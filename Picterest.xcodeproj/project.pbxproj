@@ -13,6 +13,12 @@
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
 		DE15E66828604279003DD2F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */; };
 		FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C5D288E6508002CBB0E /* SavedViewController.swift */; };
+		FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */; };
+		FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C62288EA109002CBB0E /* NetworkManager.swift */; };
+		FFB74C66288EA220002CBB0E /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C65288EA220002CBB0E /* CustomError.swift */; };
+		FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C67288EA502002CBB0E /* ImageInfo.swift */; };
+		FFB74C6A288ED3AE002CBB0E /* UnsplashInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */; };
+		FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,12 @@
 		DE15E66728604279003DD2F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE15E66928604279003DD2F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FFB74C5D288E6508002CBB0E /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
+		FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
+		FFB74C62288EA109002CBB0E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		FFB74C65288EA220002CBB0E /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		FFB74C67288EA502002CBB0E /* ImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
+		FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UnsplashInfo.plist; sourceTree = "<group>"; };
+		FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picterest++Bundle.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +68,9 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				FFB74C6B288ED490002CBB0E /* Extension */,
+				FFB74C64288EA210002CBB0E /* Entities */,
+				FFB74C5F288E9DBE002CBB0E /* Network */,
 				FFB74C5C288E5BBD002CBB0E /* Resource */,
 				FFB74C5B288E5B78002CBB0E /* Presentation */,
 				FFB74C5A288E5B27002CBB0E /* Application */,
@@ -87,8 +102,35 @@
 				DE15E66428604279003DD2F5 /* Assets.xcassets */,
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
+				FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		FFB74C5F288E9DBE002CBB0E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */,
+				FFB74C62288EA109002CBB0E /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FFB74C64288EA210002CBB0E /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				FFB74C65288EA220002CBB0E /* CustomError.swift */,
+				FFB74C67288EA502002CBB0E /* ImageInfo.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		FFB74C6B288ED490002CBB0E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB74C6A288ED3AE002CBB0E /* UnsplashInfo.plist in Resources */,
 				DE15E66828604279003DD2F5 /* LaunchScreen.storyboard in Resources */,
 				DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */,
 			);
@@ -161,8 +204,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB74C66288EA220002CBB0E /* CustomError.swift in Sources */,
+				FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ImagesViewController.swift in Sources */,
+				FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */,
+				FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
+				FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */,
 				FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 			);
