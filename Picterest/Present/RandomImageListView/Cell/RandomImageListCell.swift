@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
+final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView = UIStackView()
     private let starButton = UIButton(type: .system)

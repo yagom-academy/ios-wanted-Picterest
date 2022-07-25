@@ -18,7 +18,7 @@ final class NetworkManager {
         self.session = session
     }
     
-    func getRandomImageInfo(completion: @escaping (Result<ImageInfo, CustomError>) -> ()) {
+    func getRandomImageInfo(completion: @escaping (Result<[ImageInfo], CustomError>) -> ()) {
         
         guard let url = api.getRandomImageAPI().url else {
             completion(.failure(CustomError.makeURLError))
@@ -49,7 +49,7 @@ final class NetworkManager {
                 return
             }
             do {
-                let hasData = try JSONDecoder().decode(ImageInfo.self, from: data)
+                let hasData = try JSONDecoder().decode([ImageInfo].self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(hasData))
                 }

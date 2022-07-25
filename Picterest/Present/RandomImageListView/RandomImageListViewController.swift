@@ -10,6 +10,7 @@ import UIKit
 final class RandomImageListViewController: UIViewController {
     
     private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
+    private let viewModel = RandomImageListViewModel(networkManager: NetworkManager.shared)
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +42,7 @@ extension RandomImageListViewController: UICollectionViewDataSource {
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return viewModel.cellTotalCount
     }
 }
 

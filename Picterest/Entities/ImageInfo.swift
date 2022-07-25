@@ -38,7 +38,7 @@ struct ImageURL: Decodable {
 struct Author: Decodable {
     var username: String
     var name: String
-    var portfolioURL: String
+    var portfolioURL: String?
     var profileImage: Profile
     
     private enum CodingKeys: String, CodingKey {

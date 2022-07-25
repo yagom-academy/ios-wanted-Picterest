@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomCollectionViewLayout: UICollectionViewLayout {
+final class CustomCollectionViewLayout: UICollectionViewLayout {
     weak var delegate: CustomCollectionViewLayoutDelegate!
 
     fileprivate var cellPadding: CGFloat = 6

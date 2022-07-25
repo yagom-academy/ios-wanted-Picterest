@@ -22,6 +22,7 @@
 		FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */; };
 		FE56A666288EB21600EBD539 /* RandomImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A665288EB21600EBD539 /* RandomImageListCell.swift */; };
 		FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */; };
+		FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayoutDelegate.swift; sourceTree = "<group>"; };
 		FE56A665288EB21600EBD539 /* RandomImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCell.swift; sourceTree = "<group>"; };
 		FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifying.swift; sourceTree = "<group>"; };
+		FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				FE24EB7E288E6CE600A4527C /* RandomImageListViewController.swift */,
+				FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */,
 				FE56A667288EB2FC00EBD539 /* Cell */,
 				FE56A664288EB1B000EBD539 /* CustomCollectionViewLayout */,
 			);
@@ -237,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE24EB79288E4C2700A4527C /* CustomError.swift in Sources */,
+				FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */,
 				FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */,
 				FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */,
 				FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */,
