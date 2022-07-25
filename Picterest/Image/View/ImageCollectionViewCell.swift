@@ -8,5 +8,5 @@
 import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
-    
+    static let identifier = "ImageCollectionViewCell"
 }
