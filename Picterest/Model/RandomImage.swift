@@ -9,7 +9,7 @@ import Foundation
 
 struct RandomImage: Codable {
     let id: String
-    let urls: [RandomImageURL]
+    let urls: RandomImageURL
 }
 
 struct RandomImageURL: Codable {

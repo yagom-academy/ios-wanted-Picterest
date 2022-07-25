@@ -32,7 +32,7 @@ struct Resource<T: Codable> {
     init(
         base: String = "https://api.unsplash.com",
         path: String = "/photos/random",
-        params: [String: String] = ["15": "count"],
+        params: [String: String] = ["count": "15"],
         header: [String: String] = ["Client-ID \(APIKey.shared.accessKey)": "Authorization"]
     ) {
         self.base = base
