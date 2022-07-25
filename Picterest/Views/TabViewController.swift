@@ -19,13 +19,17 @@ class TabViewController: UITabBarController {
                                            image: UIImage(systemName: "star"),
                                            selectedImage: UIImage(systemName: "star.fill"))
         
-        let feedController = UINavigationController(rootViewController: FeedViewController(viewModel: FeedViewModel(key: viewModel.key ?? "")))
+        let feedController = FeedViewController(
+            viewModel: FeedViewModel(key: viewModel.key ?? "")
+        )
+        
+        let feedNavController = UINavigationController(rootViewController: feedController)
         feedController.tabBarItem = feedTabBarItem
         
         let savedController = SavedViewController()
         savedController.tabBarItem = savedTabBarItem
         
-        setViewControllers([feedController,savedController], animated: true)
+        setViewControllers([feedNavController,savedController], animated: true)
         tabBar.backgroundColor = .lightGray
         
     }
