@@ -10,7 +10,18 @@ import UIKit
 class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .blue
+        setUpNavBar()
+        view.backgroundColor = .lightGray
+    }
+}
+
+
+
+// MARK: - UI Configure Methods
+private extension FeedViewController {
+    func setUpNavBar() {
+        navigationItem.title = "피드"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .automatic
     }
 }
