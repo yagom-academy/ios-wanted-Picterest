@@ -9,7 +9,13 @@ import UIKit
 
 class ImageListViewController: UIViewController {
     
-    var photos = [ImageData]()
+    private let viewModel = ImageListViewModel()
+    
+    private var activity: UIActivityIndicatorView = {
+        var indicator = UIActivityIndicatorView()
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
     
     private var picterestCollectionView: UICollectionView = {
         let layout = PicterestCollectionViewLayout()
@@ -23,10 +29,11 @@ class ImageListViewController: UIViewController {
         super.viewDidLoad()
         setDelegate()
         setLayout()
-        fetchPicterestData()
+        addViewModelObserver()
+        
     }
     
-    func setDelegate() {
+    private func setDelegate() {
         picterestCollectionView.delegate = self
         picterestCollectionView.dataSource = self
         if let layout = picterestCollectionView.collectionViewLayout as? PicterestCollectionViewLayout {
@@ -34,11 +41,16 @@ class ImageListViewController: UIViewController {
         }
     }
     
-    func setLayout() {
+    private func setLayout() {
         view.backgroundColor = .systemBackground
+        view.addSubview(activity)
         view.addSubview(picterestCollectionView)
         
         NSLayoutConstraint.activate([
+            
+            activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activity.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
             picterestCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             picterestCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             picterestCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -46,19 +58,25 @@ class ImageListViewController: UIViewController {
         ])
     }
     
-    func fetchPicterestData() {
-        Repository().fetchImage { [self] result in
-            switch result {
-            case .success(let imageData):
-                photos = imageData
-                print(imageData)
-                DispatchQueue.main.async { [self] in
-                    picterestCollectionView.reloadData()
-                }
-            case .failure(let error):
-                print(error)
+    private func addViewModelObserver() {
+        viewModel.loadingStarted = { [weak activity] in
+            activity?.isHidden = false
+            DispatchQueue.main.async {
+                activity?.startAnimating()
             }
         }
+        viewModel.loadingEnded = { [weak activity] in
+            DispatchQueue.main.async {
+                activity?.stopAnimating()
+            }
+            
+        }
+        viewModel.imageListUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.picterestCollectionView.reloadData()
+            }
+        }
+        viewModel.list()
     }
     
 }
@@ -66,12 +84,13 @@ class ImageListViewController: UIViewController {
 extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return viewModel.imageCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
-        cell.fetchImageData(data: photos[indexPath.row])
+        let imageData = viewModel.image(at: indexPath.row)
+        cell.fetchImageData(data: imageData)
         return cell
     }
 }
