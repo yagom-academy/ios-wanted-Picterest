@@ -10,6 +10,7 @@
 		0EFF10DA288E4A9400CE8957 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */; };
 		0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */; };
 		0EFF10DE288E4AEC00CE8957 /* StarImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */; };
+		0EFF10E1288E53EC00CE8957 /* RandomImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10E0288E53EC00CE8957 /* RandomImage.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewController.swift; sourceTree = "<group>"; };
 		0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageViewController.swift; sourceTree = "<group>"; };
+		0EFF10E0288E53EC00CE8957 /* RandomImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImage.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +63,14 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		0EFF10DF288E53E100CE8957 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0EFF10E0288E53EC00CE8957 /* RandomImage.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				0EFF10DF288E53E100CE8957 /* Model */,
 				0EFF10D8288E4A8700CE8957 /* Controller */,
 				0EFF10D7288E48A200CE8957 /* Application */,
 			);
@@ -158,6 +169,7 @@
 			files = (
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */,
+				0EFF10E1288E53EC00CE8957 /* RandomImage.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				0EFF10DA288E4A9400CE8957 /* MainTabbarController.swift in Sources */,
 				0EFF10DE288E4AEC00CE8957 /* StarImageViewController.swift in Sources */,
