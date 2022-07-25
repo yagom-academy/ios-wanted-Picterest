@@ -22,6 +22,7 @@ final class ImageCollectionViewCellDescriptionView: UIView {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "1번째 사진"
+        label.textAlignment = .right
         
         return label
     }()
@@ -32,6 +33,7 @@ final class ImageCollectionViewCellDescriptionView: UIView {
         configureSubViews()
         setConstraintsOfStarButton()
         setConstraintsOfDescriptionLabel()
+        self.backgroundColor = .lightGray
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +53,7 @@ extension ImageCollectionViewCellDescriptionView {
     
     private func setConstraintsOfStarButton() {
         NSLayoutConstraint.activate([
-            starButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            starButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
             starButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             starButton.widthAnchor.constraint(equalToConstant: 35),
             starButton.heightAnchor.constraint(equalToConstant: 35)
@@ -61,8 +63,8 @@ extension ImageCollectionViewCellDescriptionView {
     private func setConstraintsOfDescriptionLabel() {
         NSLayoutConstraint.activate([
             descriptionLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            descriptionLabel.leadingAnchor.constraint(equalTo: starButton.leadingAnchor, constant: 15),
-            descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15)
+            descriptionLabel.leadingAnchor.constraint(equalTo: starButton.trailingAnchor, constant: 5),
+            descriptionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5)
         ])
     }
 }

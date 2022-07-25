@@ -30,10 +30,15 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         configureSubView()
         setConstraintsOfImageView()
+        setConstraintsOfdescriptionView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
     
     // MARK: - Method
@@ -65,7 +70,7 @@ extension ImageCollectionViewCell {
             descriptionView.topAnchor.constraint(equalTo: contentView.topAnchor),
             descriptionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             descriptionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            descriptionView.heightAnchor.constraint(equalToConstant: 50)
+            descriptionView.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }
