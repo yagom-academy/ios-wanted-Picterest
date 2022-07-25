@@ -12,7 +12,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     static let identifier = "ImageCollectionViewCell"
     
     // MARK: - ViewProperties
-    private let imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         
@@ -45,8 +45,6 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Method
     func configureCell(with randomImage: RandomImage) {
         self.imageView.load(randomImage.urls.smallSizeImageURL)
-//        self.imageView.image = UIImage(named: "1.jpg")
-        
     }
     
     override func prepareForReuse() {

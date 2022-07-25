@@ -10,12 +10,18 @@ import Foundation
 struct RandomImage: Codable {
     let id: String
     let urls: RandomImageURL
+    let width: Double
+    let height: Double
+    
+    var imageRatio: Double {
+        return width / height
+    }
 }
 
 struct RandomImageURL: Codable {
     let smallSizeImageURL: String
     
     enum CodingKeys: String, CodingKey {
-        case smallSizeImageURL = "full"
+        case smallSizeImageURL = "small"
     }
 }
