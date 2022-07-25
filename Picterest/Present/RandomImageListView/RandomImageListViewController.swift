@@ -17,17 +17,29 @@ final class RandomImageListViewController: UIViewController {
         
         attribute()
         layout()
+        loadCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func loadCell() {
+        viewModel.loadData { [weak self] result in
+            switch result {
+            case .success():
+                self?.collectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
 //MARK: - CustomCollectionViewLayoutDelegate
 extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 300
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
@@ -39,6 +51,7 @@ extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
 extension RandomImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RandomImageListCell.reuseIdentifier, for: indexPath) as? RandomImageListCell else { return UICollectionViewCell() }
+        cell.configure(indexPath: indexPath, data: viewModel.cellData(indexPath))
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

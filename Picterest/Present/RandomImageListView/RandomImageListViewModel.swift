@@ -17,17 +17,22 @@ final class RandomImageListViewModel {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        loadImageInfos()
     }
     
-    private func loadImageInfos() {
+    func cellData(_ indexPath: IndexPath) -> ImageInfo? {
+        return imageInfos[indexPath.row]
+    }
+    
+    func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
         networkManager.getRandomImageInfo { result in
             switch result {
             case .success(let infos):
                 self.imageInfos = infos
                 print("success load data!")
+                completion(.success(Void()))
             case .failure(let error):
                 print(error)
+                completion(.failure(error))
             }
         }
     }

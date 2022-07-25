@@ -13,6 +13,8 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     private let starButton = UIButton(type: .system)
     private let titleLabel = UILabel()
     
+    private let imageView = UIImageView()
+    
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         
@@ -22,6 +24,11 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(indexPath: IndexPath, data: ImageInfo?) {
+        titleLabel.text = "\(indexPath.row+1)번째 사진"
+        imageView.load(urlString: data?.imageURL.thumbnail)
     }
     
     private func attribute() {
@@ -39,8 +46,16 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func layout() {
-        contentView.addSubview(topBarStackView)
-        topBarStackView.translatesAutoresizingMaskIntoConstraints = false
+        [imageView, topBarStackView].forEach {
+            contentView.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
         topBarStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         topBarStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         topBarStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
