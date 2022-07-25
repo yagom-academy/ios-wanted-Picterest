@@ -8,6 +8,7 @@
 import UIKit
 
 class ImageTopView: UIView {
+    // MARK: - UI Components
     private lazy var starButton: UIButton = {
         let button = UIButton()
         button.setImage(Icon.star.image, for: .normal)
@@ -26,18 +27,21 @@ class ImageTopView: UIView {
         return label
     }()
     
+    // MARK: - Setup
     func setupView(index: Int) {
         configUI()
         indexLabel.text = "\(index)번째 사진"
     }
 }
 
+// MARK: - @objc Methods
 private extension ImageTopView {
     @objc func didTapStarButton() {
         print("didTapStarButton")
     }
 }
 
+// MARK: - UI Methods
 private extension ImageTopView {
     func configUI() {
         backgroundColor = UIColor(red: 125/255, green: 125/255, blue: 125/255, alpha: 0.4)
