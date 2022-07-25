@@ -20,17 +20,30 @@ class PhotoListViewController: UIViewController {
         return collectionView
     }()
     
+    private let viewModel = PhotoListViewModel()
+    
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
+        viewModel.fetchPhotoList()
+        bindUpdateCollectionView()
     }
 }
 
 // MARK: - PhotoListCollectionViewLayoutDelegate
 extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return [50, 100, 100, 50][indexPath.row % 4]
+    func collectionView(
+        _ collectionView: UICollectionView,
+        heightForPhotoAtIndexPath indexPath: IndexPath
+    ) -> CGFloat {
+        let photo = viewModel.photoList.value[indexPath.item]
+        let photoWidth = CGFloat(photo.width)
+        let photoHeight = CGFloat(photo.height)
+        
+        let ratio = photoHeight / photoWidth
+        
+        return ((collectionView.bounds.width / 2) - 12) * ratio
     }
 }
 // MARK: - UICollectionViewDataSource
@@ -39,7 +52,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 100
+        return viewModel.photoList.value.count
     }
     func collectionView(
         _ collectionView: UICollectionView,
@@ -49,8 +62,23 @@ extension PhotoListViewController: UICollectionViewDataSource {
             withReuseIdentifier: PhotoListCollectionViewCell.identifier,
             for: indexPath
         ) as? PhotoListCollectionViewCell else { return UICollectionViewCell() }
+        
+        let photo = viewModel.photoList.value[indexPath.item]
+        cell.viewModel = PhotoListCollectionViewCellViewModel(photo: photo)
         cell.setupView(index: indexPath.item)
+        
         return cell
+    }
+}
+
+// MARK: - Bind
+private extension PhotoListViewController {
+    func bindUpdateCollectionView() {
+        viewModel.photoList.bind { _ in
+            DispatchQueue.main.async {
+                self.photoListCollectionView.reloadData()
+            }
+        }
     }
 }
 

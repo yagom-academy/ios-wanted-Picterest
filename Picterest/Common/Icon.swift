@@ -12,6 +12,8 @@ enum Icon: String {
     case photoFill = "photo.fill"
     case starBubble = "star.bubble"
     case starBubbleFill = "star.bubble.fill"
+    case star = "star"
+    case starFill = "star.fill"
     
     var image: UIImage? { UIImage(systemName: self.rawValue) }
 }
