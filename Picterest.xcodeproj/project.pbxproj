@@ -74,7 +74,6 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				F0F56DFE288E9D80007AED0C /* ViewModel */,
 				F0F56DEF288E8A98007AED0C /* Views */,
 				F0F56DE8288E6897007AED0C /* Model */,
 				F0F56DE2288E54A9007AED0C /* Network */,
@@ -141,13 +140,6 @@
 				F0F56DF0288E8ABB007AED0C /* ImageTabbarController.swift */,
 			);
 			path = Tabbar;
-			sourceTree = "<group>";
-		};
-		F0F56DFE288E9D80007AED0C /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
