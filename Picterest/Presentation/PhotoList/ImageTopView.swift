@@ -12,6 +12,11 @@ class ImageTopView: UIView {
         let button = UIButton()
         button.setImage(Icon.star.image, for: .normal)
         button.tintColor = .white
+        button.addTarget(
+            self,
+            action: #selector(didTapStarButton),
+            for: .touchUpInside
+        )
         return button
     }()
     private lazy var indexLabel: UILabel = {
@@ -24,6 +29,12 @@ class ImageTopView: UIView {
     func setupView(index: Int) {
         configUI()
         indexLabel.text = "\(index)번째 사진"
+    }
+}
+
+private extension ImageTopView {
+    @objc func didTapStarButton() {
+        print("didTapStarButton")
     }
 }
 
