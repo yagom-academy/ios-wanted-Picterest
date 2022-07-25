@@ -76,7 +76,19 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     }
     
     func fetchImageData(data: ImageData) {
-        let image = try! Data(contentsOf: URL(string: data.imageUrl.smallUrl)!)
-        picterestImageView.image = UIImage(data: image)
+        let imageData = try! Data(contentsOf: URL(string: data.imageUrl.smallUrl)!)
+        let image = UIImage(data: imageData)!
+        
+        picterestImageView.image = resizeImage(image: image, width: 100)
+    }
+    
+    func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
+        let scale = width / image.size.width
+        let height = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+        image.draw(in: CGRect(x: 0, y: 0, width: width, height: height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
     }
 }
