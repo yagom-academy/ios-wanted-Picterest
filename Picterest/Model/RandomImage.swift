@@ -14,6 +14,7 @@ struct RandomImage: Codable {
     let height: Double
     
     var imageRatio: Double {
+        print(height / width)
         return height / width
     }
 }

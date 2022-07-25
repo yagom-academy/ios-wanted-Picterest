@@ -14,7 +14,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - ViewProperties
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleToFill
         
         
         return imageView

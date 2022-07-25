@@ -22,9 +22,18 @@ final class ImageCollectionViewCellDescriptionView: UIView {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "1번째 사진"
+        label.textColor = .white
         label.textAlignment = .right
         
         return label
+    }()
+    
+    private let alphaView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.4
+        
+        return view
     }()
     
     // MARK: - LifeCycle
@@ -33,7 +42,7 @@ final class ImageCollectionViewCellDescriptionView: UIView {
         configureSubViews()
         setConstraintsOfStarButton()
         setConstraintsOfDescriptionLabel()
-        self.backgroundColor = .lightGray
+        setConstraintsOfAlphaView()
     }
     
     required init?(coder: NSCoder) {
@@ -52,10 +61,20 @@ extension ImageCollectionViewCellDescriptionView {
 // MARK: - UI
 extension ImageCollectionViewCellDescriptionView {
     private func configureSubViews() {
-        [starButton, descriptionLabel].forEach { [weak self] in
+        [alphaView, starButton, descriptionLabel].forEach { [weak self] in
             $0.translatesAutoresizingMaskIntoConstraints = false
             self?.addSubview($0)
         }
+    }
+    
+    private func setConstraintsOfAlphaView() {
+        NSLayoutConstraint.activate([
+            alphaView.topAnchor.constraint(equalTo: self.topAnchor),
+            alphaView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            alphaView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            alphaView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+        
     }
     
     private func setConstraintsOfStarButton() {
