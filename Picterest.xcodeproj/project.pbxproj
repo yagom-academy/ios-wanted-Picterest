@@ -64,6 +64,14 @@
 			path = Save;
 			sourceTree = "<group>";
 		};
+		68035083288E5E81003AA3AD /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				68035081288E57F1003AA3AD /* TabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -83,11 +91,11 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				68035083288E5E81003AA3AD /* TabBar */,
 				6803507D288E558C003AA3AD /* Image */,
 				6803507E288E5593003AA3AD /* Save */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
-				68035081288E57F1003AA3AD /* TabBarViewController.swift */,
 				DE15E66428604279003DD2F5 /* Assets.xcassets */,
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
