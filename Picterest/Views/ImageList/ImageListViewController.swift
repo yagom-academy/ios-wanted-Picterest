@@ -14,6 +14,7 @@ class ImageListViewController: UIViewController {
     private var activity: UIActivityIndicatorView = {
         var indicator = UIActivityIndicatorView()
         indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.style = .large
         return indicator
     }()
     
@@ -50,7 +51,7 @@ class ImageListViewController: UIViewController {
             
             activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activity.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
+            
             picterestCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             picterestCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             picterestCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -93,13 +94,20 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.fetchImageData(data: imageData, at: indexPath.row)
         return cell
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        if offsetY > scrollView.frame.height / 2 {
+            viewModel.next()
+        }
+    }
 }
 
 extension ImageListViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        // image view size 조절 클래스 필요
-        //return photos[indexPath.item].image.size.height
-        return 200
+        return viewModel.imageSize(at: indexPath.row)
     }
 }
+
+
