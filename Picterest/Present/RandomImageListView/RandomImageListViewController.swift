@@ -38,8 +38,8 @@ final class RandomImageListViewController: UIViewController {
 
 //MARK: - CustomCollectionViewLayoutDelegate
 extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 300
+    func collectionView(_ collectionView: UICollectionView, heightMultiplierForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return viewModel.cellHeightMultiplier(indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {

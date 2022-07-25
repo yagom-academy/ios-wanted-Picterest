@@ -10,13 +10,14 @@ import UIKit
 final class CustomCollectionViewLayout: UICollectionViewLayout {
     weak var delegate: CustomCollectionViewLayoutDelegate!
 
-    fileprivate var cellPadding: CGFloat = 6
+    private var windowWidth = UIScreen.main.bounds.width
+    private var cellPadding: CGFloat = 6
 
-    fileprivate var cache = [UICollectionViewLayoutAttributes]()
+    private var cache = [UICollectionViewLayoutAttributes]()
 
-    fileprivate var contentHeight: CGFloat = 0
+    private var contentHeight: CGFloat = 0
 
-    fileprivate var contentWidth: CGFloat {
+    private var contentWidth: CGFloat {
       guard let collectionView = collectionView else {
         return 0
       }
@@ -46,7 +47,8 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             for item in 0 ..< collectionView.numberOfItems(inSection: section) {
                 let indexPath = IndexPath(item: item, section: 0)
                 
-                let photoHeight = delegate.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath)
+                let cellWidth = windowWidth/CGFloat(numberOfColumns) - cellPadding*2
+                let photoHeight = cellWidth * delegate.collectionView(collectionView, heightMultiplierForPhotoAtIndexPath: indexPath)
                 let height = cellPadding * 2 + photoHeight
                 let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
                 let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)

@@ -5,7 +5,7 @@
 //  Created by 김기림 on 2022/07/25.
 //
 
-import Foundation
+import UIKit
 
 final class RandomImageListViewModel {
     
@@ -21,6 +21,12 @@ final class RandomImageListViewModel {
     
     func cellData(_ indexPath: IndexPath) -> ImageInfo? {
         return imageInfos[safe: indexPath.row]
+    }
+    
+    func cellHeightMultiplier(_ indexPath: IndexPath) -> CGFloat {
+        guard let data = imageInfos[safe: indexPath.row] else { return 0.0 }
+        let multiplier = CGFloat(data.height) / CGFloat(data.width)
+        return multiplier
     }
     
     func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
