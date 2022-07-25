@@ -16,8 +16,8 @@ final class MainTabbarController: UITabBarController {
     }
     
     private func configureTabbar() {
-        let randomImageVC = RandomImageViewController()
-        let starImageVC = StarImageViewController()
+        let randomImageVC = UINavigationController(rootViewController: RandomImageViewController())
+        let starImageVC = UINavigationController(rootViewController: StarImageViewController())
         
         randomImageVC.tabBarItem.title = "Images"
         randomImageVC.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
