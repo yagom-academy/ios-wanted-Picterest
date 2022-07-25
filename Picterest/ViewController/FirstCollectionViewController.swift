@@ -11,11 +11,14 @@ private let reuseIdentifier = "Cell"
 
 class FirstCollectionViewController: UICollectionViewController {
 
+    var networkManager : NetworkManager?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        // Register cell classes
+        networkManager = NetworkManager()
+        networkManager?.fetchRandomImages(completion: { result in
+            print(result)
+        })
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         // Do any additional setup after loading the view.
     }

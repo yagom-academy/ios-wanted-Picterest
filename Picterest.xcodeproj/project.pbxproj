@@ -10,6 +10,8 @@
 		C7FE9FD5288E4BC10019B063 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FD4288E4BC00019B063 /* TabBarController.swift */; };
 		C7FE9FD7288E4C5A0019B063 /* FirstCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FD6288E4C5A0019B063 /* FirstCollectionViewController.swift */; };
 		C7FE9FD9288E4C6D0019B063 /* SecondCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FD8288E4C6D0019B063 /* SecondCollectionViewController.swift */; };
+		C7FE9FDC288E63270019B063 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FDB288E63270019B063 /* NetworkManager.swift */; };
+		C7FE9FDF288E63F10019B063 /* ImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FDE288E63F10019B063 /* ImageResponse.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66328604278003DD2F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66128604278003DD2F5 /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 		C7FE9FD4288E4BC00019B063 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C7FE9FD6288E4C5A0019B063 /* FirstCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCollectionViewController.swift; sourceTree = "<group>"; };
 		C7FE9FD8288E4C6D0019B063 /* SecondCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCollectionViewController.swift; sourceTree = "<group>"; };
+		C7FE9FDB288E63270019B063 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		C7FE9FDE288E63F10019B063 /* ImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponse.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +55,22 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		C7FE9FDA288E62F90019B063 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				C7FE9FDB288E63270019B063 /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		C7FE9FDD288E63DE0019B063 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C7FE9FDE288E63F10019B063 /* ImageResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -70,6 +90,8 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				C7FE9FDD288E63DE0019B063 /* Model */,
+				C7FE9FDA288E62F90019B063 /* Network */,
 				C7FE9FD3288E4B280019B063 /* ViewController */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
@@ -152,7 +174,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7FE9FDC288E63270019B063 /* NetworkManager.swift in Sources */,
 				C7FE9FD7288E4C5A0019B063 /* FirstCollectionViewController.swift in Sources */,
+				C7FE9FDF288E63F10019B063 /* ImageResponse.swift in Sources */,
 				C7FE9FD5288E4BC10019B063 /* TabBarController.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				C7FE9FD9288E4C6D0019B063 /* SecondCollectionViewController.swift in Sources */,
