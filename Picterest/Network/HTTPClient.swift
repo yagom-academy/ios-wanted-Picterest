@@ -1,28 +1,16 @@
 //
-//  PhotoAPIService.swift
+//  HTTPClient.swift
 //  Picterest
 //
-//  Created by 백유정 on 2022/07/25.
+//  Created by 백유정 on 2022/07/26.
 //
 
-import UIKit
+import Foundation
 
-enum APIError: Error {
-    case unexpectedStatusCode(statusCode: String)
-    case invalidResponse
-    case noData
-    case failed
-    case invalidData
-}
-
-class PhotoAPIService {
-    
-    func getRandomPhoto(_ completion: @escaping (Result<[Photo], APIError>) -> Void) {
-        var request = URLRequest(url: EndPoint.getPhoto.url)
-        request.httpMethod = HTTPMethod.GET.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
+class HTTPClient {
+    func getRandomPhoto<T: Decodable>(endpoint: URLRequest, completion: @escaping(Result<[T], APIError>) -> Void) {
+        let session = URLSession(configuration: .ephemeral)
+        let task = session.dataTask(with: endpoint) { data, response, error in
             guard error == nil else {
                 completion(.failure(.failed))
                 return
@@ -45,11 +33,12 @@ class PhotoAPIService {
             
             do {
                 let decoder = JSONDecoder()
-                let userData = try decoder.decode([Photo].self, from: data)
+                let userData = try decoder.decode([T].self, from: data)
                 completion(.success(userData))
             } catch {
                 completion(.failure(.invalidData))
             }
-        }.resume()
+        }
+        task.resume()
     }
 }

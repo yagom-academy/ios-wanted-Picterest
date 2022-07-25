@@ -13,7 +13,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private let photoImageView: UIImageView = {
         let image = UIImageView()
-        image.layer.cornerRadius = 30
+        image.layer.cornerRadius = 10
         image.clipsToBounds = true
         image.tintColor = .lightGray
         
@@ -23,7 +23,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     func fetchData(_ photo: Photo) {
         layout()
         
-        LoadImage().loadImage(photo.urls.full) { result in
+        LoadImage().loadImage(photo.urls.small) { result in
             switch result {
             case .success(let image):
                 DispatchQueue.main.async {

@@ -33,7 +33,7 @@ class ImageViewController: UIViewController {
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
-                self.photoRandomList = photos.photoData
+                self.photoRandomList = photos
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
                 }
@@ -82,7 +82,6 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.backgroundColor = .yellow
         cell.fetchData(photoRandomList[indexPath.row])
         return cell
     }

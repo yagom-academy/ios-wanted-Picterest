@@ -13,11 +13,12 @@ enum EndPoint {
 
 extension EndPoint {
     static let accessKey = "RlALhP2d1f-1NTL_O2Y4t0RdHBvEgwgrrYRMxsF963Q"
+    static let count = 15
     
     var url: URL {
         switch self {
         case .getPhoto:
-            return .makeEndPoint("random/?client_id=\(EndPoint.accessKey)&count=15")
+            return .makeEndPoint("random/?client_id=\(EndPoint.accessKey)&count=\(EndPoint.count)")
         }
     }
 }

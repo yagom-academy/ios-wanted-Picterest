@@ -5,15 +5,7 @@
 //  Created by 백유정 on 2022/07/25.
 //
 
-import UIKit
-
-struct PhotoData: Codable {
-    let photoData: [Photo]
-    
-    enum CodingKeys: String, CodingKey {
-        case photoData = "data"
-    }
-}
+import Foundation
 
 struct Photo: Codable {
     let id: String
@@ -21,6 +13,13 @@ struct Photo: Codable {
 }
 
 struct Urls: Codable {
+    let small: String
     let full: String
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        full = try container.decode(String.self, forKey: .full)
+        small = try container.decode(String.self, forKey: .small)
+    }
 }
 
