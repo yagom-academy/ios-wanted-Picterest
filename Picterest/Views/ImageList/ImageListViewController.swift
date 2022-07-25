@@ -8,7 +8,7 @@
 import UIKit
 
 class ImageListViewController: UIViewController {
-
+    
     var photos = [ImageData]()
     
     private var picterestCollectionView: UICollectionView = {
@@ -60,16 +60,15 @@ class ImageListViewController: UIViewController {
             }
         }
     }
-
+    
 }
 
 extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(photos.count)
         return photos.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
         cell.fetchImageData(data: photos[indexPath.row])
@@ -78,10 +77,10 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
 }
 
 extension ImageListViewController: PinterestLayoutDelegate {
-  func collectionView(_ collectionView: UICollectionView,
-                      heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-    // image view size 조절 클래스 필요
-      //return photos[indexPath.item].image.size.height
-      return 200
-  }
+    func collectionView(_ collectionView: UICollectionView,
+                        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
+        // image view size 조절 클래스 필요
+        //return photos[indexPath.item].image.size.height
+        return 200
+    }
 }
