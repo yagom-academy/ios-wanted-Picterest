@@ -8,6 +8,7 @@
 import Foundation
 
 extension URLRequest {
+  
   static func makeURLRequest(request: Requestable) -> Self {
     var urlRequest = URLRequest(url: request.endPoint.url)
     urlRequest.httpMethod = request.requestType.rawValue
@@ -15,4 +16,5 @@ extension URLRequest {
     urlRequest.httpBody = request.body
     return urlRequest
   }
+  
 }
