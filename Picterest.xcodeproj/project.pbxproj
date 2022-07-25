@@ -19,6 +19,7 @@
 		FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C67288EA502002CBB0E /* ImageInfo.swift */; };
 		FFB74C6A288ED3AE002CBB0E /* UnsplashInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */; };
 		FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */; };
+		FFB74C71288EEE18002CBB0E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C70288EEE18002CBB0E /* ImageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		FFB74C67288EA502002CBB0E /* ImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfo.swift; sourceTree = "<group>"; };
 		FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UnsplashInfo.plist; sourceTree = "<group>"; };
 		FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picterest++Bundle.swift"; sourceTree = "<group>"; };
+		FFB74C70288EEE18002CBB0E /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +92,8 @@
 		FFB74C5B288E5B78002CBB0E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				DE15E65F28604278003DD2F5 /* ImagesViewController.swift */,
-				FFB74C5D288E6508002CBB0E /* SavedViewController.swift */,
+				FFB74C6E288EEDA9002CBB0E /* ImagesView */,
+				FFB74C6F288EEDC1002CBB0E /* SavedView */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -131,6 +133,23 @@
 				FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		FFB74C6E288EEDA9002CBB0E /* ImagesView */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E65F28604278003DD2F5 /* ImagesViewController.swift */,
+				FFB74C70288EEE18002CBB0E /* ImageCell.swift */,
+			);
+			path = ImagesView;
+			sourceTree = "<group>";
+		};
+		FFB74C6F288EEDC1002CBB0E /* SavedView */ = {
+			isa = PBXGroup;
+			children = (
+				FFB74C5D288E6508002CBB0E /* SavedViewController.swift */,
+			);
+			path = SavedView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +232,7 @@
 				FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */,
 				FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
+				FFB74C71288EEE18002CBB0E /* ImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

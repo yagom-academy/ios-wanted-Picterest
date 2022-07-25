@@ -13,7 +13,7 @@ class ImagesViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .blue
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.identifier)
         collectionView.dataSource = self
         return collectionView
     }()
@@ -21,11 +21,13 @@ class ImagesViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         fetchData()
         configureUI()
     }
 }
 
+// MARK: - Methods
 extension ImagesViewController {
     
     private func fetchData() {
@@ -33,7 +35,6 @@ extension ImagesViewController {
             switch result {
             case .success(let result):
                 self.imageDatas = result
-                print(self.imageDatas.count)
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -47,7 +48,7 @@ extension ImagesViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
     }
 }
@@ -55,11 +56,18 @@ extension ImagesViewController {
 // MARK: - CollectionView DataSoucrce
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-       return UICollectionViewCell()
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.identifier, for: indexPath) as? ImageCell else { return  UICollectionViewCell() }
+        
+        cell.configure()
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        imageDatas.count
+        print("갯수", imageDatas.count)
+        return 15
+        
     }
 }
 
