@@ -19,6 +19,12 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    private let descriptionView: ImageCollectionViewCellDescriptionView = {
+        let view = ImageCollectionViewCellDescriptionView()
+        
+        return view
+    }()
+    
     // MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,7 +45,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
 // MARK: - UI
 extension ImageCollectionViewCell {
     private func configureSubView() {
-        [imageView].forEach {
+        [imageView, descriptionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             contentView.addSubview($0)
         }
@@ -51,6 +57,15 @@ extension ImageCollectionViewCell {
             imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        ])
+    }
+    
+    private func setConstraintsOfdescriptionView() {
+        NSLayoutConstraint.activate([
+            descriptionView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            descriptionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            descriptionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            descriptionView.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
