@@ -8,20 +8,33 @@
 import Foundation
 import Combine
 
-final class RandomImageViewModel {
+protocol RandomImageViewModelInterface: AnyObject {
+    var updateRandomImages: PassthroughSubject<Void, Never> { get }
+    var randomImagesCount: Int { get }
+    
+    func fetchNewImages()
+    func randomImageAtIndex(index: Int) -> RandomImage
+}
+
+final class RandomImageViewModel: RandomImageViewModelInterface {
+    
     // MARK: - Properties
     let networkManager = NetworkManager()
     let updateRandomImages = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
-    var randomImages = [RandomImage]() {
+    private var randomImages = [RandomImageEntity]() {
         didSet {
             updateRandomImages.send()
         }
     }
     
+    var randomImagesCount: Int {
+        randomImages.count
+    }
+    
     // MARK: - Method
     func fetchNewImages() {
-        let resource = Resource<[RandomImage]>()
+        let resource = Resource<[RandomImageEntity]>()
         networkManager.fetchRandomImageInfo(resource: resource)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -34,5 +47,14 @@ final class RandomImageViewModel {
             } receiveValue: { [weak self] images in
                 self?.randomImages.append(contentsOf: images)
             }.store(in: &subscriptions)
+    }
+    
+    func randomImageAtIndex(index: Int) -> RandomImage {
+        let randomImageEntity = randomImages[index]
+        
+        return RandomImage(
+            imageUrlString: randomImageEntity.urls.smallSizeImageURL,
+            imageRatio: randomImageEntity.imageRatio
+        )
     }
 }

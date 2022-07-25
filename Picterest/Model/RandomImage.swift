@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RandomImage: Codable {
+struct RandomImageEntity: Codable {
     let id: String
     let urls: RandomImageURL
     let width: Double
@@ -24,4 +24,9 @@ struct RandomImageURL: Codable {
     enum CodingKeys: String, CodingKey {
         case smallSizeImageURL = "small"
     }
+}
+
+struct RandomImage {
+    let imageUrlString: String
+    let imageRatio: Double
 }

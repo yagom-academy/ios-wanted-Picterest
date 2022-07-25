@@ -16,7 +16,6 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         
-        
         return imageView
     }()
     
@@ -46,7 +45,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Method
     func configureCell(with randomImage: RandomImage, index: Int) {
-        self.imageView.load(randomImage.urls.smallSizeImageURL)
+        self.imageView.load(randomImage.imageUrlString)
         descriptionView.configureView(index: index)
     }
     

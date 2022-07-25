@@ -26,7 +26,7 @@ final class RandomImageViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    let randomImageViewModel = RandomImageViewModel()
+    let randomImageViewModel: RandomImageViewModelInterface = RandomImageViewModel()
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
@@ -74,13 +74,13 @@ extension RandomImageViewController {
 // MARK: - UICollectionViewDataSource
 extension RandomImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return randomImageViewModel.randomImages.count
+        return randomImageViewModel.randomImagesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        let randomImage = randomImageViewModel.randomImages[indexPath.row]
+        let randomImage = randomImageViewModel.randomImageAtIndex(index: indexPath.row)
         cell.configureCell(with: randomImage, index: indexPath.row)
         
         return cell
@@ -104,7 +104,7 @@ extension RandomImageViewController: UICollectionViewDelegateFlowLayout {
 extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
-        let height = width * randomImageViewModel.randomImages[indexPath.row].imageRatio
+        let height = width * randomImageViewModel.randomImageAtIndex(index: indexPath.row).imageRatio
         
         return height
     }
@@ -113,7 +113,7 @@ extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
 // MARK: - UICollectionViewDelegate
 extension RandomImageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row + 1 == randomImageViewModel.randomImages.count {
+        if indexPath.row + 1 == randomImageViewModel.randomImagesCount {
             randomImageViewModel.fetchNewImages()
         }
     }
