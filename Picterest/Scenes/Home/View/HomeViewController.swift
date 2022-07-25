@@ -13,16 +13,16 @@ class HomeViewController: UIViewController {
     let endPoint = EndPoint(path: .showList, query: .imagesPerPage())
     let request = Requset(requestType: .get, body: nil, endPoint: endPoint)
     
-    test.request(on: request.value) { result in
-      switch result {
-      case .success(let data):
-        print(data)
-        let decoder = Decoder<[ImageDTO]>()
-        print(decoder.decode(data: data))
-      case .failure(let error):
-        print(error)
-      }
-    }
+//    test.request(on: request.value) { result in
+//      switch result {
+//      case .success(let data):
+//        print(data)
+//        let decoder = Decoder<[ImageDTO]>()
+//        print(decoder.decode(data: data))
+//      case .failure(let error):
+//        print(error)
+//      }
+//    }
     
   }
   

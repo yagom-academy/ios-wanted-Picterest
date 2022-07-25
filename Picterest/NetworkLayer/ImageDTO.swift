@@ -22,3 +22,14 @@ struct ImageURL: Decodable {
       case url = "regular"
   }
 }
+
+extension ImageDTO {
+  
+  func toDomain(index: Int) -> ImageEntity {
+    return ImageEntity(id: self.id,
+                       imageURL: self.imageURL.url,
+                       memo: "\(index)번째 사진",
+                       isLiked: false)
+  }
+  
+}

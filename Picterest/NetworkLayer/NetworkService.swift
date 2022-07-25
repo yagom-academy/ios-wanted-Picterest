@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct NetworkService: NetworkServiceable {
+struct NetworkService {
   
-  func request(on endPoint: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+  static func request(on endPoint: URLRequest, completion: @escaping (Result<Data, NetworkError>) -> Void) {
     
     URLSession.shared.dataTask(with: endPoint) { data, response, error in
       if let error = error {
