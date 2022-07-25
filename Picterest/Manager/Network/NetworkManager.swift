@@ -7,9 +7,10 @@
 
 import Foundation
 import Combine
+import UIKit
 
 enum NetworkError: Error {
-    case failCreateRequest
+    case failCreateRequest, urlError, networkError
     case invalidStatusCode(statusCode: Int)
 }
 
@@ -37,5 +38,17 @@ final class NetworkManager {
             }
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
+    }
+    
+    static func fetchImage(urlString: String, completion: @escaping (UIImage) -> Void) {
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        
+        URLSession(configuration: .default).dataTask(with: url) { data, _, error in
+            guard let data = data,
+                  let image = UIImage(data: data) else { return }
+            completion(image)
+        }.resume()
     }
 }
