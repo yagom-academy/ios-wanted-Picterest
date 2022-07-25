@@ -10,8 +10,9 @@ import Foundation
 enum CustomError: Error {
     case makeURLError
     case noData
-    case decodingError
     case responseError(code:Int)
+    case error(error: Error?)
+    case decodingError
     
     var description: String {
         switch self {
@@ -21,6 +22,11 @@ enum CustomError: Error {
             return "데이터가 없습니다."
         case .responseError(code: let code):
             return "리스폰에러 응답코드: \(code)"
+        case .error(error: let error):
+            guard let error = error else {
+                return "알수없는 에러 발생"
+            }
+            return "에러: \(error.localizedDescription)"
         case .decodingError:
             return "디코딩 에러"
         }
