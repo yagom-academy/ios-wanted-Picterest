@@ -25,6 +25,7 @@
 		FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */; };
 		FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */; };
 		FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */; };
+		FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A672288ED11100EBD539 /* Collection+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListViewModel.swift; sourceTree = "<group>"; };
 		FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		FE56A672288ED11100EBD539 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */,
+				FE56A672288ED11100EBD539 /* Collection+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
 				FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */,
+				FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */,
 				FE24EB72288E3C0000A4527C /* NetworkManger.swift in Sources */,
 				FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */,
 				FE56A666288EB21600EBD539 /* RandomImageListCell.swift in Sources */,

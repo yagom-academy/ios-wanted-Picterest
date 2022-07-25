@@ -20,7 +20,7 @@ final class RandomImageListViewModel {
     }
     
     func cellData(_ indexPath: IndexPath) -> ImageInfo? {
-        return imageInfos[indexPath.row]
+        return imageInfos[safe: indexPath.row]
     }
     
     func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
