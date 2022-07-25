@@ -71,6 +71,4 @@ extension PhotoListViewController: UICollectionViewDataSource {
         }
         return photoCell
     }
-    
-    
 }
