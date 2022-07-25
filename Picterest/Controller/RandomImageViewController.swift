@@ -14,8 +14,9 @@ final class RandomImageViewController: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .yellow
         collectionView.dataSource = self
+        collectionView.register(ImageCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -53,10 +54,14 @@ extension RandomImageViewController {
 // MARK: - UICollectionViewDataSource
 extension RandomImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 1000
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.configureCell()
+        
+        return cell
     }
 }
