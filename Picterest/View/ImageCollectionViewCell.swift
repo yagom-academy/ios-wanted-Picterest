@@ -40,6 +40,8 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
     }
     
     // MARK: - Method
