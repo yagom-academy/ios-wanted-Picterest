@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class RandomImageViewController: UIViewController {
     
@@ -23,12 +24,28 @@ final class RandomImageViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Properties
+    let randomImageViewModel = RandomImageViewModel()
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
         configureSubView()
         setConfigurationsOfRandomImageCollectionView()
+        bindingUpdateRandomImages()
+        randomImageViewModel.fetchNewImages()
+    }
+}
+
+// MARK: - binding
+extension RandomImageViewController {
+    private func bindingUpdateRandomImages() {
+        randomImageViewModel.updateRandomImages
+            .sink { [weak self] in
+                self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
+            }.store(in: &subscriptions)
     }
 }
 
@@ -56,13 +73,14 @@ extension RandomImageViewController {
 // MARK: - UICollectionViewDataSource
 extension RandomImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
+        return randomImageViewModel.randomImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.configureCell()
+        let randomImage = randomImageViewModel.randomImages[indexPath.row]
+        cell.configureCell(with: randomImage)
         
         return cell
     }

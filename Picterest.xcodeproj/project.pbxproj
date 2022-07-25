@@ -17,6 +17,8 @@
 		0EFF10EC288E69DD00CE8957 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10EB288E69DD00CE8957 /* ImageCollectionViewCell.swift */; };
 		0EFF10EE288E6DD500CE8957 /* ImageCollectionViewCellDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10ED288E6DD500CE8957 /* ImageCollectionViewCellDescriptionView.swift */; };
 		0EFF10F1288E81B600CE8957 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10F0288E81B600CE8957 /* UIImageView+Extension.swift */; };
+		0EFF10F5288E8B9500CE8957 /* RandomImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10F4288E8B9500CE8957 /* RandomImageViewModel.swift */; };
+		0EFF10F9288E9C3200CE8957 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10F8288E9C3200CE8957 /* ImageCacheManager.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
@@ -34,6 +36,8 @@
 		0EFF10EB288E69DD00CE8957 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		0EFF10ED288E6DD500CE8957 /* ImageCollectionViewCellDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCellDescriptionView.swift; sourceTree = "<group>"; };
 		0EFF10F0288E81B600CE8957 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		0EFF10F4288E8B9500CE8957 /* RandomImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewModel.swift; sourceTree = "<group>"; };
+		0EFF10F8288E9C3200CE8957 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,8 +73,8 @@
 		0EFF10D8288E4A8700CE8957 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				0EFF10F3288E8B8200CE8957 /* RandomImageViewController */,
 				0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */,
-				0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */,
 				0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */,
 			);
 			path = Controller;
@@ -88,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				0EFF10E5288E59A100CE8957 /* Network */,
+				0EFF10F8288E9C3200CE8957 /* ImageCacheManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -116,6 +121,15 @@
 				0EFF10F0288E81B600CE8957 /* UIImageView+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		0EFF10F3288E8B8200CE8957 /* RandomImageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */,
+				0EFF10F4288E8B9500CE8957 /* RandomImageViewModel.swift */,
+			);
+			path = RandomImageViewController;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -220,10 +234,12 @@
 				0EFF10E9288E5D5A00CE8957 /* NetworkManager.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				0EFF10E7288E59A900CE8957 /* Resource.swift in Sources */,
+				0EFF10F5288E8B9500CE8957 /* RandomImageViewModel.swift in Sources */,
 				0EFF10F1288E81B600CE8957 /* UIImageView+Extension.swift in Sources */,
 				0EFF10E3288E55D700CE8957 /* APIKey.swift in Sources */,
 				0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */,
 				0EFF10E1288E53EC00CE8957 /* RandomImage.swift in Sources */,
+				0EFF10F9288E9C3200CE8957 /* ImageCacheManager.swift in Sources */,
 				0EFF10EC288E69DD00CE8957 /* ImageCollectionViewCell.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				0EFF10EE288E6DD500CE8957 /* ImageCollectionViewCellDescriptionView.swift in Sources */,

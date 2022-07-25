@@ -14,7 +14,8 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - ViewProperties
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
+        
         
         return imageView
     }()
@@ -42,8 +43,15 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Method
-    func configureCell() {
-        imageView.image = UIImage(systemName: "person")
+    func configureCell(with randomImage: RandomImage) {
+        self.imageView.load(randomImage.urls.smallSizeImageURL)
+//        self.imageView.image = UIImage(named: "1.jpg")
+        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = UIImage(systemName: "person.fill")
     }
 }
 

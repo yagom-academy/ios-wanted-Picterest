@@ -40,14 +40,21 @@ final class NetworkManager {
             .eraseToAnyPublisher()
     }
     
-    static func fetchImage(urlString: String, completion: @escaping (UIImage) -> Void) {
+    static func fetchImage(urlString: String, completion: @escaping (UIImage?) -> Void) {
+        
+        if let image = ImageCacheManager.shared.getImage(urlString) {
+            completion(image)
+            return
+        }
+        
         guard let url = URL(string: urlString) else {
             return
         }
         
-        URLSession(configuration: .default).dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data,
                   let image = UIImage(data: data) else { return }
+            ImageCacheManager.shared.storeImage(urlString, image: image)
             completion(image)
         }.resume()
     }

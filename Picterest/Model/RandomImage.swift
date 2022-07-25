@@ -13,9 +13,9 @@ struct RandomImage: Codable {
 }
 
 struct RandomImageURL: Codable {
-    let fullSizeImageURL: String
+    let smallSizeImageURL: String
     
     enum CodingKeys: String, CodingKey {
-        case fullSizeImageURL = "full"
+        case smallSizeImageURL = "full"
     }
 }
