@@ -7,9 +7,7 @@
 
 import UIKit
 
-class ImageCell: UICollectionViewCell {
-    
-    static let identifier = "ImageCell"
+class ImageCell: UICollectionViewCell, ReuseIdentifying {
     
     // MARK: - Properties
     private let imageView: UIImageView = {

@@ -20,6 +20,7 @@
 		FFB74C6A288ED3AE002CBB0E /* UnsplashInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */; };
 		FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */; };
 		FFB74C71288EEE18002CBB0E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C70288EEE18002CBB0E /* ImageCell.swift */; };
+		FFB74C73288EF78E002CBB0E /* ReuseIdentifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C72288EF78E002CBB0E /* ReuseIdentifying.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		FFB74C69288ED3AE002CBB0E /* UnsplashInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UnsplashInfo.plist; sourceTree = "<group>"; };
 		FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picterest++Bundle.swift"; sourceTree = "<group>"; };
 		FFB74C70288EEE18002CBB0E /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		FFB74C72288EF78E002CBB0E /* ReuseIdentifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifying.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 			children = (
 				DE15E65F28604278003DD2F5 /* ImagesViewController.swift */,
 				FFB74C70288EEE18002CBB0E /* ImageCell.swift */,
+				FFB74C72288EF78E002CBB0E /* ReuseIdentifying.swift */,
 			);
 			path = ImagesView;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				DE15E66028604278003DD2F5 /* ImagesViewController.swift in Sources */,
 				FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */,
 				FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */,
+				FFB74C73288EF78E002CBB0E /* ReuseIdentifying.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */,
 				FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */,
