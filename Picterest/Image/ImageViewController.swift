@@ -19,12 +19,28 @@ class ImageViewController: UIViewController {
         return cv
     }()
     
+    private var photoRandomList: [Photo] = []
+    private var viewModel = ImageViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
         attribute()
         layout()
+        bind(viewModel)
+        viewModel.getRandomPhoto { [weak self] result in
+            guard let self = self  else { return }
+            switch result {
+            case .success(let photos):
+                self.photoRandomList = photos.photoData
+                DispatchQueue.main.async {
+                    self.imageCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -51,23 +67,29 @@ extension ImageViewController {
             imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func bind(_ viewModel: ImageViewModel) {
+        self.viewModel = viewModel
+    }
 }
 
 extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        print(photoRandomList.count)
+        return photoRandomList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.backgroundColor = .yellow
+        cell.fetchData(photoRandomList[indexPath.row])
         return cell
     }
 }
 
 extension ImageViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 200
     }
 }

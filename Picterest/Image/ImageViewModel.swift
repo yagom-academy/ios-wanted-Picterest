@@ -9,4 +9,9 @@ import Foundation
 
 class ImageViewModel {
     
+    private let photoAPIService = PhotoAPIService()
+    
+    func getRandomPhoto(_ completion: @escaping (Result<PhotoData, APIError>) -> Void) {
+        photoAPIService.getRandomPhoto(completion)
+    }
 }

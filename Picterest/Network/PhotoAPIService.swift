@@ -17,16 +17,9 @@ enum APIError: Error {
 
 class PhotoAPIService {
     
-    private let accessKey = "RlALhP2d1f-1NTL_O2Y4t0RdHBvEgwgrrYRMxsF963Q"
-    
-    func getRandomPhoto(_ completion: @escaping (Result<Photo, APIError>) -> Void) {
-        guard let url = URL(string: "https://api.unsplash.com/photos/random/?client_id=\(accessKey)") else {
-            completion(.failure(.failed))
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+    func getRandomPhoto(_ completion: @escaping (Result<PhotoData, APIError>) -> Void) {
+        var request = URLRequest(url: EndPoint.getPhoto.url)
+        request.httpMethod = HTTPMethod.GET.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
@@ -52,7 +45,7 @@ class PhotoAPIService {
             
             do {
                 let decoder = JSONDecoder()
-                let userData = try decoder.decode(Photo.self, from: data)
+                let userData = try decoder.decode(PhotoData.self, from: data)
                 completion(.success(userData))
             } catch {
                 completion(.failure(.invalidData))

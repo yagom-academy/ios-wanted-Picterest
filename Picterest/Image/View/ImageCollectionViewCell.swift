@@ -20,10 +20,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    func setup(_ photo: Photo) {
+    func fetchData(_ photo: Photo) {
         layout()
         
-        LoadImage().loadImage(photo.urls.first?.full ?? "") { result in
+        LoadImage().loadImage(photo.urls.full) { result in
             switch result {
             case .success(let image):
                 DispatchQueue.main.async {
