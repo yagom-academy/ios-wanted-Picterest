@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoListCollectionViewCell" id="gTV-IL-0wX" customClass="PhotoListCollectionViewCell" customModule="Picterest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="153" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="153" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo.on.rectangle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="yOb-da-n85">
+                        <rect key="frame" x="0.0" y="0.5" width="153" height="199"/>
+                        <color key="tintColor" systemColor="systemGray5Color"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="yOb-da-n85" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MTW-HM-B1X"/>
+                <constraint firstItem="yOb-da-n85" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="XFQ-Sd-IzY"/>
+                <constraint firstAttribute="trailing" secondItem="yOb-da-n85" secondAttribute="trailing" id="lAi-jX-44U"/>
+                <constraint firstAttribute="bottom" secondItem="yOb-da-n85" secondAttribute="bottom" id="zy8-gX-H3W"/>
+            </constraints>
+            <size key="customSize" width="153" height="200"/>
+            <connections>
+                <outlet property="radomImageView" destination="yOb-da-n85" id="4gR-yO-0if"/>
+            </connections>
+            <point key="canvasLocation" x="212.31884057971016" y="196.20535714285714"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="photo.on.rectangle" catalog="system" width="128" height="97"/>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
