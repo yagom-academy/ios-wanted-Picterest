@@ -15,8 +15,10 @@ final class RandomImageViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(ImageCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        collectionView.contentInset = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
         
         return collectionView
     }()
@@ -63,5 +65,16 @@ extension RandomImageViewController: UICollectionViewDataSource {
         cell.configureCell()
         
         return cell
+    }
+}
+
+extension RandomImageViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
+        return CGSize(width: itemSize, height: itemSize)
     }
 }

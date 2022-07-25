@@ -56,10 +56,10 @@
 			children = (
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
+				0EFF10E2288E55D700CE8957 /* APIKey.swift */,
 				DE15E66428604279003DD2F5 /* Assets.xcassets */,
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
-				0EFF10E2288E55D700CE8957 /* APIKey.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
