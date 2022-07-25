@@ -43,8 +43,9 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Method
-    func configureCell(with randomImage: RandomImage) {
+    func configureCell(with randomImage: RandomImage, index: Int) {
         self.imageView.load(randomImage.urls.smallSizeImageURL)
+        descriptionView.configureView(index: index)
     }
     
     override func prepareForReuse() {

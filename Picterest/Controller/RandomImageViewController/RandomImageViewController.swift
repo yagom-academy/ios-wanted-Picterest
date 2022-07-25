@@ -12,8 +12,9 @@ final class RandomImageViewController: UIViewController {
     
     // MARK: - ViewProperties
     private lazy var randomImageCollectionView: UICollectionView = {
-        let flowLayout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let layout = RandomImageCollectionViewLayout()
+        layout.delegate = self
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -80,7 +81,7 @@ extension RandomImageViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
         let randomImage = randomImageViewModel.randomImages[indexPath.row]
-        cell.configureCell(with: randomImage)
+        cell.configureCell(with: randomImage, index: indexPath.row)
         
         return cell
     }
@@ -93,8 +94,16 @@ extension RandomImageViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
+        
+        return CGSize(width: width, height: width)
+    }
+}
+
+extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
         let height = width * randomImageViewModel.randomImages[indexPath.row].imageRatio
         
-        return CGSize(width: width, height: height)
+        return height
     }
 }

@@ -42,6 +42,13 @@ final class ImageCollectionViewCellDescriptionView: UIView {
     
 }
 
+// MARK: - Method
+extension ImageCollectionViewCellDescriptionView {
+    func configureView(index: Int) {
+        descriptionLabel.text = "\(index)번째 사진"
+    }
+}
+
 // MARK: - UI
 extension ImageCollectionViewCellDescriptionView {
     private func configureSubViews() {
