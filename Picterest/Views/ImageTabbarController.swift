@@ -7,23 +7,30 @@
 
 import UIKit
 
-class ImageTabbarController: UITabBarController {
+class ImageTabbarController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate = self
+    }
 
-        // Do any additional setup after loading the view.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let newsVC = ImageListViewController()
+        let categoryVC = ImageRepositoryViewController()
+        
+        let newsVCTabBarItem = UITabBarItem(title: "Images", image: UIImage(systemName: "photo.fill.on.rectangle.fill"), tag: 1)
+        newsVC.tabBarItem = newsVCTabBarItem
+        
+        let categoryVCTabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star.bubble"), tag: 2)
+        categoryVC.tabBarItem = categoryVCTabBarItem
+
+        self.viewControllers = [newsVC, categoryVC]
+
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        return true
     }
-    */
-
 }
