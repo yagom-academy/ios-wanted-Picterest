@@ -18,6 +18,10 @@
 		FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB7B288E6BB100A4527C /* MainTabBarController.swift */; };
 		FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB7E288E6CE600A4527C /* RandomImageListViewController.swift */; };
 		FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */; };
+		FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A660288E95DE00EBD539 /* CustomCollectionViewLayout.swift */; };
+		FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */; };
+		FE56A666288EB21600EBD539 /* RandomImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A665288EB21600EBD539 /* RandomImageListCell.swift */; };
+		FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +38,10 @@
 		FE24EB7B288E6BB100A4527C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		FE24EB7E288E6CE600A4527C /* RandomImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListViewController.swift; sourceTree = "<group>"; };
 		FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListViewController.swift; sourceTree = "<group>"; };
+		FE56A660288E95DE00EBD539 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
+		FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayoutDelegate.swift; sourceTree = "<group>"; };
+		FE56A665288EB21600EBD539 /* RandomImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCell.swift; sourceTree = "<group>"; };
+		FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReuseIdentifying.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +115,8 @@
 			isa = PBXGroup;
 			children = (
 				FE24EB7E288E6CE600A4527C /* RandomImageListViewController.swift */,
+				FE56A667288EB2FC00EBD539 /* Cell */,
+				FE56A664288EB1B000EBD539 /* CustomCollectionViewLayout */,
 			);
 			path = RandomImageListView;
 			sourceTree = "<group>";
@@ -136,6 +146,24 @@
 				DE15E66928604279003DD2F5 /* Info.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		FE56A664288EB1B000EBD539 /* CustomCollectionViewLayout */ = {
+			isa = PBXGroup;
+			children = (
+				FE56A660288E95DE00EBD539 /* CustomCollectionViewLayout.swift */,
+				FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */,
+			);
+			path = CustomCollectionViewLayout;
+			sourceTree = "<group>";
+		};
+		FE56A667288EB2FC00EBD539 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				FE56A665288EB21600EBD539 /* RandomImageListCell.swift */,
+				FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,11 +239,15 @@
 				FE24EB79288E4C2700A4527C /* CustomError.swift in Sources */,
 				FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */,
 				FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */,
+				FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
 				FE24EB72288E3C0000A4527C /* NetworkManger.swift in Sources */,
+				FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */,
+				FE56A666288EB21600EBD539 /* RandomImageListCell.swift in Sources */,
+				FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

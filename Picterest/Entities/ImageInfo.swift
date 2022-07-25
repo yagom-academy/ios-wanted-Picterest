@@ -12,12 +12,14 @@ struct ImageInfo: Decodable {
     var imageURL: ImageURL
     var author: Author
     var likes: Int
+    var width: Int
+    var height: Int
     
     private enum CodingKeys: String, CodingKey {
         case updatedAt = "updated_at"
         case imageURL = "urls"
         case author = "user"
-        case likes
+        case likes, width, height
     }
 }
 
