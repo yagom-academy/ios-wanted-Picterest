@@ -25,10 +25,6 @@ class PhotoListViewController: UIViewController {
         super.viewDidLoad()
         configUI()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        photoListCollectionView.reloadData()
-    }
 }
 
 // MARK: - PhotoListCollectionViewLayoutDelegate
