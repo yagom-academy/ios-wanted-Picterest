@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resource<T> {
+struct Resource<T: Codable> {
     var base: String
     var path: String
     var params: [String: String]
@@ -32,8 +32,8 @@ struct Resource<T> {
     init(
         base: String = "https://api.unsplash.com",
         path: String = "/photos/random",
-        params: [String: String] = ["count": "15"],
-        header: [String: String] = ["Authorization": "Client-ID \(APIKey.shared.accessKey)"]
+        params: [String: String] = ["15": "count"],
+        header: [String: String] = ["Client-ID \(APIKey.shared.accessKey)": "Authorization"]
     ) {
         self.base = base
         self.path = path
