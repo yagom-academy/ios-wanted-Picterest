@@ -32,7 +32,7 @@ final class RandomImageCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        guard let collectionView = collectionView, cache.isEmpty else { return }
+        guard let collectionView = collectionView else { return }
         
         let columnWidth = imageWidth / CGFloat(numberOfColumns)
         // cell의 X위치
@@ -84,6 +84,10 @@ final class RandomImageCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        return cache[indexPath.item]
+        if collectionView?.numberOfItems(inSection: 0) == cache.count {
+            return cache[indexPath.item]
+        } else {
+            return nil
+        }
     }
 }

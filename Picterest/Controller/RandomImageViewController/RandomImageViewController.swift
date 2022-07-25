@@ -87,6 +87,7 @@ extension RandomImageViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension RandomImageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 7
@@ -99,11 +100,21 @@ extension RandomImageViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - RandomImageCollectionViewLayoutDelegate
 extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
         let height = width * randomImageViewModel.randomImages[indexPath.row].imageRatio
         
         return height
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension RandomImageViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row + 1 == randomImageViewModel.randomImages.count {
+            randomImageViewModel.fetchNewImages()
+        }
     }
 }
