@@ -9,11 +9,11 @@ import Foundation
 
 struct Image: Codable {
     let id: String
-    let width: Int
-    let height: Int
+    let width: Double
+    let height: Double
     let urls: ImageURL
 }
 
 struct ImageURL: Codable {
-    let raw: String
+    let small: String
 }

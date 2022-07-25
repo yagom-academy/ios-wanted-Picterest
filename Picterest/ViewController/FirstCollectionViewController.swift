@@ -11,9 +11,16 @@ class FirstCollectionViewController: UICollectionViewController {
 
     
     var imageListViewModel = ImageListViewModel()
+    var numOfColumns = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let layout = collectionView.collectionViewLayout as? ImageCollectionViewLayout {
+            layout.delegate = self
+            layout.setNumberOfColumns(numOfColumns: 2)
+            numOfColumns = layout.getNumberOfColumns()
+        }
+        
         imageListViewModel.fetchRandomImages()
         self.collectionView!.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         imageListViewModel.collectionViewUpdate = { [weak self] in
@@ -28,24 +35,24 @@ class FirstCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.imageTitleOrIndexLabel.text = "\(indexPath.row)번째 사진"
-        cell.configureCell(with: imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row))
+        cell.configureCell(with: imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), indexpath: indexPath.row)
         return cell
     }
 }
 
 extension FirstCollectionViewController: UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width / 2 - 1
-        let size = CGSize(width: width, height: width)
-        return size
+        let itemSize = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right)) / CGFloat(numOfColumns)
+        return CGSize(width: itemSize, height: itemSize)
     }
+}
+
+extension FirstCollectionViewController: ImageCollectionViewLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) ) / CGFloat(numOfColumns)
+        let height = width*(imageListViewModel.imageList[indexPath.row].height / imageListViewModel.imageList[indexPath.row].width)
+        
+        return height
+    }
+    
 }

@@ -9,4 +9,10 @@ import Foundation
 
 class CacheManager {
     static let shared = CacheManager()
+    
+    let urlCache = URLCache.shared
+    
+    func checkImageInURLCache(){
+        
+    }
 }

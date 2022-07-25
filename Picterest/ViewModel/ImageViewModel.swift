@@ -20,7 +20,15 @@ struct ImageViewModel {
     }
     
     var url: String {
-        return image.urls.raw
+        return image.urls.small
+    }
+    
+    var width: Double {
+        return image.width
+    }
+    
+    var height: Double {
+        return image.height
     }
     
 }
