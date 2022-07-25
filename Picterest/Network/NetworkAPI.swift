@@ -20,7 +20,8 @@ struct NetworkAPI {
         components.path = "/photos/random"
         
         components.queryItems = [
-            URLQueryItem(name: "client_id", value: "XEWW_uPfwublfP0Vds0M6MP1JCcgSJniF9q38N8FyL4")
+            URLQueryItem(name: "client_id", value: "XEWW_uPfwublfP0Vds0M6MP1JCcgSJniF9q38N8FyL4"),
+            URLQueryItem(name: "count", value: "15")
         ]
         return components
     }
