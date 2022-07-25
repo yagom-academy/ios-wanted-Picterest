@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zbd-hl-cVh">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Cpe-hk-85V">
+            <objects>
+                <tabBarController storyboardIdentifier="MainTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="zbd-hl-cVh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="k9z-0H-SLc">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="dQN-Kf-XAC" kind="relationship" relationship="viewControllers" id="5Vl-zM-PTi"/>
+                        <segue destination="fZN-lE-FJX" kind="relationship" relationship="viewControllers" id="Zuq-Gu-hfg"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rfu-EX-pDv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="116.51785714285714"/>
+        </scene>
+        <!--PhotoListNavigationController-->
+        <scene sceneID="usk-kc-Wgs">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PhotoListStoryboard" referencedIdentifier="PhotoListNavigationController" id="dQN-Kf-XAC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="zO5-vJ-Ma8"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u9h-HM-G0W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="908" y="-11"/>
+        </scene>
+        <!--PhotoSaveNavigationController-->
+        <scene sceneID="9IK-hP-Swx">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PhotoSaveStoryboard" referencedIdentifier="PhotoSaveNavigationController" id="fZN-lE-FJX" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="5qP-7r-fTK"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0eY-pG-nq0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="908" y="179"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
