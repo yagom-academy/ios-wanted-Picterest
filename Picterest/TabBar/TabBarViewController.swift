@@ -34,4 +34,3 @@ class TabBarViewController: UITabBarController {
         setViewControllers([navigationImage, navigationSave], animated: false)
     }
 }
-
