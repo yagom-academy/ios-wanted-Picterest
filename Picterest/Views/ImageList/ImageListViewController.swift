@@ -90,7 +90,7 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
         let imageData = viewModel.image(at: indexPath.row)
-        cell.fetchImageData(data: imageData)
+        cell.fetchImageData(data: imageData, at: indexPath.row)
         return cell
     }
 }

@@ -14,6 +14,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
+        
         return imageView
     }()
     
@@ -23,8 +24,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         view.axis = .horizontal
         view.distribution = .equalSpacing
         view.alignment = .center
-        view.backgroundColor = .black
-        view.alpha = 0.5
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        
         return view
     }()
     
@@ -55,7 +56,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     }
     
     private func setCellLayout() {
-        self.layer.cornerRadius = self.frame.height/2
+        contentView.layer.cornerRadius = 20
+        contentView.layer.masksToBounds = true
         contentView.addSubview(picterestImageView)
         contentView.addSubview(cellTopBar)
         cellTopBar.addArrangedSubview(starButton)
@@ -75,11 +77,13 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func fetchImageData(data: ImageData) {
+    func fetchImageData(data: ImageData, at n: Int) {
         let imageData = try! Data(contentsOf: URL(string: data.imageUrl.smallUrl)!)
         let image = UIImage(data: imageData)!
+        picterestImageView.image = image
+        //resizeImage(image: image, width: 100)
         
-        picterestImageView.image = resizeImage(image: image, width: 100)
+        indexTitleLabel.text = "\(n)번째 사진"
     }
     
     func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
