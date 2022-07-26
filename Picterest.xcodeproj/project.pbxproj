@@ -17,6 +17,7 @@
 		9F1DD594288FCD720065E57D /* ImagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD593288FCD720065E57D /* ImagesCollectionViewCell.swift */; };
 		9F1DD596288FD0CB0065E57D /* extension_UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD595288FD0CB0065E57D /* extension_UIImageView.swift */; };
 		9F1DD598288FD1100065E57D /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD597288FD1100065E57D /* ImageCacheManager.swift */; };
+		9F1DD59D288FD89A0065E57D /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD59C288FD89A0065E57D /* CustomLayout.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66328604278003DD2F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66128604278003DD2F5 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		9F1DD593288FCD720065E57D /* ImagesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		9F1DD595288FD0CB0065E57D /* extension_UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extension_UIImageView.swift; sourceTree = "<group>"; };
 		9F1DD597288FD1100065E57D /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		9F1DD59C288FD89A0065E57D /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,40 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		9F1DD599288FD81C0065E57D /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9F1DD587288F75CF0065E57D /* ImagesViewController.swift */,
+				9F1DD585288F75C20065E57D /* SavedViewController.swift */,
+				9F1DD583288F6ED70065E57D /* TabBarViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9F1DD59A288FD8430065E57D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F1DD59B288FD8490065E57D /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9F1DD59B288FD8490065E57D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9F1DD593288FCD720065E57D /* ImagesCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		9F1DD59E288FD9300065E57D /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				9F1DD59C288FD89A0065E57D /* CustomLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +129,9 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				9F1DD59E288FD9300065E57D /* Layout */,
+				9F1DD59A288FD8430065E57D /* View */,
+				9F1DD599288FD81C0065E57D /* ViewController */,
 				9F1DD590288FC8FE0065E57D /* ViewModel */,
 				9F1DD58F288FBA6F0065E57D /* Model */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
@@ -101,10 +140,6 @@
 				DE15E66428604279003DD2F5 /* Assets.xcassets */,
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
-				9F1DD583288F6ED70065E57D /* TabBarViewController.swift */,
-				9F1DD585288F75C20065E57D /* SavedViewController.swift */,
-				9F1DD587288F75CF0065E57D /* ImagesViewController.swift */,
-				9F1DD593288FCD720065E57D /* ImagesCollectionViewCell.swift */,
 				9F1DD595288FD0CB0065E57D /* extension_UIImageView.swift */,
 			);
 			path = Picterest;
@@ -192,6 +227,7 @@
 				9F1DD598288FD1100065E57D /* ImageCacheManager.swift in Sources */,
 				9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */,
 				9F1DD594288FCD720065E57D /* ImagesCollectionViewCell.swift in Sources */,
+				9F1DD59D288FD89A0065E57D /* CustomLayout.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

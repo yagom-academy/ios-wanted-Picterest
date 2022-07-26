@@ -17,6 +17,6 @@ class ImagesCollectionViewCell: UICollectionViewCell {
     }
 
     func configureCell(_ photo: PhotoModel) {
-        imageView.loadImage(photo.urls.raw)
+        imageView.loadImage(photo.urls.full)
     }
 }

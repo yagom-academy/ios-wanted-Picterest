@@ -20,6 +20,9 @@ final class ImagesViewController: UIViewController {
         collectionView.dataSource = self
         bind()
         viewModel.fetch()
+        if let layout = collectionView.collectionViewLayout as? CustomLayout {
+            layout.delegate = self
+        }
     }
 }
 
@@ -44,7 +47,20 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
+//        cell.imageView.backgroundColor = .blue
         cell.configureCell(viewModel.getImage(of: indexPath.row))
         return cell
+    }
+}
+
+extension ImagesViewController: CustomLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        print("item: \(viewModel.images[indexPath.row].height)")
+        
+        return CGFloat(viewModel.images[indexPath.row].height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, widthForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return CGFloat(viewModel.images[indexPath.row].width)
     }
 }
