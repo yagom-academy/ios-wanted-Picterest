@@ -11,19 +11,35 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "photoListCollectionViewCell"
 
+    var saveButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    
+    var rightLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        return label
+    }()
+    
+    var topStackView: UIStackView = {
+        let topView = UIStackView()
+        topView.axis = .horizontal
+        topView.backgroundColor = .gray
+        topView.distribution = .equalSpacing
+        topView.alpha = 0.6
+        return topView
+    }()
+    
     var imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
     }()
     
-    var test: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.layer.cornerRadius = 10
         setupView()
         setupConstraints()
     }
@@ -33,18 +49,35 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     }
     
     func setupView() {
-//        addSubview(imageView)
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(test)
-        test.translatesAutoresizingMaskIntoConstraints = false
+        
+        [saveButton, rightLabel].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            topStackView.addArrangedSubview($0)
+        }
+        
+        topStackView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addSubview(topStackView)
+        
+        self.contentView.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-//            imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-//            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            test.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            test.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            saveButton.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor, constant: 5),
+            saveButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            
+            rightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+
+
+            topStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
 }

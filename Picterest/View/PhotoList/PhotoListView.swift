@@ -10,10 +10,20 @@ import UIKit
 class PhotoListView: UIView {
 
     let photoCollectionView : UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout.init())
+        
+        let layout = CustomLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(PhotoListCollectionViewCell.self, forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier)
-        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.layer.borderWidth = 1
         return collectionView
+    }()
+    
+    let navigationBottomBar : UINavigationBar = {
+        let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+        let navItem = UINavigationItem(title: "SomeTitle")
+
+        navigationBar.setItems([navItem], animated: false)
+        return navigationBar
     }()
 
     override init(frame: CGRect) {
@@ -27,14 +37,20 @@ class PhotoListView: UIView {
     }
     
     func setupView() {
-        addSubview(photoCollectionView)
+        self.addSubview(navigationBottomBar)
+        self.addSubview(photoCollectionView)
+        navigationBottomBar.translatesAutoresizingMaskIntoConstraints = false
         photoCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            photoCollectionView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            photoCollectionView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+//            navigationBottomBar.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+//            navigationBottomBar.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            photoCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            photoCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            photoCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            photoCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }

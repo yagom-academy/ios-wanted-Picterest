@@ -10,15 +10,19 @@ import Combine
 
 class PhotoListViewModel : ObservableObject {
     
-    @Published var photoList : PhotoList?
+    @Published var photoList : [Photo]?
+    var pageNumber = 1
+    var perPage = 15
     let photoManager = PhotoManager()
-    
-    // 별도의 이모지를 추가해도 좋습니다.
-    let emojies = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
 
     func getDataFromServer() {
-        photoManager.getData { [weak self] photoList in
-            self?.photoList = photoList
+        photoManager.getData(perPage, pageNumber) { [weak self] photoList in
+            if self?.photoList == nil {
+                self?.photoList = photoList
+            } else {
+                self?.photoList?.append(contentsOf: photoList)
+            }
         }
+        pageNumber += 1
     }
 }

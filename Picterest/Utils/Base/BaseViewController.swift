@@ -13,10 +13,12 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
 
         style()
+        setupView()
     }
     
     func style() {
         view.backgroundColor = .white
     }
-
+    
+    func setupView() {}
 }

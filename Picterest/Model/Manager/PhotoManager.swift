@@ -9,10 +9,16 @@ import Foundation
 
 struct PhotoManager {
     
-    let api = "https://api.unsplash.com/photos/?client_id=sRobjHR_YJo2sphiIADOISpCsrtIywIwxeABhC23E0I"
+    let baseApi = "https://api.unsplash.com/photos/?client_id=sRobjHR_YJo2sphiIADOISpCsrtIywIwxeABhC23E0I"
     
-    func getData(completion : @escaping (PhotoList) -> Void ) {
-        if let url = URL(string: api) {
+    func fetchURL(_ perPage : Int, _ pageNumber : Int, _ api : String) -> String {
+        let urlString = api + "&page=\(pageNumber)&per_page=\(perPage)"
+        return urlString
+    }
+    
+    func getData(_ perPage : Int, _ pageNumber : Int, completion : @escaping ([Photo]) -> Void ) {
+        
+        if let url = URL(string: fetchURL(perPage, pageNumber, baseApi)) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
                 if let error = error {
@@ -28,10 +34,11 @@ struct PhotoManager {
         }
     }
     
-    func parseJSON(_ data : Data) -> PhotoList? {
+    func parseJSON(_ data : Data) -> [Photo]? {
         let decorder = JSONDecoder()
         do {
-            let decodeData = try decorder.decode(PhotoList.self, from: data)
+            let decodeData = try decorder.decode([Photo].self, from: data)
+            print(decodeData[9])
             return decodeData
         } catch {
             return nil
