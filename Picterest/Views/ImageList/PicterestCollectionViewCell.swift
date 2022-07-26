@@ -102,9 +102,15 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     
     func fetchImageData(data: ImageData, at n: Int) {
         currentImageData = data
-        let imageData = try! Data(contentsOf: URL(string: data.imageUrl.smallUrl)!)
-        let image = UIImage(data: imageData)!
-        picterestImageView.image = image
+        
+        ImageLoder().leadImage(url: data.imageUrl.smallUrl) { [self] result in
+            switch result {
+            case .success(let image):
+                picterestImageView.image = image
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         indexTitleLabel.text = "\(n)번째 사진"
     }
     
