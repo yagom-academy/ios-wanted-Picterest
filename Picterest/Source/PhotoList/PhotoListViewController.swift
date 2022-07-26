@@ -9,10 +9,12 @@ import UIKit
 class PhotoListViewController: UIViewController {
     
     @IBOutlet weak var photoListCollectionView: UICollectionView!
+    var photoModel: PhotoModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
+        NetworkManager().getPhotoList()
     }
 }
 

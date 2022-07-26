@@ -6,5 +6,5 @@
 import Foundation
 
 struct Constant {
-    static let BASE_URL = "https://api.unsplash.com/photos"
+    static let BASE_URL = "https://api.unsplash.com/photos/random"
 }

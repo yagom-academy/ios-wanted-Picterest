@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		362C897F288F93BE0055C3DF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C897E288F93BE0055C3DF /* NetworkManager.swift */; };
+		362C8981288FB22E0055C3DF /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C8980288FB22E0055C3DF /* PhotoModel.swift */; };
 		36C79A20288E441A0016F9E5 /* PhotoListStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36C79A1F288E441A0016F9E5 /* PhotoListStoryboard.storyboard */; };
 		36C79A22288E44350016F9E5 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C79A21288E44350016F9E5 /* PhotoListViewController.swift */; };
 		36C79A24288E44460016F9E5 /* PhotoSaveStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36C79A23288E44460016F9E5 /* PhotoSaveStoryboard.storyboard */; };
@@ -24,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		362C897E288F93BE0055C3DF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		362C8980288FB22E0055C3DF /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		36C79A1F288E441A0016F9E5 /* PhotoListStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotoListStoryboard.storyboard; sourceTree = "<group>"; };
 		36C79A21288E44350016F9E5 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
 		36C79A23288E44460016F9E5 /* PhotoSaveStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PhotoSaveStoryboard.storyboard; sourceTree = "<group>"; };
@@ -53,6 +57,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		362C8963288F65D30055C3DF /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				362C897E288F93BE0055C3DF /* NetworkManager.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		36C79A19288E432D0016F9E5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,26 +113,20 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		36C79A2F288E66600016F9E5 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		36C79A32288E933C0016F9E5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		36C79A33288E937B0016F9E5 /* Secret */ = {
 			isa = PBXGroup;
 			children = (
 				36C79A34288E943D0016F9E5 /* PicterestKey.swift */,
 			);
 			path = Secret;
+			sourceTree = "<group>";
+		};
+		36C79A36288EBC680016F9E5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				362C8980288FB22E0055C3DF /* PhotoModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -143,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				36C79A2C288E4D460016F9E5 /* Configuration */,
-				36C79A2F288E66600016F9E5 /* Network */,
-				36C79A32288E933C0016F9E5 /* Model */,
+				362C8963288F65D30055C3DF /* Network */,
+				36C79A36288EBC680016F9E5 /* Model */,
 				36C79A19288E432D0016F9E5 /* Source */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
@@ -229,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				362C897F288F93BE0055C3DF /* NetworkManager.swift in Sources */,
 				36C79A31288E91E10016F9E5 /* Constant.swift in Sources */,
 				36C79A35288E943D0016F9E5 /* PicterestKey.swift in Sources */,
 				36C79A26288E44530016F9E5 /* PhotoSaveViewController.swift in Sources */,
@@ -236,6 +243,7 @@
 				36C79A2A288E4B0E0016F9E5 /* PhotoListCollectionViewCell.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				36C79A22288E44350016F9E5 /* PhotoListViewController.swift in Sources */,
+				362C8981288FB22E0055C3DF /* PhotoModel.swift in Sources */,
 				36C79A2E288E4EC10016F9E5 /* PhotoListCollectionViewLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
