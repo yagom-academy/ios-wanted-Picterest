@@ -17,7 +17,7 @@ enum NetworkError: Error {
 
 final class NetworkManager {
     func fetchRandomImages(completion: @escaping (Result<[Image],NetworkError>)->Void){
-        let urlStr = "https://api.unsplash.com/photos/random/?client_id=\(CLIENT_ID)&count=15"
+        let urlStr = "https://api.unsplash.com/photos/?client_id=\(CLIENT_ID)&per_page=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.url))
             return

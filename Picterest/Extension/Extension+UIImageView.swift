@@ -22,11 +22,9 @@ extension UIImageView {
             }
         CacheManager.shared.urlCache.getCachedResponse(for: dataTask) { response in
             guard let response = response else {
-                print("캐시에 없음")
                 dataTask.resume()
                 return
             }
-            print("캐시에 존재")
             self.image = UIImage(data: response.data)
         }
         }

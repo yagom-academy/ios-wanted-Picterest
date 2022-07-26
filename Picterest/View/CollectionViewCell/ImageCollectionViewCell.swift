@@ -14,7 +14,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
@@ -59,7 +59,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
             imageInfoView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageInfoView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageInfoView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageInfoView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.2)
+            imageInfoView.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
 }
