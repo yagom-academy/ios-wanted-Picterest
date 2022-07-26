@@ -52,9 +52,7 @@ extension PhotoListViewController : UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoListCollectionViewCell.identifier, for: indexPath) as? PhotoListCollectionViewCell else { return UICollectionViewCell() }
-        guard let imageUrl = URL(string: photoList?[indexPath.row].urls.small ?? "") else {return UICollectionViewCell()}
-        guard let imageData = try? Data(contentsOf: imageUrl) else {return UICollectionViewCell()}
-        cell.imageView.image = UIImage(data: imageData)
+        cell.imageView.image = photoListViewModel.makeImage(photoList?[indexPath.row].urls.small ?? "")
         cell.rightLabel.text = "\(indexPath.row + 1)번째 사진"
         
         return cell
