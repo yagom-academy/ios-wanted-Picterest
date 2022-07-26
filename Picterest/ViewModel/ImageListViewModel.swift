@@ -18,7 +18,7 @@ class ImageListViewModel {
     var collectionViewUpdate: () -> Void = {}
     
     func fetchRandomImages() {
-        self.networkManager.fetchRandomImages { [weak self] result in
+        self.networkManager.fetchImageList { [weak self] result in
             switch result {
             case .success(let reviews):
                 self?.imageList.append(contentsOf: reviews)
