@@ -45,7 +45,7 @@ class FirstCollectionViewController: UICollectionViewController {
         
         let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
         let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
-            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row))
+            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), memo: textField.text ?? "")
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField { alertTextField in
