@@ -37,6 +37,15 @@ final class StorageManager {
         }
     }
     
+    func deleteImage(id: String) {
+        guard let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
+        do {
+            try fileManager.removeItem(at: imagePath)
+        } catch let error {
+            print(String(describing: error))
+        }
+    }
+    
     private func uiImageToPngData(_ image: UIImage) -> Data? {
         return image.pngData()
     }

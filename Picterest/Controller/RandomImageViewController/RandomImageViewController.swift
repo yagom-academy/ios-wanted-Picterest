@@ -60,7 +60,8 @@ extension RandomImageViewController {
     
     private func showImageDeleteAlert(_ index: Int, button: UIButton) {
         let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.randomImageViewModel.deleteImage(index: index)
             button.isSelected = false
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)

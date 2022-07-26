@@ -15,6 +15,7 @@ protocol RandomImageViewModelInterface: AnyObject {
     func fetchNewImages()
     func randomImageAtIndex(index: Int) -> RandomImage
     func saveImage(image: UIImage, index: Int)
+    func deleteImage(index: Int)
 }
 
 final class RandomImageViewModel: RandomImageViewModelInterface {
@@ -62,5 +63,10 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
     func saveImage(image: UIImage, index: Int) {
         let id = randomImages[index].id
         storageManager.saveImage(image: image, id: id)
+    }
+    
+    func deleteImage(index: Int) {
+        let id = randomImages[index].id
+        storageManager.deleteImage(id: id)
     }
 }
