@@ -54,11 +54,14 @@ extension PhotoListViewController {
                 print(error)
             }
         }
-        print(photoList)
     }
     
     func showAlertMessage(completion: @escaping (String?) -> Void) {
-        let alertController = UIAlertController(title: "사진 저장", message: "저장할 사진에 메모를 남겨주세요", preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "사진 저장",
+            message: "저장할 사진에 메모를 남겨주세요",
+            preferredStyle: .alert
+        )
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             completion(alertController.textFields?[0].text)
@@ -86,10 +89,11 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                 print(result, photoInfo)
                 // 파일매니저 저장 메소드
                 
-                // 메모 CoreData추가
-//                photoInfo?.urls.raw
-//                photoInfo?.id
-//                result
+              //  CoreData추가
+              //  메모 result
+              //  photoInfo?.urls.raw
+              //  photoInfo?.id
+              //  result
                 
             }
         }
@@ -130,7 +134,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         photoCell.delegate = self
         photoCell.photoInfo = photoList[indexPath.row]
         photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row])
-        photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
+        photoCell.captionLabel.text = "\(indexPath.row + 1)번째 사진"
         return photoCell
     }
 }
