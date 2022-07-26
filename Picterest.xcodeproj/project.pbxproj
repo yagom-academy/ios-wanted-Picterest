@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0E651FFC288F9FB000D8F4A7 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E651FFB288F9FB000D8F4A7 /* StorageManager.swift */; };
+		0E651FFF288FB01500D8F4A7 /* StarImage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0E651FFD288FB01500D8F4A7 /* StarImage.xcdatamodeld */; };
+		0E652001288FB06F00D8F4A7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E652000288FB06F00D8F4A7 /* CoreDataManager.swift */; };
+		0E652005288FB23300D8F4A7 /* StarImageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E652004288FB23300D8F4A7 /* StarImageEntity.swift */; };
 		0EFF10DA288E4A9400CE8957 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */; };
 		0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */; };
 		0EFF10DE288E4AEC00CE8957 /* StarImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */; };
@@ -29,6 +32,9 @@
 
 /* Begin PBXFileReference section */
 		0E651FFB288F9FB000D8F4A7 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		0E651FFE288FB01500D8F4A7 /* StarImage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StarImage.xcdatamodel; sourceTree = "<group>"; };
+		0E652000288FB06F00D8F4A7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0E652004288FB23300D8F4A7 /* StarImageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageEntity.swift; sourceTree = "<group>"; };
 		0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewController.swift; sourceTree = "<group>"; };
 		0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +70,8 @@
 		0E651FFA288F9F0A00D8F4A7 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				0E651FFD288FB01500D8F4A7 /* StarImage.xcdatamodeld */,
+				0E652000288FB06F00D8F4A7 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -95,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				0EFF10E0288E53EC00CE8957 /* RandomImage.swift */,
+				0E652004288FB23300D8F4A7 /* StarImageEntity.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -258,8 +267,11 @@
 				0EFF10E7288E59A900CE8957 /* Resource.swift in Sources */,
 				0EFF10FC288EA64900CE8957 /* RandomImageCollectionViewLayout.swift in Sources */,
 				0EFF10F5288E8B9500CE8957 /* RandomImageViewModel.swift in Sources */,
+				0E652005288FB23300D8F4A7 /* StarImageEntity.swift in Sources */,
 				0EFF10F1288E81B600CE8957 /* UIImageView+Extension.swift in Sources */,
+				0E652001288FB06F00D8F4A7 /* CoreDataManager.swift in Sources */,
 				0EFF10E3288E55D700CE8957 /* APIKey.swift in Sources */,
+				0E651FFF288FB01500D8F4A7 /* StarImage.xcdatamodeld in Sources */,
 				0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */,
 				0EFF10E1288E53EC00CE8957 /* RandomImage.swift in Sources */,
 				0EFF10F9288E9C3200CE8957 /* ImageCacheManager.swift in Sources */,
@@ -476,6 +488,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0E651FFD288FB01500D8F4A7 /* StarImage.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0E651FFE288FB01500D8F4A7 /* StarImage.xcdatamodel */,
+			);
+			currentVersion = 0E651FFE288FB01500D8F4A7 /* StarImage.xcdatamodel */;
+			path = StarImage.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }

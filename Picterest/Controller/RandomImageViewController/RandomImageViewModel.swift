@@ -23,6 +23,7 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
     // MARK: - Properties
     let networkManager = NetworkManager()
     let storageManager = StorageManager()
+    let coreDataManager = CoreDataManager()
     let updateRandomImages = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private var randomImages = [RandomImageEntity]() {
