@@ -90,6 +90,7 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
+        cell.delegate = self
         let imageData = viewModel.image(at: indexPath.row)
         cell.fetchImageData(data: imageData, at: indexPath.row)
         return cell
@@ -110,4 +111,9 @@ extension ImageListViewController: PinterestLayoutDelegate {
     }
 }
 
+extension ImageListViewController: PicterestPhotoSavable {
+    func picterestCollectoinViewCell(imageData: ImageData) {
+        
+    }
+}
 
