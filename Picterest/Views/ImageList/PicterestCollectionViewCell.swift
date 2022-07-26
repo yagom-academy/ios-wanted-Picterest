@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol PicterestPhotoSavable: AnyObject {
+    func picterestCollectoinViewCell(imageData: ImageData)
+}
+
 class PicterestCollectionViewCell: UICollectionViewCell {
+    
+    weak var delegate: PicterestPhotoSavable?
+    
+    private var currentImageData: ImageData?
     
     private let picterestImageView: UIImageView = {
         var imageView = UIImageView()
@@ -25,7 +33,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         view.distribution = .equalSpacing
         view.alignment = .center
         view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        
+        view.isLayoutMarginsRelativeArrangement = true
+        view.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         return view
     }()
     
@@ -33,7 +42,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.tintColor = .systemBackground
+        button.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        button.tintColor = .systemYellow
         return button
     }()
     
@@ -48,11 +58,13 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setCellLayout()
+        setButtonAction()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setCellLayout()
+        setButtonAction()
     }
     
     private func setCellLayout() {
@@ -77,16 +89,26 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         ])
     }
     
+    private func setButtonAction() {
+        starButton.addTarget(self, action: #selector(starbuttonClicked), for: .touchUpInside)
+    }
+    
+    @objc func starbuttonClicked() {
+        if let delegate = delegate {
+            starButton.isSelected.toggle()
+            delegate.picterestCollectoinViewCell(imageData: currentImageData!)
+        }
+    }
+    
     func fetchImageData(data: ImageData, at n: Int) {
+        currentImageData = data
         let imageData = try! Data(contentsOf: URL(string: data.imageUrl.smallUrl)!)
         let image = UIImage(data: imageData)!
         picterestImageView.image = image
-        //resizeImage(image: image, width: 100)
-        
         indexTitleLabel.text = "\(n)번째 사진"
     }
     
-    func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
+    private func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
         let scale = width / image.size.width
         let height = image.size.height * scale
         UIGraphicsBeginImageContext(CGSize(width: width, height: height))
