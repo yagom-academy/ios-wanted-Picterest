@@ -14,18 +14,22 @@ protocol RandomImageViewModelInterface: AnyObject {
     
     func fetchNewImages()
     func randomImageAtIndex(index: Int) -> RandomImage
-    func saveImage(image: UIImage, index: Int)
-    func deleteImage(index: Int)
+    func saveImageToStorage(image: UIImage, index: Int, memo: String)
+    func deleteImageToStorage(index: Int)
 }
 
 final class RandomImageViewModel: RandomImageViewModelInterface {
     
     // MARK: - Properties
-    let networkManager = NetworkManager()
-    let storageManager = StorageManager()
-    let coreDataManager = CoreDataManager()
     let updateRandomImages = PassthroughSubject<Void, Never>()
+    private let networkManager = NetworkManager()
+    private let storageManager = StorageManager()
+    private let coreDataManager = CoreDataManager()
+    private var lastIndex: Int = 0
+    private var lastMemo: String = ""
+    private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
+    private var starImages = [StarImage]()
     private var randomImages = [RandomImageEntity]() {
         didSet {
             updateRandomImages.send()
@@ -35,7 +39,16 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
         randomImages.count
     }
     
-    // MARK: - Method
+    init() {
+        bindingStorageManger()
+        bindingCoreDataManager()
+    }
+}
+
+// MARK: - Method
+extension RandomImageViewModel {
+    
+    /// RandomImage 받아오기
     func fetchNewImages() {
         let resource = Resource<[RandomImageEntity]>()
         networkManager.fetchRandomImageInfo(resource: resource)
@@ -60,14 +73,73 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
             imageRatio: randomImageEntity.imageRatio
         )
     }
+}
+
+// MARK: - Storage
+extension RandomImageViewModel {
     
-    func saveImage(image: UIImage, index: Int) {
+    /// storage에 이미지 저장하기
+    func saveImageToStorage(image: UIImage, index: Int, memo: String) {
+        lastIndex = index
+        lastMemo = memo
         let id = randomImages[index].id
         storageManager.saveImage(image: image, id: id)
     }
     
-    func deleteImage(index: Int) {
+    /// 스토리지에서 이미지 삭제하기
+    func deleteImageToStorage(index: Int) {
         let id = randomImages[index].id
+        lastID = id
         storageManager.deleteImage(id: id)
+    }
+}
+
+// MARK: - CoreData
+extension RandomImageViewModel {
+    func saveImageInfoToCoreData(storageURL: String) {
+        let randomImage = randomImages[lastIndex]
+        let networkURLString = randomImage.urls.smallSizeImageURL
+        let entity = StarImageEntity(
+            id: randomImage.id,
+            memo: lastMemo,
+            networkURL: networkURLString,
+            storageURL: storageURL
+        )
+        
+        coreDataManager.saveStarImages(entity: entity)
+    }
+    
+    func deleteImageInfoToCoreData() {
+        let starImage = starImages.first {
+            $0.id == lastID
+        }
+        guard let starImage = starImage else {
+            return
+        }
+        
+        coreDataManager.deleteStarImage(starImage: starImage)
+    }
+}
+
+// MARK: - Binding
+extension RandomImageViewModel {
+    private func bindingStorageManger() {
+        storageManager.saveSuccess
+            .sink { [weak self] url in
+                let urlString = url.absoluteString
+                self?.saveImageInfoToCoreData(storageURL: urlString)
+            }.store(in: &subscriptions)
+        
+        storageManager.deleteSuccess
+            .sink { [weak self] in
+                self?.deleteImageInfoToCoreData()
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingCoreDataManager() {
+        coreDataManager.getAllStarImageSuccess
+            .sink { [weak self] starImages in
+                self?.starImages = starImages
+            }.store(in: &subscriptions)
     }
 }

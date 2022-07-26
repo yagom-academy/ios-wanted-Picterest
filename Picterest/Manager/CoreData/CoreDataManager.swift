@@ -7,12 +7,14 @@
 
 import Foundation
 import CoreData
+import Combine
 
 class CoreDataManager {
     
+    // MARK: - Properties
     private let entityName = "StarImage"
-    
-    let persistentContainer: NSPersistentContainer
+    private let persistentContainer: NSPersistentContainer
+    let getAllStarImageSuccess = PassthroughSubject<[StarImage], Never>()
     
     init() {
         persistentContainer = NSPersistentContainer(name: entityName)
@@ -23,13 +25,15 @@ class CoreDataManager {
         }
     }
     
-    func getAllStarImages() -> [StarImage] {
+    // MARK: - Method
+    func getAllStarImages() {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         
         guard let starImages = try? persistentContainer.viewContext.fetch(fetchRequest) as? [StarImage] else {
-            return []
+            return
         }
-        return starImages
+        
+        getAllStarImageSuccess.send(starImages)
     }
     
     func saveStarImages(entity: StarImageEntity) {
@@ -41,12 +45,15 @@ class CoreDataManager {
         
         do {
             try persistentContainer.viewContext.save()
+            getAllStarImages()
         } catch {
             persistentContainer.viewContext.rollback()
         }
     }
     
     func deleteStarImage(starImage: StarImage) {
+        print(#function)
         persistentContainer.viewContext.delete(starImage)
+        getAllStarImages()
     }
 }

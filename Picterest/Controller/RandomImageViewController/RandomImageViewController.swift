@@ -47,8 +47,7 @@ extension RandomImageViewController {
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             guard let memo = alert.textFields?[0].text else { return }
             button.isSelected = true
-            self?.randomImageViewModel.saveImage(image: image, index: index)
-            print(memo)
+            self?.randomImageViewModel.saveImageToStorage(image: image, index: index, memo: memo)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(okAction)
@@ -61,7 +60,7 @@ extension RandomImageViewController {
     private func showImageDeleteAlert(_ index: Int, button: UIButton) {
         let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.randomImageViewModel.deleteImage(index: index)
+            self?.randomImageViewModel.deleteImageToStorage(index: index)
             button.isSelected = false
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)

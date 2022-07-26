@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import Combine
 
 final class StorageManager {
+    
+    // MARK: - Properties
     private let fileManager = FileManager.default
     private lazy var defaultDocumentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
     private var directoryPath: URL?
+    let saveSuccess = PassthroughSubject<URL, Never>()
+    let deleteSuccess = PassthroughSubject<Void, Never>()
     
     init() {
         createDirectory()
     }
     
+    // MARK: - Method
     private func createDirectory() {
         let directoryPath: URL = defaultDocumentPath.appendingPathComponent("starImage")
         print(directoryPath)
@@ -32,6 +38,7 @@ final class StorageManager {
               let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
         do {
             try data.write(to: imagePath)
+            saveSuccess.send(imagePath)
         } catch let error {
             print(String(describing: error))
         }
@@ -41,6 +48,7 @@ final class StorageManager {
         guard let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
         do {
             try fileManager.removeItem(at: imagePath)
+            deleteSuccess.send()
         } catch let error {
             print(String(describing: error))
         }
