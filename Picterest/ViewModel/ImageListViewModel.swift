@@ -10,8 +10,9 @@ import UIKit
 class ImageListViewModel {
     
     private var repository = Repository()
-    private var imageList = [ImageData]()
+    private var imageList: [ImageData] = [ImageData]()
     private var imageSizeList = [CGFloat]()
+    private var currentPage = 1
     
     private var loading = false
     
@@ -19,8 +20,8 @@ class ImageListViewModel {
     var loadingEnded: () -> Void = { }
     var imageListUpdate: () -> Void = { }
     
-    
-    func imageCount() -> Int {
+    var imageCount: Int {
+        print("image Count", imageList.count)
         return imageList.count
     }
     
@@ -35,7 +36,7 @@ class ImageListViewModel {
     func list() {
         loading = true
         loadingStarted()
-        resizingImage {
+        resizingImage(page: currentPage) {
             self.imageListUpdate()
             self.loadingEnded()
             self.loading = false
@@ -46,27 +47,21 @@ class ImageListViewModel {
         if loading { return }
         loading = true
         loadingStarted()
-//        repository.next(currentPage: lectureList) {
-//            var lectureList = $0
-//            lectureList.lectures.insert(contentsOf: self.lectureList.lectures, at: 0)
-//            self.lectureList = lectureList
-//            self.lectureListUpdated()
-//            self.loadingEnded()
-//            self.loading = false
-//        }
+        currentPage+=1
+        resizingImage(page: currentPage) {
+            self.imageListUpdate()
+            self.loadingEnded()
+            self.loading = false
+        }
     }
     
-    func resizingImage(completion: @escaping () -> Void) -> Void {
-        repository.fetchImage { [self] result in
+    func resizingImage(page: Int, completion: @escaping () -> Void) -> Void {
+        repository.fetchNextImageData(page: page) { [self] result in
             switch result {
-            case .success(let imagelist):
-                self.imageList = imagelist
+            case .success(let imageList):
+                self.imageList += imageList
                 imageList.forEach {
                     let height = getImageHeight(height: CGFloat($0.height), width: CGFloat($0.width))
-                    print($0.imageUrl.rawUrl)
-                    print($0.height, $0.width)
-                    print(height)
-                    
                     imageSizeList.append(height)
                 }
                 completion()
