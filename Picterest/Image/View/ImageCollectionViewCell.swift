@@ -20,7 +20,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    func fetchData(_ photo: Photo) {
+    func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
         layout()
         
         LoadImage().loadImage(photo.urls.small) { result in
@@ -33,6 +33,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
                 print(error.localizedDescription)
             }
         }
+//        photoLabel.text = "\(indexPath.row)번째 사진"
     }
 }
 

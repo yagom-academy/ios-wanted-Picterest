@@ -7,91 +7,73 @@
 
 import UIKit
 
-class ImageColletionViewCustomLayout: UICollectionViewLayout {
-    // 1
+class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
+    
     weak var delegate: CustomLayoutDelegate?
-
-    // 2
-    private let numberOfColumns = 2 // 한 줄에 몇개
-    private let cellPadding: CGFloat = 6 // 패딩
-
-    // 3
+    
     private var cache: [UICollectionViewLayoutAttributes] = [] // 셀 갯수
-
-    // 4
+    
     private var contentHeight: CGFloat = 0
     private var contentWidth: CGFloat {
-      guard let collectionView = collectionView else {
-        return 0
-      }
-      let insets = collectionView.contentInset
-      return collectionView.bounds.width - (insets.left + insets.right)
+        guard let collectionView = collectionView else {
+            return 0
+        }
+        let insets = collectionView.contentInset
+        return collectionView.bounds.width - (insets.left + insets.right)
     }
-
-    // 5
+    
     override var collectionViewContentSize: CGSize {
-      return CGSize(width: contentWidth, height: contentHeight)
+        return CGSize(width: contentWidth, height: contentHeight)
     }
     
     override func prepare() {
-      // 1
-      guard
-        cache.isEmpty,
-        let collectionView = collectionView
-        else {
-          return
-      }
-      // 2
-      let columnWidth = contentWidth / CGFloat(numberOfColumns)
-      var xOffset: [CGFloat] = []
-      for column in 0..<numberOfColumns {
-        xOffset.append(CGFloat(column) * columnWidth)
-      }
-      var column = 0
-      var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
+        guard cache.isEmpty, let collectionView = collectionView else { return }
         
-      // 3
-      for item in 0..<collectionView.numberOfItems(inSection: 0) {
-        let indexPath = IndexPath(item: item, section: 0)
-          
-        // 4
-        let photoHeight = delegate?.collectionView(
-          collectionView,
-          heightForPhotoAtIndexPath: indexPath) ?? 180
-        let height = cellPadding * 2 + photoHeight
-        let frame = CGRect(x: xOffset[column],
-                           y: yOffset[column],
-                           width: columnWidth,
-                           height: height)
-        let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-          
-        // 5
-        let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-        attributes.frame = insetFrame
-        cache.append(attributes)
-          
-        // 6
-        contentHeight = max(contentHeight, frame.maxY)
-        yOffset[column] = yOffset[column] + height
+        let numberOfColumns = 2 // 한 줄에 몇개
+        let cellPadding: CGFloat = 6 // 패딩
+        let cellWidth = contentWidth / CGFloat(numberOfColumns)
         
-        column = column < (numberOfColumns - 1) ? (column + 1) : 0
-      }
+        var xOffset: [CGFloat] = []
+        var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
+        var column = 0
+        
+        for column in 0..<numberOfColumns {
+            xOffset.append(CGFloat(column) * cellWidth)
+        }
+        
+        for item in 0..<collectionView.numberOfItems(inSection: 0) {
+            let indexPath = IndexPath(item: item, section: 0)
+            let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
+            let height = cellPadding * 2 + photoHeight
+            let frame = CGRect(x: xOffset[column],
+                               y: yOffset[column],
+                               width: cellWidth,
+                               height: height)
+            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            
+            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            attributes.frame = insetFrame
+            cache.append(attributes)
+            
+            contentHeight = max(contentHeight, frame.maxY)
+            yOffset[column] = yOffset[column] + height
+            
+            column = yOffset[0] > yOffset[1] ? 1 : 0
+        }
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-      var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
-      
-      // Loop through the cache and look for items in the rect
-      for attributes in cache {
-        if attributes.frame.intersects(rect) {
-          visibleLayoutAttributes.append(attributes)
+        var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
+        
+        for attributes in cache {
+            if attributes.frame.intersects(rect) {
+                visibleLayoutAttributes.append(attributes)
+            }
         }
-      }
-      return visibleLayoutAttributes
+        return visibleLayoutAttributes
     }
     
-    override func layoutAttributesForItem(at indexPath: IndexPath)
-        -> UICollectionViewLayoutAttributes? {
-      return cache[indexPath.item]
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return cache[indexPath.item]
     }
 }

@@ -26,6 +26,7 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
         attribute()
         layout()
         bind(viewModel)
@@ -50,6 +51,10 @@ extension ImageViewController {
         imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
+        
+        let customLayout = ImageColletionViewCustomLayout()
+        customLayout.delegate = self
+        imageCollectionView.collectionViewLayout = customLayout
     }
     
     private func layout() {
@@ -82,13 +87,16 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.fetchData(photoRandomList[indexPath.row])
+        cell.fetchData(photoRandomList[indexPath.row], indexPath)
         return cell
     }
 }
 
 extension ImageViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 200
+        let width: CGFloat = (view.bounds.width - 4) / 2
+        let ratio: Double = photoRandomList[indexPath.row].height / photoRandomList[indexPath.row].width
+        
+        return CGFloat(width * ratio)
     }
 }
