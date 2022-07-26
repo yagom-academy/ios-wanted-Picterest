@@ -52,8 +52,13 @@ class CoreDataManager {
     }
     
     func deleteStarImage(starImage: StarImage) {
-        print(#function)
         persistentContainer.viewContext.delete(starImage)
-        getAllStarImages()
+        
+        do {
+            try persistentContainer.viewContext.save()
+            getAllStarImages()
+        } catch {
+            persistentContainer.viewContext.rollback()
+        }
     }
 }
