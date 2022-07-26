@@ -6,24 +6,45 @@
 //
 
 import UIKit
+import Combine
 
-class ImagesViewController: UIViewController {
-
+final class ImagesViewController: UIViewController {
+    private let reuseIdentifier = "PicterestCell"
+    private let viewModel = ImagesViewModel()
+    private var cancellable = Set<AnyCancellable>()
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        collectionView.dataSource = self
+        bind()
+        viewModel.fetch()
     }
-    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension ImagesViewController {
+    private func bind() {
+        viewModel.$images
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellable)
     }
-    */
+}
 
+
+extension ImagesViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.getImagesCount()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.configureCell(viewModel.getImage(of: indexPath.row))
+        return cell
+    }
 }

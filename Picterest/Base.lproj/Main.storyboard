@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -32,10 +33,55 @@
                     <view key="view" contentMode="scaleToFill" id="oA1-qD-gEy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9sN-An-OeU">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="We2-jV-9Mb">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PicterestCell" id="apk-7b-uUe" customClass="ImagesCollectionViewCell" customModule="Picterest" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XOi-hl-Umv">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jQ5-oe-vVu">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="jQ5-oe-vVu" secondAttribute="trailing" id="031-Ua-2Me"/>
+                                                <constraint firstAttribute="bottom" secondItem="jQ5-oe-vVu" secondAttribute="bottom" id="6Z5-Uf-zMy"/>
+                                                <constraint firstItem="jQ5-oe-vVu" firstAttribute="leading" secondItem="XOi-hl-Umv" secondAttribute="leading" id="gmq-05-bfB"/>
+                                                <constraint firstItem="jQ5-oe-vVu" firstAttribute="top" secondItem="XOi-hl-Umv" secondAttribute="top" id="oqH-D4-S9N"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageView" destination="jQ5-oe-vVu" id="KkK-K1-pfH"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="sxj-Fu-d5z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="sxj-Fu-d5z" firstAttribute="bottom" secondItem="9sN-An-OeU" secondAttribute="bottom" id="Uh7-QF-wS8"/>
+                            <constraint firstItem="9sN-An-OeU" firstAttribute="leading" secondItem="sxj-Fu-d5z" secondAttribute="leading" id="YM5-LT-i9A"/>
+                            <constraint firstItem="sxj-Fu-d5z" firstAttribute="trailing" secondItem="9sN-An-OeU" secondAttribute="trailing" id="t77-e6-7Hk"/>
+                            <constraint firstItem="9sN-An-OeU" firstAttribute="top" secondItem="sxj-Fu-d5z" secondAttribute="top" id="ysk-b1-Fdz"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Images" image="photo.fill.on.rectangle.fill" id="zHy-oM-IoG"/>
+                    <connections>
+                        <outlet property="collectionView" destination="9sN-An-OeU" id="o3d-KZ-vjs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L45-lc-qW5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

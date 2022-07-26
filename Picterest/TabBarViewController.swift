@@ -8,13 +8,11 @@
 import UIKit
 
 final class TabBarViewController: UITabBarController {
-
-    private let networkManager = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        networkManager.download()
+        
         
         // Do any additional setup after loading the view.
     }

@@ -12,5 +12,4 @@ struct Constant {
         static let downloadURL: String = "https://api.unsplash.com/photos"
         static let clientKey: String = "7ALCpoVug3GfgRPsqELTFsDKYeG_wDhaXCNhabb9j1Q"
     }
-
 }
