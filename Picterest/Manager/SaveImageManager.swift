@@ -16,5 +16,4 @@ class SaveImageManager {
             self.coredataManager.setImageInfo(imageViewModel, memo: memo, saveLocation: imageFilePath)
         }
     }
-    
 }

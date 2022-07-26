@@ -20,7 +20,7 @@ final class NetworkManager {
     
     static let shared = NetworkManager()
     
-    func fetchImageList(completion: @escaping (Result<[Image],NetworkError>)->Void){
+    func fetchImageList(completion: @escaping (Result<[ImageModel],NetworkError>)->Void){
         let urlStr = "https://api.unsplash.com/photos/?client_id=\(CLIENT_ID)&per_page=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.url))
@@ -33,7 +33,7 @@ final class NetworkManager {
                 return
             }
             let decorder = JSONDecoder()
-            guard let data = try? decorder.decode([Image].self, from: data) else {
+            guard let data = try? decorder.decode([ImageModel].self, from: data) else {
                 completion(.failure(.decode(error: error)))
                 return
             }

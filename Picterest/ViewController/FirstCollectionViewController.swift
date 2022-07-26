@@ -8,7 +8,6 @@
 import UIKit
 
 class FirstCollectionViewController: UICollectionViewController {
-
     
     var imageListViewModel = ImageListViewModel()
     var saveImageManager = SaveImageManager()
@@ -21,21 +20,21 @@ class FirstCollectionViewController: UICollectionViewController {
             layout.setNumberOfColumns(numOfColumns: 2)
             numOfColumns = layout.getNumberOfColumns()
         }
-        
-        imageListViewModel.fetchRandomImages()
-        self.collectionView!.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        imageListViewModel.fetchImages()
+        self.collectionView?.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier)
         imageListViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
         }
     }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageListViewModel.getImageCount()
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCell(with: imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), indexpath: indexPath.row)
         return cell
     }

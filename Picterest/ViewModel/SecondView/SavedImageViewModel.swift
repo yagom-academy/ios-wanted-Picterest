@@ -1,18 +1,19 @@
 //
-//  ImageViewModel.swift
+//  SavedImageViewModel.swift
 //  Picterest
 //
-//  Created by JunHwan Kim on 2022/07/25.
+//  Created by JunHwan Kim on 2022/07/27.
 //
 
 import Foundation
-import UIKit
 
-struct ImageViewModel {
-    private let image: Image
+class SavedImageViewModel {
     
-    init(image : Image){
+    private let image: ImageModel
+    
+    init(image : ImageModel, memo: String){
         self.image = image
+        self.memo = memo
     }
     
     var id: String {
@@ -30,5 +31,7 @@ struct ImageViewModel {
     var height: Double {
         return image.height
     }
+    
+    var memo: String 
     
 }

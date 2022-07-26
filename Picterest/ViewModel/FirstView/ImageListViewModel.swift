@@ -9,7 +9,7 @@ import Foundation
 
 class ImageListViewModel {
     private let networkManager = NetworkManager()
-    var imageList: [Image] = [] {
+    var imageList: [ImageModel] = [] {
         didSet {
             collectionViewUpdate()
         }
@@ -17,7 +17,7 @@ class ImageListViewModel {
     
     var collectionViewUpdate: () -> Void = {}
     
-    func fetchRandomImages() {
+    func fetchImages() {
         self.networkManager.fetchImageList { [weak self] result in
             switch result {
             case .success(let reviews):

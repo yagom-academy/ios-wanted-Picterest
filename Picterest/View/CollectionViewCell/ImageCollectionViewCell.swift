@@ -9,7 +9,8 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "ImageCollectionViewCell"
+    static let firstViewIdentifier = "ImageCollectionViewCell"
+    static let secondViewIdentifier = "SavedImageCollectionViewCell"
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -37,17 +38,22 @@ class ImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureCell(with imageViewModel: ImageViewModel, indexpath: Int){
+    func configureCell(with imageViewModel: ImageViewModel, indexpath: Int) {
         self.imageView.load(url: imageViewModel.url)
         self.imageInfoView.imageTitleOrIndexLabel.text = "\(indexpath)번째 사진"
     }
     
-    func addView(){
+    func configureSavedCell(with savedImageViewModel: SavedImageViewModel, indexpath: Int) {
+        self.imageView.load(url: savedImageViewModel.url)
+        self.imageInfoView.imageTitleOrIndexLabel.text = savedImageViewModel.memo
+    }
+    
+    func addView() {
         self.contentView.addSubview(imageView)
         self.contentView.addSubview(imageInfoView)
     }
     
-    func autoLayOut(){
+    func autoLayOut() {
         contentView.layer.cornerRadius = 10.0
         contentView.layer.masksToBounds = true
         NSLayoutConstraint.activate([
