@@ -5,7 +5,7 @@
 //  Created by oyat on 2022/07/26.
 //
 
-import Foundation
+import UIKit
 
 final class ImagesViewModel {
     
@@ -36,9 +36,17 @@ final class ImagesViewModel {
         
         let row = indexPath.row
         guard row < imagedDataCount else { return nil }
-        let urlString = self.imageDatas[row].urls.regular
+        let urlString = imageDatas[row].urls.regular
         
         return ImageData(imageURLString: urlString)
         
+    }
+    
+    func imageSize(_ indexPath: IndexPath) -> CGSize {
+        let row = indexPath.row
+        let data = imageDatas[row]
+        let height = data.height
+        let width = data.width
+        return CGSize(width: width, height: height)
     }
 }

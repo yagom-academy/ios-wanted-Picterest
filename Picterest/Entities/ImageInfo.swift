@@ -10,10 +10,12 @@ import Foundation
 struct ImageInfo: Codable {
     let id: String
     let urls: Urls
+    let width, height: Int
     
     enum CodingKeys: String, CodingKey {
         case id
         case urls
+        case width, height
     }
 }
 

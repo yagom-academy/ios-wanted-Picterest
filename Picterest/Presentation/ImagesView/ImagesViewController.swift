@@ -10,17 +10,20 @@ class ImagesViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = ImagesViewModel()
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: PicterestLayout())
+        let picterestLayout = PicterestLayout()
+        picterestLayout.delegate = self
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
         collectionView.dataSource = self
+        
         return collectionView
     }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         fetchData()
         configureUI()
     }
@@ -58,9 +61,8 @@ extension ImagesViewController {
 }
 
 extension ImagesViewController: PicterstLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        //TODO 이미지 높이 가져오기
-        return 100
+    func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
+        return viewModel.imageSize(indexPath)
     }
     
     
