@@ -12,6 +12,8 @@
 		DE15E66028604278003DD2F5 /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65F28604278003DD2F5 /* ImagesViewController.swift */; };
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
 		DE15E66828604279003DD2F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */; };
+		FF2D51BB288FB5DF001D1922 /* ImagesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51BA288FB5DF001D1922 /* ImagesViewModel.swift */; };
+		FF2D51BD288FBF94001D1922 /* UIImageView+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51BC288FBF94001D1922 /* UIImageView+Custom.swift */; };
 		FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C5D288E6508002CBB0E /* SavedViewController.swift */; };
 		FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */; };
 		FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C62288EA109002CBB0E /* NetworkManager.swift */; };
@@ -31,6 +33,8 @@
 		DE15E66428604279003DD2F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE15E66728604279003DD2F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE15E66928604279003DD2F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF2D51BA288FB5DF001D1922 /* ImagesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewModel.swift; sourceTree = "<group>"; };
+		FF2D51BC288FBF94001D1922 /* UIImageView+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Custom.swift"; sourceTree = "<group>"; };
 		FFB74C5D288E6508002CBB0E /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
 		FFB74C62288EA109002CBB0E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -133,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				FFB74C6C288ED4BC002CBB0E /* Picterest++Bundle.swift */,
+				FF2D51BC288FBF94001D1922 /* UIImageView+Custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 				DE15E65F28604278003DD2F5 /* ImagesViewController.swift */,
 				FFB74C70288EEE18002CBB0E /* ImageCell.swift */,
 				FFB74C72288EF78E002CBB0E /* ReuseIdentifying.swift */,
+				FF2D51BA288FB5DF001D1922 /* ImagesViewModel.swift */,
 			);
 			path = ImagesView;
 			sourceTree = "<group>";
@@ -232,7 +238,9 @@
 				FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */,
 				FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */,
 				FFB74C73288EF78E002CBB0E /* ReuseIdentifying.swift in Sources */,
+				FF2D51BB288FB5DF001D1922 /* ImagesViewModel.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
+				FF2D51BD288FBF94001D1922 /* UIImageView+Custom.swift in Sources */,
 				FFB74C68288EA502002CBB0E /* ImageInfo.swift in Sources */,
 				FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,

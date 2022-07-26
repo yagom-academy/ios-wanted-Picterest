@@ -29,9 +29,11 @@ class ImageCell: UICollectionViewCell, ReuseIdentifying {
 
 // MARK: - Methods
 extension ImageCell {
-    func configure() {
-       imageView.image = UIImage(systemName: "photo")
-   }
+    func configure(data: ImagesViewModel.ImageData?) {
+        
+        guard let data = data else { return }
+        imageView.load(urlString: data.imageURLString)
+    }
     
     private func configureUI() {
         contentView.addSubview(imageView)

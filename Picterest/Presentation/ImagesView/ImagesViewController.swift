@@ -8,8 +8,7 @@ import UIKit
 class ImagesViewController: UIViewController {
     
     // MARK: - Properties
-    private var imageDatas: [ImageInfo] = []
-    
+    private let viewModel = ImagesViewModel()
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,18 +24,23 @@ class ImagesViewController: UIViewController {
         fetchData()
         configureUI()
     }
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: - Methods
 extension ImagesViewController {
     
     private func fetchData() {
-        NetworkManager.shard.fetchImages { result in
-            switch result {
-            case .success(let result):
-                self.imageDatas = result
-            case .failure(let error):
-                print(error.localizedDescription)
+        viewModel.fetchData { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
             }
         }
     }
@@ -57,17 +61,15 @@ extension ImagesViewController {
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else { return  UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else { return  ImageCell() }
         
-        cell.configure()
+        cell.configure(data: viewModel.imageData(indexPath: indexPath))
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("갯수", imageDatas.count)
-        return 15
-        
+        return viewModel.imagedDataCount
     }
 }
 
