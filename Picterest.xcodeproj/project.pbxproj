@@ -23,6 +23,7 @@
 		F0F56DFA288E9A53007AED0C /* PicterestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56DF9288E9A53007AED0C /* PicterestCollectionViewCell.swift */; };
 		F0F56DFD288E9A77007AED0C /* PicterestCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56DFC288E9A77007AED0C /* PicterestCollectionViewLayout.swift */; };
 		F0F56E03288EBB2C007AED0C /* ImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */; };
+		F0F56E21288FE0F3007AED0C /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E20288FE0F3007AED0C /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		F0F56DF9288E9A53007AED0C /* PicterestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewCell.swift; sourceTree = "<group>"; };
 		F0F56DFC288E9A77007AED0C /* PicterestCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewLayout.swift; sourceTree = "<group>"; };
 		F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewModel.swift; sourceTree = "<group>"; };
+		F0F56E20288FE0F3007AED0C /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 				F0F56DED288E6D05007AED0C /* Repository.swift */,
 				F0F56DE5288E5617007AED0C /* HttpClient.swift */,
 				F0F56DEB288E68FB007AED0C /* ImageEndPoint.swift */,
+				F0F56E20288FE0F3007AED0C /* ImageLoader.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 			files = (
 				F0F56DF3288E8B2B007AED0C /* ImageListViewController.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ViewController.swift in Sources */,
+				F0F56E21288FE0F3007AED0C /* ImageLoader.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				F0F56DF5288E8B40007AED0C /* ImageRepositoryViewController.swift in Sources */,
 				F0F56DE4288E54B8007AED0C /* HttpMethod.swift in Sources */,
