@@ -27,7 +27,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Properties
-    var starButtonTapped: (() -> Void)?
+    var starButtonTapped: ((UIButton) -> Void)?
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -62,8 +62,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
 // MARK: - TargetMethod
 extension ImageCollectionViewCell {
     @objc private func starButtonTapped(_ sender: UIButton) {
-        sender.isSelected.toggle()
-        starButtonTapped?()
+        starButtonTapped?(sender)
     }
 }
 

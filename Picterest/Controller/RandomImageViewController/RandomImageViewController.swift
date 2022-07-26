@@ -40,6 +40,36 @@ final class RandomImageViewController: UIViewController {
     }
 }
 
+// MARK: - Method
+extension RandomImageViewController {
+    private func showImageSaveAlert(_ index: Int, button: UIButton) {
+        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 저장하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            guard let memo = alert.textFields?[0].text else { return }
+            button.isSelected = true
+            print(memo)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        alert.addTextField()
+        
+        self.present(alert, animated: true)
+    }
+    
+    private func showImageDeleteAlert(_ index: Int, button: UIButton) {
+        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            button.isSelected = false
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+}
+
 // MARK: - binding
 extension RandomImageViewController {
     private func bindingUpdateRandomImages() {
@@ -53,8 +83,13 @@ extension RandomImageViewController {
         cell: ImageCollectionViewCell,
         index: Int
     ) {
-        cell.starButtonTapped = {
+        cell.starButtonTapped = { [weak self] button in
             print("tapped: \(index)번째 cell")
+            if button.isSelected {
+                self?.showImageDeleteAlert(index, button: button)
+            } else {
+                self?.showImageSaveAlert(index, button: button)
+            }
         }
     }
 }
