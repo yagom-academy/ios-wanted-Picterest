@@ -5,7 +5,7 @@
 //  Created by J_Min on 2022/07/25.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 protocol RandomImageViewModelInterface: AnyObject {
@@ -14,12 +14,14 @@ protocol RandomImageViewModelInterface: AnyObject {
     
     func fetchNewImages()
     func randomImageAtIndex(index: Int) -> RandomImage
+    func saveImage(image: UIImage, index: Int)
 }
 
 final class RandomImageViewModel: RandomImageViewModelInterface {
     
     // MARK: - Properties
     let networkManager = NetworkManager()
+    let storageManager = StorageManager()
     let updateRandomImages = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private var randomImages = [RandomImageEntity]() {
@@ -27,7 +29,6 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
             updateRandomImages.send()
         }
     }
-    
     var randomImagesCount: Int {
         randomImages.count
     }
@@ -56,5 +57,10 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
             imageUrlString: randomImageEntity.urls.smallSizeImageURL,
             imageRatio: randomImageEntity.imageRatio
         )
+    }
+    
+    func saveImage(image: UIImage, index: Int) {
+        let id = randomImages[index].id
+        storageManager.saveImage(image: image, id: id)
     }
 }

@@ -44,9 +44,10 @@ final class RandomImageViewController: UIViewController {
 extension RandomImageViewController {
     private func showImageSaveAlert(_ index: Int, button: UIButton, image: UIImage) {
         let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 저장하시겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             guard let memo = alert.textFields?[0].text else { return }
             button.isSelected = true
+            self?.randomImageViewModel.saveImage(image: image, index: index)
             print(memo)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
