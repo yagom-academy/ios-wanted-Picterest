@@ -5,13 +5,15 @@
 //  Created by Kai Kim on 2022/07/25.
 //
 
-import Foundation
+import UIKit
 
 struct ImageDTO: Decodable {
   let id: String
+  let width: Int
+  let height: Int
   let imageURL: ImageURL
   enum CodingKeys: String, CodingKey {
-      case id
+      case id, width, height
       case imageURL = "urls"
   }
 }
@@ -29,7 +31,9 @@ extension ImageDTO {
     return ImageEntity(id: self.id,
                        imageURL: self.imageURL.url,
                        memo: "\(index)번째 사진",
-                       isLiked: false)
+                       isLiked: false,
+                       width: CGFloat(self.width),
+                       height: CGFloat(self.height))
   }
   
 }

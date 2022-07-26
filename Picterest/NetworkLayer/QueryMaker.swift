@@ -11,7 +11,7 @@ enum QueryMaker {
   
   static let defaultAPIKEY: String? = Bundle.searchObject(from: "API", key: "key")
   
-  case imagesPerPage(Int = 15)
+  case imagesPerPage(Int)
   case noQuery
   
   var queryItems: [URLQueryItem]? {
