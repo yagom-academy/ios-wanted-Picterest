@@ -19,11 +19,15 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private let descriptionView: ImageCollectionViewCellDescriptionView = {
+    private lazy var descriptionView: ImageCollectionViewCellDescriptionView = {
         let view = ImageCollectionViewCellDescriptionView()
+        view.starButton.addTarget(self, action: #selector(starButtonTapped(_:)), for: .touchUpInside)
         
         return view
     }()
+    
+    // MARK: - Properties
+    var starButtonTapped: (() -> Void)?
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -52,6 +56,14 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = UIImage(systemName: "person.fill")
+    }
+}
+
+// MARK: - TargetMethod
+extension ImageCollectionViewCell {
+    @objc private func starButtonTapped(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        starButtonTapped?()
     }
 }
 

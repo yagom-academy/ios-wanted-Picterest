@@ -10,7 +10,7 @@ import UIKit
 final class ImageCollectionViewCellDescriptionView: UIView {
     
     // MARK: - ViewProperties
-    private let starButton: UIButton = {
+    let starButton: UIButton = {
         let button = UIButton()
         button.tintColor = .yellow
         button.setImage(UIImage(systemName: "star"), for: .normal)

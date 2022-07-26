@@ -48,6 +48,15 @@ extension RandomImageViewController {
                 self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
     }
+    
+    private func bindingCellStarButtonTapped(
+        cell: ImageCollectionViewCell,
+        index: Int
+    ) {
+        cell.starButtonTapped = {
+            print("tapped: \(index)번째 cell")
+        }
+    }
 }
 
 // MARK: - UI
@@ -82,6 +91,7 @@ extension RandomImageViewController: UICollectionViewDataSource {
         
         let randomImage = randomImageViewModel.randomImageAtIndex(index: indexPath.row)
         cell.configureCell(with: randomImage, index: indexPath.row)
+        bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
         
         return cell
     }
