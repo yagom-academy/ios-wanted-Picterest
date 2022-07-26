@@ -36,26 +36,27 @@ class FirstCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCell(with: imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), indexpath: indexPath.row)
+        cell.imageInfoView.delegate = self
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        var textField = UITextField()
-        
-        let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
-        let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
-            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), memo: textField.text ?? "")
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        alert.addTextField { alertTextField in
-            alertTextField.placeholder = "메모"
-            textField = alertTextField
-        }
-        alert.addAction(downloadAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
-        print(imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row))
+//        var textField = UITextField()
+//        
+//        let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
+//        let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
+//            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), memo: textField.text ?? "")
+//        }
+//        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+//        alert.addTextField { alertTextField in
+//            alertTextField.placeholder = "메모"
+//            textField = alertTextField
+//        }
+//        alert.addAction(downloadAction)
+//        alert.addAction(cancelAction)
+//        present(alert, animated: true, completion: nil)
     }
+    
 }
 
 extension FirstCollectionViewController: UICollectionViewDelegateFlowLayout{
@@ -71,6 +72,26 @@ extension FirstCollectionViewController: ImageCollectionViewLayoutDelegate {
         let height = width*(imageListViewModel.imageList[indexPath.row].height / imageListViewModel.imageList[indexPath.row].width)
         
         return height
+    }
+    
+}
+
+extension FirstCollectionViewController: ImageInfoViewDelegate {
+    func saveImageButton(at index: Int) {
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
+        let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
+            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: index), memo: textField.text ?? "")
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addTextField { alertTextField in
+            alertTextField.placeholder = "메모"
+            textField = alertTextField
+        }
+        alert.addAction(downloadAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
 }

@@ -20,10 +20,10 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var imageInfoView: ImageInfoView = {
+    lazy var imageInfoView: ImageInfoView = {
        let imageInfoView = ImageInfoView()
         imageInfoView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         return imageInfoView
     }()
    
@@ -41,6 +41,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     func configureCell(with imageViewModel: ImageViewModel, indexpath: Int) {
         self.imageView.load(url: imageViewModel.url)
         self.imageInfoView.imageTitleOrIndexLabel.text = "\(indexpath)번째 사진"
+        self.imageInfoView.indexPath = indexpath
     }
     
     func configureSavedCell(with savedImageViewModel: SavedImageViewModel, indexpath: Int) {

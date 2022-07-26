@@ -7,7 +7,15 @@
 
 import UIKit
 
+protocol ImageInfoViewDelegate {
+    func saveImageButton(at index: Int)
+}
+
 class ImageInfoView: UIView {
+    
+    var delegate: ImageInfoViewDelegate?
+    var indexPath = 0
+    
     private lazy var blackAlphaView: UIView = {
         let blackAlphaView = UIView()
         blackAlphaView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,6 +47,8 @@ class ImageInfoView: UIView {
         super.init(frame: frame)
         addView()
         autoLayOut()
+        saveStarButton.addTarget(self, action: #selector(saveStarButtonTap), for: .touchUpInside)
+        
     }
     
     required init?(coder: NSCoder) {
@@ -65,5 +75,9 @@ class ImageInfoView: UIView {
             imageTitleOrIndexLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             imageTitleOrIndexLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
         ])
+    }
+    
+    @objc func saveStarButtonTap(){
+        delegate?.saveImageButton(at: indexPath)
     }
 }

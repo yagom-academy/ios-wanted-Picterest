@@ -46,7 +46,7 @@
             </objects>
             <point key="canvasLocation" x="-110" y="-100"/>
         </scene>
-        <!--Saved Image-->
+        <!--Saved Images-->
         <scene sceneID="bTl-Wm-cz8">
             <objects>
                 <collectionViewController id="Ndh-sR-5MP" customClass="SecondCollectionViewController" customModule="Picterest" customModuleProvider="target" sceneMemberID="viewController">
@@ -61,7 +61,7 @@
                             <outlet property="delegate" destination="Ndh-sR-5MP" id="cd6-y6-anr"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Saved Image" largeTitleDisplayMode="always" id="xBm-Ec-QZj"/>
+                    <navigationItem key="navigationItem" title="Saved Images" largeTitleDisplayMode="always" id="xBm-Ec-QZj"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Dp-bj-ZKQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -73,8 +73,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Of-xg-7E2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Saved" image="star.bubble" catalog="system" selectedImage="star.bubble.fill" id="0US-53-kPb"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="N8E-eA-1Gd">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="N8E-eA-1Gd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
