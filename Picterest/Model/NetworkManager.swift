@@ -11,7 +11,7 @@ final class NetworkManager {
     
     func fetchData(completion: @escaping ([PhotoModel]) -> Void) {
         
-        guard let url = URL(string: Constant.Network.downloadURL + "?" + "client_id=\(Constant.Network.clientKey)") else {
+        guard let url = URL(string: Constant.Network.downloadURL + "?" + "client_id=\(Constant.Network.clientKey)" + "&per_page=\(15)") else {
             return
         }
         

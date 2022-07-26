@@ -10,13 +10,10 @@ import UIKit
 class ImagesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var indexLabel: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-    }
-
-    func configureCell(_ photo: PhotoModel) {
-        imageView.loadImage(photo.urls.full)
     }
 }

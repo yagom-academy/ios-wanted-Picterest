@@ -47,8 +47,8 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
-//        cell.imageView.backgroundColor = .blue
-        cell.configureCell(viewModel.getImage(of: indexPath.row))
+        cell.imageView.loadImage(viewModel.getImage(of: indexPath.row).urls.full)
+        cell.indexLabel.text = "\(indexPath.row)번째 사진"
         return cell
     }
 }

@@ -17,8 +17,8 @@ class CustomLayout: UICollectionViewLayout {
     weak var delegate: CustomLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 6
-    
+    private let cellPadding: CGFloat = 1.5
+    private var heightArray: [CGFloat] = [0, 0]
     private var cache: [UICollectionViewLayoutAttributes] = []
     
     private var contentHeight: CGFloat = 0
@@ -49,7 +49,7 @@ class CustomLayout: UICollectionViewLayout {
         for column in 0..<numberOfColumns {
             xOffset.append(CGFloat(column) * columnWidth)
         }
-        var column = 0
+        var column = calculateColumnValue()
         var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
         
         /// 3
@@ -75,8 +75,8 @@ class CustomLayout: UICollectionViewLayout {
             contentHeight = max(contentHeight, frame.maxY)
             print("contentHeight: \(contentHeight)")
             yOffset[column] = yOffset[column] + height
-            
-            column = column < (numberOfColumns - 1) ? (column + 1) : 0
+            setHeightArray(with: height, at: column)
+            column = calculateColumnValue()
         }
     }
     
@@ -95,4 +95,32 @@ class CustomLayout: UICollectionViewLayout {
         return cache[indexPath.item]
     }
     
+}
+
+extension CustomLayout {
+    
+    private func calculateColumnValue() -> Int {
+        if heightArray[0] == 0 && heightArray[0] == 0 {
+            return 0
+        }
+        
+        if heightArray[0] > heightArray[1] {
+            return 1
+        } else {
+            return 0
+        }
+    }
+    
+    private func setHeightArray(with height: CGFloat, at column: Int) {
+        if heightArray[0] == 0 && heightArray[0] == 0 {
+            heightArray[0] = height
+        } else if heightArray[0] == 0 {
+            heightArray[0] = height
+        } else if heightArray[1] == 0 {
+            heightArray[1] = height
+        } else {
+            heightArray = [0, 0]
+            heightArray[column] = height
+        }
+    }
 }
