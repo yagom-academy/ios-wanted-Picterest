@@ -42,6 +42,7 @@ class CoreDataManager {
         starImage.memo = entity.memo
         starImage.networkURL = entity.networkURL
         starImage.storageURL = entity.storageURL
+        starImage.imageRatio = entity.imageRatio
         
         do {
             try persistentContainer.viewContext.save()

@@ -12,4 +12,5 @@ struct StarImageEntity {
     let memo: String
     let networkURL: String
     let storageURL: String
+    let imageRatio: Double
 }

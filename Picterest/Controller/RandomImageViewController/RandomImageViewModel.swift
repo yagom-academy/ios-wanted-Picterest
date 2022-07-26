@@ -103,7 +103,8 @@ extension RandomImageViewModel {
             id: randomImage.id,
             memo: lastMemo,
             networkURL: networkURLString,
-            storageURL: storageURL
+            storageURL: storageURL,
+            imageRatio: randomImage.imageRatio
         )
         
         coreDataManager.saveStarImages(entity: entity)

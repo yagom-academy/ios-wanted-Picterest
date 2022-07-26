@@ -96,8 +96,9 @@ extension StarImageViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension StarImageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let starImage = starImageViewModel.starImageAtIndex(index: indexPath.row)
         let width = (collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right))
-        
-        return CGSize(width: width, height: width)
+        let height = width * starImage.imageRatio
+        return CGSize(width: width, height: height)
     }
 }
