@@ -65,7 +65,9 @@ extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath: IndexPath
     ) -> CGFloat {
-        return 
+        let width = CGFloat(photoList[indexPath.row].width)
+        let height = CGFloat(photoList[indexPath.row].height)
+        return (((collectionView.frame.width - 32) / 2 ) - 10) * (height /  width)
     }
 }
 
@@ -74,7 +76,6 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        print(photoList.count)
         return photoList.count
     }
     
