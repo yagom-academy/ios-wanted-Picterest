@@ -32,9 +32,10 @@ final class RandomImageViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         configureNavigation()
         configureSubView()
-        setConfigurationsOfRandomImageCollectionView()
+        setConstraintsOfRandomImageCollectionView()
         bindingUpdateRandomImages()
         randomImageViewModel.fetchNewImages()
     }
@@ -98,7 +99,7 @@ extension RandomImageViewController {
 // MARK: - UI
 extension RandomImageViewController {
     private func configureNavigation() {
-        navigationItem.title = "Random Image"
+        navigationItem.title = "Random Images"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
@@ -106,7 +107,7 @@ extension RandomImageViewController {
         view.addSubview(randomImageCollectionView)
     }
     
-    private func setConfigurationsOfRandomImageCollectionView() {
+    private func setConstraintsOfRandomImageCollectionView() {
         NSLayoutConstraint.activate([
             randomImageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             randomImageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
