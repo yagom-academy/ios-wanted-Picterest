@@ -19,6 +19,7 @@
 		C7FE9FF3288ECA060019B063 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FF2288ECA060019B063 /* CacheManager.swift */; };
 		C7FE9FF6288ED5630019B063 /* ImageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FF5288ED5630019B063 /* ImageInfoView.swift */; };
 		C7FE9FF9288EEFD40019B063 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FF8288EEFD40019B063 /* ImageCollectionViewLayout.swift */; };
+		C7FEA023288FAB2E0019B063 /* ImageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA021288FAB2E0019B063 /* ImageDataModel.xcdatamodeld */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66328604278003DD2F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66128604278003DD2F5 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 		C7FE9FF2288ECA060019B063 /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		C7FE9FF5288ED5630019B063 /* ImageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageInfoView.swift; sourceTree = "<group>"; };
 		C7FE9FF8288EEFD40019B063 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
+		C7FEA022288FAB2E0019B063 /* ImageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDataModel.xcdatamodel; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +139,14 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		C7FEA020288FAB0B0019B063 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				C7FEA021288FAB2E0019B063 /* ImageDataModel.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +166,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				C7FEA020288FAB0B0019B063 /* CoreData */,
 				C7FE9FF7288EEFAC0019B063 /* Layout */,
 				C7FE9FF1288EC9F90019B063 /* Cache */,
 				C7FE9FEE288EBF8F0019B063 /* Extension */,
@@ -252,6 +263,7 @@
 				C7FE9FF0288EBF9D0019B063 /* Extension+UIImageView.swift in Sources */,
 				C7FE9FDF288E63F10019B063 /* ImageResponse.swift in Sources */,
 				C7FE9FD5288E4BC10019B063 /* TabBarController.swift in Sources */,
+				C7FEA023288FAB2E0019B063 /* ImageDataModel.xcdatamodeld in Sources */,
 				C7FE9FED288EB5C30019B063 /* ImageViewModel.swift in Sources */,
 				C7FE9FF9288EEFD40019B063 /* ImageCollectionViewLayout.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
@@ -472,6 +484,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C7FEA021288FAB2E0019B063 /* ImageDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C7FEA022288FAB2E0019B063 /* ImageDataModel.xcdatamodel */,
+			);
+			currentVersion = C7FEA022288FAB2E0019B063 /* ImageDataModel.xcdatamodel */;
+			path = ImageDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }
