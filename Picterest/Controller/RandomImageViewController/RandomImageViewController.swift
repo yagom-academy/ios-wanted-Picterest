@@ -42,7 +42,7 @@ final class RandomImageViewController: UIViewController {
 
 // MARK: - Method
 extension RandomImageViewController {
-    private func showImageSaveAlert(_ index: Int, button: UIButton) {
+    private func showImageSaveAlert(_ index: Int, button: UIButton, image: UIImage) {
         let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 저장하시겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { _ in
             guard let memo = alert.textFields?[0].text else { return }
@@ -83,12 +83,12 @@ extension RandomImageViewController {
         cell: ImageCollectionViewCell,
         index: Int
     ) {
-        cell.starButtonTapped = { [weak self] button in
+        cell.starButtonTapped = { [weak self] button, image in
             print("tapped: \(index)번째 cell")
             if button.isSelected {
                 self?.showImageDeleteAlert(index, button: button)
             } else {
-                self?.showImageSaveAlert(index, button: button)
+                self?.showImageSaveAlert(index, button: button, image: image)
             }
         }
     }

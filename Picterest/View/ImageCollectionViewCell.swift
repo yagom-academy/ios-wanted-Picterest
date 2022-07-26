@@ -27,7 +27,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     }()
     
     // MARK: - Properties
-    var starButtonTapped: ((UIButton) -> Void)?
+    var starButtonTapped: ((UIButton, UIImage) -> Void)?
     
     // MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -55,14 +55,15 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = UIImage(systemName: "person.fill")
+        imageView.image = nil
     }
 }
 
 // MARK: - TargetMethod
 extension ImageCollectionViewCell {
     @objc private func starButtonTapped(_ sender: UIButton) {
-        starButtonTapped?(sender)
+        guard let image = imageView.image else { return }
+        starButtonTapped?(sender, image)
     }
 }
 
