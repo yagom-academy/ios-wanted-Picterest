@@ -23,7 +23,6 @@
 		F0F56DFA288E9A53007AED0C /* PicterestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56DF9288E9A53007AED0C /* PicterestCollectionViewCell.swift */; };
 		F0F56DFD288E9A77007AED0C /* PicterestCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56DFC288E9A77007AED0C /* PicterestCollectionViewLayout.swift */; };
 		F0F56E03288EBB2C007AED0C /* ImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */; };
-		F0F56E1F288FB8F2007AED0C /* PicterestCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E1E288FB8F2007AED0C /* PicterestCollectionViewCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +44,6 @@
 		F0F56DF9288E9A53007AED0C /* PicterestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewCell.swift; sourceTree = "<group>"; };
 		F0F56DFC288E9A77007AED0C /* PicterestCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewLayout.swift; sourceTree = "<group>"; };
 		F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewModel.swift; sourceTree = "<group>"; };
-		F0F56E1E288FB8F2007AED0C /* PicterestCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,7 +149,6 @@
 			isa = PBXGroup;
 			children = (
 				F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */,
-				F0F56E1E288FB8F2007AED0C /* PicterestCollectionViewCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -227,7 +224,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0F56DF3288E8B2B007AED0C /* ImageListViewController.swift in Sources */,
-				F0F56E1F288FB8F2007AED0C /* PicterestCollectionViewCellViewModel.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ViewController.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				F0F56DF5288E8B40007AED0C /* ImageRepositoryViewController.swift in Sources */,
