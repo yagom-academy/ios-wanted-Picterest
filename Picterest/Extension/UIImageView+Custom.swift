@@ -9,6 +9,11 @@ import UIKit
 
 extension UIImageView {
     func load(urlString: String) {
+        let cachedImage = ImageCacheManager.shared.cachedImage(urlString: urlString)
+        if cachedImage != nil {
+            self.image = cachedImage
+            return
+        }
         
         guard let url = URL(string: urlString) else { return }
         
@@ -18,6 +23,7 @@ extension UIImageView {
                   (200...299).contains(httpResponse.statusCode) else { return }
             guard let data = data,
                   let image = UIImage(data: data) else { return }
+            ImageCacheManager.shared.setObject(image: image, urlString: urlString)
             DispatchQueue.main.async {
                 self?.image = image
             }
