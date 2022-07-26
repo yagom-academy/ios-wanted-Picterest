@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class StarImageViewController: UIViewController {
     
@@ -23,6 +24,10 @@ final class StarImageViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Properties
+    private let starImageViewModel = StarImageViewModel()
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +35,22 @@ final class StarImageViewController: UIViewController {
         configureNavigation()
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
+        bindingViewModel()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        starImageViewModel.fetcnStarImages()
+    }
+}
+
+// MARK: - Binding
+extension StarImageViewController {
+    private func bindingViewModel() {
+        starImageViewModel.updateStarImages
+            .sink { [weak self] in
+                self?.starImageCollectionView.reloadSections(IndexSet(0...0))
+            }.store(in: &subscriptions)
     }
 }
 
@@ -55,10 +76,11 @@ extension StarImageViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension StarImageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
+        return starImageViewModel.starImageCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,6 +90,7 @@ extension StarImageViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension StarImageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right))

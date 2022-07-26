@@ -12,7 +12,7 @@ protocol RandomImageViewModelInterface: AnyObject {
     var updateRandomImages: PassthroughSubject<Void, Never> { get }
     var randomImagesCount: Int { get }
     
-    func fetchNewImages()
+    func fetchNewRandomImages()
     func randomImageAtIndex(index: Int) -> RandomImage
     func saveImageToStorage(image: UIImage, index: Int, memo: String)
     func deleteImageToStorage(index: Int)
@@ -49,7 +49,7 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
 extension RandomImageViewModel {
     
     /// RandomImage 받아오기
-    func fetchNewImages() {
+    func fetchNewRandomImages() {
         let resource = Resource<[RandomImageEntity]>()
         networkManager.fetchRandomImageInfo(resource: resource)
             .receive(on: DispatchQueue.main)
