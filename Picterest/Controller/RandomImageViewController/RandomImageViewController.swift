@@ -86,7 +86,6 @@ extension RandomImageViewController {
         index: Int
     ) {
         cell.starButtonTapped = { [weak self] button, image in
-            print("tapped: \(index)번째 cell")
             if button.isSelected {
                 self?.showImageDeleteAlert(index, button: button)
             } else {

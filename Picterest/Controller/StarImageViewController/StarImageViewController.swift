@@ -44,6 +44,22 @@ final class StarImageViewController: UIViewController {
     }
 }
 
+// MARK: - Method
+extension StarImageViewController {
+    private func showImageDeleteAlert(_ index: Int, button: UIButton) {
+        let alert = UIAlertController(title: nil, message: "사진을 삭제하겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.starImageViewModel.deleteImageToStorage(index: index)
+            button.isSelected = false
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true)
+    }
+}
+
 // MARK: - Binding
 extension StarImageViewController {
     private func bindingViewModel() {
@@ -51,6 +67,17 @@ extension StarImageViewController {
             .sink { [weak self] in
                 self?.starImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
+    }
+    
+    private func bindingCellStarButtonTapped(
+        cell: ImageCollectionViewCell,
+        index: Int
+    ) {
+        cell.starButtonTapped = { [weak self] button, image in
+            if button.isSelected {
+                self?.showImageDeleteAlert(index, button: button)
+            }
+        }
     }
 }
 
@@ -88,6 +115,7 @@ extension StarImageViewController: UICollectionViewDataSource {
         
         let starImage = starImageViewModel.starImageAtIndex(index: indexPath.row)
         cell.configureCell(with: starImage)
+        bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
         
         return cell
     }

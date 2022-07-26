@@ -96,7 +96,7 @@ extension RandomImageViewModel {
 
 // MARK: - CoreData
 extension RandomImageViewModel {
-    func saveImageInfoToCoreData(storageURL: String) {
+    private func saveImageInfoToCoreData(storageURL: String) {
         let randomImage = randomImages[lastIndex]
         let networkURLString = randomImage.urls.smallSizeImageURL
         let entity = StarImageEntity(
@@ -110,7 +110,7 @@ extension RandomImageViewModel {
         coreDataManager.saveStarImages(entity: entity)
     }
     
-    func deleteImageInfoToCoreData() {
+    private func deleteImageInfoToCoreData() {
         let starImage = starImages.first {
             $0.id == lastID
         }
