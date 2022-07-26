@@ -8,5 +8,5 @@
 import Foundation
 
 class ImageTopViewModel {
-    
+    let starButtonTapped: Observable<Bool> = Observable(false)
 }

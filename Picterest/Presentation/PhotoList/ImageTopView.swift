@@ -27,6 +27,8 @@ class ImageTopView: UIView {
         return label
     }()
     
+    var viewModel: ImageTopViewModel?
+    
     // MARK: - Setup
     func setupView(index: Int) {
         configUI()
@@ -38,6 +40,7 @@ class ImageTopView: UIView {
 private extension ImageTopView {
     @objc func didTapStarButton() {
         print("didTapStarButton")
+        viewModel?.starButtonTapped.value = true
     }
 }
 

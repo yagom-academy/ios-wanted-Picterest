@@ -28,6 +28,7 @@ class PhotoListViewController: UIViewController {
         configUI()
         viewModel.fetchPhotoList()
         bindUpdateCollectionView()
+        bindSavePhoto()
     }
 }
 
@@ -64,7 +65,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         ) as? PhotoListCollectionViewCell else { return UICollectionViewCell() }
         
         let photo = viewModel.photoList.value[indexPath.item]
-        cell.viewModel = PhotoListCollectionViewCellViewModel(photo: photo)
+        cell.viewModel = viewModel.makePhotoListCollectionViewCellViewModel(photo: photo)
         cell.setupView(index: indexPath.item)
         
         return cell
@@ -73,6 +74,15 @@ extension PhotoListViewController: UICollectionViewDataSource {
 
 // MARK: - Bind
 private extension PhotoListViewController {
+    func bindSavePhoto() {
+        viewModel.starButtonTapped.bind {
+            if $0 {
+                self.showAlert {
+                    self.viewModel.savePhoto(memo: $0)
+                }
+            }
+        }
+    }
     func bindUpdateCollectionView() {
         viewModel.photoList.bind { _ in
             DispatchQueue.main.async {
@@ -84,6 +94,21 @@ private extension PhotoListViewController {
 
 // MARK: - UI Methods
 private extension PhotoListViewController {
+    func showAlert(handler: @escaping (String?) -> Void) {
+        let alert = UIAlertController(
+            title: "메모 작성",
+            message: nil,
+            preferredStyle: .alert
+        )
+        alert.addTextField()
+        let saveAction = UIAlertAction(title: "확인", style: .default) { _ in
+            handler(alert.textFields?.first?.text)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        [saveAction, cancelAction].forEach { alert.addAction($0) }
+        present(alert, animated: true)
+    }
+    
     func configUI() {
         view.backgroundColor = .systemBackground
         

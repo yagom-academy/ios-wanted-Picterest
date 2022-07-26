@@ -24,6 +24,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     func setupView(index: Int) {
         configUI()
         bindImage()
+        topView.viewModel = viewModel?.imageTopViewModel
         topView.setupView(index: index)
     }
     
