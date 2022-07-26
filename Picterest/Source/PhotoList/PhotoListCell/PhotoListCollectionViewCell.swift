@@ -5,12 +5,12 @@
 //
 
 import UIKit
+
 protocol DidTapPhotoSaveButtonDelegate {
     func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?)
 }
 
 class PhotoListCollectionViewCell: UICollectionViewCell {
-
     @IBOutlet weak var radomImageView: UIImageView!
     @IBOutlet weak var savedButton: UIButton!
     @IBOutlet weak var captionLabel: UILabel!
@@ -25,6 +25,10 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     @IBAction func didTapPhotoSave(_ sender: UIButton) {
         delegate?.showSavePhotoAlert(sender: sender, photoInfo: photoInfo)
+    }
+    
+    override func prepareForReuse() {
+        radomImageView.image = nil
     }
     
     func fetchDataFromCollectionView(data: PhotoModel) {

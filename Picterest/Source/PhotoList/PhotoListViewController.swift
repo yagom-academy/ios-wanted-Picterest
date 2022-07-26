@@ -7,7 +7,6 @@
 import UIKit
 
 class PhotoListViewController: UIViewController {
-    
     @IBOutlet weak var photoListCollectionView: UICollectionView!
     private var photoList: [PhotoModel] = []
     private var networkManager = NetworkManager()
@@ -20,6 +19,7 @@ class PhotoListViewController: UIViewController {
 }
 
 //MARK: - Extension: Methods
+
 extension PhotoListViewController {
     func setCollectionView() {
         photoListCollectionView.dataSource = self
@@ -72,6 +72,7 @@ extension PhotoListViewController {
         self.present(alertController, animated: true)
     }
 }
+
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
 
 extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
@@ -94,7 +95,8 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
               //  photoInfo?.urls.raw
               //  photoInfo?.id
               //  result
-                
+              //  성능적인 이슈 ->
+              //  시점 ->
             }
         }
     }
@@ -134,7 +136,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         photoCell.delegate = self
         photoCell.photoInfo = photoList[indexPath.row]
         photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row])
-        photoCell.captionLabel.text = "\(indexPath.row + 1)번째 사진"
+        photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
         return photoCell
     }
 }

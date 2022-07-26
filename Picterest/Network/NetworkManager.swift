@@ -5,6 +5,7 @@
 //
 
 import Foundation
+
 enum NetworkError: Error {
     case badUrl
     case noData
@@ -20,13 +21,11 @@ class NetworkManager {
         components?.queryItems = [clientID, count]
         
         guard let url = components?.url else { return  completion(.failure(.badUrl)) }
-        print(url)
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
         let dataTask = session.dataTask(with: request) { data, response, error in
             guard let data = data else { return completion(.failure(.noData)) }
-            print(data)
             do {
                 let photoData = try? JSONDecoder().decode([PhotoModel].self, from: data)
                 if let photoData = photoData {
