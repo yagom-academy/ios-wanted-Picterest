@@ -19,6 +19,11 @@ class ImageLoader {
         urlString: String,
         completion: @escaping (Result<UIImage, ImageLoaderError>) -> Void
     ) {
+        if let cachedImage = CacheManager.shared.object(forKey: urlString as NSString) {
+            completion(.success(cachedImage))
+            return
+        }
+        
         guard let url = URL(string: urlString) else {
             completion(.failure(.unknown))
             return
@@ -41,6 +46,7 @@ class ImageLoader {
                 return
             }
             
+            CacheManager.shared.setObject(image, forKey: urlString as NSString)
             completion(.success(image))
         }.resume()
     }
