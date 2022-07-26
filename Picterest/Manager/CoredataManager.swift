@@ -38,10 +38,15 @@ class CoredataManager {
                 let imageModel = SavedImageViewModel(image: ImageModel(id: id, width: width, height: height, urls: ImageURL(small: urlString)), memo: memo)//ImageModel(id: id, width: width, height: height, urls: ImageURL(small: urlString))
                 fetchDecodingCoredataArray.append(imageModel)
             }
+            print(fetchDecodingCoredataArray)
             completion(fetchDecodingCoredataArray)
         } catch {
             print("fetching data error \(error.localizedDescription)")
         }
+    }
+    
+    func deleteCoredata() {
+        
     }
     
     func saveImageInfo() {

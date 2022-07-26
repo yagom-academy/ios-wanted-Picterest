@@ -19,10 +19,8 @@ class SavedImageListViewModel{
     var collectionViewUpdate: () -> Void = {}
     
     func fetchSavedImageList() {
-        print("fetch")
         coredataManager.loadCoredataImageInfo { decodingImageList in
             self.imageList = decodingImageList
-            print(self.imageList)
         }
     }
     

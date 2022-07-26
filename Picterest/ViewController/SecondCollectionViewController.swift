@@ -23,8 +23,11 @@ class SecondCollectionViewController: UICollectionViewController {
         savedImageListViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
+                self?.collectionView.refreshControl?.endRefreshing()
+                print("reloadData")
             }
         }
+        configureRefreshControl()
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -35,6 +38,18 @@ class SecondCollectionViewController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.secondViewIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureSavedCell(with: savedImageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), indexpath: indexPath.row)
         return cell
+    }
+    
+    func configureRefreshControl() {
+        self.collectionView.refreshControl = UIRefreshControl()
+        self.collectionView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+    }
+    
+    @objc func refresh() {
+        savedImageListViewModel.fetchSavedImageList()
+        if let layout = collectionView.collectionViewLayout as? ImageCollectionViewLayout {
+            layout.reloadData()
+        }
     }
 }
 

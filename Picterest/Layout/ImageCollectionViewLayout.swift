@@ -43,6 +43,10 @@ final class ImageCollectionViewLayout: UICollectionViewLayout {
         return numberOfColumns
     }
     
+    func reloadData(){
+        self.cache = [UICollectionViewLayoutAttributes]()
+    }
+    
     override func prepare() {
         guard cache.isEmpty, let collectionView = collectionView else { return }
         
