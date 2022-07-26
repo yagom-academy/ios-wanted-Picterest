@@ -56,6 +56,11 @@ extension ImageCollectionViewCellDescriptionView {
     func configureView(index: Int) {
         descriptionLabel.text = "\(index)번째 사진"
     }
+    
+    func configureView(memo: String) {
+        starButton.isSelected = true
+        descriptionLabel.text = memo
+    }
 }
 
 // MARK: - UI

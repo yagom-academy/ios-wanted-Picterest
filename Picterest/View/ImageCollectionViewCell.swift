@@ -49,8 +49,13 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Method
     func configureCell(with randomImage: RandomImage, index: Int) {
-        self.imageView.load(randomImage.imageUrlString)
+        self.imageView.load(url: randomImage.imageUrlString)
         descriptionView.configureView(index: index)
+    }
+    
+    func configureCell(with starImage: StarImage) {
+        self.imageView.load(id: starImage.id ?? "")
+        descriptionView.configureView(memo: starImage.memo ?? "")
     }
     
     override func prepareForReuse() {

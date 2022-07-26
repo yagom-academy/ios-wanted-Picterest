@@ -38,6 +38,10 @@ extension StarImageViewModel {
     func fetcnStarImages() {
         coreDataManager.getAllStarImages()
     }
+    
+    func starImageAtIndex(index: Int) -> StarImage {
+        return starImages[index]
+    }
 }
 
 // MARK: - Binding

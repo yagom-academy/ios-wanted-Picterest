@@ -86,6 +86,9 @@ extension StarImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
+        let starImage = starImageViewModel.starImageAtIndex(index: indexPath.row)
+        cell.configureCell(with: starImage)
+        
         return cell
     }
 }
