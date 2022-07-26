@@ -56,7 +56,6 @@ class CustomLayout : UICollectionViewLayout {
             
             let imageWidth = delegate?.collectionView(collectionView, widthForImageAtIndexPath: indexPath) ?? 0
             let imageHeight = delegate?.collectionView(collectionView, heightForImageAtIndexPath: indexPath) ?? 0
-            print(imageWidth, imageHeight)
             let ratio = imageHeight * contentWidth / imageWidth / 2
             let height = cellPadding * 2 + ratio
             let frame : CGRect = {

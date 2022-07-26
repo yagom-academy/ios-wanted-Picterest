@@ -5,7 +5,7 @@
 //  Created by 조성빈 on 2022/07/25.
 //
 
-import Foundation
+import UIKit
 
 struct PhotoManager {
     
@@ -17,7 +17,6 @@ struct PhotoManager {
     }
     
     func getData(_ perPage : Int, _ pageNumber : Int, completion : @escaping ([Photo]) -> Void ) {
-        
         if let url = URL(string: fetchURL(perPage, pageNumber, baseApi)) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
@@ -38,7 +37,6 @@ struct PhotoManager {
         let decorder = JSONDecoder()
         do {
             let decodeData = try decorder.decode([Photo].self, from: data)
-            print(decodeData[9])
             return decodeData
         } catch {
             return nil
