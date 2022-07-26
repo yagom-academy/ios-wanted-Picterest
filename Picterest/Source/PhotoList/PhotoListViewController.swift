@@ -9,10 +9,13 @@ import UIKit
 class PhotoListViewController: UIViewController {
     
     @IBOutlet weak var photoListCollectionView: UICollectionView!
+    private var photoList: [PhotoModel] = []
+    private var networkManager = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
+        getPhotoData()
     }
 }
 
@@ -38,6 +41,21 @@ extension PhotoListViewController {
             forCellWithReuseIdentifier: "PhotoListCollectionViewCell"
         )
     }
+    
+    func getPhotoData() {
+        networkManager.getPhotoList { result in
+            switch result {
+            case .success(let data):
+                self.photoList.append(contentsOf: data)
+                DispatchQueue.main.async {
+                    self.photoListCollectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        print(photoList)
+    }
 }
 
 //MARK: - Extension: CollectionView
@@ -47,7 +65,9 @@ extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath: IndexPath
     ) -> CGFloat {
-        return 500
+        let width = CGFloat(photoList[indexPath.row].width)
+        let height = CGFloat(photoList[indexPath.row].height)
+        return (((collectionView.frame.width - 32) / 2 ) - 10) * (height /  width)
     }
 }
 
@@ -56,7 +76,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        return photoList.count
     }
     
     func collectionView(
@@ -69,8 +89,8 @@ extension PhotoListViewController: UICollectionViewDataSource {
         ) as? PhotoListCollectionViewCell else {
             return UICollectionViewCell()
         }
+        photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row])
+        photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
         return photoCell
     }
-    
-    
 }

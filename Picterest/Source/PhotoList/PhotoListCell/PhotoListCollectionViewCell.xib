@@ -22,7 +22,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemGray5Color"/>
                     </imageView>
-                    <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hQ-1k-kR5">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2hQ-1k-kR5">
                         <rect key="frame" x="0.0" y="0.0" width="153" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1번째 사진" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b8v-oo-7IO">
@@ -38,7 +38,7 @@
                                 <state key="normal" image="star" catalog="system"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemFillColor"/>
                         <constraints>
                             <constraint firstItem="b8v-oo-7IO" firstAttribute="centerY" secondItem="2hQ-1k-kR5" secondAttribute="centerY" id="73i-2V-qYd"/>
                             <constraint firstItem="WsH-eN-l9J" firstAttribute="centerY" secondItem="2hQ-1k-kR5" secondAttribute="centerY" id="9kJ-Lv-nIf"/>
@@ -72,6 +72,9 @@
     <resources>
         <image name="photo.on.rectangle" catalog="system" width="128" height="97"/>
         <image name="star" catalog="system" width="128" height="116"/>
+        <systemColor name="systemFillColor">
+            <color red="0.47058823529411764" green="0.47058823529411764" blue="0.50196078431372548" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
