@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 class ImageListViewModel {
     
-    var repository = Repository()
-    var imageList = [ImageData]()
-    var imageSizeList = [CGFloat]()
+    private var repository = Repository()
+    private var imageList = [ImageData]()
+    private var imageSizeList = [CGFloat]()
     
     private var loading = false
     
@@ -63,6 +63,10 @@ class ImageListViewModel {
                 self.imageList = imagelist
                 imageList.forEach {
                     let height = getImageHeight(height: CGFloat($0.height), width: CGFloat($0.width))
+                    print($0.imageUrl.rawUrl)
+                    print($0.height, $0.width)
+                    print(height)
+                    
                     imageSizeList.append(height)
                 }
                 completion()
@@ -72,7 +76,7 @@ class ImageListViewModel {
         }
     }
     
-    func getImageHeight(height: CGFloat, width: CGFloat) -> CGFloat {
+    private func getImageHeight(height: CGFloat, width: CGFloat) -> CGFloat {
         let scale = 150 / width
         return height * scale
     }
