@@ -33,6 +33,31 @@ final class StorageManager {
         self.directoryPath = directoryPath
     }
     
+    static func getImage(id: String) -> UIImage? {
+        
+        let fileManager = FileManager.default
+        lazy var defaultDocumentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        
+        let directoryPath: URL = defaultDocumentPath.appendingPathComponent("starImage")
+        print(directoryPath)
+        
+        let imagePath = directoryPath.appendingPathComponent("\(id).png")
+        
+        if let image = ImageCacheManager.shared.getImage(imagePath.absoluteString) {
+            return image
+        }
+        
+        do {
+            let imageData = try Data(contentsOf: imagePath)
+            guard let image = UIImage(data: imageData) else { return nil }
+            ImageCacheManager.shared.storeImage(imagePath.absoluteString, image: image)
+            return image
+        } catch let error {
+            print(String(describing: error))
+            return nil
+        }
+    }
+    
     func saveImage(image: UIImage, id: String) {
         guard let data = uiImageToPngData(image),
               let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
