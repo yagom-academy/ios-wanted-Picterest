@@ -27,6 +27,8 @@ final class StarImageViewController: UIViewController {
     // MARK: - Properties
     private let starImageViewModel = StarImageViewModel()
     private var subscriptions = Set<AnyCancellable>()
+    private var longPressCell: UICollectionViewCell?
+    private var longPressStartIndexPath: IndexPath?
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -36,6 +38,7 @@ final class StarImageViewController: UIViewController {
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
         bindingViewModel()
+        setLongPressGestureToStarImageCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,17 +49,57 @@ final class StarImageViewController: UIViewController {
 
 // MARK: - Method
 extension StarImageViewController {
-    private func showImageDeleteAlert(_ index: Int, button: UIButton) {
+    private func showImageDeleteAlert(_ index: Int) {
         let alert = UIAlertController(title: nil, message: "사진을 삭제하겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             self?.starImageViewModel.deleteImageToStorage(index: index)
-            button.isSelected = false
         }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
+            UIView.animate(withDuration: 0.2) {
+                self?.longPressCell?.transform = .identity
+            }
+        }
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true)
+    }
+    
+    private func setLongPressGestureToStarImageCollectionView() {
+        let longPressGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(longPressGestureToStarImageCollectionViewAction(_:))
+        )
+        
+        longPressGesture.minimumPressDuration = 0.2
+        longPressGesture.delaysTouchesBegan = true
+        starImageCollectionView.addGestureRecognizer(longPressGesture)
+    }
+}
+
+// MARK: - TargetMethod
+extension StarImageViewController {
+    @objc private func longPressGestureToStarImageCollectionViewAction(_ sender: UILongPressGestureRecognizer) {
+        let pressPoint = sender.location(in: starImageCollectionView)
+        guard let indexPath = starImageCollectionView.indexPathForItem(at: pressPoint) else { return }
+        
+        if sender.state == .began {
+            guard let cell = starImageCollectionView.cellForItem(at: indexPath) else { return }
+            longPressCell = cell
+            longPressStartIndexPath = indexPath
+            UIView.animate(withDuration: 0.2) {
+                self.longPressCell?.transform = .init(scaleX: 0.95, y: 0.95)
+            }
+        } else if sender.state == .ended {
+            UIView.animate(withDuration: 0.2) {
+                self.longPressCell?.transform = .identity
+            }
+            if longPressStartIndexPath == indexPath {
+                showImageDeleteAlert(indexPath.row)
+            }
+        } else {
+            return
+        }
     }
 }
 
@@ -75,7 +118,7 @@ extension StarImageViewController {
     ) {
         cell.starButtonTapped = { [weak self] button, image in
             if button.isSelected {
-                self?.showImageDeleteAlert(index, button: button)
+                self?.showImageDeleteAlert(index)
             }
         }
     }
