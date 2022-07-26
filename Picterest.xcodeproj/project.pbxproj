@@ -18,6 +18,7 @@
 		C77046A3288E57FD009CE7DE /* SavedPhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046A2288E57FD009CE7DE /* SavedPhotoListViewController.swift */; };
 		C77046A6288E595C009CE7DE /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046A5288E595C009CE7DE /* PhotoListCollectionViewCell.swift */; };
 		C77046AC28902363009CE7DE /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046AB28902363009CE7DE /* CacheManager.swift */; };
+		C77046AF28903B02009CE7DE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046AE28903B02009CE7DE /* TabBarViewController.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		C77046A2288E57FD009CE7DE /* SavedPhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoListViewController.swift; sourceTree = "<group>"; };
 		C77046A5288E595C009CE7DE /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C77046AB28902363009CE7DE /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		C77046AE28903B02009CE7DE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		C7638FEA288E4CC800D06944 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C77046AD28903AE5009CE7DE /* TabBar */,
 				C7704699288E56E2009CE7DE /* Base */,
 			);
 			path = Utils;
@@ -183,6 +186,14 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C77046AD28903AE5009CE7DE /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				C77046AE28903B02009CE7DE /* TabBarViewController.swift */,
+			);
+			path = TabBar;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -288,6 +299,7 @@
 				C7638FF3288E4FE400D06944 /* PhotoListViewController.swift in Sources */,
 				C7704698288E5573009CE7DE /* CustomLayout.swift in Sources */,
 				C7704695288E521F009CE7DE /* PhotoListViewModel.swift in Sources */,
+				C77046AF28903B02009CE7DE /* TabBarViewController.swift in Sources */,
 				C7638FEE288E4DEC00D06944 /* Photo.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				C770469E288E5764009CE7DE /* PhotoListView.swift in Sources */,

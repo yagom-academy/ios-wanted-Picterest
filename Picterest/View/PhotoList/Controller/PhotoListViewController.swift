@@ -13,6 +13,7 @@ class PhotoListViewController: BaseViewController {
     private let photoListView = PhotoListView()
     let photoListViewModel = PhotoListViewModel()
     
+    
     var photoList : [Photo]?
     var disposalbleBag = Set<AnyCancellable>()
     
@@ -24,7 +25,6 @@ class PhotoListViewController: BaseViewController {
         photoListView.photoCollectionView.delegate = self
         photoListViewModel.getDataFromServer()
         setBinding()
-        
     }
     
     func configure() {
