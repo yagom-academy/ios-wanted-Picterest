@@ -5,8 +5,8 @@
 //  Created by yc on 2022/07/26.
 //
 
-import Foundation
+import UIKit
 
 class ImageTopViewModel {
-    let starButtonTapped: Observable<Bool> = Observable(false)
+    let starButtonTapped: Observable<UIButton?> = Observable(nil)
 }

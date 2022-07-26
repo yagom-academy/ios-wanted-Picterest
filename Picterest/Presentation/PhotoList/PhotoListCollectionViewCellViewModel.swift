@@ -11,7 +11,7 @@ class PhotoListCollectionViewCellViewModel {
     
     let photo: Photo
     let image: Observable<UIImage> = Observable(UIImage())
-    let starButtonTapped: Observable<Bool> = Observable(false)
+    let starButtonTapped: Observable<(UIButton?, Photo?, UIImage?)> = Observable((nil, nil, nil))
     let imageTopViewModel = ImageTopViewModel()
     
     init(photo: Photo) {
@@ -19,9 +19,9 @@ class PhotoListCollectionViewCellViewModel {
         downloadImage(urlString: photo.urls.regular)
         
         imageTopViewModel.starButtonTapped.bind {
-            if $0 {
-                self.starButtonTapped.value = $0
-                self.imageTopViewModel.starButtonTapped.value = false
+            if $0 != nil {
+                self.starButtonTapped.value = ($0, photo, self.image.value)
+                self.imageTopViewModel.starButtonTapped.value = nil
             }
         }
     }

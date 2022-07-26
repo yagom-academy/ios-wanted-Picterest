@@ -15,7 +15,7 @@ class ImageTopView: UIView {
         button.tintColor = .white
         button.addTarget(
             self,
-            action: #selector(didTapStarButton),
+            action: #selector(didTapStarButton(_:)),
             for: .touchUpInside
         )
         return button
@@ -38,16 +38,16 @@ class ImageTopView: UIView {
 
 // MARK: - @objc Methods
 private extension ImageTopView {
-    @objc func didTapStarButton() {
+    @objc func didTapStarButton(_ sender: UIButton) {
         print("didTapStarButton")
-        viewModel?.starButtonTapped.value = true
+        viewModel?.starButtonTapped.value = sender
     }
 }
 
 // MARK: - UI Methods
 private extension ImageTopView {
     func configUI() {
-        backgroundColor = UIColor(red: 125/255, green: 125/255, blue: 125/255, alpha: 0.4)
+        backgroundColor = .systemFill
         
         [
             starButton,

@@ -5,12 +5,14 @@
 //  Created by yc on 2022/07/25.
 //
 
-import Foundation
+import UIKit
 
 class PhotoListViewModel {
     let photoList: Observable<[Photo]> = Observable([])
     
-    let starButtonTapped: Observable<Bool> = Observable(false)
+    let starButtonTapped: Observable<(UIButton?, Photo?, UIImage?)> = Observable((nil, nil, nil))
+    let isSave: Observable<(UIButton?, Bool)> = Observable((nil, false))
+    let isRemove: Observable<(UIButton?, Bool)> = Observable((nil, false))
     
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
@@ -31,13 +33,54 @@ class PhotoListViewModel {
         }
     }
     
-    func makePhotoListCollectionViewCellViewModel(photo: Photo) -> PhotoListCollectionViewCellViewModel {
+    func makePhotoListCollectionViewCellViewModel(
+        photo: Photo
+    ) -> PhotoListCollectionViewCellViewModel {
         let viewModel = PhotoListCollectionViewCellViewModel(photo: photo)
         photoListCollectionViewCellViewModel = viewModel
         return viewModel
     }
     
-    func savePhoto(memo: String?) {
-        print(memo)
+    func savePhoto(sender: UIButton, photoInfo: Photo, memo: String, image: UIImage) {
+        guard let folderURL = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        ).first?.appendingPathComponent("SavedPhotos") else { return }
+        
+        
+        if !FileManager.default.fileExists(atPath: folderURL.path) {
+            do {
+                try FileManager.default.createDirectory(
+                    at: folderURL,
+                    withIntermediateDirectories: true
+                )
+            } catch {
+                return
+            }
+        }
+        
+        let writeURL = folderURL.appendingPathComponent(photoInfo.id + ".png")
+        
+        do {
+            try image.pngData()?.write(to: writeURL)
+        } catch {
+            return
+        }
+        isSave.value = (sender, true)
+    }
+    
+    func removePhoto(sender: UIButton, photoInfo: Photo) {
+        guard let folderURL = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        ).first?.appendingPathComponent("SavedPhotos") else { return }
+        
+        let writedURL = folderURL.appendingPathComponent(photoInfo.id + ".png")
+        do {
+            try FileManager.default.removeItem(at: writedURL)
+        } catch {
+            return
+        }
+        isRemove.value = (sender, true)
     }
 }

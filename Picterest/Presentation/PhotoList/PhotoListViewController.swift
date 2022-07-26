@@ -75,12 +75,40 @@ extension PhotoListViewController: UICollectionViewDataSource {
 // MARK: - Bind
 private extension PhotoListViewController {
     func bindSavePhoto() {
-        viewModel.starButtonTapped.bind {
-            if $0 {
-                self.showAlert {
-                    self.viewModel.savePhoto(memo: $0)
+        viewModel.starButtonTapped.bind { sender, photoInfo, image in
+            guard let sender = sender,
+                  let photoInfo = photoInfo,
+                  let image = image else { return }
+            
+            if sender.tintColor != .systemYellow {
+                self.showAlert { memo in
+                    self.viewModel.savePhoto(
+                        sender: sender,
+                        photoInfo: photoInfo,
+                        memo: memo ?? "",
+                        image: image
+                    )
                 }
+            } else {
+                self.viewModel.removePhoto(sender: sender, photoInfo: photoInfo)
             }
+        }
+        
+        viewModel.isSave.bind { sender, isDone in
+            guard let sender = sender else { return }
+            if isDone {
+                sender.setImage(Icon.starFill.image, for: .normal)
+                sender.tintColor = .systemYellow
+            }
+            self.viewModel.isSave.value = (nil, false)
+        }
+        viewModel.isRemove.bind { sender, isDone in
+            guard let sender = sender else { return }
+            if isDone {
+                sender.setImage(Icon.star.image, for: .normal)
+                sender.tintColor = .white
+            }
+            self.viewModel.isRemove.value = (nil, false)
         }
     }
     func bindUpdateCollectionView() {
