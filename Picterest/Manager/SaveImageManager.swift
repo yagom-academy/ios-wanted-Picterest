@@ -11,7 +11,10 @@ class SaveImageManager {
     let coredataManager = CoredataManager()
     let saveLocalImageFileManager = SaveLocalImageFileManager()
     
-    func saveImageAndIndo(){
+    func saveImageAndInfo(imageViewModel: ImageViewModel){
+        saveLocalImageFileManager.saveLocalImage(imageViewModel: imageViewModel) {
+            
+        }
     }
     
 }

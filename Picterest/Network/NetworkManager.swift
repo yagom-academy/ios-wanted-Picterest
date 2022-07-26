@@ -48,6 +48,7 @@ final class NetworkManager {
                 let data = data, error == nil,
                 let image = UIImage(data: data)
                 else { return }
+            print("다운로드")
                 completion(image)
         }
         CacheManager.shared.urlCache.getCachedResponse(for: dataTask) { response in
@@ -56,6 +57,7 @@ final class NetworkManager {
                 return
             }
             guard let image = UIImage(data: response.data) else { return }
+            print("캐시")
             completion(image)
         }
     }
