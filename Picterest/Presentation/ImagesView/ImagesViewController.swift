@@ -10,7 +10,7 @@ class ImagesViewController: UIViewController {
     // MARK: - Properties
     private let viewModel = ImagesViewModel()
     private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: PicterestLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
         collectionView.dataSource = self
@@ -51,10 +51,19 @@ extension ImagesViewController {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
     }
+}
+
+extension ImagesViewController: PicterstLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        //TODO 이미지 높이 가져오기
+        return 100
+    }
+    
+    
 }
 
 // MARK: - CollectionView DataSoucrce
