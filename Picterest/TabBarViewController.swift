@@ -7,11 +7,15 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
+final class TabBarViewController: UITabBarController {
 
+    private let networkManager = NetworkManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        networkManager.download()
+        
         // Do any additional setup after loading the view.
     }
     
