@@ -33,8 +33,10 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private func attribute() {
         contentView.backgroundColor = .cyan
+        contentView.layer.cornerRadius = 20
+        contentView.clipsToBounds = true
         
-        topBarStackView.backgroundColor = .black.withAlphaComponent(0.4)
+        topBarStackView.backgroundColor = .black.withAlphaComponent(0.6)
         topBarStackView.axis = .horizontal
         topBarStackView.alignment = .center
         topBarStackView.distribution = .fill
@@ -42,7 +44,8 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         starButton.setTitle("☆", for: .normal)
         starButton.setTitleColor(.white, for: .normal)
         starButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .medium)
-        titleLabel.text = "xxxxxxx"
+        
+        titleLabel.textColor = .white
     }
     
     private func layout() {

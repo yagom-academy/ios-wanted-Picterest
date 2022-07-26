@@ -50,6 +50,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
                 let cellWidth = windowWidth/CGFloat(numberOfColumns) - cellPadding*2
                 let photoHeight = cellWidth * delegate.collectionView(collectionView, heightMultiplierForPhotoAtIndexPath: indexPath)
                 let height = cellPadding * 2 + photoHeight
+                column = correctColumn(numberOfColumns: numberOfColumns, height: height)
                 let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
                 let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
                 
@@ -59,10 +60,29 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
                 
                 contentHeight = max(contentHeight, frame.maxY)
                 yOffset[column] = yOffset[column] + height
-                
-                column = column < (numberOfColumns - 1) ? (column + 1) : 0
             }
         }
+    }
+    
+    private func correctColumn(numberOfColumns: Int, height: CGFloat) -> Int {
+        struct CumulativeValue {
+            static var height: [Int:CGFloat] = [:]
+        }
+        var result: Int = 0
+        guard numberOfColumns >= 2 else { return result }
+        for i in 1..<numberOfColumns {
+            guard let min = CumulativeValue.height[result] else {
+                CumulativeValue.height.updateValue(height, forKey: result)
+                return result
+            }
+            guard let next = CumulativeValue.height[i] else {
+                CumulativeValue.height.updateValue(height, forKey: i)
+                return i
+            }
+            result = min > next ? i : result
+        }
+        CumulativeValue.height.updateValue((CumulativeValue.height[result] ?? 0)+height, forKey: result)
+        return result
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {

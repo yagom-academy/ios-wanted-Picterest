@@ -43,7 +43,7 @@ extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 }
 
