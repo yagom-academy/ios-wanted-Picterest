@@ -74,7 +74,7 @@ class PhotoListCollectionViewLayout: UICollectionViewLayout {
             contentHeight = max(contentHeight, frame.maxY) // 프레임 높이 업데이트
             yOffset[column] = yOffset[column] + height
             
-            column = (column + 1) % numberOfColumns
+            column = yOffset[0] > yOffset[1] ? 1 : 0
         }
     }
     
