@@ -85,7 +85,7 @@ class ImageListViewController: UIViewController {
 extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.imageCount()
+        return viewModel.imageCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -98,10 +98,12 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        if offsetY > scrollView.frame.height / 2 {
+        let contentHeight = scrollView.contentSize.height
+        if offsetY > contentHeight - scrollView.frame.height - 50 {
             viewModel.next()
         }
     }
+    
 }
 
 extension ImageListViewController: PinterestLayoutDelegate {
