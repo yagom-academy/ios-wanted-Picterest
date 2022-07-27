@@ -21,6 +21,7 @@
 		9F1DD5B628912F3C0065E57D /* ImageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD5B428912F3C0065E57D /* ImageDataModel.xcdatamodeld */; };
 		9F2D472E289147AB007B0B21 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D472D289147AB007B0B21 /* CoreDataManager.swift */; };
 		9F2D473028914D1A007B0B21 /* ImageCoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D472F28914D1A007B0B21 /* ImageCoreDataModel.swift */; };
+		9F2D473828916D62007B0B21 /* UIAlertController+makeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66328604278003DD2F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66128604278003DD2F5 /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 		9F1DD5B528912F3C0065E57D /* ImageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDataModel.xcdatamodel; sourceTree = "<group>"; };
 		9F2D472D289147AB007B0B21 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		9F2D472F28914D1A007B0B21 /* ImageCoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoreDataModel.swift; sourceTree = "<group>"; };
+		9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+makeAlert.swift"; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				9F1DD595288FD0CB0065E57D /* UIImageView+loadImage.swift */,
+				9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 				9F1DD584288F6ED70065E57D /* TabBarViewController.swift in Sources */,
 				9F1DD598288FD1100065E57D /* ImageCacheManager.swift in Sources */,
 				9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */,
+				9F2D473828916D62007B0B21 /* UIAlertController+makeAlert.swift in Sources */,
 				9F2D473028914D1A007B0B21 /* ImageCoreDataModel.swift in Sources */,
 				9F1DD5B628912F3C0065E57D /* ImageDataModel.xcdatamodeld in Sources */,
 				9F1DD594288FCD720065E57D /* ImagesCollectionViewCell.swift in Sources */,

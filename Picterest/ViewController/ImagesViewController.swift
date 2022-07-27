@@ -12,7 +12,6 @@ import CoreData
 final class ImagesViewController: UIViewController {
     private let reuseIdentifier = "PicterestCell"
     private let viewModel = ImagesViewModel()
-    private let imageFileManager = ImageFileManager()
     private var cancellable = Set<AnyCancellable>()
     private var layout: CustomLayout?
     
@@ -22,7 +21,6 @@ final class ImagesViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         bind()
         viewModel.fetch()
         layout = collectionView.collectionViewLayout as? CustomLayout
@@ -91,37 +89,24 @@ extension ImagesViewController: UICollectionViewDelegate {
 
 extension ImagesViewController: ImageCollectionViewCellDelegate {
     func alert(from cell: ImagesCollectionViewCell) {
-        let alertController = UIAlertController(title: "Picterest", message: "사진을 다운받으시겠습니까?", preferredStyle: .alert)
-        alertController.addTextField()
-
-        let save = UIAlertAction(title: "저장", style: UIAlertAction.Style.default, handler: { saveAction -> Void in
-            guard let textFields = alertController.textFields,
-                  let index = self.collectionView.indexPath(for: cell)?.row,
-                  let imageInformation = self.viewModel.getImage(at: index),
-                  let memo = textFields[0].text else {
-                return
-            }
-            
-            let imageID = imageInformation.id
-            let originalURL = imageInformation.urls.small
-            
-            guard let savedLocation = self.imageFileManager.saveImageToDevice(fileName: imageID, cell.imageView.image) else { return }
-            let imageCoreData = ImageCoreDataModel(id: imageID, memo: memo, originalURL: originalURL, savedLocation: savedLocation)
-            
-            CoreDataManager.shared.save(imageCoreData)
-        })
+        let title = "Picterest"
+        let message = "사진을 다운 받으시겠습니까?"
+        let firstActionTitle = "취소"
+        let secondActionTitle = "확인"
         
-        let cancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: {
-            (action : UIAlertAction!) -> Void in
-            print("취소")
-        })
-
-
-        alertController.addAction(save)
-        alertController.addAction(cancel)
+        let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert, hasTextField: true)
+        
+        guard let index = self.collectionView.indexPath(for: cell)?.row,
+              let imageInformation = self.viewModel.getImage(at: index) else {
+            return
+        }
+    
+        let alertAction = alertController.alertActionInImagesViewController(cell: cell, imageInformation: imageInformation)
+        
+        alertController.addAlertAction(title: firstActionTitle, style: .default)
+        alertController.addAlertAction(title: secondActionTitle, style: .default, handler: alertAction)
 
         present(alertController, animated: true)
-
     }
 }
 

@@ -19,15 +19,13 @@ class ImagesCollectionViewCell: UICollectionViewCell {
 
     weak var delegate: ImageCollectionViewCellDelegate?
     
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+        
     }
     
     @IBAction func tappedSaveImageButton(_ sender: UIButton) {
-        saveImageButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        saveImageButton.tintColor = .yellow
         delegate?.alert(from: self)
     }
 }
