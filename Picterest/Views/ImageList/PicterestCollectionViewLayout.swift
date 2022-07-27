@@ -62,7 +62,7 @@ class PicterestCollectionViewLayout: UICollectionViewLayout {
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
             
-            column = column < (numberOfColumns - 1) ? (column + 1) : 0
+            column = yOffset[0] > yOffset[1] ? 1 : 0
         }
     }
     

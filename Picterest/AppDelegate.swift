@@ -24,7 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
+        setCoreDataSetting()
         return true
+    }
+    
+    private func setCoreDataSetting() {
+        CoreDataManager.shared.setup(modelName: "PictureModel")
     }
 
     // MARK: UISceneSession Lifecycle

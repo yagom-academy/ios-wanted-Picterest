@@ -8,14 +8,15 @@
 import UIKit
 
 protocol PicterestPhotoSavable: AnyObject {
-    func picterestCollectoinViewCell(imageData: ImageData)
+    func picterestCollectoinViewCell(imageInfo: ImageData, imageData: UIImage)
 }
 
 class PicterestCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: PicterestPhotoSavable?
     
-    private var currentImageData: ImageData?
+    private var currentImageInfo: ImageData?
+    private var currentImageData: UIImage?
     
     private let picterestImageView: UIImageView = {
         var imageView = UIImageView()
@@ -67,6 +68,12 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         setButtonAction()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.picterestImageView.image = UIImage(systemName: "photo")
+        self.indexTitleLabel.text = "n번째 사진"
+    }
+    
     private func setCellLayout() {
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
@@ -96,16 +103,20 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     @objc func starbuttonClicked() {
         if let delegate = delegate {
             starButton.isSelected.toggle()
-            delegate.picterestCollectoinViewCell(imageData: currentImageData!)
+            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo else {
+                return
+            }
+            delegate.picterestCollectoinViewCell(imageInfo: currentImageInfo, imageData: currentImageData)
         }
     }
     
     func fetchImageData(data: ImageData, at n: Int) {
-        currentImageData = data
+        currentImageInfo = data
         
         ImageLoder().leadImage(url: data.imageUrl.smallUrl) { [self] result in
             switch result {
             case .success(let image):
+                currentImageData = image
                 picterestImageView.image = image
             case .failure(let error):
                 print(error.localizedDescription)

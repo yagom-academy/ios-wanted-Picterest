@@ -5,8 +5,8 @@
 //  Created by 신의연 on 2022/07/25.
 //
 
-import Foundation
 import UIKit
+
 class ImageListViewModel {
     
     private var repository = Repository()
@@ -21,7 +21,6 @@ class ImageListViewModel {
     var imageListUpdate: () -> Void = { }
     
     var imageCount: Int {
-        print("image Count", imageList.count)
         return imageList.count
     }
     

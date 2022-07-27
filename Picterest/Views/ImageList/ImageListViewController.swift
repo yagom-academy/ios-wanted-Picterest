@@ -114,8 +114,26 @@ extension ImageListViewController: PinterestLayoutDelegate {
 }
 
 extension ImageListViewController: PicterestPhotoSavable {
-    func picterestCollectoinViewCell(imageData: ImageData) {
+    func picterestCollectoinViewCell(imageInfo: ImageData, imageData: UIImage) {
+        let alert = UIAlertController(title: "이미지 메모", message: nil, preferredStyle: .alert)
+        alert.addTextField()
         
+        let action = UIAlertAction(title: "저장", style: .default) { [weak alert] (_) in
+            let memo = alert?.textFields![0].text ?? ""
+            
+            let fileUrl = PicterestFileManager.shared.createPictureId(fileName: imageInfo.id)
+            
+            if let data = imageData.pngData() {
+                try? data.write(to: fileUrl)
+            }
+            CoreDataManager.shared.createPictureData(id: imageInfo.id, memo: memo, originUrl: imageInfo.imageUrl.rawUrl, localUrl: fileUrl.path)
+        }
+        
+        alert.addAction(action)
+        
+        self.present(alert, animated: true) {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 }
 
