@@ -36,14 +36,27 @@ class CustomLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
+        
         /// 1
         /// cache가 비어있고 collectionView가 존재할 때만 layout attributes 계산
-        guard cache.isEmpty,
-              let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
+        
+        let numberOfItemsInCollectionView = collectionView.numberOfItems(inSection: 0)
+        
+        if numberOfItemsInCollectionView == cache.count {
+            guard cache.isEmpty else {
+                return
+            }
+        }
+        
+        
         /// 2
         /// x좌표 값, y좌표 값 지정
+        
+        cache.removeAll()
+        
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var xOffset: [CGFloat] = []
         for column in 0..<numberOfColumns {
@@ -54,7 +67,7 @@ class CustomLayout: UICollectionViewLayout {
         
         /// 3
         /// 첫번째 섹션에 있는 모든 아이템을 순회
-        for item in 0..<collectionView.numberOfItems(inSection: 0) {
+        for item in 0..<numberOfItemsInCollectionView {
             let indexPath = IndexPath(item: item, section: 0)
            
             /// 4
@@ -73,7 +86,6 @@ class CustomLayout: UICollectionViewLayout {
             
             // 6
             contentHeight = max(contentHeight, frame.maxY)
-            print("contentHeight: \(contentHeight)")
             yOffset[column] = yOffset[column] + height
             setHeightArray(with: height, at: column)
             column = calculateColumnValue()

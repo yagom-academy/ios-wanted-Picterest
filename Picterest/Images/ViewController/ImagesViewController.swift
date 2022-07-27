@@ -12,17 +12,18 @@ final class ImagesViewController: UIViewController {
     private let reuseIdentifier = "PicterestCell"
     private let viewModel = ImagesViewModel()
     private var cancellable = Set<AnyCancellable>()
+    private var layout: CustomLayout?
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
+        collectionView.delegate = self
         bind()
         viewModel.fetch()
-        if let layout = collectionView.collectionViewLayout as? CustomLayout {
-            layout.delegate = self
-        }
+        layout = collectionView.collectionViewLayout as? CustomLayout
+        layout?.delegate = self
     }
 }
 
@@ -40,6 +41,7 @@ extension ImagesViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return viewModel.getImagesCount()
     }
 
@@ -47,7 +49,7 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.imageView.loadImage(viewModel.getImage(of: indexPath.row).urls.full)
+        cell.imageView.loadImage(viewModel.getImage(of: indexPath.row).urls.small)
         cell.indexLabel.text = "\(indexPath.row)번째 사진"
         return cell
     }
@@ -55,7 +57,6 @@ extension ImagesViewController: UICollectionViewDataSource {
 
 extension ImagesViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        print("item: \(viewModel.images[indexPath.row].height)")
         
         return CGFloat(viewModel.images[indexPath.row].height)
     }
@@ -63,4 +64,18 @@ extension ImagesViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, widthForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         return CGFloat(viewModel.images[indexPath.row].width)
     }
+}
+
+extension ImagesViewController: UICollectionViewDelegate {
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if Int(scrollView.contentOffset.y) >= Int(scrollView.contentSize.height - scrollView.frame.size.height) {
+            DispatchQueue.main.async {
+                self.viewModel.increasePageIndex()
+                self.viewModel.fetch()
+                self.collectionView.reloadData()
+            }
+        }
+    }
+
 }

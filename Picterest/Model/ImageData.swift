@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PhotoModel: Decodable {
+struct ImageData: Decodable {
     let id: String
     let width: Int
     let height: Int
@@ -15,5 +15,5 @@ struct PhotoModel: Decodable {
 }
 
 struct URLsModel: Decodable {
-    let full: String
+    let small: String
 }
