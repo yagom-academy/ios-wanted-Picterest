@@ -57,6 +57,15 @@ extension RandomImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.cellTotalCount
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SampleFooter.reuseIdentifier, for: indexPath)
+        return footer
+    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
 }
 
 
@@ -73,6 +82,7 @@ extension RandomImageListViewController {
         collectionView.backgroundColor = .purple
         collectionView.dataSource = self
         collectionView.register(RandomImageListCell.self, forCellWithReuseIdentifier: RandomImageListCell.reuseIdentifier)
+        collectionView.register(SampleFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SampleFooter.reuseIdentifier)
     }
     
     private func layout() {
