@@ -5,4 +5,34 @@
 //  Created by 신의연 on 2022/07/27.
 //
 
-import Foundation
+import UIKit
+
+class ImageRepositoryViewModel {
+    
+    private var imageList: [Picture] = [Picture]()
+    
+    var imageListUpdate: () -> Void = { }
+    
+    var imageCount: Int {
+        return imageList.count
+    }
+    
+    func image(at index: Int) -> Picture {
+        return imageList[index]
+    }
+    func imageSize(at index: Int) -> CGFloat {
+        return CGFloat(Int(imageList[index].imageSize!) ?? 0)
+    }
+    func deleteImage(at indexPath: IndexPath) {
+        let item = imageList[indexPath.item]
+        CoreDataManager.shared.delete(entity: item)
+        PicterestFileManager.shared.deletePicture(fileName: item.id!)
+        imageList.remove(at: indexPath.row)
+    }
+    
+    func list() {
+        imageList.removeAll()
+        imageList = CoreDataManager.shared.fetchSurvey()
+        self.imageListUpdate()
+    }
+}
