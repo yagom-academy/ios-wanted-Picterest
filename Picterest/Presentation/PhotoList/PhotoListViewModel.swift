@@ -67,6 +67,15 @@ class PhotoListViewModel {
             return
         }
         isSave.value = (sender, true)
+        
+        let newPhoto = CoreSavedPhoto(
+            id: photoInfo.id,
+            memo: memo,
+            url: photoInfo.urls.raw,
+            path: writeURL.path
+        )
+        
+        CoreDataManager.shared.save(newPhoto: newPhoto)
     }
     
     func removePhoto(sender: UIButton, photoInfo: Photo) {
@@ -82,5 +91,7 @@ class PhotoListViewModel {
             return
         }
         isRemove.value = (sender, true)
+        
+        CoreDataManager.shared.remove(id: photoInfo.id)
     }
 }
