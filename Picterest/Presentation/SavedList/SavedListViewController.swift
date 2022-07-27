@@ -12,8 +12,9 @@ class SavedListViewController: UIViewController {
     // MARK: - UI Components
     private lazy var savedListTableView: UITableView = {
         let tableView = UITableView()
+        tableView.estimatedRowHeight = 1000.0
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 300.0
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.register(
             SavedListTableViewCell.self,
