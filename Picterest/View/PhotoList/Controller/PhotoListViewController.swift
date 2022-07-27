@@ -27,6 +27,11 @@ class PhotoListViewController: BaseViewController {
         setBinding()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        photoListView.photoCollectionView.reloadData()
+    }
+    
     func configure() {
         let layout = photoListView.photoCollectionView.collectionViewLayout as? PhotoListCustomLayout
         layout?.delegate = self
@@ -55,8 +60,21 @@ extension PhotoListViewController : UICollectionViewDataSource {
         cell.imageView.image = photoListViewModel.makeImage(photoList?[indexPath.row].urls.small ?? "")
         cell.rightLabel.text = "\(indexPath.row + 1)번째 사진"
         cell.index = indexPath.row
+        updateStar(cell, (photoList?[indexPath.row].id) ?? "")
         cell.cellDelegate = self
         return cell
+    }
+    
+    func updateStar(_ cell : PhotoListCollectionViewCell, _ name : String) {
+        DispatchQueue.main.async {
+            if (self.photoListViewModel.isSavedImage(name)) == false {
+                cell.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
+                cell.saveButton.tintColor = .white
+            } else {
+                cell.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                cell.saveButton.tintColor = .yellow
+            }
+        }
     }
 }
 
@@ -107,6 +125,7 @@ extension PhotoListViewController : SaveButtonDelegate {
             self.present(alert, animated: true)
         } else {
             cell.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
+            cell.saveButton.tintColor = .white
             // filemanager에 있는 이미지 삭제
             self.photoListViewModel.deleteImageFromFilemanager(self.photoList?[cell.index ?? -1].id ?? "")
             // coredata에 있는 정보 삭제
