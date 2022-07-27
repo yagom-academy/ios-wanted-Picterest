@@ -28,7 +28,7 @@ class FirstCollectionViewController: UICollectionViewController {
                 if let layout = self?.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
                     layout.reloadData()
                 }
-                self?.collectionView.reloadData()
+                self?.collectionView.reloadSections(IndexSet(0...0))
             }
         }
     }
@@ -112,7 +112,7 @@ func deleteImage() {
         if let layout = self.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
             layout.reloadData()
         }
-    self.collectionView.reloadData()
+        self.collectionView.reloadSections(IndexSet(0...0))
     }
 }
 }

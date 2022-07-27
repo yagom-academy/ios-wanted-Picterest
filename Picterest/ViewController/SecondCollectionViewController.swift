@@ -26,7 +26,6 @@ class SecondCollectionViewController: UICollectionViewController {
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
                 self?.collectionView.refreshControl?.endRefreshing()
-                print("reloadData")
             }
         }
         configureRefreshControl()
@@ -67,7 +66,9 @@ class SecondCollectionViewController: UICollectionViewController {
         savedImageListViewModel.fetchSavedImageList()
         if let layout = collectionView.collectionViewLayout as? ImageCollectionViewLayout {
             layout.reloadData()
+            self.collectionView.reloadData()
         }
+        
     }
 }
 
