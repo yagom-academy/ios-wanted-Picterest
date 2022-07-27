@@ -7,13 +7,14 @@
 import UIKit
 
 protocol DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?)
+    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?, image: UIImage?)
 }
 
 class PhotoListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var radomImageView: UIImageView!
     @IBOutlet weak var savedButton: UIButton!
     @IBOutlet weak var captionLabel: UILabel!
+    
     var delegate: DidTapPhotoSaveButtonDelegate?
     var photoInfo: PhotoModel?
     
@@ -23,12 +24,16 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
-    @IBAction func didTapPhotoSave(_ sender: UIButton) {
-        delegate?.showSavePhotoAlert(sender: sender, photoInfo: photoInfo)
-    }
-    
     override func prepareForReuse() {
         radomImageView.image = nil
+    }
+    
+    @IBAction func didTapPhotoSave(_ sender: UIButton) {
+        delegate?.showSavePhotoAlert(
+            sender: sender,
+            photoInfo: photoInfo,
+            image: radomImageView.image
+        )
     }
     
     func fetchDataFromCollectionView(data: PhotoModel) {

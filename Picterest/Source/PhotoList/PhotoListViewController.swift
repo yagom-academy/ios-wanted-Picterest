@@ -8,6 +8,7 @@ import UIKit
 
 class PhotoListViewController: UIViewController {
     @IBOutlet weak var photoListCollectionView: UICollectionView!
+    
     private var photoList: [PhotoModel] = []
     private var networkManager = NetworkManager()
     
@@ -21,7 +22,7 @@ class PhotoListViewController: UIViewController {
 //MARK: - Extension: Methods
 
 extension PhotoListViewController {
-    func setCollectionView() {
+    private func setCollectionView() {
         photoListCollectionView.dataSource = self
         if let layout = photoListCollectionView.collectionViewLayout as?
             PhotoListCollectionViewLayout {
@@ -42,7 +43,7 @@ extension PhotoListViewController {
         )
     }
     
-    func getPhotoData() {
+    private func getPhotoData() {
         networkManager.getPhotoList { result in
             switch result {
             case .success(let data):
@@ -56,7 +57,7 @@ extension PhotoListViewController {
         }
     }
     
-    func showAlertMessage(completion: @escaping (String?) -> Void) {
+    private func showAlertMessage(completion: @escaping (String?) -> Void) {
         let alertController = UIAlertController(
             title: "사진 저장",
             message: "저장할 사진에 메모를 남겨주세요",
@@ -76,7 +77,7 @@ extension PhotoListViewController {
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
 
 extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?) {
+    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?, image: UIImage?) {
         if sender.tintColor == .systemYellow {
             sender.setImage(UIImage(systemName: "star"), for: .normal)
             sender.tintColor = .white
@@ -86,8 +87,10 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
             sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
             sender.tintColor = .systemYellow
             showAlertMessage { result in
-                guard let result = result else { return }
-                print(result, photoInfo)
+                guard result != nil else { return }
+                
+                
+                
                 // 파일매니저 저장 메소드
                 
               //  CoreData추가
