@@ -5,7 +5,8 @@
 //
 
 import UIKit
-//import CoreData
+
+public var page = 1
 
 class PhotoListViewController: UIViewController {
     @IBOutlet weak var photoListCollectionView: UICollectionView!
@@ -51,6 +52,7 @@ extension PhotoListViewController {
                 self.photoList.append(contentsOf: data)
                 DispatchQueue.main.async {
                     self.photoListCollectionView.reloadData()
+                    
                 }
             case .failure(let error):
                 print(error)
@@ -109,9 +111,11 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                 ) else { return }
                 CoreDataManager.shared.saveCoreData(
                     id: photoInfo.id,
-                    memo: memo, url:
-                        photoInfo.urls.raw,
-                    location: urlPath
+                    memo: memo,
+                    url:photoInfo.urls.regular,
+                    location: urlPath,
+                    width: photoInfo.width,
+                    height: photoInfo.height
                 )
                 print(urlPath)
                 print(CoreDataManager.shared.fetchCoreData().count)

@@ -17,8 +17,9 @@ class NetworkManager {
         let session = URLSession(configuration: .default)
         var components = URLComponents(string: Constant.BASE_URL)
         let clientID = URLQueryItem(name: "client_id", value: PicterestKey.appKey)
-        let count = URLQueryItem(name: "count", value: "15")
-        components?.queryItems = [clientID, count]
+        let count = URLQueryItem(name: "per_page", value: "15")
+        let page = URLQueryItem(name: "page", value: "\(page)")
+        components?.queryItems = [clientID, count, page]
         
         guard let url = components?.url else { return  completion(.failure(.badUrl)) }
         var request = URLRequest(url: url)
