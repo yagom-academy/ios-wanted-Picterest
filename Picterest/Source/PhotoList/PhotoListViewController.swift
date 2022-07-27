@@ -113,6 +113,7 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                         photoInfo.urls.raw,
                     location: urlPath
                 )
+                print(urlPath)
                 print(CoreDataManager.shared.fetchCoreData().count)
             }
         }
