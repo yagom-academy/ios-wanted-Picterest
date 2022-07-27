@@ -17,6 +17,8 @@
 		E14276952890DD3F00AC4039 /* PhotoListResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276942890DD3F00AC4039 /* PhotoListResult.swift */; };
 		E14276972890E49500AC4039 /* PhotoURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276962890E49500AC4039 /* PhotoURL.swift */; };
 		E14276A02891004D00AC4039 /* PhotoInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = E142769F2891004D00AC4039 /* PhotoInfo.plist */; };
+		E14276A42891017600AC4039 /* SavedPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276A32891017600AC4039 /* SavedPhotoViewController.swift */; };
+		E14276A7289101BA00AC4039 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276A6289101BA00AC4039 /* TabBarViewController.swift */; };
 		E14A5492288E77790020282C /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5491288E77790020282C /* EndPointType.swift */; };
 		E14A5494288E77930020282C /* PhotoListEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5493288E77930020282C /* PhotoListEndPoint.swift */; };
 		E14A549A288E7B130020282C /* Bundle + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5499288E7B130020282C /* Bundle + extension.swift */; };
@@ -35,6 +37,8 @@
 		E14276942890DD3F00AC4039 /* PhotoListResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListResult.swift; sourceTree = "<group>"; };
 		E14276962890E49500AC4039 /* PhotoURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoURL.swift; sourceTree = "<group>"; };
 		E142769F2891004D00AC4039 /* PhotoInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PhotoInfo.plist; sourceTree = "<group>"; };
+		E14276A32891017600AC4039 /* SavedPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoViewController.swift; sourceTree = "<group>"; };
+		E14276A6289101BA00AC4039 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E14A5491288E77790020282C /* EndPointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
 		E14A5493288E77930020282C /* PhotoListEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListEndPoint.swift; sourceTree = "<group>"; };
 		E14A5499288E7B130020282C /* Bundle + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + extension.swift"; sourceTree = "<group>"; };
@@ -114,6 +118,30 @@
 			path = APIProvider;
 			sourceTree = "<group>";
 		};
+		E14276A12891014D00AC4039 /* SavedPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				E14276A32891017600AC4039 /* SavedPhotoViewController.swift */,
+			);
+			path = SavedPhoto;
+			sourceTree = "<group>";
+		};
+		E14276A22891015C00AC4039 /* PhotoList */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E65F28604278003DD2F5 /* PhotoListViewController.swift */,
+			);
+			path = PhotoList;
+			sourceTree = "<group>";
+		};
+		E14276A52891019E00AC4039 /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				E14276A6289101BA00AC4039 /* TabBarViewController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		E14A548E288E77620020282C /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,7 +183,9 @@
 		E167D0AD288E6BBB0062496F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				DE15E65F28604278003DD2F5 /* PhotoListViewController.swift */,
+				E14276A52891019E00AC4039 /* TabBar */,
+				E14276A12891014D00AC4039 /* SavedPhoto */,
+				E14276A22891015C00AC4039 /* PhotoList */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -235,12 +265,14 @@
 				DE15E66028604278003DD2F5 /* PhotoListViewController.swift in Sources */,
 				E14276972890E49500AC4039 /* PhotoURL.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
+				E14276A7289101BA00AC4039 /* TabBarViewController.swift in Sources */,
 				E14276922890DABA00AC4039 /* PhotoListProvider.swift in Sources */,
 				E14276902890CED800AC4039 /* NetworkRequester.swift in Sources */,
 				E14A549A288E7B130020282C /* Bundle + extension.swift in Sources */,
 				E14A5494288E77930020282C /* PhotoListEndPoint.swift in Sources */,
 				E14A5492288E77790020282C /* EndPointType.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
+				E14276A42891017600AC4039 /* SavedPhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
