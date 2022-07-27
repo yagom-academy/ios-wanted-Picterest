@@ -9,10 +9,24 @@ import UIKit
 class PhotoSaveViewController: UIViewController {
     @IBOutlet weak var saveListCollectionView: UICollectionView!
     
+    var coreData = [Picterest]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        coreData = CoreDataManager.shared.fetchCoreData()
+        saveListCollectionView.reloadData()
+    }
+}
+
+//MARK: - Methods
+
+extension PhotoSaveViewController {
+    
 }
 
 //MARK: - Extension: CollectionView
@@ -20,6 +34,7 @@ class PhotoSaveViewController: UIViewController {
 extension PhotoSaveViewController {
     private func setCollectionView() {
         saveListCollectionView.dataSource = self
+        saveListCollectionView.delegate = self
         saveListCollectionView?.contentInset = UIEdgeInsets(
             top: 10,
             left: 16,
@@ -34,9 +49,6 @@ extension PhotoSaveViewController {
             forCellWithReuseIdentifier: "PhotoSaveCollectionViewCell"
         )
         let flowlayout = UICollectionViewFlowLayout()
-        let width: CGFloat = UIScreen.main.bounds.width - 32
-        let height: CGFloat = 300
-        flowlayout.itemSize = CGSize(width: width, height: height)
         saveListCollectionView.collectionViewLayout = flowlayout
     }
 }
@@ -46,7 +58,7 @@ extension PhotoSaveViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 10
+        return coreData.count
     }
     
     func collectionView(
@@ -59,6 +71,24 @@ extension PhotoSaveViewController: UICollectionViewDataSource {
         ) as? PhotoSaveCollectionViewCell else {
             return UICollectionViewCell()
         }
+        saveCell.deleteSavedData = {
+            ImageFileManager.shared.deleteImageFromLocal(named: self.coreData[indexPath.row].id ?? "")
+            CoreDataManager.shared.deleteCoreData(ID: self.coreData[indexPath.row].id ?? "")
+        }
+        saveCell.savedMemo.text = coreData[indexPath.row].memo
+        saveCell.fetchDataFromCollectionView(data: coreData[indexPath.row].url ?? "")
         return saveCell
+    }
+}
+
+extension PhotoSaveViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        let width = UIScreen.main.bounds.width - 32
+        let height =  width * (coreData[indexPath.row].heigt / coreData[indexPath.row].width)
+        return CGSize(width: width, height: height)
     }
 }

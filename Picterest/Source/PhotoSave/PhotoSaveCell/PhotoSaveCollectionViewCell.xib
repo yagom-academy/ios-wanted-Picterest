@@ -25,16 +25,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="162" height="40"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="memo" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05y-YA-pZH">
-                                <rect key="frame" x="122" y="12.5" width="35" height="15"/>
+                                <rect key="frame" x="122" y="13" width="35" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W2Q-AB-r4o">
                                 <rect key="frame" x="5" y="9" width="22" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="22" id="beG-rc-nKA"/>
+                                    <constraint firstAttribute="height" constant="22" id="mMZ-vY-Wa5"/>
+                                </constraints>
                                 <color key="tintColor" systemColor="systemYellowColor"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="star.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="didTapDeletePhotoData:" destination="gTV-IL-0wX" eventType="touchUpInside" id="iHP-o3-g82"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemFillColor"/>
@@ -64,6 +71,7 @@
             <connections>
                 <outlet property="savedButton" destination="W2Q-AB-r4o" id="N2d-xh-TrM"/>
                 <outlet property="savedImageView" destination="dt6-w4-wSz" id="taG-Vo-zUC"/>
+                <outlet property="savedMemo" destination="05y-YA-pZH" id="t4F-ob-0Hb"/>
             </connections>
             <point key="canvasLocation" x="218.84057971014494" y="127.23214285714285"/>
         </collectionViewCell>
