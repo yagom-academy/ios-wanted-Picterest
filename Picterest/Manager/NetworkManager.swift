@@ -17,11 +17,12 @@ enum NetworkError: Error {
 
 final class NetworkManager {
     
-    let apiKey = "EYcGnmZWJmPQPhb1Hw9nXqv7mo7p_Vr4XpVnkkMqN5I"
+    static let apiKey = "EYcGnmZWJmPQPhb1Hw9nXqv7mo7p_Vr4XpVnkkMqN5I"
     
     static let shared = NetworkManager()
+    private init() {}
     
-    func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
+    static func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
         let urlStr = "https://api.unsplash.com/photos/random/?client_id=\(apiKey)&count=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.invalidURL))

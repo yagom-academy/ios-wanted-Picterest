@@ -8,7 +8,6 @@
 import UIKit
 
 class ImageCollectionViewModel {
-    private let networkManager = NetworkManager()
     private var pageNumber = 0
     private var images: [Image] = [] {
         didSet {
@@ -23,7 +22,7 @@ class ImageCollectionViewModel {
     private var isFetching = false
     
     func fetchImages() {
-        networkManager.fetchImageList { [weak self] result in
+        NetworkManager.fetchImageList { [weak self] result in
             switch result {
             case .success(let images):
                 self?.images.append(contentsOf: images)
