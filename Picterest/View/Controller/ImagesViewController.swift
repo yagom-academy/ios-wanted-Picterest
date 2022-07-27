@@ -9,6 +9,8 @@ import UIKit
 
 class ImagesViewController: UIViewController {
     
+    let imagesViewModel = ImageCollectionViewModel()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -22,6 +24,12 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSubviews()
+        imagesViewModel.fetchImages()
+        imagesViewModel.collectionViewUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
     private func configureSubviews() {
@@ -39,13 +47,12 @@ class ImagesViewController: UIViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return imagesViewModel.imagesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagesCollectionViewCell.reuseIdentifier, for: indexPath) as? imagesCollectionViewCell else { return UICollectionViewCell()}
-        cell.backgroundColor = .red
-        cell.setup()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagesCollectionViewCell.reuseIdentifier, for: indexPath) as? imagesCollectionViewCell else { return UICollectionViewCell() }
+        cell.configureCell(with: imagesViewModel.imageAtIndex(indexPath.row), index: indexPath.row)
         return cell
     }
 }

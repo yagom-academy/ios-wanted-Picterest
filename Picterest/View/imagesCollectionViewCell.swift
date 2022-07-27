@@ -35,19 +35,19 @@ class imagesCollectionViewCell: UICollectionViewCell {
     private lazy var indexLabel: UILabel = {
         let indexLabel = UILabel()
         indexLabel.font = .systemFont(ofSize: 15)
-        indexLabel.text = "N번째이미지"
         indexLabel.textColor = .white
         return indexLabel
     }()
     
    
-    func setup() {
-        configureSubView()
+    func configureCell(with imageViewModel: ImageViewModel, index: Int) {
+        setSubView()
         setConstraints()
-        self.layer.cornerRadius = 10
+        self.imageView.loadImage(url: imageViewModel.url)
+        self.indexLabel.text = "\(index)번째 사진"
     }
     
-    private func configureSubView() {
+    private func setSubView() {
         [imageView, descriptionView, starButton, indexLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)
