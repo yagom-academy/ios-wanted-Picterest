@@ -10,11 +10,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
+    func scene(
+        _ scene: UIScene,
+        willConnectTo session: UISceneSession,
+        options connectionOptions: UIScene.ConnectionOptions
+    ) {
         guard let windowScene = scene as? UIWindowScene else { return }
         window = UIWindow(windowScene: windowScene)
-        let rootViewController = ViewController()
+        let networkRequester = NetworkRequester()
+        let photoListProvider = PhotoListAPIProvider(networkRequester: networkRequester)
+        let rootViewController = PhotoListViewController.instantiate(
+            with: photoListProvider
+        )
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }

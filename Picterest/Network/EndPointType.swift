@@ -11,8 +11,8 @@ protocol EndPointType {
     
     var apiKey: String { get }
     var baseURL: String { get }
-    var path: String { get } // photos
-    var query: [URLQueryItem] { get } // client_id
+    var path: String { get }
+    var query: [URLQueryItem] { get }
     
     func asURLRequest() -> URLRequest?
     
