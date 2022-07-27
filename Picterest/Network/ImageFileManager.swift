@@ -14,9 +14,7 @@ enum ImageFileManagerError: Error {
 
 class ImageFileManager {
     static let shared: ImageFileManager = ImageFileManager()
-    
-    
-    
+
     func saveImageToLocal(image: UIImage, name: String) {
         guard let data = image.pngData() else { return }
         if let directory: NSURL = try? FileManager.default.url(
