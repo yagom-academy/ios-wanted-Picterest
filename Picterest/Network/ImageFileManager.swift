@@ -26,6 +26,7 @@ class ImageFileManager {
                 guard let imageURL = directory.appendingPathComponent(name) else { return nil }
                 try data.write(to: imageURL)
                 return imageURL.path
+                print(imageURL.path)
             } catch {
                 print(ImageFileManagerError.notDirectory)
             }

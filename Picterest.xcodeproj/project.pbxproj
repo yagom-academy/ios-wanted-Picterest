@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		362094A02890E6B600D8E017 /* Picterest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3620949E2890E6B600D8E017 /* Picterest.xcdatamodeld */; };
 		362094A22890E84200D8E017 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362094A12890E84200D8E017 /* CoreDataManager.swift */; };
+		362094AC2891193B00D8E017 /* PhotoSaveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362094AA2891193B00D8E017 /* PhotoSaveCollectionViewCell.swift */; };
+		362094AD2891193B00D8E017 /* PhotoSaveCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 362094AB2891193B00D8E017 /* PhotoSaveCollectionViewCell.xib */; };
 		362C897F288F93BE0055C3DF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C897E288F93BE0055C3DF /* NetworkManager.swift */; };
 		362C8981288FB22E0055C3DF /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C8980288FB22E0055C3DF /* PhotoModel.swift */; };
 		362C8983288FBE960055C3DF /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362C8982288FBE960055C3DF /* ImageLoader.swift */; };
@@ -32,6 +34,8 @@
 /* Begin PBXFileReference section */
 		3620949F2890E6B600D8E017 /* Picterest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Picterest.xcdatamodel; sourceTree = "<group>"; };
 		362094A12890E84200D8E017 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		362094AA2891193B00D8E017 /* PhotoSaveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSaveCollectionViewCell.swift; sourceTree = "<group>"; };
+		362094AB2891193B00D8E017 /* PhotoSaveCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoSaveCollectionViewCell.xib; sourceTree = "<group>"; };
 		362C897E288F93BE0055C3DF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		362C8980288FB22E0055C3DF /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		362C8982288FBE960055C3DF /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
@@ -65,6 +69,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		362094AE2891194000D8E017 /* PhotoSaveCell */ = {
+			isa = PBXGroup;
+			children = (
+				362094AA2891193B00D8E017 /* PhotoSaveCollectionViewCell.swift */,
+				362094AB2891193B00D8E017 /* PhotoSaveCollectionViewCell.xib */,
+			);
+			path = PhotoSaveCell;
+			sourceTree = "<group>";
+		};
 		362C8963288F65D30055C3DF /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +115,7 @@
 			children = (
 				36C79A23288E44460016F9E5 /* PhotoSaveStoryboard.storyboard */,
 				36C79A25288E44530016F9E5 /* PhotoSaveViewController.swift */,
+				362094AE2891194000D8E017 /* PhotoSaveCell */,
 			);
 			path = PhotoSave;
 			sourceTree = "<group>";
@@ -237,6 +251,7 @@
 				DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */,
 				36C79A24288E44460016F9E5 /* PhotoSaveStoryboard.storyboard in Resources */,
 				DE15E66328604278003DD2F5 /* MainStoryboard.storyboard in Resources */,
+				362094AD2891193B00D8E017 /* PhotoSaveCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +271,7 @@
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				362C8983288FBE960055C3DF /* ImageLoader.swift in Sources */,
 				36C79A2A288E4B0E0016F9E5 /* PhotoListCollectionViewCell.swift in Sources */,
+				362094AC2891193B00D8E017 /* PhotoSaveCollectionViewCell.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				36C79A22288E44350016F9E5 /* PhotoListViewController.swift in Sources */,
 				362C8981288FB22E0055C3DF /* PhotoModel.swift in Sources */,
