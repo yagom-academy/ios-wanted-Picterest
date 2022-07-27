@@ -30,10 +30,10 @@ final class RandomImageListViewModel {
     }
     
     func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
-        networkManager.getRandomImageInfo { result in
+        networkManager.getRandomImageInfo { [weak self] result in
             switch result {
             case .success(let infos):
-                self.imageInfos = infos
+                self?.imageInfos += infos
                 print("success load data!")
                 completion(.success(Void()))
             case .failure(let error):

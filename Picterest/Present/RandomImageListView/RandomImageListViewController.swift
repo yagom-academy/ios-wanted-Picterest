@@ -47,7 +47,7 @@ extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
 }
 
@@ -63,11 +63,26 @@ extension RandomImageListViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SampleFooter.reuseIdentifier, for: indexPath)
+        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier, for: indexPath) as? AddCellButtonFooterView else { return UICollectionReusableView() }
+        footer.delegate = self
         return footer
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+}
+
+extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
+    func tappedAddCellButton() {
+        viewModel.loadData { [weak self] result in
+            switch result {
+            case .success():
+                print("성공")
+                self?.collectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
@@ -84,8 +99,9 @@ extension RandomImageListViewController {
         
         collectionView.backgroundColor = .purple
         collectionView.dataSource = self
+//        collectionView.delegate = self
         collectionView.register(RandomImageListCell.self, forCellWithReuseIdentifier: RandomImageListCell.reuseIdentifier)
-        collectionView.register(SampleFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: SampleFooter.reuseIdentifier)
+        collectionView.register(AddCellButtonFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier)
     }
     
     private func layout() {
@@ -97,3 +113,9 @@ extension RandomImageListViewController {
         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
+
+//extension RandomImageListViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+//        return CGSize(width: 100, height: 100)
+//    }
+//}

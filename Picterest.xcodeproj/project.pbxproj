@@ -26,7 +26,8 @@
 		FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */; };
 		FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */; };
 		FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A672288ED11100EBD539 /* Collection+Extension.swift */; };
-		FEB73B322890038F00E165EC /* SampleFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* SampleFooter.swift */; };
+		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
+		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +52,8 @@
 		FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		FE56A672288ED11100EBD539 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
-		FEB73B312890038F00E165EC /* SampleFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleFooter.swift; sourceTree = "<group>"; };
+		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
+		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +176,8 @@
 			isa = PBXGroup;
 			children = (
 				FE56A665288EB21600EBD539 /* RandomImageListCell.swift */,
-				FEB73B312890038F00E165EC /* SampleFooter.swift */,
+				FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */,
+				FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */,
 				FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */,
 			);
 			path = Cell;
@@ -273,11 +276,12 @@
 				FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */,
 				FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */,
 				FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */,
+				FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
-				FEB73B322890038F00E165EC /* SampleFooter.swift in Sources */,
+				FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */,
 				FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */,
 				FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */,
 				FE24EB72288E3C0000A4527C /* NetworkManger.swift in Sources */,

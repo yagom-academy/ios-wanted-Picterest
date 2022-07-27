@@ -19,7 +19,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     private var cellPadding: CGFloat = 6
 
     private var cache = [UICollectionViewLayoutAttributes]()
-    private var supplementaryCache = [UICollectionViewLayoutAttributes]()
+    private var sectionOneFooterCache: UICollectionViewLayoutAttributes? = nil
 
     private var contentHeight: CGFloat = 0
 
@@ -37,12 +37,18 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     
     override func prepare() {
         super.prepare()
+        initCumlativeValue()
         prepareSectionOneCellLayout()
         prepareSectionOneFooterLayout(maxHeight: CumulativeValue.maxHeight)
     }
     
+    private func initCumlativeValue() {
+        CumulativeValue.height.removeAll()
+        CumulativeValue.maxHeight = 0.0
+    }
+    
     private func prepareSectionOneCellLayout() {
-        guard cache.isEmpty == true, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
         let numberOfColumns = delegate?.collectionView(collectionView, numberOfColumnsInSection: 0) ?? 1
@@ -77,7 +83,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     }
     
     private func prepareSectionOneFooterLayout(maxHeight: CGFloat) {
-        guard supplementaryCache.isEmpty == true, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
         if (collectionView.numberOfItems(inSection: 0) > 0) {
@@ -86,7 +92,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(row: 0, section: 0))
             attributes.frame = insetFrame
-            supplementaryCache.append(attributes)
+            sectionOneFooterCache = attributes
             contentHeight = max(contentHeight, frame.maxY)
         }
     }
@@ -118,17 +124,16 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
                 visibleLayoutAttributes.append(attributes)
             }
         }
-        for supplementaryAttributes in supplementaryCache {
-            if supplementaryAttributes.frame.intersects(rect) {
-                visibleLayoutAttributes.append(supplementaryAttributes)
-            }
+        guard let supplementaryAttributes = sectionOneFooterCache else { return visibleLayoutAttributes }
+        if supplementaryAttributes.frame.intersects(rect) {
+            visibleLayoutAttributes.append(supplementaryAttributes)
         }
         return visibleLayoutAttributes
     }
 
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
-        return supplementaryCache[0]
+        return sectionOneFooterCache
     }
 
 //    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
