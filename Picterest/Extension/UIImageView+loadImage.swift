@@ -9,7 +9,10 @@ import UIKit
 
 extension UIImageView {
     
-    func loadImage(_ urlString: String) {
+    func loadImage(_ urlString: String?) {
+        guard let urlString = urlString else {
+            return
+        }
         
         var task: URLSessionDataTask?
         let imageCacheManager = ImageCacheManager.shared

@@ -22,12 +22,11 @@ final class ImagesViewModel {
         return images.count
     }
     
-    func getImage(at index: Int) -> ImageInformation {
+    func getImage(at index: Int) -> ImageInformation? {
+        if index < 0 || index >= images.count {
+            return nil
+        }
         return images[index]
-    }
-    
-    func getID(at index: Int) -> String {
-        return images[index].id
     }
     
     func fetch() {

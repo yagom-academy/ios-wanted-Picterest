@@ -57,8 +57,7 @@ extension ImagesViewController: UICollectionViewDataSource {
         let index = indexPath.row
         
         cell.delegate = self
-        cell.imageID = viewModel.getID(at: index)
-        cell.imageView.loadImage(viewModel.getImage(at: index).urls.small)
+        cell.imageView.loadImage(viewModel.getImage(at: index)?.urls.small)
         cell.indexLabel.text = "\(indexPath.row)번째 사진"
         cell.saveImageButton.tintColor = .white
         return cell
@@ -96,12 +95,20 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
         alertController.addTextField()
 
         let save = UIAlertAction(title: "저장", style: UIAlertAction.Style.default, handler: { saveAction -> Void in
-            guard let textFields = alertController.textFields else {
+            guard let textFields = alertController.textFields,
+                  let index = self.collectionView.indexPath(for: cell)?.row,
+                  let imageInformation = self.viewModel.getImage(at: index),
+                  let memo = textFields[0].text else {
                 return
             }
             
-            self.imageFileManager.saveImageToDevice(fileName: cell.imageID, cell.imageView.image)
-            self.save(id: cell.imageID, memo: textFields[0].text ?? "", originalURL: "12", savedLocation: "12")
+            let imageID = imageInformation.id
+            let originalURL = imageInformation.urls.small
+            
+            guard let savedLocation = self.imageFileManager.saveImageToDevice(fileName: imageID, cell.imageView.image) else { return }
+            let imageCoreData = ImageCoreDataModel(id: imageID, memo: memo, originalURL: originalURL, savedLocation: savedLocation)
+            
+            CoreDataManager.shared.save(imageCoreData)
         })
         
         let cancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: {
@@ -120,36 +127,12 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
 
 extension ImagesViewController {
     
-    func save(id: String, memo: String, originalURL: String, savedLocation: String) {
-        let entityName = "ImageData"
-
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            
-            guard let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
-            
-            let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
-            newValue.setValue(id, forKey: "id")
-            newValue.setValue(memo, forKey: "memo")
-            newValue.setValue(originalURL, forKey: "originalURL")
-            newValue.setValue(savedLocation, forKey: "savedLocation")
-            
-            do {
-                try context.save()
-                print("Save Success")
-                print("memo: \(memo), id: \(id)")
-            } catch {
-                print("Save Error")
-            }
-        }
-    }
-    
     func retrieveValues() {
-        let entityName = "ImageData"
+        let entityName = "ImageCoreData"
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             let context = appDelegate.persistentContainer.viewContext
-            let fetchRequest = NSFetchRequest<ImageData>(entityName: entityName)
+            let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
             
             do {
                 let results = try context.fetch(fetchRequest)

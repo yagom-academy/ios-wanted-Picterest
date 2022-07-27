@@ -13,9 +13,9 @@ final class ImageFileManager {
     private let fileManager = FileManager.default
     private let directoryName = "Images"
 
-    func saveImageToDevice(fileName: String, _ image: UIImage?) {
+    func saveImageToDevice(fileName: String, _ image: UIImage?) -> String? {
         guard let image = image else {
-            return
+            return nil
         }
                 
         let imageFileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -28,6 +28,8 @@ final class ImageFileManager {
         } catch {
             print(error.localizedDescription)
         }
+        
+        return imageFileURL.absoluteString
     }
 
 }
