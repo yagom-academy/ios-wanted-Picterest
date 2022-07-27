@@ -10,9 +10,8 @@ import Foundation
 protocol EndPointType {
     
     var baseURL: String { get }
-    var path: String { get }
-    var query: [URLQueryItem] { get }
-    var apiKey: String { get }
+    var path: String { get } // photos
+    var query: [URLQueryItem] { get } // client_id
     
     func asURLRequest() -> URLRequest?
     
