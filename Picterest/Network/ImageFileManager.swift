@@ -15,8 +15,8 @@ enum ImageFileManagerError: Error {
 class ImageFileManager {
     static let shared: ImageFileManager = ImageFileManager()
 
-    func saveImageToLocal(image: UIImage, name: String) {
-        guard let data = image.pngData() else { return }
+    func saveImageToLocal(image: UIImage, name: String) -> String? {
+        guard let data = image.pngData() else { return nil }
         if let directory: NSURL = try? FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
@@ -24,13 +24,14 @@ class ImageFileManager {
             create: false
         ) as NSURL {
             do {
-                guard let imageURL = directory.appendingPathComponent(name) else { return }
+                guard let imageURL = directory.appendingPathComponent(name) else { return nil }
                 try data.write(to: imageURL)
+                return imageURL.path
             } catch {
                 print(ImageFileManagerError.notDirectory)
             }
-            print(directory)
         }
+        return nil
     }
     
     func deleteImageFromLocal(named: String) {
