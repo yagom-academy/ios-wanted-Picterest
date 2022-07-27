@@ -11,7 +11,7 @@ class SaveViewController: UIViewController {
 
     private var saveTableView = UITableView()
     private var viewModel = SaveViewModel()
-    private var savePhotoList: [Photo] = []
+    private var savePhotoList: [SavePhoto] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
