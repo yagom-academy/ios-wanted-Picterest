@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PicterestPhotoSavable: AnyObject {
-    func picterestCollectoinViewCell(imageInfo: ImageData, imageData: UIImage)
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: ImageData, imageData: UIImage, idx: IndexPath)
 }
 
 class PicterestCollectionViewCell: UICollectionViewCell {
@@ -17,6 +17,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     
     private var currentImageInfo: ImageData?
     private var currentImageData: UIImage?
+    private var currentIndexPath: IndexPath?
     
     private let picterestImageView: UIImageView = {
         var imageView = UIImageView()
@@ -75,6 +76,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     }
     
     private func setCellLayout() {
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 20
         contentView.layer.masksToBounds = true
         contentView.addSubview(picterestImageView)
@@ -103,16 +106,16 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     @objc func starbuttonClicked() {
         if let delegate = delegate {
             starButton.isSelected.toggle()
-            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo else {
+            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo, let currentIndexPath = currentIndexPath else {
                 return
             }
-            delegate.picterestCollectoinViewCell(imageInfo: currentImageInfo, imageData: currentImageData)
+            delegate.picterestCollectoinViewCell(isSelected: starButton.isSelected, imageInfo: currentImageInfo, imageData: currentImageData, idx: currentIndexPath)
         }
     }
     
-    func fetchImageData(data: ImageData, at n: Int) {
+    func fetchImageData(data: ImageData, at idx: IndexPath) {
         currentImageInfo = data
-        
+        currentIndexPath = idx
         ImageLoder().leadImage(url: data.imageUrl.smallUrl) { [self] result in
             switch result {
             case .success(let image):
@@ -122,7 +125,23 @@ class PicterestCollectionViewCell: UICollectionViewCell {
                 print(error.localizedDescription)
             }
         }
-        indexTitleLabel.text = "\(n)번째 사진"
+        indexTitleLabel.text = "\(idx.row)번째 사진"
+    }
+    
+    func fetchImageDataToRepository(data: Picture) {
+        starButton.isSelected = true
+        starButton.isUserInteractionEnabled = false
+        if let id = data.id {
+            let imageUrl = PicterestFileManager.shared.getPictureLocaUrl(fileName: id)
+            do {
+                let imageData = try Data(contentsOf: imageUrl)
+                picterestImageView.image = UIImage(data: imageData)
+            } catch let error {
+                print(error)
+            }
+        }
+        
+        indexTitleLabel.text = data.memo
     }
     
     private func resizeImage(image: UIImage, width: CGFloat) -> UIImage {

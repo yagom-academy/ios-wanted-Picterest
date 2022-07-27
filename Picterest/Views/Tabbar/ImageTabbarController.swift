@@ -17,16 +17,26 @@ class ImageTabbarController: UITabBarController, UITabBarControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let newsVC = ImageListViewController()
-        let categoryVC = ImageRepositoryViewController()
+        let pictureListVC = ImageListViewController()
+        let repositoryVC = ImageRepositoryViewController()
+        let pictureNaviVC = UINavigationController(rootViewController: pictureListVC)
+        let repositoryNaviVC = UINavigationController(rootViewController: repositoryVC)
+        
+        pictureListVC.navigationController?.navigationBar.prefersLargeTitles = true
+        pictureListVC.navigationItem.largeTitleDisplayMode = .always
+        repositoryVC.navigationController?.navigationBar.prefersLargeTitles = true
+        repositoryVC.navigationItem.largeTitleDisplayMode = .always
+        
+        pictureListVC.title = "Picterest"
+        repositoryVC.title = "Repository"
         
         let newsVCTabBarItem = UITabBarItem(title: "Images", image: UIImage(systemName: "photo.fill.on.rectangle.fill"), tag: 1)
-        newsVC.tabBarItem = newsVCTabBarItem
+        pictureListVC.tabBarItem = newsVCTabBarItem
         
         let categoryVCTabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star.bubble"), tag: 2)
-        categoryVC.tabBarItem = categoryVCTabBarItem
+        repositoryVC.tabBarItem = categoryVCTabBarItem
 
-        self.viewControllers = [newsVC, categoryVC]
+        self.viewControllers = [pictureNaviVC, repositoryNaviVC]
 
     }
     

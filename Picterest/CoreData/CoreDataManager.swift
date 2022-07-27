@@ -5,7 +5,7 @@
 //  Created by 신의연 on 2022/07/26.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 class CoreDataManager {
@@ -32,7 +32,7 @@ class CoreDataManager {
         })
     }
     
-    func createPictureData(id: String, memo: String, originUrl: String, localUrl: String) {
+    func createPictureData(id: String, memo: String, originUrl: String, localUrl: String, imageSize: CGFloat) {
         mainContext.perform {
             
             let newPicture = Picture(context: self.mainContext)
@@ -40,6 +40,7 @@ class CoreDataManager {
             newPicture.memo = memo
             newPicture.originUrl = originUrl
             newPicture.localUrl = localUrl
+            newPicture.imageSize = String(Int(imageSize))
             self.saveContext()
         }
     }
