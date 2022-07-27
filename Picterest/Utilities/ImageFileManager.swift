@@ -58,7 +58,7 @@ final class ImageFileManager {
 
     func fileExists(_ fileName: NSString) -> Bool {
         let imageFileURL = makeFileURL(using: fileName)
-        return fileManager.fileExists(atPath: imageFileURL.absoluteString)
+        return fileManager.fileExists(atPath: imageFileURL.path)
     }
    
 }

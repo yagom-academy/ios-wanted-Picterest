@@ -123,9 +123,9 @@ extension ImagesViewController {
                 let results = try context.fetch(fetchRequest)
                 
                 for result in results {
-                    if let id = result.id, let memo = result.memo {
-                        print("id: \(id), memo: \(memo)")
-                    }
+//                    if let id = result.id, let memo = result.memo {
+//                        print("id: \(id), memo: \(memo)")
+//                    }
                 }
             } catch {
                 print("Could not retrieve")
