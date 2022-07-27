@@ -7,13 +7,13 @@
 
 import UIKit
 import Combine
+import CoreData
 
 class PhotoListViewController: BaseViewController {
 
     private let photoListView = PhotoListView()
     let photoListViewModel = PhotoListViewModel()
-    
-    
+        
     var photoList : [Photo]?
     var disposalbleBag = Set<AnyCancellable>()
     
@@ -24,7 +24,9 @@ class PhotoListViewController: BaseViewController {
         photoListView.photoCollectionView.dataSource = self
         photoListView.photoCollectionView.delegate = self
         photoListViewModel.getDataFromServer()
+        photoListViewModel.getDataFromCoreData()
         setBinding()
+        print(CoreDataManager.shared.images.count)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,13 +116,14 @@ extension PhotoListViewController : SaveButtonDelegate {
             alert.addTextField()
             alert.addAction(UIAlertAction(title: "저장", style: .default, handler: { [weak self] _ in
                 print("저장")
+                cell.memoText = alert.textFields?[0].text
                 // filemanager에 이미지 저장
-                self?.photoListViewModel.saveImageToFilemanager(cell.imageView.image ?? UIImage(), self?.photoList?[cell.index ?? -1].id ?? "")
+                guard let photo = self?.photoList?[cell.index ?? -1] else {return}
+                guard let path = self?.photoListViewModel.saveImageToFilemanager(cell.imageView.image ?? UIImage(), photo.id) else {return}
                 // coredata에 데이터 저장
-                self?.photoListViewModel.saveDataToCoreData()
+                self?.photoListViewModel.saveDataToCoreData(photo.id, cell.memoText ?? "", photo.urls.small, path, Int32(photo.width), Int32(photo.height))
                 cell.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 cell.saveButton.tintColor = .yellow
-                cell.memoText = alert.textFields?[0].text
             }))
             self.present(alert, animated: true)
         } else {
@@ -129,6 +132,13 @@ extension PhotoListViewController : SaveButtonDelegate {
             // filemanager에 있는 이미지 삭제
             self.photoListViewModel.deleteImageFromFilemanager(self.photoList?[cell.index ?? -1].id ?? "")
             // coredata에 있는 정보 삭제
+            let result = CoreDataManager.shared.getData()
+            for object in result {
+                if object.value(forKey: "id") as? String == photoList?[cell.index ?? -1].id ?? "" {
+                    self.photoListViewModel.deleteDataInCoreData(object)
+                }
+            }
+//            photoList?[cell.index ?? -1].id
         }
     }
 }

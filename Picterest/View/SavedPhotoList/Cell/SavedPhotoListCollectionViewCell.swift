@@ -37,11 +37,15 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
         topView.backgroundColor = .gray
         topView.distribution = .equalSpacing
         topView.alpha = 0.6
+        topView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        topView.isLayoutMarginsRelativeArrangement = true
         return topView
     }()
     
     var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -78,11 +82,6 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            saveButton.leadingAnchor.constraint(equalTo: topStackView.leadingAnchor, constant: 5),
-            saveButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-            
-            rightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-
             topStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
