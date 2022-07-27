@@ -12,6 +12,8 @@ class SavedListViewController: UIViewController {
     // MARK: - UI Components
     private lazy var savedListTableView: UITableView = {
         let tableView = UITableView()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 300.0
         tableView.dataSource = self
         tableView.register(
             SavedListTableViewCell.self,
@@ -40,7 +42,8 @@ extension SavedListViewController: UITableViewDataSource {
             withIdentifier: SavedListTableViewCell.identifier,
             for: indexPath
         ) as? SavedListTableViewCell else { return UITableViewCell() }
-        cell.setupView(path: savedList[indexPath.row].path)
+        let savedPhoto = savedList[indexPath.row]
+        cell.setupView(savedPhoto: savedPhoto)
         return cell
     }
 }

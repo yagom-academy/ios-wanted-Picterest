@@ -16,8 +16,19 @@ class SavedListTableViewCell: UITableViewCell, CellIdentifiable {
         return imageView
     }()
     
-    func setupView(path: String) {
+    func setupView(savedPhoto: CoreSavedPhoto) {
         configUI()
+        
+        guard let folderURL = FileManager.default.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        ).first?.appendingPathComponent("SavedPhotos") else { return }
+        
+        let writeURL = folderURL.appendingPathComponent(savedPhoto.id + ".png")
+        
+        let data = FileManager.default.contents(atPath: writeURL.path)
+        
+        savedImageView.image = UIImage(data: data!)
     }
 }
 
@@ -36,10 +47,10 @@ private extension SavedListTableViewCell {
             topView.topAnchor.constraint(equalTo: contentView.topAnchor),
             topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            savedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            savedImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            savedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            savedImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            savedImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            savedImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16.0),
+            savedImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            savedImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16.0),
         ])
     }
 }
