@@ -78,7 +78,8 @@ extension RandomImageListViewController: RandomImageListCellDelegate {
     func tappedSaveButton(_ indexPath: IndexPath) {
         viewModel.tappedStarButton(indexPath: indexPath)
         collectionView.reloadData()
-        let alert = InputMessageAlertViewController()
+        let alert = SaveImageAlertViewController(row: indexPath.row+1)
+        alert.delegate = self
         alert.modalPresentationStyle = .overFullScreen
         present(alert, animated: false)
     }
@@ -98,6 +99,12 @@ extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
     }
 }
 
+//MARK: - SaveImageAlertView Delegate 이벤트
+extension RandomImageListViewController: SaveImageAlertViewDelegate {
+    func tappedSavedButton(row: Int, message: String) {
+        print("확인")
+    }
+}
 
 //MARK: - attribute, layout 메서드
 extension RandomImageListViewController {

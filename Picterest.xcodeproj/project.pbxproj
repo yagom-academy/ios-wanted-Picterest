@@ -29,7 +29,8 @@
 		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
 		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
 		FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */; };
-		FEFB54EE28911CC5005EA2DD /* InputMessageAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54ED28911CC5005EA2DD /* InputMessageAlertView.swift */; };
+		FEFB54EE28911CC5005EA2DD /* SaveImageAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */; };
+		FEFB54F02891864F005EA2DD /* SaveImageAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54EF2891864F005EA2DD /* SaveImageAlertViewDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,7 +58,8 @@
 		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
 		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
 		FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCellDelegate.swift; sourceTree = "<group>"; };
-		FEFB54ED28911CC5005EA2DD /* InputMessageAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputMessageAlertView.swift; sourceTree = "<group>"; };
+		FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageAlertViewController.swift; sourceTree = "<group>"; };
+		FEFB54EF2891864F005EA2DD /* SaveImageAlertViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageAlertViewDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +227,8 @@
 		FEFB54EC28911CAD005EA2DD /* SubComponents */ = {
 			isa = PBXGroup;
 			children = (
-				FEFB54ED28911CC5005EA2DD /* InputMessageAlertView.swift */,
+				FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */,
+				FEFB54EF2891864F005EA2DD /* SaveImageAlertViewDelegate.swift */,
 			);
 			path = SubComponents;
 			sourceTree = "<group>";
@@ -316,11 +319,12 @@
 				FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */,
 				FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */,
 				FE24EB72288E3C0000A4527C /* NetworkManger.swift in Sources */,
-				FEFB54EE28911CC5005EA2DD /* InputMessageAlertView.swift in Sources */,
+				FEFB54EE28911CC5005EA2DD /* SaveImageAlertViewController.swift in Sources */,
 				FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */,
 				FE56A666288EB21600EBD539 /* RandomImageListCell.swift in Sources */,
 				FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
+				FEFB54F02891864F005EA2DD /* SaveImageAlertViewDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
