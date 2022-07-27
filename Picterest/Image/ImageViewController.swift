@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 protocol CustomLayoutDelegate: AnyObject {
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
@@ -22,6 +23,7 @@ class ImageViewController: UIViewController {
     var photoList: [Photo] = []
     private var startPage = 0
     private var totalPage = 0
+    private var indexPath: IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,8 +96,11 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.fetchData(photoList[indexPath.row], indexPath)
         cell.labelStackView.delegate = self
+        self.indexPath = indexPath
+        
         return cell
     }
     
@@ -140,16 +145,40 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
 extension ImageViewController: PhotoLabelEvnetDelegate {
     
     func tapStarButton(sender: UIButton) {
-        var text: String?
+        var text: String!
         let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
         let ok = UIAlertAction(title: "저장", style: .default) { ok in
             text = alert.textFields?[0].text
             print(text)
+            self.saveCoreData(text)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField()
         alert.addAction(cancel)
         alert.addAction(ok)
         self.present(alert, animated: true)
+    }
+    
+    func saveCoreData(_ text: String) {
+        guard let row = indexPath?.row else { return }
+        let path = PhotoFileManager().getPhotoFilePath(photoList[row].id)
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "SavePhoto", in: context)
+        
+        if let entity = entity {
+            let savePhoto = NSManagedObject(entity: entity, insertInto: context)
+            savePhoto.setValue(photoList[row].id, forKey: "id")
+            savePhoto.setValue(text, forKey: "memo")
+            savePhoto.setValue(photoList[row].urls.small, forKey: "originUrl")
+            savePhoto.setValue(path, forKey: "location")
+            
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 }

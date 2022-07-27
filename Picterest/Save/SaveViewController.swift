@@ -77,6 +77,10 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = saveTableView.dequeueReusableCell(withIdentifier: SaveTableViewCell.identifier, for: indexPath) as? SaveTableViewCell else { return UITableViewCell() }
+        
+        cell.fetchData(savePhotoList[indexPath.row])
+        cell.labelStackView.photoLabel.text = ""
+        
         return cell
     }
 }
