@@ -25,10 +25,16 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
         configUI()
         bindImage()
         topView.viewModel = viewModel?.imageTopViewModel
-        if let _ = photo as? Photo {
+        if let photo = photo as? Photo {
             topView.setupView(text: "\(index)번째 사진")
+            
+            if viewModel?.checkSavedPhoto(photoID: photo.id) == true {
+                topView.fillStarButton()
+            }
+            
         } else if let savedPhoto = photo as? CoreSavedPhoto {
             topView.setupView(text: savedPhoto.memo)
+            topView.fillStarButton()
         }
     }
     

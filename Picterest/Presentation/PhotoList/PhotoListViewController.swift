@@ -77,7 +77,7 @@ private extension PhotoListViewController {
     func bindSavePhoto() {
         viewModel.starButtonTapped.bind { sender, photoInfo, image in
             guard let sender = sender,
-                  let photoInfo = photoInfo,
+                  let photoInfo = photoInfo as? Photo,
                   let image = image else { return }
             
             if sender.tintColor != .systemYellow {

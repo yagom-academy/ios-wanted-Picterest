@@ -10,7 +10,7 @@ import UIKit
 class PhotoListViewModel {
     let photoList: Observable<[Photo]> = Observable([])
     
-    let starButtonTapped: Observable<(UIButton?, Photo?, UIImage?)> = Observable((nil, nil, nil))
+    let starButtonTapped: Observable<(UIButton?, AAA?, UIImage?)> = Observable((nil, nil, nil))
     let isSave: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let isRemove: Observable<(UIButton?, Bool)> = Observable((nil, false))
     

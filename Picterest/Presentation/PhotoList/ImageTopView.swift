@@ -34,6 +34,10 @@ class ImageTopView: UIView {
         configUI()
         indexLabel.text = text
     }
+    func fillStarButton() {
+        starButton.setImage(Icon.starFill.image, for: .normal)
+        starButton.tintColor = .systemYellow
+    }
 }
 
 // MARK: - @objc Methods

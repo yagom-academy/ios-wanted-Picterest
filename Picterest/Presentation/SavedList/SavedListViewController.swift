@@ -30,6 +30,7 @@ class SavedListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
+        bindRemovePhoto()
     }
 }
 
@@ -83,9 +84,46 @@ extension SavedListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - Bind
+private extension SavedListViewController {
+    func bindRemovePhoto() {
+        viewModel.starButtonTapped.bind { sender, photoInfo, image in
+            guard let _ = sender,
+                  let photoInfo = photoInfo as? CoreSavedPhoto,
+                  let _ = image else { return }
+            
+            self.showAlert {
+                self.viewModel.remove(savedPhoto: photoInfo)
+            }
+        }
+        
+        viewModel.isRemove.bind {
+            if $0 {
+                self.savedList = CoreDataManager.shared.fetch()
+                self.savedListCollectionView.reloadData()
+            }
+        }
+    }
+}
 
 // MARK: - UI Methods
 private extension SavedListViewController {
+    func showAlert(handler: @escaping () -> Void) {
+        let alert = UIAlertController(
+            title: "사진 삭제",
+            message: nil,
+            preferredStyle: .alert
+        )
+        
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            handler()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        [cancelAction, okAction].forEach { alert.addAction($0) }
+        
+        present(alert, animated: true)
+    }
+    
     func configUI() {
         view.backgroundColor = .systemBackground
         
