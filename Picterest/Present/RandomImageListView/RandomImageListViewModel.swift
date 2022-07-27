@@ -8,23 +8,31 @@
 import UIKit
 
 final class RandomImageListViewModel {
+    struct CellData {
+        var thumbnailURL: String
+        var isSaved: Bool
+        mutating func toggleSavedState() {
+            self.isSaved = !self.isSaved
+        }
+    }
     
     private let networkManager: NetworkManager
-    private var imageInfos: [ImageInfo] = []
+    private var networkDatas: [ImageInfo] = []
+    private var cellDatas: [CellData] = []
     var cellTotalCount: Int {
-        return imageInfos.count
+        return networkDatas.count
     }
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
     
-    func cellData(_ indexPath: IndexPath) -> ImageInfo? {
-        return imageInfos[safe: indexPath.row]
+    func cellData(_ indexPath: IndexPath) -> CellData? {
+        return cellDatas[safe: indexPath.row]
     }
     
     func cellHeightMultiplier(_ indexPath: IndexPath) -> CGFloat {
-        guard let data = imageInfos[safe: indexPath.row] else { return 0.0 }
+        guard let data = networkDatas[safe: indexPath.row] else { return 0.0 }
         let multiplier = CGFloat(data.height) / CGFloat(data.width)
         return multiplier
     }
@@ -33,7 +41,10 @@ final class RandomImageListViewModel {
         networkManager.getRandomImageInfo { [weak self] result in
             switch result {
             case .success(let infos):
-                self?.imageInfos += infos
+                self?.networkDatas += infos
+                self?.cellDatas += infos.map({ info in
+                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: false)
+                })
                 print("success load data!")
                 completion(.success(Void()))
             case .failure(let error):
@@ -41,5 +52,10 @@ final class RandomImageListViewModel {
                 completion(.failure(error))
             }
         }
+    }
+    
+    func tappedStarButton(indexPath: IndexPath) {
+        guard cellDatas[safe: indexPath.row] != nil else { return }
+        cellDatas[indexPath.row].toggleSavedState()
     }
 }

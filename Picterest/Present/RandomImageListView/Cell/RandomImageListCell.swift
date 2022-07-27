@@ -12,8 +12,11 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     private let topBarStackView = UIStackView()
     private let starButton = UIButton(type: .system)
     private let titleLabel = UILabel()
-    
     private let imageView = UIImageView()
+    
+    private var indexPath:IndexPath?
+    
+    weak var delegate: RandomImageListCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
@@ -26,9 +29,14 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(indexPath: IndexPath, data: ImageInfo?) {
+    func configure(indexPath: IndexPath, data: RandomImageListViewModel.CellData?) {
+        guard let data = data else {
+            return
+        }
+        self.indexPath = indexPath
         titleLabel.text = "\(indexPath.row+1)번째 사진"
-        imageView.load(urlString: data?.imageURL.thumbnail)
+        imageView.load(urlString: data.thumbnailURL)
+        starButton.setTitleColor(data.isSaved ? .yellow : .white, for: .normal)
     }
     
     private func attribute() {
@@ -44,8 +52,16 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         starButton.setTitle("☆", for: .normal)
         starButton.setTitleColor(.white, for: .normal)
         starButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .medium)
+        starButton.addTarget(self, action: #selector(tappedStarButton), for: .touchUpInside)
         
         titleLabel.textColor = .white
+    }
+    
+    @objc private func tappedStarButton() {
+        guard let indexPath = indexPath else {
+            return
+        }
+        delegate?.tappedSaveButton(indexPath)
     }
     
     private func layout() {

@@ -56,6 +56,7 @@ extension RandomImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RandomImageListCell.reuseIdentifier, for: indexPath) as? RandomImageListCell else { return UICollectionViewCell() }
         cell.configure(indexPath: indexPath, data: viewModel.cellData(indexPath))
+        cell.delegate = self
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -72,6 +73,15 @@ extension RandomImageListViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - Cell Delegate 이벤트
+extension RandomImageListViewController: RandomImageListCellDelegate {
+    func tappedSaveButton(_ indexPath: IndexPath) {
+        viewModel.tappedStarButton(indexPath: indexPath)
+        collectionView.reloadData()
+    }
+}
+
+//MARK: - Footer Delegate 이벤트
 extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
     func tappedAddCellButton() {
         viewModel.loadData { [weak self] result in
@@ -99,7 +109,6 @@ extension RandomImageListViewController {
         
         collectionView.backgroundColor = .purple
         collectionView.dataSource = self
-//        collectionView.delegate = self
         collectionView.register(RandomImageListCell.self, forCellWithReuseIdentifier: RandomImageListCell.reuseIdentifier)
         collectionView.register(AddCellButtonFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier)
     }
@@ -113,9 +122,3 @@ extension RandomImageListViewController {
         collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
-
-//extension RandomImageListViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-//        return CGSize(width: 100, height: 100)
-//    }
-//}

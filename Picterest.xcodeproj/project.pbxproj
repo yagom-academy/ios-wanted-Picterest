@@ -28,6 +28,7 @@
 		FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A672288ED11100EBD539 /* Collection+Extension.swift */; };
 		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
 		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
+		FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		FE56A672288ED11100EBD539 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
 		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
+		FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCellDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				FE56A665288EB21600EBD539 /* RandomImageListCell.swift */,
+				FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */,
 				FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */,
 				FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */,
 				FE56A668288EB32C00EBD539 /* ReuseIdentifying.swift */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */,
+				FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */,
 				FE24EB79288E4C2700A4527C /* CustomError.swift in Sources */,
 				FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */,
 				FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */,
