@@ -78,6 +78,9 @@ extension RandomImageListViewController: RandomImageListCellDelegate {
     func tappedSaveButton(_ indexPath: IndexPath) {
         viewModel.tappedStarButton(indexPath: indexPath)
         collectionView.reloadData()
+        let alert = InputMessageAlertViewController()
+        alert.modalPresentationStyle = .overFullScreen
+        present(alert, animated: false)
     }
 }
 
@@ -87,7 +90,6 @@ extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
         viewModel.loadData { [weak self] result in
             switch result {
             case .success():
-                print("성공")
                 self?.collectionView.reloadData()
             case .failure(let error):
                 print(error)

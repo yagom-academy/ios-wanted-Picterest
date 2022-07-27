@@ -16,7 +16,6 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.standardAppearance = tabBarAppearance
         self.tabBar.scrollEdgeAppearance = tabBarAppearance
         self.tabBar.tintColor = .white
-
     }
     
     private func setVC() {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddCellButtonFooterView: UICollectionReusableView, ReuseIdentifying {
+final class AddCellButtonFooterView: UICollectionReusableView, ReuseIdentifying {
     
     private let addButton = UIButton()
     weak var delegate: AddCellButtonFooterViewDelegate?
