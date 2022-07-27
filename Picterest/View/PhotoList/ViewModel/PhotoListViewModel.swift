@@ -45,4 +45,42 @@ class PhotoListViewModel : ObservableObject {
             return image
         }
     }
+    
+    func saveImageToFilemanager(_ image : UIImage, _ name : String) {
+        let fileManager = FileManager.default
+        
+        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
+        let directoryURL = directory.appendingPathComponent("images")
+        if !fileManager.fileExists(atPath: directoryURL.path) {
+            do {
+                try fileManager.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
+        let data = image.jpegData(compressionQuality: 1.0)
+        do {
+            try data?.write(to: imagePathURL)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func deleteImageFromFilemanager(_ name : String) {
+        let fileManager = FileManager.default
+        
+        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
+        let directoryURL = directory.appendingPathComponent("images")
+        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
+        do {
+            try fileManager.removeItem(at: imagePathURL)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func saveDataToCoreData() {
+        
+    }
 }
