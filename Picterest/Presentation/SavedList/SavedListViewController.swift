@@ -25,6 +25,7 @@ class SavedListViewController: UIViewController {
     
     // MARK: - Properties
     private var savedList: [CoreSavedPhoto] = CoreDataManager.shared.fetch()
+    private let viewModel = SavedListViewModel()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -44,6 +45,7 @@ extension SavedListViewController: UITableViewDataSource {
             for: indexPath
         ) as? SavedListTableViewCell else { return UITableViewCell() }
         let savedPhoto = savedList[indexPath.row]
+        cell.viewModel = viewModel.makeSavedListTableViewCellViewModel(savedPhoto: savedPhoto)
         cell.setupView(savedPhoto: savedPhoto)
         return cell
     }

@@ -22,11 +22,13 @@ class SavedListTableViewCell: UITableViewCell, CellIdentifiable {
         return imageView
     }()
     
+    var viewModel: SavedListTableViewCellViewModel?
+    
     func setupView(savedPhoto: CoreSavedPhoto) {
-        guard let data = FileManager.fetch(fileName: savedPhoto.id) else { return }
-        savedImageView.image = UIImage(data: data)
-        
-        configUI()
+        viewModel?.image.bind { image in
+            self.savedImageView.image = image
+            self.configUI()
+        }
         topView.setupView(index: 1)
     }
 }
