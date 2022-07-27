@@ -4,12 +4,12 @@
 //
 //
 
-import Foundation
 import UIKit
 
 enum ImageLoaderError: Error {
-    case noImage
     case invalidImageURL
+    case noResponseError
+    case inavalidImageData
 }
 
 class ImageLoder {
@@ -34,7 +34,7 @@ class ImageLoder {
                 }
                 guard let httpResponse = response as? HTTPURLResponse else { return }
                 guard 200..<300 ~= httpResponse.statusCode else {
-                    completion(.failure(error.unsafelyUnwrapped))
+                    completion(.failure(ImageLoaderError.noResponseError))
                     return
                 }
                 if let data = data {
@@ -45,7 +45,7 @@ class ImageLoder {
                     }
                 } else {
                     DispatchQueue.main.async {
-                        completion(.failure(error.unsafelyUnwrapped))
+                        completion(.failure(ImageLoaderError.inavalidImageData))
                     }
                 }
             }

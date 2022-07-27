@@ -6,16 +6,34 @@
 
 import UIKit
 
-class PhotoListCollectionViewCell: UICollectionViewCell {
+protocol DidTapPhotoSaveButtonDelegate {
+    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?, image: UIImage?)
+}
 
+class PhotoListCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var radomImageView: UIImageView!
     @IBOutlet weak var savedButton: UIButton!
     @IBOutlet weak var captionLabel: UILabel!
+    
+    var delegate: DidTapPhotoSaveButtonDelegate?
+    var photoInfo: PhotoModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
+    }
+    
+    override func prepareForReuse() {
+        radomImageView.image = nil
+    }
+    
+    @IBAction func didTapPhotoSave(_ sender: UIButton) {
+        delegate?.showSavePhotoAlert(
+            sender: sender,
+            photoInfo: photoInfo,
+            image: radomImageView.image
+        )
     }
     
     func fetchDataFromCollectionView(data: PhotoModel) {
