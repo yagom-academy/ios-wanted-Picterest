@@ -29,6 +29,7 @@
 		F0F56E2C288FED11007AED0C /* Picture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2A288FED11007AED0C /* Picture+CoreDataClass.swift */; };
 		F0F56E2D288FED11007AED0C /* Picture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2B288FED11007AED0C /* Picture+CoreDataProperties.swift */; };
 		F0F56E2F288FED5B007AED0C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */; };
+		F0F56E312890D2C1007AED0C /* ImageRepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		F0F56E2A288FED11007AED0C /* Picture+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picture+CoreDataClass.swift"; sourceTree = "<group>"; };
 		F0F56E2B288FED11007AED0C /* Picture+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picture+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				F0F56E26288FEC7E007AED0C /* CoreData */,
-				F0F56E24288FE7DC007AED0C /* DataManager */,
+				F0F56E24288FE7DC007AED0C /* FileManager */,
 				F0F56E01288EBB1D007AED0C /* ViewModel */,
 				F0F56DEF288E8A98007AED0C /* Views */,
 				F0F56DE8288E6897007AED0C /* Model */,
@@ -164,16 +166,17 @@
 			isa = PBXGroup;
 			children = (
 				F0F56E02288EBB2C007AED0C /* ImageListViewModel.swift */,
+				F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		F0F56E24288FE7DC007AED0C /* DataManager */ = {
+		F0F56E24288FE7DC007AED0C /* FileManager */ = {
 			isa = PBXGroup;
 			children = (
 				F0F56E22288FE7D7007AED0C /* PicterestFileManager.swift */,
 			);
-			path = DataManager;
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 		F0F56E26288FEC7E007AED0C /* CoreData */ = {
@@ -274,6 +277,7 @@
 				F0F56E2D288FED11007AED0C /* Picture+CoreDataProperties.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				F0F56DFA288E9A53007AED0C /* PicterestCollectionViewCell.swift in Sources */,
+				F0F56E312890D2C1007AED0C /* ImageRepositoryViewModel.swift in Sources */,
 				F0F56DE6288E5617007AED0C /* HttpClient.swift in Sources */,
 				F0F56E2F288FED5B007AED0C /* CoreDataManager.swift in Sources */,
 				F0F56DFD288E9A77007AED0C /* PicterestCollectionViewLayout.swift in Sources */,
