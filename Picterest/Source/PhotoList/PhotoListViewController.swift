@@ -57,19 +57,28 @@ extension PhotoListViewController {
         }
     }
     
-    private func showAlertMessage(completion: @escaping (String?) -> Void) {
+    private func showSaveAlertMessage(completion: @escaping (String?) -> Void) {
         let alertController = UIAlertController(
             title: "사진 저장",
             message: "저장할 사진에 메모를 남겨주세요",
             preferredStyle: .alert
         )
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             completion(alertController.textFields?[0].text)
         }
         alertController.addTextField()
-        alertController.addAction(cancelAction)
         alertController.addAction(saveAction)
+        self.present(alertController, animated: true)
+    }
+    
+    private func showDeleteAlertMessage() {
+        let alertController = UIAlertController(
+            title: "사진 저장 취소",
+            message: "사진 저장이 취소 되었습니다.",
+            preferredStyle: .alert
+        )
+        let deleteAction = UIAlertAction(title: "확인", style: .default)
+        alertController.addAction(deleteAction)
         self.present(alertController, animated: true)
     }
 }
@@ -81,20 +90,22 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
         if sender.tintColor == .systemYellow {
             sender.setImage(UIImage(systemName: "star"), for: .normal)
             sender.tintColor = .white
-            // 파일매니저 삭제하는 메소드 추가
+            guard let photoInfo = photoInfo else { return }
+            ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
             // coreData 삭제
+            
+            showDeleteAlertMessage()
         } else {
             sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
             sender.tintColor = .systemYellow
-            showAlertMessage { result in
-                guard result != nil else { return }
-                
-                
-                
-                // 파일매니저 저장 메소드
+            showSaveAlertMessage { memo in
+                guard memo != nil else { return }
+                guard let photoInfo = photoInfo else { return }
+                guard let image = image else { return }
+                ImageFileManager.shared.saveImageToLocal(image: image, name: (photoInfo.id) + ".png")
                 
               //  CoreData추가
-              //  메모 result
+              //  메모 memo
               //  photoInfo?.urls.raw
               //  photoInfo?.id
               //  result
