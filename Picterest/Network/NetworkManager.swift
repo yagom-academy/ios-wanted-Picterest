@@ -9,7 +9,7 @@ import Foundation
 
 final class NetworkManager {
     
-    func fetchData(url: URL, completion: @escaping ([ImageData]) -> Void) {
+    func fetchData(url: URL, completion: @escaping ([ImageInformation]) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
 
@@ -24,7 +24,7 @@ final class NetworkManager {
             DispatchQueue.main.async() {
                 print("Download image success : \(url)")
                 do {
-                    let decodedData = try JSONDecoder().decode([ImageData].self, from: safeData)
+                    let decodedData = try JSONDecoder().decode([ImageInformation].self, from: safeData)
                     completion(decodedData)
                 } catch {
                     print(error.localizedDescription)

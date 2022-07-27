@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreData
 
 final class ImagesViewController: UIViewController {
     private let reuseIdentifier = "PicterestCell"
@@ -26,6 +27,7 @@ final class ImagesViewController: UIViewController {
         viewModel.fetch()
         layout = collectionView.collectionViewLayout as? CustomLayout
         layout?.delegate = self
+        retrieveValues()
     }
 }
 
@@ -99,6 +101,7 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
             }
             
             self.imageFileManager.saveImageToDevice(fileName: cell.imageID, cell.imageView.image)
+            self.save(id: cell.imageID, memo: textFields[0].text ?? "", originalURL: "12", savedLocation: "12")
         })
         
         let cancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: {
@@ -112,5 +115,53 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
 
         present(alertController, animated: true)
 
+    }
+}
+
+extension ImagesViewController {
+    
+    func save(id: String, memo: String, originalURL: String, savedLocation: String) {
+        let entityName = "ImageData"
+
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            
+            guard let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
+            
+            let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
+            newValue.setValue(id, forKey: "id")
+            newValue.setValue(memo, forKey: "memo")
+            newValue.setValue(originalURL, forKey: "originalURL")
+            newValue.setValue(savedLocation, forKey: "savedLocation")
+            
+            do {
+                try context.save()
+                print("Save Success")
+                print("memo: \(memo), id: \(id)")
+            } catch {
+                print("Save Error")
+            }
+        }
+    }
+    
+    func retrieveValues() {
+        let entityName = "ImageData"
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            let context = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<ImageData>(entityName: entityName)
+            
+            do {
+                let results = try context.fetch(fetchRequest)
+                
+                for result in results {
+                    if let id = result.id, let memo = result.memo {
+                        print("id: \(id), memo: \(memo)")
+                    }
+                }
+            } catch {
+                print("Could not retrieve")
+            }
+        }
     }
 }

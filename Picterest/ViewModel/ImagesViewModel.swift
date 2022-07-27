@@ -10,7 +10,7 @@ import Combine
 
 final class ImagesViewModel {
     
-    @Published var images = [ImageData]()
+    @Published var images = [ImageInformation]()
     
     private var pageIndex = 1
     private let numberOfImages = 15
@@ -22,7 +22,7 @@ final class ImagesViewModel {
         return images.count
     }
     
-    func getImage(at index: Int) -> ImageData {
+    func getImage(at index: Int) -> ImageInformation {
         return images[index]
     }
     
