@@ -9,13 +9,11 @@ import UIKit
 
 class ImagesViewController: UIViewController {
     
-    let imagesViewModel = ImageCollectionViewModel()
+    let imageCollectionViewModel = ImageCollectionViewModel()
+    let picterestLayout = PicterestLayout()
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.delegate = self
-        collectionView.dataSource = self
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
         collectionView.register(imagesCollectionViewCell.self,
                                 forCellWithReuseIdentifier: imagesCollectionViewCell.reuseIdentifier)
         return collectionView
@@ -23,9 +21,11 @@ class ImagesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        picterestLayout.delegate = self
+        collectionView.dataSource = self
         configureSubviews()
-        imagesViewModel.fetchImages()
-        imagesViewModel.collectionViewUpdate = { [weak self] in
+        imageCollectionViewModel.fetchImages()
+        imageCollectionViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
@@ -47,18 +47,21 @@ class ImagesViewController: UIViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagesViewModel.imagesCount
+        return imageCollectionViewModel.imagesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagesCollectionViewCell.reuseIdentifier, for: indexPath) as? imagesCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(with: imagesViewModel.imageAtIndex(indexPath.row), index: indexPath.row)
+        cell.configureCell(with: imageCollectionViewModel.imageAtIndex(indexPath.row), index: indexPath.row)
         return cell
     }
 }
 
-extension ImagesViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 150)
+extension ImagesViewController: PicterestLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
+        let imageViewModel = imageCollectionViewModel.imageAtIndex(indexPath.row)
+        let cellWidth: CGFloat = view.bounds.width / 2
+        let imageRatio = CGFloat(imageViewModel.height) / CGFloat(imageViewModel.width)
+        return cellWidth * imageRatio
     }
 }

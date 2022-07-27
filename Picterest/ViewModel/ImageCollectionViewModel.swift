@@ -37,7 +37,7 @@ class ImageCollectionViewModel {
     }
 }
 
-class ImageViewModel {
+struct ImageViewModel {
     private let image: Image
     
     init(image: Image) {
@@ -48,7 +48,16 @@ class ImageViewModel {
         return image.id
     }
     
+    var width: Int {
+        return image.width
+    }
+    
+    var height: Int {
+        return image.height
+    }
+    
     var url: String {
         return image.urls.thumb
     }
 }
+

@@ -9,6 +9,8 @@ import UIKit
 
 struct Image: Decodable {
     let id: String
+    let width: Int
+    let height: Int
     let urls: URLs
 }
 
