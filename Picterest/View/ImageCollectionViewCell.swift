@@ -54,7 +54,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with starImage: StarImage) {
-        self.imageView.load(id: starImage.id ?? "")
+        self.imageView.load(starImage: starImage)
         descriptionView.configureView(memo: starImage.memo ?? "")
     }
     

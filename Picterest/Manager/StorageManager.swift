@@ -33,27 +33,36 @@ final class StorageManager {
         self.directoryPath = directoryPath
     }
     
-    static func getImage(id: String) -> UIImage? {
+    static func getImage(starImage: StarImage, completion: @escaping (UIImage?) -> Void) {
         
         let fileManager = FileManager.default
         lazy var defaultDocumentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         let directoryPath: URL = defaultDocumentPath.appendingPathComponent("starImage")
         
-        let imagePath = directoryPath.appendingPathComponent("\(id).png")
+        let imagePath = directoryPath.appendingPathComponent("\(starImage.id ?? "").png")
         
         if let image = ImageCacheManager.shared.getImage(imagePath.absoluteString) {
-            return image
+            completion(image)
+            return
         }
         
         do {
             let imageData = try Data(contentsOf: imagePath)
-            guard let image = UIImage(data: imageData) else { return nil }
+            guard let image = UIImage(data: imageData) else { return }
             ImageCacheManager.shared.storeImage(imagePath.absoluteString, image: image)
-            return image
-        } catch let error {
-            print(String(describing: error))
-            return nil
+            completion(image)
+            return
+        } catch {
+//            print(String(describing: error))
+            NetworkManager.fetchImage(urlString: starImage.networkURL ?? "") { image in
+                guard let image = image else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            }
         }
     }
     

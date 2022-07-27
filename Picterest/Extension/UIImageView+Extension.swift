@@ -18,7 +18,9 @@ extension UIImageView {
     }
     
     /// 스토리지에서 받아오기
-    func load(id: String) {
-        self.image = StorageManager.getImage(id: id)
+    func load(starImage: StarImage) {
+        StorageManager.getImage(starImage: starImage) { image in
+            self.image = image
+        }
     }
 }
