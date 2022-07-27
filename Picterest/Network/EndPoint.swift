@@ -8,7 +8,7 @@
 import Foundation
 
 enum EndPoint {
-    case getPhoto
+    case getPhoto(Int)
 }
 
 extension EndPoint {
@@ -17,8 +17,8 @@ extension EndPoint {
     
     var url: URL {
         switch self {
-        case .getPhoto:
-            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=\(EndPoint.per_page)")
+        case .getPhoto(let page):
+            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=\(EndPoint.per_page)&page=\(page)")
         }
     }
 }

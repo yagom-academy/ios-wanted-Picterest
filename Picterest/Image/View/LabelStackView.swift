@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol PhotoEvnetDelegate {
-//    func sliderEventValueChanged(sender: UISlider)
+protocol PhotoLabelEvnetDelegate {
+    func tapStarButton(sender: UIButton)
 }
 
 class LabelStackView: UIStackView {
     
-    var delegate: PhotoEvnetDelegate?
+    var delegate: PhotoLabelEvnetDelegate?
     
     private let starButton: UIButton = {
         let button = UIButton()
@@ -28,6 +28,10 @@ class LabelStackView: UIStackView {
     
     init() {
         super.init(frame: .zero)
+        
+        configurationProperties()
+        layout()
+        addTargetStarButton()
     }
     
     required init(coder: NSCoder) {
@@ -61,11 +65,11 @@ class LabelStackView: UIStackView {
         ])
     }
     
-//    private func addTargetToSlider() {
-//        sliderFrequency.addTarget(self, action: #selector(onChangeValueSlider), for: UIControl.Event.valueChanged)
-//    }
-//
-//    private func addTargetToSlider() {
-//        sliderFrequency.addTarget(self, action: #selector(onChangeValueSlider), for: UIControl.Event.valueChanged)
-//    }
+    private func addTargetStarButton() {
+        starButton.addTarget(self, action: #selector(tapStarButton), for: .touchUpInside)
+    }
+
+    @objc func tapStarButton() {
+        delegate?.tapStarButton(sender: starButton)
+    }
 }

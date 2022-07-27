@@ -18,9 +18,11 @@ class ImageViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
     }()
-    
-    private var photoRandomList: [Photo] = []
+    private var labelStackView = LabelStackView()
     private var viewModel = ImageViewModel()
+    private var photoRandomList: [Photo] = []
+    private var startPage = 0
+    private var totalPage = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +32,57 @@ class ImageViewController: UIViewController {
         attribute()
         layout()
         bind(viewModel)
-        viewModel.getRandomPhoto { [weak self] result in
+        fetchPhoto()
+    }
+}
+
+extension ImageViewController {
+    
+    private func attribute() {
+        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
+        imageCollectionView.prefetchDataSource = self
+        
+        
+        let customLayout = ImageColletionViewCustomLayout()
+        customLayout.delegate = self
+        imageCollectionView.collectionViewLayout = customLayout
+    }
+    
+    private func layout() {
+        [
+            imageCollectionView, labelStackView
+        ].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        NSLayoutConstraint.activate([
+            imageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            imageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            labelStackView.topAnchor.constraint(equalTo: view.topAnchor),
+            labelStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            labelStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            labelStackView.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func bind(_ viewModel: ImageViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    private func fetchPhoto() {
+        viewModel.getRandomPhoto(startPage) { [weak self] result in
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
-                self.photoRandomList = photos
+                for photo in photos {
+                    self.photoRandomList.append(photo)
+                }
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
                 }
@@ -45,43 +93,9 @@ class ImageViewController: UIViewController {
     }
 }
 
-extension ImageViewController {
-    
-    private func attribute() {
-        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
-        imageCollectionView.delegate = self
-        imageCollectionView.dataSource = self
-        
-        let customLayout = ImageColletionViewCustomLayout()
-        customLayout.delegate = self
-        imageCollectionView.collectionViewLayout = customLayout
-    }
-    
-    private func layout() {
-        [
-            imageCollectionView
-        ].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        NSLayoutConstraint.activate([
-            imageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            imageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-    }
-    
-    private func bind(_ viewModel: ImageViewModel) {
-        self.viewModel = viewModel
-    }
-}
-
 extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(photoRandomList.count)
         return photoRandomList.count
     }
 
@@ -89,6 +103,18 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.fetchData(photoRandomList[indexPath.row], indexPath)
         return cell
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if let cv = scrollView as? UICollectionView {
+            let layout = ImageColletionViewCustomLayout()
+            let cellHeight = layout.itemSize.height + layout.minimumLineSpacing
+            
+            var offset = targetContentOffset.pointee
+            let idx = round((offset.x + cv.contentInset.top) + cellHeight)
+            
+            offset = CGPoint(x: 0, y: CGFloat(idx) * cellHeight)
+        }
     }
 }
 
@@ -98,5 +124,17 @@ extension ImageViewController: CustomLayoutDelegate {
         let ratio: Double = photoRandomList[indexPath.row].height / photoRandomList[indexPath.row].width
         
         return CGFloat(width * ratio)
+    }
+}
+
+extension ImageViewController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            if photoRandomList.count - 1 == indexPath.row {
+                startPage += 1
+                fetchPhoto()
+            }
+        }
     }
 }

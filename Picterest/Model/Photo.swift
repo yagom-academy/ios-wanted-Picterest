@@ -7,21 +7,15 @@
 
 import Foundation
 
-struct Photo: Codable {
+struct Photo: Decodable {
     let id: String
     let width: Double
     let height: Double
     let urls: Urls
 }
 
-struct Urls: Codable {
+struct Urls: Decodable {
     let small: String
     let full: String
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        full = try container.decode(String.self, forKey: .full)
-        small = try container.decode(String.self, forKey: .small)
-    }
 }
 

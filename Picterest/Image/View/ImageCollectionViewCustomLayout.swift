@@ -11,7 +11,7 @@ class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
     
     weak var delegate: CustomLayoutDelegate?
     
-    private var cache: [UICollectionViewLayoutAttributes] = [] // 셀 갯수
+    private var cache: [UICollectionViewLayoutAttributes] = []
     
     private var contentHeight: CGFloat = 0
     private var contentWidth: CGFloat {
@@ -19,6 +19,7 @@ class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
             return 0
         }
         let insets = collectionView.contentInset
+        
         return collectionView.bounds.width - (insets.left + insets.right)
     }
     
@@ -29,8 +30,8 @@ class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
     override func prepare() {
         guard cache.isEmpty, let collectionView = collectionView else { return }
         
-        let numberOfColumns = 2 // 한 줄에 몇개
-        let cellPadding: CGFloat = 6 // 패딩
+        let numberOfColumns = 2
+        let cellPadding: CGFloat = 6
         let cellWidth = contentWidth / CGFloat(numberOfColumns)
         
         var xOffset: [CGFloat] = []
@@ -42,15 +43,17 @@ class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
         }
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
-            let indexPath = IndexPath(item: item, section: 0)
-            let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
+            let indexPath = IndexPath(item: item,
+                                      section: 0)
+            let photoHeight = delegate?.collectionView(collectionView,
+                                                       heightForPhotoAtIndexPath: indexPath) ?? 180
             let height = cellPadding * 2 + photoHeight
             let frame = CGRect(x: xOffset[column],
                                y: yOffset[column],
                                width: cellWidth,
                                height: height)
-            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-            
+            let insetFrame = frame.insetBy(dx: cellPadding,
+                                           dy: cellPadding)
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
             cache.append(attributes)
