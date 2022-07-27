@@ -20,6 +20,10 @@
 		68035090288EC934003AA3AD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6803508F288EC934003AA3AD /* HTTPMethod.swift */; };
 		68035092288EC9CA003AA3AD /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68035091288EC9CA003AA3AD /* EndPoint.swift */; };
 		68B9C8E52890EC6700203C6A /* SaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8E42890EC6700203C6A /* SaveTableViewCell.swift */; };
+		68B9C8E82890F3A200203C6A /* PhotoFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */; };
+		68B9C8EB289107C100203C6A /* SavePhoto.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8E9289107C100203C6A /* SavePhoto.xcdatamodeld */; };
+		68B9C8F228910A1E00203C6A /* SavePhoto+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8F028910A1E00203C6A /* SavePhoto+CoreDataClass.swift */; };
+		68B9C8F328910A1E00203C6A /* SavePhoto+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8F128910A1E00203C6A /* SavePhoto+CoreDataProperties.swift */; };
 		68C96FBD288F628A00E7D1AA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C96FBC288F628A00E7D1AA /* HTTPClient.swift */; };
 		68C96FD9288FB39100E7D1AA /* LabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C96FD8288FB39100E7D1AA /* LabelStackView.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
@@ -42,6 +46,10 @@
 		6803508F288EC934003AA3AD /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		68035091288EC9CA003AA3AD /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		68B9C8E42890EC6700203C6A /* SaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTableViewCell.swift; sourceTree = "<group>"; };
+		68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFileManager.swift; sourceTree = "<group>"; };
+		68B9C8EA289107C100203C6A /* SavePhoto.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SavePhoto.xcdatamodel; sourceTree = "<group>"; };
+		68B9C8F028910A1E00203C6A /* SavePhoto+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavePhoto+CoreDataClass.swift"; sourceTree = "<group>"; };
+		68B9C8F128910A1E00203C6A /* SavePhoto+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavePhoto+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		68C96FBC288F628A00E7D1AA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		68C96FD8288FB39100E7D1AA /* LabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStackView.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,9 +124,20 @@
 		6803508A288E7B1A003AA3AD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				68B9C8E9289107C100203C6A /* SavePhoto.xcdatamodeld */,
+				68B9C8F028910A1E00203C6A /* SavePhoto+CoreDataClass.swift */,
+				68B9C8F128910A1E00203C6A /* SavePhoto+CoreDataProperties.swift */,
 				6803508B288E7B31003AA3AD /* Photo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		68B9C8E62890F39000203C6A /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -140,6 +159,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				68B9C8E62890F39000203C6A /* Manager */,
 				6803508A288E7B1A003AA3AD /* Model */,
 				68035087288E6F46003AA3AD /* Network */,
 				68035083288E5E81003AA3AD /* TabBar */,
@@ -225,10 +245,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				68C96FD9288FB39100E7D1AA /* LabelStackView.swift in Sources */,
+				68B9C8F228910A1E00203C6A /* SavePhoto+CoreDataClass.swift in Sources */,
 				68035082288E57F1003AA3AD /* TabBarViewController.swift in Sources */,
 				68035089288E6FEF003AA3AD /* LoadImage.swift in Sources */,
 				6803507C288E5586003AA3AD /* ImageCollectionViewCell.swift in Sources */,
 				68035078288E4327003AA3AD /* ImageViewModel.swift in Sources */,
+				68B9C8F328910A1E00203C6A /* SavePhoto+CoreDataProperties.swift in Sources */,
 				68035076288E42AA003AA3AD /* SaveViewController.swift in Sources */,
 				68035080288E55D0003AA3AD /* SaveViewModel.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
@@ -236,9 +258,11 @@
 				68035074288E42A0003AA3AD /* ImageViewController.swift in Sources */,
 				6803508E288E82F8003AA3AD /* PhotoAPIService.swift in Sources */,
 				68035090288EC934003AA3AD /* HTTPMethod.swift in Sources */,
+				68B9C8EB289107C100203C6A /* SavePhoto.xcdatamodeld in Sources */,
 				68C96FBD288F628A00E7D1AA /* HTTPClient.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				68035092288EC9CA003AA3AD /* EndPoint.swift in Sources */,
+				68B9C8E82890F3A200203C6A /* PhotoFileManager.swift in Sources */,
 				68035086288E6AD1003AA3AD /* ImageCollectionViewCustomLayout.swift in Sources */,
 				68B9C8E52890EC6700203C6A /* SaveTableViewCell.swift in Sources */,
 			);
@@ -446,6 +470,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		68B9C8E9289107C100203C6A /* SavePhoto.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				68B9C8EA289107C100203C6A /* SavePhoto.xcdatamodel */,
+			);
+			currentVersion = 68B9C8EA289107C100203C6A /* SavePhoto.xcdatamodel */;
+			path = SavePhoto.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }

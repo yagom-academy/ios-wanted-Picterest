@@ -19,7 +19,7 @@ class ImageViewController: UIViewController {
         return cv
     }()
     private var viewModel = ImageViewModel()
-    private var photoRandomList: [Photo] = []
+    private var photoList: [Photo] = []
     private var startPage = 0
     private var totalPage = 0
     
@@ -75,7 +75,7 @@ extension ImageViewController {
             switch result {
             case .success(let photos):
                 for photo in photos {
-                    self.photoRandomList.append(photo)
+                    self.photoList.append(photo)
                 }
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
@@ -90,12 +90,12 @@ extension ImageViewController {
 extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photoRandomList.count
+        return photoList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.fetchData(photoRandomList[indexPath.row], indexPath)
+        cell.fetchData(photoList[indexPath.row], indexPath)
         return cell
     }
     
@@ -120,7 +120,7 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
 extension ImageViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let width: CGFloat = (view.bounds.width - 4) / 2
-        let ratio: Double = photoRandomList[indexPath.row].height / photoRandomList[indexPath.row].width
+        let ratio: Double = photoList[indexPath.row].height / photoList[indexPath.row].width
         
         return CGFloat(width * ratio)
     }
@@ -130,7 +130,7 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
-            if photoRandomList.count - 1 == indexPath.row {
+            if photoList.count - 1 == indexPath.row {
                 startPage += 1
                 fetchPhoto()
             }
