@@ -11,6 +11,7 @@ import Combine
 final class ImagesViewController: UIViewController {
     private let reuseIdentifier = "PicterestCell"
     private let viewModel = ImagesViewModel()
+    private let imageFileManager = ImageFileManager()
     private var cancellable = Set<AnyCancellable>()
     private var layout: CustomLayout?
     
@@ -50,8 +51,12 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        let index = indexPath.row
+        
         cell.delegate = self
-        cell.imageView.loadImage(viewModel.getImage(of: indexPath.row).urls.small)
+        cell.imageID = viewModel.getID(at: index)
+        cell.imageView.loadImage(viewModel.getImage(at: index).urls.small)
         cell.indexLabel.text = "\(indexPath.row)번째 사진"
         cell.saveImageButton.tintColor = .white
         return cell
@@ -93,6 +98,7 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
                 return
             }
             
+            self.imageFileManager.saveImageToDevice(fileName: cell.imageID, cell.imageView.image)
         })
         
         let cancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: {

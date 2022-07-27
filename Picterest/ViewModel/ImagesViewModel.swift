@@ -11,6 +11,7 @@ import Combine
 final class ImagesViewModel {
     
     @Published var images = [ImageData]()
+    
     private var pageIndex = 1
     private let numberOfImages = 15
     private let downloadURL = "https://api.unsplash.com/photos"
@@ -18,11 +19,15 @@ final class ImagesViewModel {
     private let networkManager = NetworkManager()
     
     func getImagesCount() -> Int {
-        images.count
+        return images.count
     }
     
-    func getImage(of index: Int) -> ImageData {
+    func getImage(at index: Int) -> ImageData {
         return images[index]
+    }
+    
+    func getID(at index: Int) -> String {
+        return images[index].id
     }
     
     func fetch() {

@@ -16,7 +16,10 @@ class ImagesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var indexLabel: UILabel!
     @IBOutlet weak var saveImageButton: UIButton!
+
     weak var delegate: ImageCollectionViewCellDelegate?
+    var imageID: String!
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
