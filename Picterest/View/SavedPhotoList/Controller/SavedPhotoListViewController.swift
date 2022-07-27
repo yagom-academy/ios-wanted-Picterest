@@ -28,7 +28,6 @@ class SavedPhotoListViewController: BaseViewController {
         super.viewDidAppear(animated)
         getSavedPhotosFromFilemanager()
         setBinding()
-        print(savedPhotos)
     }
 
     func getSavedPhotosFromFilemanager() {
@@ -64,7 +63,6 @@ extension SavedPhotoListViewController : SavedCustomLayoutDelegate {
 //        코어데이터에서 꺼내오자
         return 100
     }
-    
 }
 
 extension SavedPhotoListViewController : UICollectionViewDataSource {
@@ -75,10 +73,34 @@ extension SavedPhotoListViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedPhotoListCollectionViewCell.identifier, for: indexPath) as? SavedPhotoListCollectionViewCell else { return UICollectionViewCell() }
         cell.imageView.image = savedPhotoListViewModel.getSavedPhotoFromFilemanager(savedPhotos?[indexPath.row] ?? "")
+        cell.index = indexPath.row
+        cell.cellDelegate = self
         return cell
     }
 }
 
 extension SavedPhotoListViewController : UICollectionViewDelegate {
     
+}
+
+extension SavedPhotoListViewController : ImageDelegate {
+    func longPressImage(_ cell: SavedPhotoListCollectionViewCell) {
+        let alert = UIAlertController(title: "", message: "삭제 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.destructive, handler: {[weak self] _ in
+            self?.dismiss(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "삭제", style: .default, handler: { [weak self] _ in
+            print("삭제")
+            // filemanager에 이미지 삭제
+            self?.savedPhotoListViewModel.deleteImageFromFilemanager(self?.savedPhotos?[cell.index ?? -1] ?? "")
+            // coredata에 데이터 저장
+            
+            // savedPhotos에서 삭제
+            self?.savedPhotos?.remove(at: cell.index ?? -1)
+            DispatchQueue.main.async {
+                self?.savedPhotoListView.savedPhotoCollectionView.reloadData()
+            }
+        }))
+        self.present(alert, animated: true)
+    }
 }

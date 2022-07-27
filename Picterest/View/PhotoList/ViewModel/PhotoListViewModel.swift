@@ -83,4 +83,17 @@ class PhotoListViewModel : ObservableObject {
     func saveDataToCoreData() {
         
     }
+    
+    func isSavedImage(_ name : String) -> Bool? {
+        let fileManager = FileManager.default
+        
+        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return nil}
+        let directoryURL = directory.appendingPathComponent("images")
+        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
+        if fileManager.fileExists(atPath: imagePathURL.path) {
+            return true
+        } else {
+            return false
+        }
+    }
 }

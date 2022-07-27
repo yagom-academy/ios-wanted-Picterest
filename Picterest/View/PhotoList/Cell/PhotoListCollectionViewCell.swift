@@ -46,7 +46,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         let tap = UITapGestureRecognizer(target: nil, action: #selector(pressButton(_:)))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tap)
-
         return imageView
     }()
     
