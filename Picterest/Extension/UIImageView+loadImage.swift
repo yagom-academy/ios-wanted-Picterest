@@ -9,15 +9,15 @@ import UIKit
 
 extension UIImageView {
     
-    func loadImage(_ urlString: String?) {
+    func loadImage(urlString: String?, imageID: String) {
         guard let urlString = urlString else {
             return
         }
         
         var task: URLSessionDataTask?
         let imageCacheManager = ImageCacheManager.shared
-        
-        let key = urlString as NSString
+        let imageFileManager = ImageFileManager.shared
+        let key = imageID as NSString
         
         if let task = task {
             task.cancel()
@@ -25,6 +25,12 @@ extension UIImageView {
         
         if let cachedData = imageCacheManager.load(key) {
             image = UIImage(data: cachedData)
+            return
+        }
+        
+        if imageFileManager.fileExists(key), let savedData = imageFileManager.load(key) {
+            image = UIImage(data: savedData)
+            imageCacheManager.save(key, savedData)
             return
         }
         

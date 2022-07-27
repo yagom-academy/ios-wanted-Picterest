@@ -55,8 +55,8 @@ extension ImagesViewController: UICollectionViewDataSource {
         let index = indexPath.row
         
         cell.delegate = self
-        cell.imageView.loadImage(viewModel.getImage(at: index)?.urls.small)
-        cell.indexLabel.text = "\(indexPath.row)번째 사진"
+        cell.imageView.loadImage(urlString: viewModel.getImage(at: index)?.urls.small, imageID: viewModel.images[index].id)
+        cell.indexLabel.text = "\(index)번째 사진"
         cell.saveImageButton.tintColor = .white
         return cell
     }

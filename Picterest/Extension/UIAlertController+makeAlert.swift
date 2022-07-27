@@ -27,7 +27,7 @@ extension UIAlertController {
     
     func alertActionInImagesViewController(cell: ImagesCollectionViewCell, imageInformation: ImageInformation) -> ((UIAlertAction) -> Void) {
         
-        let imageFileManager = ImageFileManager()
+        let imageFileManager = ImageFileManager.shared
         
         let actionHandler: (UIAlertAction) -> Void = { (action) -> Void in
             guard let textFields = self.textFields,
@@ -39,7 +39,7 @@ extension UIAlertController {
             let imageID = imageInformation.id
             let originalURL = imageInformation.urls.small
             
-            guard let savedLocation = imageFileManager.saveImageToDevice(fileName: imageID, image) else {
+            guard let savedLocation = imageFileManager.save(imageID as NSString, image) else {
                 return
             }
             
