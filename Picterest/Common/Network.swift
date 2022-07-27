@@ -14,7 +14,7 @@ enum NetworkError: Error {
 class Network {
     static let shard = Network()
     private init() {}
-    private let clientID = "Yc0bhB2C3cat-BkI9K3jyKgJmPccHXScsWtW2809tso"
+    private let clientID = "7EoAQCEONksYSL9jv2U0iSUGUzpTffG6_YrGTdTXF2o"
     private let count = 15
     private let path = "https://api.unsplash.com/photos/random"
     
