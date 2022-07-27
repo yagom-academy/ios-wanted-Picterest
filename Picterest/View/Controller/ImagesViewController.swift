@@ -14,8 +14,8 @@ class ImagesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
-        collectionView.register(imagesCollectionViewCell.self,
-                                forCellWithReuseIdentifier: imagesCollectionViewCell.reuseIdentifier)
+        collectionView.register(imageCollectionViewCell.self,
+                                forCellWithReuseIdentifier: imageCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     
@@ -51,8 +51,9 @@ extension ImagesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagesCollectionViewCell.reuseIdentifier, for: indexPath) as? imagesCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCollectionViewCell.reuseIdentifier, for: indexPath) as? imageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureCell(with: imageCollectionViewModel.imageAtIndex(indexPath.row), index: indexPath.row)
+        cell.delegate = self
         return cell
     }
 }
@@ -63,5 +64,21 @@ extension ImagesViewController: PicterestLayoutDelegate {
         let cellWidth: CGFloat = view.bounds.width / 2
         let imageRatio = CGFloat(imageViewModel.height) / CGFloat(imageViewModel.width)
         return cellWidth * imageRatio
+    }
+}
+
+extension ImagesViewController: SaveImageDelegate {
+    func starButtonTapped(didSave: Bool) {
+        if !didSave {
+            let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
+            let save = UIAlertAction(title: "저장", style: .default)
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alert.addAction(save)
+            alert.addAction(cancel)
+            alert.addTextField { textfield in
+                textfield.placeholder = "내용을 입력해주세요"
+            }
+            present(alert, animated: true, completion: nil)
+        }
     }
 }

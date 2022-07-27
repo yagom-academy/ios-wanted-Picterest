@@ -1,5 +1,5 @@
 //
-//  imagesCollectionViewCell.swift
+//  imageCollectionViewCell.swift
 //  Picterest
 //
 //  Created by CHUBBY on 2022/07/26.
@@ -7,9 +7,16 @@
 
 import UIKit
 
-class imagesCollectionViewCell: UICollectionViewCell {
+protocol SaveImageDelegate: AnyObject {
+    func starButtonTapped(didSave: Bool)
+}
+
+class imageCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "imagesCollectionViewCell"
+    
+    weak var delegate: SaveImageDelegate?
+    var isStar: Bool = false
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -32,6 +39,7 @@ class imagesCollectionViewCell: UICollectionViewCell {
         let starButton = UIButton()
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
         starButton.tintColor = .white
+        starButton.addTarget(self, action: #selector(starButtonTabbed), for: .touchUpInside)
         return starButton
     }()
     
@@ -42,7 +50,18 @@ class imagesCollectionViewCell: UICollectionViewCell {
         return indexLabel
     }()
     
-   
+    @objc func starButtonTabbed() {
+        delegate?.starButtonTapped(didSave: isStar)
+        if isStar {
+            starButton.setImage(UIImage(systemName: "star"), for: .normal)
+            starButton.tintColor = .white
+        } else {
+            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            starButton.tintColor = .yellow
+        }
+        isStar.toggle()
+    }
+    
     func configureCell(with imageViewModel: ImageViewModel, index: Int) {
         setSubView()
         setConstraints()
