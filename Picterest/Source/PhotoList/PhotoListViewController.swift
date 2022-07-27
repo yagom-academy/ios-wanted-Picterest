@@ -5,6 +5,7 @@
 //
 
 import UIKit
+//import CoreData
 
 class PhotoListViewController: UIViewController {
     @IBOutlet weak var photoListCollectionView: UICollectionView!
@@ -92,25 +93,28 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
             sender.tintColor = .white
             guard let photoInfo = photoInfo else { return }
             ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
-            // coreData 삭제
-            
+            CoreDataManager.shared.deleteCoreData(ID: photoInfo.id)
+            print(CoreDataManager.shared.fetchCoreData().count)
             showDeleteAlertMessage()
         } else {
             sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
             sender.tintColor = .systemYellow
             showSaveAlertMessage { memo in
-                guard memo != nil else { return }
+                guard let memo = memo else { return }
                 guard let photoInfo = photoInfo else { return }
                 guard let image = image else { return }
-                ImageFileManager.shared.saveImageToLocal(image: image, name: (photoInfo.id) + ".png")
-                
-              //  CoreData추가
-              //  메모 memo
-              //  photoInfo?.urls.raw
-              //  photoInfo?.id
-              //  result
-              //  성능적인 이슈 ->
-              //  시점 ->
+                guard let urlPath = ImageFileManager.shared.saveImageToLocal(
+                    image: image,
+                    name: (photoInfo.id) + ".png"
+                ) else { return }
+                CoreDataManager.shared.saveCoreData(
+                    id: photoInfo.id,
+                    memo: memo, url:
+                        photoInfo.urls.raw,
+                    location: urlPath
+                )
+                print(urlPath)
+                print(CoreDataManager.shared.fetchCoreData().count)
             }
         }
     }
