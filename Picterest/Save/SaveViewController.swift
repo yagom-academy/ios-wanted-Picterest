@@ -9,9 +9,17 @@ import UIKit
 
 class SaveViewController: UIViewController {
 
+    private var saveTableView = UITableView()
+    private var viewModel = SaveViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
     }
+}
+
+extension SaveViewController {
+    
 }

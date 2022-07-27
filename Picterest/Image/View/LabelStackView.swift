@@ -15,16 +15,18 @@ class LabelStackView: UIStackView {
     
     var delegate: PhotoLabelEvnetDelegate?
     
-    private let starButton: UIButton = {
+    let starButton: UIButton = {
         let button = UIButton()
-        let largeConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .regular, scale: .large)
-        let largeRecordImage = UIImage(systemName: "star", withConfiguration: largeConfig)
-        button.setImage(largeRecordImage, for: .normal)
-        button.tintColor = .yellow
+        button.setImage(UIImage(systemName: "star"), for: .normal)
+        button.tintColor = .systemYellow
         return button
     }()
     
-    private let photoLabel = UILabel()
+    let photoLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        return label
+    }()
     
     init() {
         super.init(frame: .zero)
@@ -39,9 +41,13 @@ class LabelStackView: UIStackView {
     }
     
     private func configurationProperties() {
+        self.backgroundColor = .black.withAlphaComponent(0.5)
+        self.isLayoutMarginsRelativeArrangement = true
         self.axis = .horizontal
         self.distribution = .equalSpacing
-        self.alignment = .fill
+        self.alignment = .center
+        self.layer.cornerRadius = 10
+        self.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
     }
     
     private func layout() {
@@ -51,18 +57,6 @@ class LabelStackView: UIStackView {
             self.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
-        NSLayoutConstraint.activate([
-            starButton.topAnchor.constraint(equalTo: self.topAnchor),
-            starButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            starButton.widthAnchor.constraint(equalToConstant: 30),
-            starButton.heightAnchor.constraint(equalTo: self.heightAnchor),
-            
-            photoLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            photoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            photoLabel.widthAnchor.constraint(equalToConstant: 70),
-            photoLabel.heightAnchor.constraint(equalTo: self.heightAnchor)
-        ])
     }
     
     private func addTargetStarButton() {

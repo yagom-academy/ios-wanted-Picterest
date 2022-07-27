@@ -18,7 +18,6 @@ class ImageViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         return cv
     }()
-    private var labelStackView = LabelStackView()
     private var viewModel = ImageViewModel()
     private var photoRandomList: [Photo] = []
     private var startPage = 0
@@ -52,7 +51,7 @@ extension ImageViewController {
     
     private func layout() {
         [
-            imageCollectionView, labelStackView
+            imageCollectionView
         ].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -62,12 +61,7 @@ extension ImageViewController {
             imageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
             imageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            labelStackView.topAnchor.constraint(equalTo: view.topAnchor),
-            labelStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            labelStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            labelStackView.heightAnchor.constraint(equalToConstant: 30)
+            imageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -105,16 +99,21 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return cell
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        <#code#>
+        
+    }
+    
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        if let cv = scrollView as? UICollectionView {
-            let layout = ImageColletionViewCustomLayout()
-            let cellHeight = layout.itemSize.height + layout.minimumLineSpacing
-            
-            var offset = targetContentOffset.pointee
-            let idx = round((offset.x + cv.contentInset.top) + cellHeight)
-            
-            offset = CGPoint(x: 0, y: CGFloat(idx) * cellHeight)
-        }
+//        if let cv = scrollView as? UICollectionView {
+//            let layout = ImageColletionViewCustomLayout()
+//            let cellHeight = layout.itemSize.height + layout.minimumLineSpacing
+//
+//            var offset = targetContentOffset.pointee
+//            let idx = round((offset.x + cv.contentInset.top) + cellHeight)
+//
+//            offset = CGPoint(x: 0, y: CGFloat(idx) * cellHeight)
+//        }
     }
 }
 
