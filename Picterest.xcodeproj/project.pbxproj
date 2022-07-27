@@ -11,7 +11,7 @@
 		C7638FF1288E4E0100D06944 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7638FF0288E4E0100D06944 /* PhotoManager.swift */; };
 		C7638FF3288E4FE400D06944 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7638FF2288E4FE400D06944 /* PhotoListViewController.swift */; };
 		C7704695288E521F009CE7DE /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7704694288E521F009CE7DE /* PhotoListViewModel.swift */; };
-		C7704698288E5573009CE7DE /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7704697288E5573009CE7DE /* CustomLayout.swift */; };
+		C7704698288E5573009CE7DE /* PhotoListCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7704697288E5573009CE7DE /* PhotoListCustomLayout.swift */; };
 		C770469B288E56F3009CE7DE /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C770469A288E56F3009CE7DE /* BaseViewController.swift */; };
 		C770469E288E5764009CE7DE /* PhotoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C770469D288E5764009CE7DE /* PhotoListView.swift */; };
 		C77046A1288E57E7009CE7DE /* SavedPhotoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046A0288E57E7009CE7DE /* SavedPhotoListView.swift */; };
@@ -19,6 +19,9 @@
 		C77046A6288E595C009CE7DE /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046A5288E595C009CE7DE /* PhotoListCollectionViewCell.swift */; };
 		C77046AC28902363009CE7DE /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046AB28902363009CE7DE /* CacheManager.swift */; };
 		C77046AF28903B02009CE7DE /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046AE28903B02009CE7DE /* TabBarViewController.swift */; };
+		C77046B12890F247009CE7DE /* SavedPhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046B02890F247009CE7DE /* SavedPhotoListViewModel.swift */; };
+		C77046B42890F45D009CE7DE /* SavedPhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046B32890F45D009CE7DE /* SavedPhotoListCollectionViewCell.swift */; };
+		C77046B72890FA55009CE7DE /* SavedListCustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77046B62890FA55009CE7DE /* SavedListCustomLayout.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66528604279003DD2F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66428604279003DD2F5 /* Assets.xcassets */; };
@@ -30,7 +33,7 @@
 		C7638FF0288E4E0100D06944 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		C7638FF2288E4FE400D06944 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
 		C7704694288E521F009CE7DE /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
-		C7704697288E5573009CE7DE /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		C7704697288E5573009CE7DE /* PhotoListCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCustomLayout.swift; sourceTree = "<group>"; };
 		C770469A288E56F3009CE7DE /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		C770469D288E5764009CE7DE /* PhotoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListView.swift; sourceTree = "<group>"; };
 		C77046A0288E57E7009CE7DE /* SavedPhotoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoListView.swift; sourceTree = "<group>"; };
@@ -38,6 +41,9 @@
 		C77046A5288E595C009CE7DE /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C77046AB28902363009CE7DE /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		C77046AE28903B02009CE7DE /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		C77046B02890F247009CE7DE /* SavedPhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoListViewModel.swift; sourceTree = "<group>"; };
+		C77046B32890F45D009CE7DE /* SavedPhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
+		C77046B62890FA55009CE7DE /* SavedListCustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedListCustomLayout.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,8 +85,10 @@
 			isa = PBXGroup;
 			children = (
 				C77046A0288E57E7009CE7DE /* SavedPhotoListView.swift */,
+				C77046B22890F2FC009CE7DE /* Cell */,
 				C77046A8288E5D02009CE7DE /* ViewModel */,
 				C770469F288E57CC009CE7DE /* Controller */,
+				C77046B52890F9CC009CE7DE /* CustomLayout */,
 			);
 			path = SavedPhotoList;
 			sourceTree = "<group>";
@@ -136,7 +144,7 @@
 		C7704696288E5537009CE7DE /* CustomLayout */ = {
 			isa = PBXGroup;
 			children = (
-				C7704697288E5573009CE7DE /* CustomLayout.swift */,
+				C7704697288E5573009CE7DE /* PhotoListCustomLayout.swift */,
 			);
 			path = CustomLayout;
 			sourceTree = "<group>";
@@ -184,6 +192,7 @@
 		C77046A8288E5D02009CE7DE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				C77046B02890F247009CE7DE /* SavedPhotoListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -194,6 +203,22 @@
 				C77046AE28903B02009CE7DE /* TabBarViewController.swift */,
 			);
 			path = TabBar;
+			sourceTree = "<group>";
+		};
+		C77046B22890F2FC009CE7DE /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C77046B32890F45D009CE7DE /* SavedPhotoListCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		C77046B52890F9CC009CE7DE /* CustomLayout */ = {
+			isa = PBXGroup;
+			children = (
+				C77046B62890FA55009CE7DE /* SavedListCustomLayout.swift */,
+			);
+			path = CustomLayout;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -296,8 +321,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C77046AC28902363009CE7DE /* CacheManager.swift in Sources */,
+				C77046B42890F45D009CE7DE /* SavedPhotoListCollectionViewCell.swift in Sources */,
 				C7638FF3288E4FE400D06944 /* PhotoListViewController.swift in Sources */,
-				C7704698288E5573009CE7DE /* CustomLayout.swift in Sources */,
+				C7704698288E5573009CE7DE /* PhotoListCustomLayout.swift in Sources */,
+				C77046B12890F247009CE7DE /* SavedPhotoListViewModel.swift in Sources */,
+				C77046B72890FA55009CE7DE /* SavedListCustomLayout.swift in Sources */,
 				C7704695288E521F009CE7DE /* PhotoListViewModel.swift in Sources */,
 				C77046AF28903B02009CE7DE /* TabBarViewController.swift in Sources */,
 				C7638FEE288E4DEC00D06944 /* Photo.swift in Sources */,

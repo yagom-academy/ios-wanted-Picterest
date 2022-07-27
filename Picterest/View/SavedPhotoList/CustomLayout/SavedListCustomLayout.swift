@@ -1,5 +1,5 @@
 //
-//  CustomLayout.swift
+//  SavedListCustomLayout.swift
 //  Picterest
 //
 //  Created by 조성빈 on 2022/07/25.
@@ -9,17 +9,17 @@ import Foundation
 import UIKit
 import CoreGraphics
 
-protocol CustomLayoutDelegate: AnyObject {
+protocol SavedCustomLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat
     func collectionView(_ collectionView: UICollectionView, widthForImageAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class CustomLayout : UICollectionViewLayout {
+class SavedPhotoListCustomLayout : UICollectionViewLayout {
     
-    weak var delegate : CustomLayoutDelegate?
+    weak var delegate : SavedCustomLayoutDelegate?
     
-    fileprivate var numberOfColumns: Int = 2
-    fileprivate var cellPadding: CGFloat = 3.0
+    fileprivate var numberOfColumns: Int = 1
+    fileprivate var cellPadding: CGFloat = 10.0
     fileprivate var cache: [UICollectionViewLayoutAttributes] = []
     fileprivate var contentHeight: CGFloat = 0.0
     
@@ -41,30 +41,20 @@ class CustomLayout : UICollectionViewLayout {
         cache.removeAll()
         
         // xOffset 계산
-        let columnWidth: CGFloat = contentWidth / CGFloat(numberOfColumns)
-        var xOffset: [CGFloat] = []
-        for column in 0..<numberOfColumns {
-            let offset = CGFloat(column) * columnWidth
-            xOffset += [offset]
-        }
+        let columnWidth: CGFloat = contentWidth
+        let xOffset: CGFloat = 0
         
         // yOffset 계산
         var column = 0
-        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
+        var yOffset : CGFloat = 0
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             
             let imageWidth = delegate?.collectionView(collectionView, widthForImageAtIndexPath: indexPath) ?? 0
             let imageHeight = delegate?.collectionView(collectionView, heightForImageAtIndexPath: indexPath) ?? 0
-            let ratio = imageHeight * contentWidth / imageWidth / 2
+            let ratio = imageHeight * contentWidth / imageWidth
             let height = cellPadding * 2 + ratio
-            let frame : CGRect = {
-                if yOffset[0] <= yOffset[1] {
-                    return CGRect(x: xOffset[0], y: yOffset[0], width: columnWidth, height: height)
-                } else {
-                    return CGRect(x: xOffset[1], y: yOffset[1], width: columnWidth, height: height)
-                }
-            }()
+            let frame : CGRect = CGRect(x: xOffset, y: yOffset, width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
             // cache 저장
@@ -74,11 +64,7 @@ class CustomLayout : UICollectionViewLayout {
             
             // 새로 계산된 항목의 프레임을 설명하도록 확장
             contentHeight = max(contentHeight, frame.maxY)
-            if yOffset[0] <= yOffset[1] {
-                yOffset[0] = yOffset[0] + height
-            } else {
-                yOffset[1] = yOffset[1] + height
-            }
+            yOffset += height
             
             // 다음 항목이 다음 열에 배치되도록 설정
             column = column < (numberOfColumns - 1) ? (column + 1) : 0

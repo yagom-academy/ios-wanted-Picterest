@@ -11,10 +11,9 @@ class PhotoListView: UIView {
     
     let photoCollectionView : UICollectionView = {
         
-        let layout = CustomLayout()
+        let layout = PhotoListCustomLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(PhotoListCollectionViewCell.self, forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier)
-        collectionView.layer.borderWidth = 1
         return collectionView
     }()
     

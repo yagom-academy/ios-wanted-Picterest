@@ -9,12 +9,35 @@ import UIKit
 
 class SavedPhotoListView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    let savedPhotoCollectionView : UICollectionView = {
+        
+        let layout = SavedPhotoListCustomLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(SavedPhotoListCollectionViewCell.self, forCellWithReuseIdentifier: SavedPhotoListCollectionViewCell.identifier)
+        return collectionView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        setupConstraints()
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    func setupView() {
+        self.addSubview(savedPhotoCollectionView)
+        savedPhotoCollectionView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func setupConstraints() {
+        NSLayoutConstraint.activate([
+            savedPhotoCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
+            savedPhotoCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            savedPhotoCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            savedPhotoCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
 }
