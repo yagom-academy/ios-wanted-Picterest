@@ -19,6 +19,8 @@
 		E14276A02891004D00AC4039 /* PhotoInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = E142769F2891004D00AC4039 /* PhotoInfo.plist */; };
 		E14276A42891017600AC4039 /* SavedPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276A32891017600AC4039 /* SavedPhotoViewController.swift */; };
 		E14276A7289101BA00AC4039 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276A6289101BA00AC4039 /* TabBarViewController.swift */; };
+		E14276A92891216F00AC4039 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276A82891216F00AC4039 /* CustomCollectionViewLayout.swift */; };
+		E14276AB289127AA00AC4039 /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14276AA289127AA00AC4039 /* PhotoListCollectionViewCell.swift */; };
 		E14A5492288E77790020282C /* EndPointType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5491288E77790020282C /* EndPointType.swift */; };
 		E14A5494288E77930020282C /* PhotoListEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5493288E77930020282C /* PhotoListEndPoint.swift */; };
 		E14A549A288E7B130020282C /* Bundle + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14A5499288E7B130020282C /* Bundle + extension.swift */; };
@@ -39,6 +41,8 @@
 		E142769F2891004D00AC4039 /* PhotoInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PhotoInfo.plist; sourceTree = "<group>"; };
 		E14276A32891017600AC4039 /* SavedPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPhotoViewController.swift; sourceTree = "<group>"; };
 		E14276A6289101BA00AC4039 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		E14276A82891216F00AC4039 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
+		E14276AA289127AA00AC4039 /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		E14A5491288E77790020282C /* EndPointType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPointType.swift; sourceTree = "<group>"; };
 		E14A5493288E77930020282C /* PhotoListEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListEndPoint.swift; sourceTree = "<group>"; };
 		E14A5499288E7B130020282C /* Bundle + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + extension.swift"; sourceTree = "<group>"; };
@@ -74,12 +78,12 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				E14276932890DD3400AC4039 /* Model */,
-				E14A5498288E7B010020282C /* Utils */,
-				E14A548E288E77620020282C /* Network */,
 				E167D0AC288E6BB00062496F /* Application */,
 				E167D0AD288E6BBB0062496F /* Presentation */,
+				E14276932890DD3400AC4039 /* Model */,
+				E14A548E288E77620020282C /* Network */,
 				E167D0AB288E6B980062496F /* Resource */,
+				E14A5498288E7B010020282C /* Utils */,
 			);
 			path = Picterest;
 			sourceTree = "<group>";
@@ -130,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				DE15E65F28604278003DD2F5 /* PhotoListViewController.swift */,
+				E14276AA289127AA00AC4039 /* PhotoListCollectionViewCell.swift */,
 			);
 			path = PhotoList;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				E14A5499288E7B130020282C /* Bundle + extension.swift */,
+				E14276A82891216F00AC4039 /* CustomCollectionViewLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -184,8 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				E14276A52891019E00AC4039 /* TabBar */,
-				E14276A12891014D00AC4039 /* SavedPhoto */,
 				E14276A22891015C00AC4039 /* PhotoList */,
+				E14276A12891014D00AC4039 /* SavedPhoto */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -272,7 +278,9 @@
 				E14A5494288E77930020282C /* PhotoListEndPoint.swift in Sources */,
 				E14A5492288E77790020282C /* EndPointType.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
+				E14276A92891216F00AC4039 /* CustomCollectionViewLayout.swift in Sources */,
 				E14276A42891017600AC4039 /* SavedPhotoViewController.swift in Sources */,
+				E14276AB289127AA00AC4039 /* PhotoListCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
