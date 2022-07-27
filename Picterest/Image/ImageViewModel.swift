@@ -11,7 +11,7 @@ class ImageViewModel {
     
     private let photoAPIService = PhotoAPIService()
     
-    func getRandomPhoto(_ completion: @escaping (Result<[Photo], APIError>) -> Void) {
-        photoAPIService.getRandomPhoto(completion)
+    func getRandomPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
+        photoAPIService.getRandomPhoto(page, completion)
     }
 }

@@ -11,17 +11,19 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCollectionViewCell"
     
+    private let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        image.tintColor = .lightGray
         
         return image
     }()
     
-    func fetchData(_ photo: Photo) {
+    func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
         layout()
+        
+        labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
         
         LoadImage().loadImage(photo.urls.small) { result in
             switch result {
@@ -40,7 +42,7 @@ extension ImageCollectionViewCell {
     
     func layout() {
         [
-            photoImageView
+            photoImageView, labelStackView
         ].forEach {
             addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +52,12 @@ extension ImageCollectionViewCell {
             photoImageView.topAnchor.constraint(equalTo: self.topAnchor),
             photoImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             photoImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            photoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            photoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            labelStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            labelStackView.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
 }
