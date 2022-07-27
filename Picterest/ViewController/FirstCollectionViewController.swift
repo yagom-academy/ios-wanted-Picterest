@@ -10,7 +10,7 @@ import UIKit
 class FirstCollectionViewController: UICollectionViewController {
     
     var imageListViewModel = ImageListViewModel()
-    var saveImageManager = SaveImageManager()
+    var saveImageManager = ImageManager()
     var numOfColumns = 0
     
     override func viewDidLoad() {

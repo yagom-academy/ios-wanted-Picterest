@@ -21,8 +21,8 @@
 		C7FE9FF9288EEFD40019B063 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FE9FF8288EEFD40019B063 /* ImageCollectionViewLayout.swift */; };
 		C7FEA023288FAB2E0019B063 /* ImageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA021288FAB2E0019B063 /* ImageDataModel.xcdatamodeld */; };
 		C7FEA025288FBCA20019B063 /* CoredataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA024288FBCA20019B063 /* CoredataManager.swift */; };
-		C7FEA028288FC1090019B063 /* SaveImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA027288FC1090019B063 /* SaveImageManager.swift */; };
-		C7FEA02A288FC2C50019B063 /* SaveLocalImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA029288FC2C50019B063 /* SaveLocalImageFileManager.swift */; };
+		C7FEA028288FC1090019B063 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA027288FC1090019B063 /* ImageManager.swift */; };
+		C7FEA02A288FC2C50019B063 /* LocalImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA029288FC2C50019B063 /* LocalImageFileManager.swift */; };
 		C7FEA02C288FDE700019B063 /* SavedImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA02B288FDE700019B063 /* SavedImageListViewModel.swift */; };
 		C7FEA03028904B740019B063 /* SavedImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FEA02F28904B730019B063 /* SavedImageViewModel.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
@@ -47,8 +47,8 @@
 		C7FE9FF8288EEFD40019B063 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
 		C7FEA022288FAB2E0019B063 /* ImageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDataModel.xcdatamodel; sourceTree = "<group>"; };
 		C7FEA024288FBCA20019B063 /* CoredataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoredataManager.swift; sourceTree = "<group>"; };
-		C7FEA027288FC1090019B063 /* SaveImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageManager.swift; sourceTree = "<group>"; };
-		C7FEA029288FC2C50019B063 /* SaveLocalImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLocalImageFileManager.swift; sourceTree = "<group>"; };
+		C7FEA027288FC1090019B063 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		C7FEA029288FC2C50019B063 /* LocalImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalImageFileManager.swift; sourceTree = "<group>"; };
 		C7FEA02B288FDE700019B063 /* SavedImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListViewModel.swift; sourceTree = "<group>"; };
 		C7FEA02F28904B730019B063 /* SavedImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageViewModel.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,8 +161,8 @@
 			isa = PBXGroup;
 			children = (
 				C7FEA024288FBCA20019B063 /* CoredataManager.swift */,
-				C7FEA027288FC1090019B063 /* SaveImageManager.swift */,
-				C7FEA029288FC2C50019B063 /* SaveLocalImageFileManager.swift */,
+				C7FEA027288FC1090019B063 /* ImageManager.swift */,
+				C7FEA029288FC2C50019B063 /* LocalImageFileManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -304,13 +304,13 @@
 				C7FE9FD5288E4BC10019B063 /* TabBarController.swift in Sources */,
 				C7FEA023288FAB2E0019B063 /* ImageDataModel.xcdatamodeld in Sources */,
 				C7FE9FED288EB5C30019B063 /* ImageViewModel.swift in Sources */,
-				C7FEA028288FC1090019B063 /* SaveImageManager.swift in Sources */,
+				C7FEA028288FC1090019B063 /* ImageManager.swift in Sources */,
 				C7FE9FF9288EEFD40019B063 /* ImageCollectionViewLayout.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				C7FE9FD9288E4C6D0019B063 /* SecondCollectionViewController.swift in Sources */,
 				C7FEA02C288FDE700019B063 /* SavedImageListViewModel.swift in Sources */,
 				C7FEA025288FBCA20019B063 /* CoredataManager.swift in Sources */,
-				C7FEA02A288FC2C50019B063 /* SaveLocalImageFileManager.swift in Sources */,
+				C7FEA02A288FC2C50019B063 /* LocalImageFileManager.swift in Sources */,
 				C7FEA03028904B740019B063 /* SavedImageViewModel.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 			);

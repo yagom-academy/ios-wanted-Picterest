@@ -7,13 +7,17 @@
 
 import Foundation
 
-class SaveImageManager {
-    let coredataManager = CoredataManager()
-    let saveLocalImageFileManager = SaveLocalImageFileManager()
+class ImageManager {
+    let coredataManager = CoredataManager.shared
+    let saveLocalImageFileManager = LocalImageFileManager()
     
     func saveImageAndInfo(imageViewModel: ImageViewModel, memo: String){
         saveLocalImageFileManager.saveLocalImage(imageViewModel: imageViewModel) { imageFilePath in
             self.coredataManager.setImageInfo(imageViewModel, memo: memo, saveLocation: imageFilePath)
         }
+    }
+    
+    func deleteImage(savedImageViewModel: SavedImageViewModel, indexPath: Int) {
+        coredataManager.deleteCoredata(indexPath: indexPath)
     }
 }

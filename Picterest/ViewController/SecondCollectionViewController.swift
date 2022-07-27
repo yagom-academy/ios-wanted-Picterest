@@ -8,8 +8,10 @@
 import UIKit
 class SecondCollectionViewController: UICollectionViewController {
     
+    let imageManager = ImageManager()
     var savedImageListViewModel = SavedImageListViewModel()
     var numOfColumns = 0
+    var selectedIndexPath = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,23 @@ class SecondCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.secondViewIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.configureSavedCell(with: savedImageListViewModel.imageViewModelAtIndexPath(index: indexPath.row), indexpath: indexPath.row)
+        let longPressGesture: CustomLongPressTapGesture = CustomLongPressTapGesture(target: self, action: #selector(deleteImage(sender:)))
+        longPressGesture.indexPath = indexPath.row
+        cell.addGestureRecognizer(longPressGesture)
         return cell
+    }
+    
+    @objc func deleteImage(sender: CustomLongPressTapGesture){
+        
+        let alert = UIAlertController(title: "이미지 삭제", message: "해당 이미지를 삭제하시겠습니까?", preferredStyle: .alert)
+        let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
+            self.imageManager.deleteImage(savedImageViewModel: self.savedImageListViewModel.imageViewModelAtIndexPath(index: sender.indexPath ?? 0), indexPath: sender.indexPath ?? 0)
+            self.refresh()
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(downloadAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
     func configureRefreshControl() {
@@ -68,4 +86,8 @@ extension SecondCollectionViewController: ImageCollectionViewLayoutDelegate {
         return height
     }
     
+}
+
+class CustomLongPressTapGesture: UILongPressGestureRecognizer {
+    var indexPath: Int?
 }

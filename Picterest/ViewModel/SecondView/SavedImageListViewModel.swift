@@ -8,7 +8,7 @@
 import Foundation
 
 class SavedImageListViewModel{
-    private let coredataManager = CoredataManager()
+    private let coredataManager = CoredataManager.shared
     
     var imageList: [SavedImageViewModel] = [] {
         didSet {

@@ -10,7 +10,11 @@ import UIKit
 import CoreData
 
 class CoredataManager {
+    
+    static let shared = CoredataManager()
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var coredataImageInfoList: [ImageInfo] = []
     
     func setImageInfo(_ imageViewModel: ImageViewModel, memo: String, saveLocation: String) {
         let newImageInfo = ImageInfo(context: context)
@@ -28,6 +32,7 @@ class CoredataManager {
         do {
             var fetchDecodingCoredataArray : [SavedImageViewModel] = []
             let coredataItemList = try context.fetch(request)
+            
             for data in coredataItemList {
                 guard let id = data.value(forKey: "id") as? String else { return }
                 guard let url = data.value(forKey: "originURL") as? URL else { return }
@@ -35,18 +40,22 @@ class CoredataManager {
                 guard let width = data.value(forKey: "width") as? Double else { return }
                 guard let height = data.value(forKey: "height") as? Double else { return }
                 guard let memo = data.value(forKey: "memo") as? String else { return }
-                let imageModel = SavedImageViewModel(image: ImageModel(id: id, width: width, height: height, urls: ImageURL(small: urlString)), memo: memo)//ImageModel(id: id, width: width, height: height, urls: ImageURL(small: urlString))
+                let imageModel = SavedImageViewModel(image: ImageModel(id: id, width: width, height: height, urls: ImageURL(small: urlString)), memo: memo)
                 fetchDecodingCoredataArray.append(imageModel)
             }
-            print(fetchDecodingCoredataArray)
+            coredataImageInfoList = coredataItemList
             completion(fetchDecodingCoredataArray)
         } catch {
             print("fetching data error \(error.localizedDescription)")
         }
     }
     
-    func deleteCoredata() {
-        
+    func deleteCoredata(indexPath: Int) {
+        context.delete(coredataImageInfoList[indexPath])
+        saveImageInfo()
+//        let readRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "id")
+//        readRequest.predicate = NSPredicate()
+//        context.delete(<#T##object: NSManagedObject##NSManagedObject#>)
     }
     
     func saveImageInfo() {

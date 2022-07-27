@@ -7,8 +7,8 @@
 
 import Foundation
 
-class SaveLocalImageFileManager {
-    static let shared: SaveLocalImageFileManager = SaveLocalImageFileManager()
+class LocalImageFileManager {
+    static let shared: LocalImageFileManager = LocalImageFileManager()
     
     let defaultImageFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     
