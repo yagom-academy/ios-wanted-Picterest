@@ -20,6 +20,7 @@
 		68035090288EC934003AA3AD /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6803508F288EC934003AA3AD /* HTTPMethod.swift */; };
 		68035092288EC9CA003AA3AD /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68035091288EC9CA003AA3AD /* EndPoint.swift */; };
 		68B9C8E52890EC6700203C6A /* SaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8E42890EC6700203C6A /* SaveTableViewCell.swift */; };
+		68B9C8E82890F3A200203C6A /* PhotoFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */; };
 		68C96FBD288F628A00E7D1AA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C96FBC288F628A00E7D1AA /* HTTPClient.swift */; };
 		68C96FD9288FB39100E7D1AA /* LabelStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C96FD8288FB39100E7D1AA /* LabelStackView.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
@@ -42,6 +43,7 @@
 		6803508F288EC934003AA3AD /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		68035091288EC9CA003AA3AD /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		68B9C8E42890EC6700203C6A /* SaveTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveTableViewCell.swift; sourceTree = "<group>"; };
+		68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFileManager.swift; sourceTree = "<group>"; };
 		68C96FBC288F628A00E7D1AA /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		68C96FD8288FB39100E7D1AA /* LabelStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelStackView.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		68B9C8E62890F39000203C6A /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				68B9C8E72890F3A200203C6A /* PhotoFileManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +150,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				68B9C8E62890F39000203C6A /* Manager */,
 				6803508A288E7B1A003AA3AD /* Model */,
 				68035087288E6F46003AA3AD /* Network */,
 				68035083288E5E81003AA3AD /* TabBar */,
@@ -239,6 +250,7 @@
 				68C96FBD288F628A00E7D1AA /* HTTPClient.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				68035092288EC9CA003AA3AD /* EndPoint.swift in Sources */,
+				68B9C8E82890F3A200203C6A /* PhotoFileManager.swift in Sources */,
 				68035086288E6AD1003AA3AD /* ImageCollectionViewCustomLayout.swift in Sources */,
 				68B9C8E52890EC6700203C6A /* SaveTableViewCell.swift in Sources */,
 			);
