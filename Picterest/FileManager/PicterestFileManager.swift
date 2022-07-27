@@ -5,7 +5,7 @@
 //  Created by 신의연 on 2022/07/26.
 //
 
-import Foundation
+import UIKit
 
 enum FileError: String {
     case canNotDeleteFile = "파일을 지울 수 없습니다."
@@ -45,7 +45,37 @@ class PicterestFileManager {
         }
     }
     
-    func createPictureId(fileName: String) -> URL {
+    func getPictureLocaUrl(fileName: String) -> URL{
         return directoryPath.appendingPathComponent(fileName)
     }
+    
+    func savePicture(fileName: String, image: UIImage) -> URL {
+        let fileUrl = directoryPath.appendingPathComponent(fileName)
+        if let data = image.pngData() {
+            do {
+                try data.write(to: fileUrl)
+            } catch {
+                print(error)
+            }
+        }
+        return fileUrl
+    }
+   
+    func deletePicture(fileName: String) {
+        let filePath = directoryPath.appendingPathComponent(fileName)
+        if fileManager.fileExists(atPath: filePath.path) {
+            do {
+                try fileManager.removeItem(at: filePath)
+            } catch let error {
+                if let delegate = delegate {
+                    delegate.fileManager(fileManager, error: FileError.canNotDeleteFile, desc: error)
+                }
+            }
+        } else {
+            if let delegate = delegate {
+                delegate.fileManager(fileManager, error: FileError.fileDoesNotExit, desc: nil)
+            }
+        }
+    }
+    
 }
