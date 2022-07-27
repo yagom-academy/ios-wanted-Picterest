@@ -52,7 +52,7 @@ final class ImageCell: UICollectionViewCell {
   private let imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.layer.cornerRadius = 15
-    imageView.contentMode = .scaleAspectFill
+    imageView.contentMode = .scaleAspectFit
     imageView.translatesAutoresizingMaskIntoConstraints = false
     return imageView
   }()
@@ -71,6 +71,7 @@ final class ImageCell: UICollectionViewCell {
   func configure(model: ImageEntity) {
     self.imageView.setImage(url: model.imageURL){ image in
       model.saveImage(image: image)
+      print("실제 이미지 사이즈 : \(image.size.width)x\(image.size.height), 비율 = \(image.size.width/image.size.height)")
     }
     memoLabel.text = model.memo
   }

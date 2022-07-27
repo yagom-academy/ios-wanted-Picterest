@@ -8,10 +8,9 @@ import UIKit
 class HomeViewController: UIViewController {
   
   let viewModel = HomeViewModel()
-
-  private var collectionView: UICollectionView = {
-    let layoutProvider = HomeSceneLayout()
-//    let layout = FlowLayoutManager.makeCompositionalLayout(layoutProvider)
+  let layoutProvider = SceneLayout(scene: .home, cellPadding: 6)
+  
+  private lazy var collectionView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider)
     collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.id)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,9 +46,7 @@ private extension HomeViewController {
   
   func setConstraints() {
     view.addSubview(collectionView)
-    if let layout = collectionView.collectionViewLayout as? HomeSceneLayout {
-      layout.delegate = self
-    }
+    layoutProvider.delegate = self
     NSLayoutConstraint.activate([
       collectionView.topAnchor.constraint(equalTo: view.topAnchor),
       collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -60,14 +57,11 @@ private extension HomeViewController {
   
 }
 
-extension HomeViewController: UICollectionViewDataSource, HomeSceneLayoutDelegate {
+extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate {
 
-  
-  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return viewModel.imageList.value.count
   }
-  
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.id, for: indexPath) as? ImageCell,
@@ -82,7 +76,7 @@ extension HomeViewController: UICollectionViewDataSource, HomeSceneLayoutDelegat
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
     guard let image = viewModel[indexPath] else {return 180}
     let widthRatio = image.width / image.height
-    return view.frame.width / widthRatio
+    return ((view.frame.width / CGFloat(layoutProvider.numberOfColumns)) - layoutProvider.cellPadding * 2) / widthRatio
   }
   
 }

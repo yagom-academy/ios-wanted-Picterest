@@ -7,18 +7,25 @@
 
 import UIKit
 
-protocol HomeSceneLayoutDelegate: AnyObject {
+protocol SceneLayoutDelegate: AnyObject {
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-final class HomeSceneLayout: UICollectionViewLayout {
+
+enum LayoutType: Int {
+  case home = 2
+  case save = 1
+}
+
+
+final class SceneLayout: UICollectionViewLayout {
   
   // 1
-  weak var delegate: HomeSceneLayoutDelegate?
+  weak var delegate: SceneLayoutDelegate?
   
   // 2
-  private let numberOfColumns = 2
-  private let cellPadding: CGFloat = 6
+  let numberOfColumns: Int
+  let cellPadding: CGFloat
   
   // 3
   private var cache: [UICollectionViewLayoutAttributes] = []
@@ -35,6 +42,17 @@ final class HomeSceneLayout: UICollectionViewLayout {
     return collectionView.bounds.width - (insets.left + insets.right)
   }
   
+  init(scene: LayoutType, cellPadding: CGFloat){
+    self.numberOfColumns = scene.rawValue
+    self.cellPadding = cellPadding
+    super.init()
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  
   // 5
   override var collectionViewContentSize: CGSize {
     return CGSize(width: contentWidth, height: contentHeight)
@@ -50,7 +68,8 @@ final class HomeSceneLayout: UICollectionViewLayout {
     }
     
     //7
-    let columnWidth = contentWidth / CGFloat(numberOfColumns)
+    let columnWidth = (contentWidth / CGFloat(numberOfColumns))
+    
     var xOffset: [CGFloat] = []
     for column in 0..<numberOfColumns {
       xOffset.append(CGFloat(column) * columnWidth)
@@ -65,12 +84,13 @@ final class HomeSceneLayout: UICollectionViewLayout {
       //9
       let photoHeight = delegate?.collectionView(
         collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
-      let height = cellPadding * 2 + photoHeight / 2
+      let height = cellPadding * 2 + photoHeight
       
       let frame = CGRect(x: xOffset[column],
                          y: yOffset[column],
                          width: columnWidth,
                          height: height)
+      
       let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
       
       //10
@@ -82,10 +102,9 @@ final class HomeSceneLayout: UICollectionViewLayout {
       //11
       contentHeight = max(contentHeight, frame.maxY)
       yOffset[column] = yOffset[column] + height
-
+      if numberOfColumns == 1 {continue}
       let otherCol = column == 0 ? 1:0
       column = yOffset[column] < yOffset[otherCol] ? column : otherCol
-  
     }
   }
   
