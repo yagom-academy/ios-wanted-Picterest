@@ -7,13 +7,25 @@
 
 import UIKit
 
+protocol ImageCollectionViewCellDelegate: AnyObject {
+    func alert(from cell: ImagesCollectionViewCell)
+}
+
 class ImagesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var indexLabel: UILabel!
+    @IBOutlet weak var saveImageButton: UIButton!
+    weak var delegate: ImageCollectionViewCellDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
+    }
+    
+    @IBAction func tappedSaveImageButton(_ sender: UIButton) {
+        saveImageButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        saveImageButton.tintColor = .yellow
+        delegate?.alert(from: self)
     }
 }

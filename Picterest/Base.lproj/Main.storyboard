@@ -56,30 +56,42 @@
                                                         <constraint firstAttribute="height" constant="50" id="EM0-7O-oe2"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YR3-ci-AW6">
-                                                    <rect key="frame" x="197" y="14.5" width="42" height="21"/>
+                                                <label userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YR3-ci-AW6">
+                                                    <rect key="frame" x="98.5" y="175" width="42" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
+                                                    <color key="highlightedColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <size key="shadowOffset" width="0.0" height="0.0"/>
                                                 </label>
+                                                <button contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Ki-ar-oRy">
+                                                    <rect key="frame" x="8" y="79" width="51" height="31"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="star" catalog="system" title=" "/>
+                                                    <connections>
+                                                        <action selector="tappedSaveImageButton:" destination="apk-7b-uUe" eventType="touchUpInside" id="fkn-AT-oSr"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="jQ5-oe-vVu" secondAttribute="trailing" id="031-Ua-2Me"/>
                                                 <constraint firstAttribute="bottom" secondItem="jQ5-oe-vVu" secondAttribute="bottom" id="6Z5-Uf-zMy"/>
                                                 <constraint firstItem="kNF-Aq-Bbn" firstAttribute="leading" secondItem="XOi-hl-Umv" secondAttribute="leading" id="AqE-sd-ivJ"/>
                                                 <constraint firstItem="kNF-Aq-Bbn" firstAttribute="top" secondItem="XOi-hl-Umv" secondAttribute="top" id="ClG-xS-XY5"/>
-                                                <constraint firstAttribute="trailing" secondItem="YR3-ci-AW6" secondAttribute="trailing" id="L7u-UT-BLK"/>
+                                                <constraint firstItem="3Ki-ar-oRy" firstAttribute="leading" secondItem="XOi-hl-Umv" secondAttribute="leading" constant="5" id="DPa-Vd-HKZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="YR3-ci-AW6" secondAttribute="trailing" constant="10" id="Rc8-YH-5do"/>
+                                                <constraint firstItem="YR3-ci-AW6" firstAttribute="centerY" secondItem="kNF-Aq-Bbn" secondAttribute="centerY" id="X78-VP-iVh"/>
                                                 <constraint firstItem="jQ5-oe-vVu" firstAttribute="leading" secondItem="XOi-hl-Umv" secondAttribute="leading" id="gmq-05-bfB"/>
                                                 <constraint firstAttribute="trailing" secondItem="kNF-Aq-Bbn" secondAttribute="trailing" id="l1m-1p-OXo"/>
-                                                <constraint firstItem="YR3-ci-AW6" firstAttribute="centerY" secondItem="kNF-Aq-Bbn" secondAttribute="centerY" id="ojk-cJ-lY6"/>
                                                 <constraint firstItem="jQ5-oe-vVu" firstAttribute="top" secondItem="XOi-hl-Umv" secondAttribute="top" id="oqH-D4-S9N"/>
+                                                <constraint firstItem="3Ki-ar-oRy" firstAttribute="centerY" secondItem="kNF-Aq-Bbn" secondAttribute="centerY" id="q9H-r3-gjt"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="239" height="371"/>
                                         <connections>
                                             <outlet property="imageView" destination="jQ5-oe-vVu" id="KkK-K1-pfH"/>
                                             <outlet property="indexLabel" destination="YR3-ci-AW6" id="dIy-ai-ylJ"/>
+                                            <outlet property="saveImageButton" destination="3Ki-ar-oRy" id="9z0-4T-oIC"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -124,6 +136,7 @@
     </scenes>
     <resources>
         <image name="photo.fill.on.rectangle.fill" width="13" height="11"/>
+        <image name="star" catalog="system" width="128" height="116"/>
         <image name="star.bubble" width="11" height="11"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

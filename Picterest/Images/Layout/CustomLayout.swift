@@ -56,6 +56,7 @@ class CustomLayout: UICollectionViewLayout {
         /// x좌표 값, y좌표 값 지정
         
         cache.removeAll()
+        heightArray = [0, 0]
         
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var xOffset: [CGFloat] = []

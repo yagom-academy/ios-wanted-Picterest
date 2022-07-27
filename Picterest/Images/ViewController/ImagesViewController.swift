@@ -20,6 +20,7 @@ final class ImagesViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+        
         bind()
         viewModel.fetch()
         layout = collectionView.collectionViewLayout as? CustomLayout
@@ -49,8 +50,10 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
+        cell.delegate = self
         cell.imageView.loadImage(viewModel.getImage(of: indexPath.row).urls.small)
         cell.indexLabel.text = "\(indexPath.row)번째 사진"
+        cell.saveImageButton.tintColor = .white
         return cell
     }
 }
@@ -78,4 +81,30 @@ extension ImagesViewController: UICollectionViewDelegate {
         }
     }
 
+}
+
+extension ImagesViewController: ImageCollectionViewCellDelegate {
+    func alert(from cell: ImagesCollectionViewCell) {
+        let alertController = UIAlertController(title: "Picterest", message: "사진을 다운받으시겠습니까?", preferredStyle: .alert)
+        alertController.addTextField()
+
+        let save = UIAlertAction(title: "저장", style: UIAlertAction.Style.default, handler: { saveAction -> Void in
+            guard let textFields = alertController.textFields else {
+                return
+            }
+            
+        })
+        
+        let cancel = UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: {
+            (action : UIAlertAction!) -> Void in
+            print("취소")
+        })
+
+
+        alertController.addAction(save)
+        alertController.addAction(cancel)
+
+        present(alertController, animated: true)
+
+    }
 }
