@@ -100,7 +100,6 @@ extension PhotoListViewController {
             switch result {
             case .success(let photoLists):
                 self.photos += photoLists
-                print("photos:\(self.photos)")
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -133,17 +132,17 @@ extension PhotoListViewController: UICollectionViewDataSource {
         }
         
         let photo: PhotoListResult = photos[indexPath.item]
-//        cell.setupCell(photo: photo)
+        
+        cell.setupCell(photo: photo, index: indexPath.item)
         
         URLImageProvider?.fetchImage(from: photo.urls.small, completion: { result in
             switch result {
             case .success(let image):
-                cell.setupCell(image)
+                cell.setupImage(image)
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
-        
         
         return cell
     }

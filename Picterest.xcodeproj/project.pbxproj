@@ -150,6 +150,14 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		E14276AE289182EC00AC4039 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E14A5499288E7B130020282C /* Bundle + extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E14A548E288E77620020282C /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,7 +171,7 @@
 		E14A5498288E7B010020282C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E14A5499288E7B130020282C /* Bundle + extension.swift */,
+				E14276AE289182EC00AC4039 /* Extensions */,
 				E14276A82891216F00AC4039 /* CustomCollectionViewLayout.swift */,
 			);
 			path = Utils;
