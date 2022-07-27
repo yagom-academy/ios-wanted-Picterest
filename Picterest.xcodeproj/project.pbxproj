@@ -26,6 +26,11 @@
 		FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */; };
 		FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */; };
 		FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A672288ED11100EBD539 /* Collection+Extension.swift */; };
+		FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B52891931900C7F358 /* CoreDataManager.swift */; };
+		FE6FC6B82891949000C7F358 /* CoreDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */; };
+		FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */; };
+		FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */; };
+		FE6FC6BF28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */; };
 		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
 		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
 		FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */; };
@@ -55,6 +60,11 @@
 		FE56A66D288ECC3400EBD539 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FE56A670288ECD3000EBD539 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		FE56A672288ED11100EBD539 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		FE6FC6B52891931900C7F358 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataInfo.swift; sourceTree = "<group>"; };
+		FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageInfoModel.xcdatamodel; sourceTree = "<group>"; };
+		FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
 		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
 		FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCellDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +102,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				FE6FC6B4289192FF00C7F358 /* DBManager */,
 				FE24EB7A288E6B9F00A4527C /* Present */,
 				FE24EB75288E48A700A4527C /* Entities */,
 				FE56A66C288ECC2100EBD539 /* Cache */,
@@ -116,6 +127,7 @@
 			children = (
 				FE24EB76288E48B500A4527C /* ImageInfo.swift */,
 				FE24EB78288E4C2700A4527C /* CustomError.swift */,
+				FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -166,6 +178,7 @@
 				DE15E66428604279003DD2F5 /* Assets.xcassets */,
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
+				FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -204,6 +217,16 @@
 				FE56A672288ED11100EBD539 /* Collection+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		FE6FC6B4289192FF00C7F358 /* DBManager */ = {
+			isa = PBXGroup;
+			children = (
+				FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */,
+				FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */,
+				FE6FC6B52891931900C7F358 /* CoreDataManager.swift */,
+			);
+			path = DBManager;
 			sourceTree = "<group>";
 		};
 		FEFB54EA28911BA3005EA2DD /* RandomImageListCell */ = {
@@ -305,13 +328,18 @@
 			files = (
 				FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */,
 				FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */,
+				FE6FC6BF28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift in Sources */,
 				FE24EB79288E4C2700A4527C /* CustomError.swift in Sources */,
+				FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */,
 				FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */,
+				FE6FC6B82891949000C7F358 /* CoreDataInfo.swift in Sources */,
 				FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */,
 				FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */,
 				FE56A669288EB32C00EBD539 /* ReuseIdentifying.swift in Sources */,
 				FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */,
+				FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
+				FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
@@ -530,6 +558,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */,
+			);
+			currentVersion = FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }
