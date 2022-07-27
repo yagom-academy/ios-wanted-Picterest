@@ -19,7 +19,9 @@ struct PhotoListAPIProvider: PhotoListAPIProviderType {
     
     let networkRequester: NetworkRequesterType
     
-    func fetchPhotoList(completion: @escaping (Result<PhotoListResult, Error>) -> Void) {
+    func fetchPhotoList(
+        completion: @escaping (Result<PhotoListResult, Error>
+        ) -> Void) {
         networkRequester.request(to: PhotoListEndPoint.getPhotoList) { result in
             switch result {
             case .success(let data):
@@ -28,6 +30,7 @@ struct PhotoListAPIProvider: PhotoListAPIProviderType {
                     return
                 }
                 completion(.success(decodedData))
+                
             case .failure(let error):
                 completion(.failure(error))
             }

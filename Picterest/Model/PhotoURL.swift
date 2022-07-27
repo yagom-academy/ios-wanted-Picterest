@@ -9,6 +9,6 @@ import Foundation
 
 struct PhotoURL: Decodable {
     
-    let regular: String
+    let small: String
  
 }
