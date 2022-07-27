@@ -17,11 +17,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
         window = UIWindow(windowScene: windowScene)
-        let networkRequester = NetworkRequester()
-        let photoListProvider = PhotoListAPIProvider(networkRequester: networkRequester)
-        let rootViewController = PhotoListViewController.instantiate(
-            with: photoListProvider
-        )
+        let rootViewController = TabBarViewController()
+        
         window?.rootViewController = rootViewController
         window?.makeKeyAndVisible()
     }
