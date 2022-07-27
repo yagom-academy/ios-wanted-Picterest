@@ -1,5 +1,5 @@
 //
-//  extension_UIImageView.swift
+//  UIImageView+loadImage.swift
 //  Picterest
 //
 //  Created by hayeon on 2022/07/26.
