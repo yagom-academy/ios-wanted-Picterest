@@ -23,16 +23,8 @@ class SavedListTableViewCell: UITableViewCell, CellIdentifiable {
     }()
     
     func setupView(savedPhoto: CoreSavedPhoto) {
-        guard let folderURL = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask
-        ).first?.appendingPathComponent("SavedPhotos") else { return }
-        
-        let writeURL = folderURL.appendingPathComponent(savedPhoto.id + ".png")
-        print(writeURL)
-        let data = FileManager.default.contents(atPath: writeURL.path)
-        
-        savedImageView.image = UIImage(data: data!)
+        guard let data = FileManager.fetch(fileName: savedPhoto.id) else { return }
+        savedImageView.image = UIImage(data: data)
         
         configUI()
         topView.setupView(index: 1)

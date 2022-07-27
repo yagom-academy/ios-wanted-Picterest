@@ -42,54 +42,25 @@ class PhotoListViewModel {
     }
     
     func savePhoto(sender: UIButton, photoInfo: Photo, memo: String, image: UIImage) {
-        guard let folderURL = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask
-        ).first?.appendingPathComponent("SavedPhotos") else { return }
+        let filePath = FileManager.save(
+            data: image.pngData(),
+            fileName: photoInfo.id
+        )
         
-        
-        if !FileManager.default.fileExists(atPath: folderURL.path) {
-            do {
-                try FileManager.default.createDirectory(
-                    at: folderURL,
-                    withIntermediateDirectories: true
-                )
-            } catch {
-                return
-            }
-        }
-        
-        let writeURL = folderURL.appendingPathComponent(photoInfo.id + ".png")
-        
-        do {
-            try image.pngData()?.write(to: writeURL)
-        } catch {
-            return
-        }
         isSave.value = (sender, true)
         
         let newPhoto = CoreSavedPhoto(
             id: photoInfo.id,
             memo: memo,
             url: photoInfo.urls.raw,
-            path: writeURL.path
+            path: filePath ?? ""
         )
         
         CoreDataManager.shared.save(newPhoto: newPhoto)
     }
     
     func removePhoto(sender: UIButton, photoInfo: Photo) {
-        guard let folderURL = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask
-        ).first?.appendingPathComponent("SavedPhotos") else { return }
-        
-        let writedURL = folderURL.appendingPathComponent(photoInfo.id + ".png")
-        do {
-            try FileManager.default.removeItem(at: writedURL)
-        } catch {
-            return
-        }
+        FileManager.remove(fileName: photoInfo.id)
         isRemove.value = (sender, true)
         
         CoreDataManager.shared.remove(id: photoInfo.id)
