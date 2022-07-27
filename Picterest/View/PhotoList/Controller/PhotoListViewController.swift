@@ -28,7 +28,7 @@ class PhotoListViewController: BaseViewController {
     }
     
     func configure() {
-        let layout = photoListView.photoCollectionView.collectionViewLayout as? CustomLayout
+        let layout = photoListView.photoCollectionView.collectionViewLayout as? PhotoListCustomLayout
         layout?.delegate = self
     }
 }
@@ -93,6 +93,7 @@ extension PhotoListViewController : SaveButtonDelegate {
             alert.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.destructive, handler: {[weak self] _ in
                 self?.dismiss(animated: true)
             }))
+            alert.addTextField()
             alert.addAction(UIAlertAction(title: "저장", style: .default, handler: { [weak self] _ in
                 print("저장")
                 // filemanager에 이미지 저장
@@ -101,6 +102,7 @@ extension PhotoListViewController : SaveButtonDelegate {
                 self?.photoListViewModel.saveDataToCoreData()
                 cell.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 cell.saveButton.tintColor = .yellow
+                cell.memoText = alert.textFields?[0].text
             }))
             self.present(alert, animated: true)
         } else {
