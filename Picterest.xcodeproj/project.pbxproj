@@ -89,13 +89,37 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		E14A548E288E77620020282C /* Network */ = {
+		E14276992890FCE800AC4039 /* EndPoint */ = {
 			isa = PBXGroup;
 			children = (
 				E14A5491288E77790020282C /* EndPointType.swift */,
 				E14A5493288E77930020282C /* PhotoListEndPoint.swift */,
+			);
+			path = EndPoint;
+			sourceTree = "<group>";
+		};
+		E142769A2890FCF200AC4039 /* NetworkRequester */ = {
+			isa = PBXGroup;
+			children = (
 				E142768F2890CED800AC4039 /* NetworkRequester.swift */,
+			);
+			path = NetworkRequester;
+			sourceTree = "<group>";
+		};
+		E142769B2890FD0000AC4039 /* APIProvider */ = {
+			isa = PBXGroup;
+			children = (
 				E14276912890DAB900AC4039 /* PhotoListProvider.swift */,
+			);
+			path = APIProvider;
+			sourceTree = "<group>";
+		};
+		E14A548E288E77620020282C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E14276992890FCE800AC4039 /* EndPoint */,
+				E142769A2890FCF200AC4039 /* NetworkRequester */,
+				E142769B2890FD0000AC4039 /* APIProvider */,
 			);
 			path = Network;
 			sourceTree = "<group>";
