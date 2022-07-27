@@ -30,6 +30,7 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
+    private var currentTab: CurrentTab = .randomImage
     private var randomImages = [RandomImageEntity]() {
         didSet {
             updateRandomImages.send()
@@ -49,6 +50,7 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
         self.coreDataManager = coreDataManager
         bindingStorageManger()
         bindingCoreDataManager()
+        configureCurrentTabNotification()
     }
 }
 
@@ -88,6 +90,24 @@ extension RandomImageViewModel {
             imageRatio: randomImageEntity.imageRatio,
             isStar: isStar
         )
+    }
+    
+    private func configureCurrentTabNotification() {
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(currentTabNotificationAction(_:)),
+                name: .currentTab, object: nil
+            )
+    }
+}
+
+// MARK: - TargetMethod
+extension RandomImageViewModel {
+    @objc private func currentTabNotificationAction(_ sender: Notification) {
+        guard let currentTab = sender.userInfo?["currentTab"] as? CurrentTab else { return }
+        self.currentTab = currentTab
     }
 }
 
@@ -149,7 +169,9 @@ extension RandomImageViewModel {
         
         storageManager.deleteSuccess
             .sink { [weak self] in
-                self?.deleteImageInfoToCoreData()
+                if self?.currentTab == .randomImage {
+                    self?.deleteImageInfoToCoreData()
+                }
             }.store(in: &subscriptions)
     }
     

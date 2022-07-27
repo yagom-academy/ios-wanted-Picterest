@@ -10,7 +10,7 @@ import Combine
 import UIKit
 
 enum NetworkError: Error {
-    case failCreateRequest, urlError, networkError
+    case failCreateRequest
     case invalidStatusCode(statusCode: Int)
 }
 
@@ -51,7 +51,7 @@ final class NetworkManager {
             return
         }
         
-        URLSession.shared.dataTask(with: url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let data = data,
                   let image = UIImage(data: data) else { return }
             ImageCacheManager.shared.storeImage(urlString, image: image)

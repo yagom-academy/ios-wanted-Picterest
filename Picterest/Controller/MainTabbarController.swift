@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum CurrentTab {
+    case randomImage, starImage
+}
+
 final class MainTabbarController: UITabBarController {
     
     // MARK: - LifeCycle
@@ -46,5 +50,16 @@ final class MainTabbarController: UITabBarController {
         self.tabBar.backgroundColor = .systemBackground
         
         setViewControllers([randomImageVC, starImageVC], animated: true)
+        NotificationCenter.default.post(name: .currentTab, object: nil, userInfo: ["currentTab": CurrentTab.randomImage])
+    }
+}
+
+extension MainTabbarController: UITabBarControllerDelegate {
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.title == "Images" {
+            NotificationCenter.default.post(name: .currentTab, object: nil, userInfo: ["currentTab": CurrentTab.randomImage])
+        } else {
+            NotificationCenter.default.post(name: .currentTab, object: nil, userInfo: ["currentTab": CurrentTab.starImage])
+        }
     }
 }

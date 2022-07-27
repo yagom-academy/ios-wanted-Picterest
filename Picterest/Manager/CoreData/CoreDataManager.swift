@@ -57,6 +57,7 @@ class CoreDataManager {
         
         do {
             try persistentContainer.viewContext.save()
+            print("delete CoreData Success")
             getAllStarImages()
         } catch {
             persistentContainer.viewContext.rollback()

@@ -25,6 +25,7 @@ final class StarImageViewModel: StarImageViewModelInterface {
     private let coreDataManager: CoreDataManager
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
+    private var currentTab: CurrentTab = .randomImage
     private var starImages = [StarImage]() {
         didSet {
             updateStarImages.send()
@@ -42,6 +43,7 @@ final class StarImageViewModel: StarImageViewModelInterface {
         self.coreDataManager = coreDataManager
         bindingCoreDataManager()
         bindingStorageManager()
+        configureCurrentTabNotification()
     }
 }
 
@@ -53,6 +55,24 @@ extension StarImageViewModel {
     
     func starImageAtIndex(index: Int) -> StarImage {
         return starImages[index]
+    }
+    
+    private func configureCurrentTabNotification() {
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(currentTabNotificationAction(_:)),
+                name: .currentTab, object: nil
+            )
+    }
+}
+
+// MARK: - TargetMethod
+extension StarImageViewModel {
+    @objc private func currentTabNotificationAction(_ sender: Notification) {
+        guard let currentTab = sender.userInfo?["currentTab"] as? CurrentTab else { return }
+        self.currentTab = currentTab
     }
 }
 
@@ -88,7 +108,9 @@ extension StarImageViewModel {
     private func bindingStorageManager() {
         storageManager.deleteSuccess
             .sink { [weak self] in
-                self?.deleteImageInfoToCoreData()
+                if self?.currentTab == .starImage {             
+                    self?.deleteImageInfoToCoreData()
+                }
             }.store(in: &subscriptions)
     }
 }

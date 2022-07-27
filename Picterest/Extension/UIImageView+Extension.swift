@@ -10,17 +10,17 @@ import UIKit
 extension UIImageView {
     /// network에서 받아오기
     func load(url: String) {
-        NetworkManager.fetchImage(urlString: url) { image in
+        NetworkManager.fetchImage(urlString: url) { [weak self] image in
             DispatchQueue.main.async {
-                self.image = image
+                self?.image = image
             }
         }
     }
     
     /// 스토리지에서 받아오기
     func load(starImage: StarImage) {
-        StorageManager.getImage(starImage: starImage) { image in
-            self.image = image
+        StorageManager.getImage(starImage: starImage) { [weak self] image in
+            self?.image = image
         }
     }
 }
