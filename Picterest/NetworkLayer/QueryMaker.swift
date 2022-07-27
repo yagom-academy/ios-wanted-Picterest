@@ -11,7 +11,7 @@ enum QueryMaker {
   
   static let defaultAPIKEY: String? = Bundle.searchObject(from: "API", key: "key")
   
-  case imagesPerPage(Int)
+  case imagesPerPage(pageNumber: Int,perPage: Int)
   case noQuery
   
   var queryItems: [URLQueryItem]? {
@@ -19,7 +19,9 @@ enum QueryMaker {
     var baseQuery: [URLQueryItem] = [URLQueryItem(name: Query.clientID.rawValue,
                                                   value: APIKey)]
     switch self {
-    case .imagesPerPage(let ImagePerPage):
+    case .imagesPerPage(let pageNumber, let ImagePerPage):
+      baseQuery.append(URLQueryItem(name: Query.pageNumber.rawValue,
+                                    value: "\(pageNumber)"))
       baseQuery.append(URLQueryItem(name: Query.perPage.rawValue,
                                     value: "\(ImagePerPage)"))
       return baseQuery

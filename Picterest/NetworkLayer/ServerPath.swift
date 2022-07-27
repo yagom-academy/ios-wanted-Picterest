@@ -13,5 +13,6 @@ enum ServerPath: String {
 
 enum Query: String {
   case clientID = "client_id"
+  case pageNumber = "page"
   case perPage = "per_page"
 }

@@ -11,12 +11,10 @@ protocol SceneLayoutDelegate: AnyObject {
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-
 enum LayoutType: Int {
-  case home = 2
   case save = 1
+  case home
 }
-
 
 final class SceneLayout: UICollectionViewLayout {
   
@@ -29,7 +27,7 @@ final class SceneLayout: UICollectionViewLayout {
   
   // 3
   private var cache: [UICollectionViewLayoutAttributes] = []
-  
+ 
   // 4
   // contentHeight = collection view 의 전체 height. -> 사진이 더해지면서 커점.
   private var contentHeight: CGFloat = 0
@@ -52,22 +50,23 @@ final class SceneLayout: UICollectionViewLayout {
     fatalError("init(coder:) has not been implemented")
   }
   
+}
+
+
+extension SceneLayout {
   
-  // 5
   override var collectionViewContentSize: CGSize {
     return CGSize(width: contentWidth, height: contentHeight)
   }
-  
-  
-  //6
+
   override func prepare() {
-    guard cache.isEmpty,
-          let collectionView = collectionView
+    super.prepare()
+    guard let collectionView = collectionView
     else {
       return
     }
     
-    //7
+
     let columnWidth = (contentWidth / CGFloat(numberOfColumns))
     
     var xOffset: [CGFloat] = []
@@ -76,46 +75,58 @@ final class SceneLayout: UICollectionViewLayout {
     }
     var column = 0
     var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
+    
 
-    //8
-    for item in 0..<collectionView.numberOfItems(inSection: 0) {
-      let indexPath = IndexPath(item: item, section: 0)
-      
-      //9
-      let photoHeight = delegate?.collectionView(
-        collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
-      let height = cellPadding * 2 + photoHeight
-      
-      let frame = CGRect(x: xOffset[column],
-                         y: yOffset[column],
-                         width: columnWidth,
-                         height: height)
-      
-      let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-      
-      //10
-      let attributes = UICollectionViewLayoutAttributes(forCellWith:
-                                                          indexPath)
-      attributes.frame = insetFrame
-      cache.append(attributes)
-      
-      //11
-      contentHeight = max(contentHeight, frame.maxY)
-      yOffset[column] = yOffset[column] + height
-      if numberOfColumns == 1 {continue}
-      let otherCol = column == 0 ? 1:0
-      column = yOffset[column] < yOffset[otherCol] ? column : otherCol
-    }
+      for item in 0..<collectionView.numberOfItems(inSection: 0) {
+        let indexPath = IndexPath(item: item, section: 0)
+        
+        //9
+        let photoHeight = delegate?.collectionView(
+          collectionView, heightForPhotoAtIndexPath: indexPath) ?? 0
+        let height = cellPadding * 2 + photoHeight
+        
+        let frame = CGRect(x: xOffset[column],
+                           y: yOffset[column],
+                           width: columnWidth,
+                           height: height)
+        
+        let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+        
+        //10
+        let attributes = UICollectionViewLayoutAttributes(forCellWith:
+                                                            indexPath)
+        attributes.frame = insetFrame
+        cache.append(attributes)
+        
+        //11
+        contentHeight = max(contentHeight, frame.maxY)
+        yOffset[column] = yOffset[column] + height
+        if numberOfColumns == 1 {continue}
+        let otherCol = column == 0 ? 1:0
+        column = yOffset[column] < yOffset[otherCol] ? column : otherCol
+      }
+    
+//    let sectionFooterAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 1, section: 0))
+//    guard let footerFrame = delegate?.collectionView(collectionView, layout: self, referenceSizeForFooterInSection: 0) else {return}
+//    sectionFooterAttributes.size = footerFrame
+//
+//
+//    cache.append(sectionFooterAttributes)
+
   }
-  
-  
+
   override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
     var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
     
-    // Loop through the cache and look for items in the rect
     for attributes in cache {
       if attributes.frame.intersects(rect) {
         visibleLayoutAttributes.append(attributes)
+      }
+      if attributes.representedElementKind == UICollectionView.elementKindSectionFooter {
+        visibleLayoutAttributes.append(attributes)
+        var frame = attributes.frame
+
+        attributes.frame = frame
       }
     }
     return visibleLayoutAttributes
@@ -126,6 +137,16 @@ final class SceneLayout: UICollectionViewLayout {
     return cache[indexPath.item]
   }
   
+//  override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+//    
+//    switch elementKind {
+//    case  UICollectionView.elementKindSectionFooter:
+//      return cache.last
+//    default:
+//      break
+//    }
+//    return nil
+//  }
+
+  
 }
-
-
