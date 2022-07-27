@@ -95,12 +95,12 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         cell.fetchData(photoList[indexPath.row], indexPath)
+        cell.labelStackView.delegate = self
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        <#code#>
-        
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -134,5 +134,22 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
                 fetchPhoto()
             }
         }
+    }
+}
+
+extension ImageViewController: PhotoLabelEvnetDelegate {
+    
+    func tapStarButton(sender: UIButton) {
+        var text: String?
+        let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "저장", style: .default) { ok in
+            text = alert.textFields?[0].text
+            print(text)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addTextField()
+        alert.addAction(cancel)
+        alert.addAction(ok)
+        self.present(alert, animated: true)
     }
 }

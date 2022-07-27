@@ -14,7 +14,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private var indexPath: IndexPath?
     private let ImageVC = ImageViewController()
-    private let labelStackView = LabelStackView()
+    let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
@@ -24,7 +24,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }()
     
     func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
-        attribute()
         layout()
         loadImage(photo)
         
@@ -34,10 +33,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
 }
 
 extension ImageCollectionViewCell {
-    
-    private func attribute() {
-        labelStackView.delegate = self
-    }
     
     private func layout() {
         [
@@ -74,9 +69,9 @@ extension ImageCollectionViewCell {
     }
 }
 
-extension ImageCollectionViewCell: PhotoLabelEvnetDelegate {
+extension ImageCollectionViewCell {
     
-    func tapStarButton(sender: UIButton) {
+    func asdf() {
         guard let row = indexPath?.row else { return }
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
