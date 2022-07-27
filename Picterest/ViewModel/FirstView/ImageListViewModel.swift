@@ -29,7 +29,9 @@ class ImageListViewModel {
     }
     
     func imageViewModelAtIndexPath(index: Int) -> ImageViewModel {
-        return ImageViewModel(image: imageList[index])
+        var imageViewModel = ImageViewModel(image: imageList[index])
+        imageViewModel.isSaved = LocalImageFileManager.shared.checkImageInLocal(id: imageViewModel.id)
+        return imageViewModel
     }
     
     func getImageCount() -> Int {

@@ -16,6 +16,8 @@ class SavedImageViewModel {
         self.memo = memo
     }
     
+    var isSaved: Bool = true
+    
     var id: String {
         return image.id
     }

@@ -35,4 +35,15 @@ class LocalImageFileManager {
             print(error.localizedDescription)
         }
     }
+    
+    func checkImageInLocal(id: String) -> Bool {
+        if let imageFilePath = defaultImageFilePath?.appendingPathComponent("\(id).png") {
+            if FileManager.default.fileExists(atPath: imageFilePath.path) {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
 }

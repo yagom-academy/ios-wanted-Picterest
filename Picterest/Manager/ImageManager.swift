@@ -7,7 +7,12 @@
 
 import Foundation
 
+protocol ImageManagerDelegate {
+    func deleteImage()
+}
+
 class ImageManager {
+    var delegate: ImageManagerDelegate?
     let coredataManager = CoredataManager.shared
     let saveLocalImageFileManager = LocalImageFileManager.shared
     
@@ -19,7 +24,9 @@ class ImageManager {
     
     func deleteImage(savedImageViewModel: SavedImageViewModel, indexPath: Int) {
         saveLocalImageFileManager.deleteLocalImage(id: savedImageViewModel.id) {
-            self.coredataManager.deleteCoredata(indexPath: indexPath)
+            self.coredataManager.deleteCoredata(indexPath: indexPath) {
+                self.delegate?.deleteImage()
+            }
         }
     }
 }

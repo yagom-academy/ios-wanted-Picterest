@@ -80,4 +80,14 @@ class ImageInfoView: UIView {
     @objc func saveStarButtonTap(){
         delegate?.saveImageButton(at: indexPath)
     }
+    
+    func setSaveStarButton(isSaved: Bool) {
+        DispatchQueue.main.async {
+            if isSaved {
+                self.saveStarButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            } else {
+                self.saveStarButton.setImage(UIImage(systemName: "star"), for: .normal)
+            }
+        }
+    }
 }

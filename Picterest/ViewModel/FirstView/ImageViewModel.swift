@@ -15,6 +15,8 @@ struct ImageViewModel {
         self.image = image
     }
     
+    var isSaved: Bool = false
+    
     var id: String {
         return image.id
     }

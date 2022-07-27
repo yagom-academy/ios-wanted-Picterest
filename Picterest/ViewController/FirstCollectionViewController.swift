@@ -21,6 +21,7 @@ class FirstCollectionViewController: UICollectionViewController {
             numOfColumns = layout.getNumberOfColumns()
         }
         imageListViewModel.fetchImages()
+        saveImageManager.delegate = self
         self.collectionView?.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier)
         imageListViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
@@ -64,10 +65,11 @@ extension FirstCollectionViewController: ImageCollectionViewLayoutDelegate {
 extension FirstCollectionViewController: ImageInfoViewDelegate {
     func saveImageButton(at index: Int) {
         var textField = UITextField()
-        
+        if !imageListViewModel.imageViewModelAtIndexPath(index: index).isSaved {
         let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
         let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
             self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: index), memo: textField.text ?? "")
+            self.collectionView.reloadData()
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField { alertTextField in
@@ -78,5 +80,18 @@ extension FirstCollectionViewController: ImageInfoViewDelegate {
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
-    
 }
+}
+
+extension FirstCollectionViewController: ImageManagerDelegate {
+func deleteImage() {
+    DispatchQueue.main.async {
+        //imageListViewModel.fetchSavedImageList()
+        if let layout = self.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
+            layout.reloadData()
+        }
+    self.collectionView.reloadData()
+    }
+}
+}
+

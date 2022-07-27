@@ -50,12 +50,10 @@ class CoredataManager {
         }
     }
     
-    func deleteCoredata(indexPath: Int) {
+    func deleteCoredata(indexPath: Int, completion: @escaping ()->Void) {
         context.delete(coredataImageInfoList[indexPath])
         saveImageInfo()
-//        let readRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "id")
-//        readRequest.predicate = NSPredicate()
-//        context.delete(<#T##object: NSManagedObject##NSManagedObject#>)
+        completion()
     }
     
     func saveImageInfo() {
