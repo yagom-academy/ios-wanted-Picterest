@@ -19,14 +19,15 @@ struct RandomImageEntity: Codable {
 }
 
 struct RandomImageURL: Codable {
-    let smallSizeImageURL: String
+    let regularSizeImageURL: String
     
     enum CodingKeys: String, CodingKey {
-        case smallSizeImageURL = "regular"
+        case regularSizeImageURL = "regular"
     }
 }
 
 struct RandomImage {
     let imageUrlString: String
     let imageRatio: Double
+    let isStar: Bool
 }

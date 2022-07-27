@@ -74,10 +74,19 @@ extension RandomImageViewModel {
     
     func randomImageAtIndex(index: Int) -> RandomImage {
         let randomImageEntity = randomImages[index]
+        var isStar: Bool
+        if starImages.contains(where: { starImage in
+            starImage.id == randomImageEntity.id
+        }) {
+            isStar = true
+        } else {
+            isStar = false
+        }
         
         return RandomImage(
-            imageUrlString: randomImageEntity.urls.smallSizeImageURL,
-            imageRatio: randomImageEntity.imageRatio
+            imageUrlString: randomImageEntity.urls.regularSizeImageURL,
+            imageRatio: randomImageEntity.imageRatio,
+            isStar: isStar
         )
     }
 }
@@ -105,7 +114,7 @@ extension RandomImageViewModel {
 extension RandomImageViewModel {
     private func saveImageInfoToCoreData(storageURL: String) {
         let randomImage = randomImages[lastIndex]
-        let networkURLString = randomImage.urls.smallSizeImageURL
+        let networkURLString = randomImage.urls.regularSizeImageURL
         let entity = StarImageEntity(
             id: randomImage.id,
             memo: lastMemo,
@@ -148,6 +157,7 @@ extension RandomImageViewModel {
         coreDataManager.getAllStarImageSuccess
             .sink { [weak self] starImages in
                 self?.starImages = starImages
+                self?.updateRandomImages.send()
             }.store(in: &subscriptions)
     }
 }

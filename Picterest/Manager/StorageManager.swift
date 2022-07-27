@@ -39,7 +39,6 @@ final class StorageManager {
         lazy var defaultDocumentPath = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         
         let directoryPath: URL = defaultDocumentPath.appendingPathComponent("starImage")
-        print(directoryPath)
         
         let imagePath = directoryPath.appendingPathComponent("\(id).png")
         

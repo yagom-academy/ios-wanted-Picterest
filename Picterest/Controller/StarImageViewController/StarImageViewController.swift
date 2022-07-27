@@ -59,11 +59,7 @@ extension StarImageViewController {
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             self?.starImageViewModel?.deleteImageToStorage(index: index)
         }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
-            UIView.animate(withDuration: 0.2) {
-                self?.longPressCell?.transform = .identity
-            }
-        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(okAction)
         alert.addAction(cancelAction)
         

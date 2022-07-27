@@ -50,7 +50,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     // MARK: - Method
     func configureCell(with randomImage: RandomImage, index: Int) {
         self.imageView.load(url: randomImage.imageUrlString)
-        descriptionView.configureView(index: index)
+        descriptionView.configureView(index: index, isStar: randomImage.isStar)
     }
     
     func configureCell(with starImage: StarImage) {

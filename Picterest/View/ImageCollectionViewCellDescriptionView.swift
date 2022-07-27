@@ -21,7 +21,6 @@ final class ImageCollectionViewCellDescriptionView: UIView {
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "1번째 사진"
         label.textColor = .white
         label.textAlignment = .right
         
@@ -53,8 +52,9 @@ final class ImageCollectionViewCellDescriptionView: UIView {
 
 // MARK: - Method
 extension ImageCollectionViewCellDescriptionView {
-    func configureView(index: Int) {
+    func configureView(index: Int, isStar: Bool) {
         descriptionLabel.text = "\(index)번째 사진"
+        starButton.isSelected = isStar
     }
     
     func configureView(memo: String) {
