@@ -26,7 +26,13 @@ class LocalImageFileManager {
         }
     }
     
-    func deleteLocalImage() {
-        
+    func deleteLocalImage(id: String, completion: @escaping () -> Void) {
+        guard let imageFilePath = defaultImageFilePath?.appendingPathComponent("\(id).png") else { return }
+        do {
+            try FileManager.default.removeItem(at: imageFilePath)
+            completion()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }

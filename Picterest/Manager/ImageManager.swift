@@ -9,7 +9,7 @@ import Foundation
 
 class ImageManager {
     let coredataManager = CoredataManager.shared
-    let saveLocalImageFileManager = LocalImageFileManager()
+    let saveLocalImageFileManager = LocalImageFileManager.shared
     
     func saveImageAndInfo(imageViewModel: ImageViewModel, memo: String){
         saveLocalImageFileManager.saveLocalImage(imageViewModel: imageViewModel) { imageFilePath in
@@ -18,6 +18,8 @@ class ImageManager {
     }
     
     func deleteImage(savedImageViewModel: SavedImageViewModel, indexPath: Int) {
-        coredataManager.deleteCoredata(indexPath: indexPath)
+        saveLocalImageFileManager.deleteLocalImage(id: savedImageViewModel.id) {
+            self.coredataManager.deleteCoredata(indexPath: indexPath)
+        }
     }
 }
