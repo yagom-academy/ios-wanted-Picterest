@@ -10,6 +10,7 @@ import UIKit
 final class CustomCollectionViewLayout: UICollectionViewLayout {
     struct CumulativeValue {
         static var height: [Int:CGFloat] = [:]
+        static var maxHeight: CGFloat = 0.0
     }
     
     weak var delegate: CustomCollectionViewLayoutDelegate?
@@ -37,7 +38,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     override func prepare() {
         super.prepare()
         prepareSectionOneCellLayout()
-//        prepareSectionOneFooterLayout()
+        prepareSectionOneFooterLayout(maxHeight: CumulativeValue.maxHeight)
     }
     
     private func prepareSectionOneCellLayout() {
@@ -70,20 +71,24 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             contentHeight = max(contentHeight, frame.maxY)
             yOffset[column] = yOffset[column] + height
         }
-        let maxHeight = yOffset.reduce(0) { beforeValue, value in
+        CumulativeValue.maxHeight = yOffset.reduce(0) { beforeValue, value in
             return beforeValue > value ? beforeValue : value
         }
-        print("a", maxHeight)
-        prepareSectionOneFooterLayout(maxHeight: maxHeight)
     }
     
     private func prepareSectionOneFooterLayout(maxHeight: CGFloat) {
-        
-        let frame = CGRect(x: 0, y: 100, width: contentWidth, height: 100)
-        let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-        let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(row: 0, section: 0))
-        attributes.frame = insetFrame
-        supplementaryCache.append(attributes)
+        guard supplementaryCache.isEmpty == true, let collectionView = collectionView else {
+            return
+        }
+        if (collectionView.numberOfItems(inSection: 0) > 0) {
+            let indexPath = IndexPath(row: 0, section: 0)
+            let frame = CGRect(x: 0, y: maxHeight, width: contentWidth, height: (delegate?.collectionView(heightFooterAtIndexPath: indexPath) ?? 0))
+            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(row: 0, section: 0))
+            attributes.frame = insetFrame
+            supplementaryCache.append(attributes)
+            contentHeight = max(contentHeight, frame.maxY)
+        }
     }
     
     private func correctColumn(numberOfColumns: Int, height: CGFloat) -> Int {
@@ -100,6 +105,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             }
             result = min > next ? i : result
         }
+        
         CumulativeValue.height.updateValue((CumulativeValue.height[result] ?? 0)+height, forKey: result)
         return result
     }
@@ -107,13 +113,16 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
         
-        // Loop through the cache and look for items in the rect
         for attributes in cache {
             if attributes.frame.intersects(rect) {
                 visibleLayoutAttributes.append(attributes)
             }
         }
-        visibleLayoutAttributes.append(supplementaryCache[0])
+        for supplementaryAttributes in supplementaryCache {
+            if supplementaryAttributes.frame.intersects(rect) {
+                visibleLayoutAttributes.append(supplementaryAttributes)
+            }
+        }
         return visibleLayoutAttributes
     }
 

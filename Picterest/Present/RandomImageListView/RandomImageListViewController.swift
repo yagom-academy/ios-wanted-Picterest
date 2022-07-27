@@ -42,6 +42,10 @@ extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
         return viewModel.cellHeightMultiplier(indexPath)
     }
     
+    func collectionView(heightFooterAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
         return 3
     }
@@ -65,7 +69,6 @@ extension RandomImageListViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
 }
 
 
