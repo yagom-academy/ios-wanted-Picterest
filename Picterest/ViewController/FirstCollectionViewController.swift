@@ -25,6 +25,9 @@ class FirstCollectionViewController: UICollectionViewController {
         self.collectionView?.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier)
         imageListViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
+                if let layout = self?.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
+                    layout.reloadData()
+                }
                 self?.collectionView.reloadData()
             }
         }
@@ -41,7 +44,27 @@ class FirstCollectionViewController: UICollectionViewController {
         return cell
     }
     
+    func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        
+        return footerView
+    }
     
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        if position > (collectionView.contentSize.height+200-scrollView.frame.size.height) {
+            if imageListViewModel.isPaginating == false{
+                print("fetch data")
+                imageListViewModel.fetchImages(pagination: true)
+                
+            }
+        }
+    }
     
 }
 
@@ -86,7 +109,6 @@ extension FirstCollectionViewController: ImageInfoViewDelegate {
 extension FirstCollectionViewController: ImageManagerDelegate {
 func deleteImage() {
     DispatchQueue.main.async {
-        //imageListViewModel.fetchSavedImageList()
         if let layout = self.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
             layout.reloadData()
         }

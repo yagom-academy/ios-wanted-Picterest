@@ -9,6 +9,7 @@ import Foundation
 
 class ImageListViewModel {
     private let networkManager = NetworkManager()
+    var isPaginating = false
     var imageList: [ImageModel] = [] {
         didSet {
             collectionViewUpdate()
@@ -17,13 +18,19 @@ class ImageListViewModel {
     
     var collectionViewUpdate: () -> Void = {}
     
-    func fetchImages() {
-        self.networkManager.fetchImageList { [weak self] result in
+    func fetchImages(pagination: Bool = false) {
+        if pagination {
+            isPaginating = true
+        }
+        self.networkManager.fetchImageList() { [weak self] result in
             switch result {
             case .success(let reviews):
                 self?.imageList.append(contentsOf: reviews)
             case .failure(let error):
                 print(error.localizedDescription)
+            }
+            if pagination {
+                self?.isPaginating = false
             }
         }
     }

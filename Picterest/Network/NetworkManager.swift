@@ -19,9 +19,11 @@ enum NetworkError: Error {
 final class NetworkManager {
     
     static let shared = NetworkManager()
+    var page = 1
     
     func fetchImageList(completion: @escaping (Result<[ImageModel],NetworkError>)->Void){
-        let urlStr = "https://api.unsplash.com/photos/?client_id=\(CLIENT_ID)&per_page=15"
+        
+        let urlStr = "https://api.unsplash.com/photos/?client_id=\(CLIENT_ID)&per_page=15&page=\(page)"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.url))
             return
@@ -37,8 +39,11 @@ final class NetworkManager {
                 completion(.failure(.decode(error: error)))
                 return
             }
+            print("success")
             completion(.success(data))
         }.resume()
+        page += 1
+        
     }
     
     func fetchImage(url: String, completion: @escaping (UIImage)->Void){
