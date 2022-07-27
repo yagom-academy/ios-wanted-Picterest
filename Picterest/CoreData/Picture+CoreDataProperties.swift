@@ -16,6 +16,7 @@ extension Picture {
         return NSFetchRequest<Picture>(entityName: "Picture")
     }
 
+    @NSManaged public var imageSize: String?
     @NSManaged public var id: String?
     @NSManaged public var memo: String?
     @NSManaged public var originUrl: String?
