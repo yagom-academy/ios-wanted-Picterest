@@ -7,10 +7,17 @@
 
 import UIKit
 
+protocol SaveButtonDelegate : AnyObject {
+    func pressSaveButton(_ cell : PhotoListCollectionViewCell)
+}
+
 class PhotoListCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "photoListCollectionViewCell"
-
+    
+    weak var cellDelegate : SaveButtonDelegate?
+    var index : Int?
+    
     var saveButton : UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "star"), for: .normal)
@@ -35,17 +42,26 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     var imageView: UIImageView = {
         let imageView = UIImageView()
+        let tap = UITapGestureRecognizer(target: nil, action: #selector(pressButton(_:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tap)
+
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.saveButton.addTarget(self, action: #selector(pressButton), for: .touchUpInside)
         setupView()
         setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @IBAction func pressButton(_ sender: UIButton) {
+        cellDelegate?.pressSaveButton(self)
     }
     
     func setupView() {
