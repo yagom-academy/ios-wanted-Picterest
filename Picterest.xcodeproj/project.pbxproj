@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C73A837B28916CBD008146D5 /* Picterest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C73A837928916CBD008146D5 /* Picterest.xcdatamodeld */; };
+		C73A837E28916E92008146D5 /* Picterest+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73A837C28916E92008146D5 /* Picterest+CoreDataClass.swift */; };
+		C73A837F28916E92008146D5 /* Picterest+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73A837D28916E92008146D5 /* Picterest+CoreDataProperties.swift */; };
+		C73A838128917441008146D5 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73A838028917441008146D5 /* CoreDataManager.swift */; };
 		C7638FEE288E4DEC00D06944 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7638FED288E4DEC00D06944 /* Photo.swift */; };
 		C7638FF1288E4E0100D06944 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7638FF0288E4E0100D06944 /* PhotoManager.swift */; };
 		C7638FF3288E4FE400D06944 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7638FF2288E4FE400D06944 /* PhotoListViewController.swift */; };
@@ -29,6 +33,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C73A837A28916CBD008146D5 /* Picterest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Picterest.xcdatamodel; sourceTree = "<group>"; };
+		C73A837C28916E92008146D5 /* Picterest+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Picterest+CoreDataClass.swift"; path = "Picterest/Picterest+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C73A837D28916E92008146D5 /* Picterest+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Picterest+CoreDataProperties.swift"; path = "Picterest/Picterest+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C73A838028917441008146D5 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		C7638FED288E4DEC00D06944 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		C7638FF0288E4E0100D06944 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		C7638FF2288E4FE400D06944 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +145,7 @@
 			children = (
 				C7638FF0288E4E0100D06944 /* PhotoManager.swift */,
 				C77046AB28902363009CE7DE /* CacheManager.swift */,
+				C73A838028917441008146D5 /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -224,6 +233,8 @@
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
+				C73A837C28916E92008146D5 /* Picterest+CoreDataClass.swift */,
+				C73A837D28916E92008146D5 /* Picterest+CoreDataProperties.swift */,
 				DE15E65A28604278003DD2F5 /* Picterest */,
 				DE15E65928604278003DD2F5 /* Products */,
 			);
@@ -246,6 +257,7 @@
 				C7638FEC288E4D1400D06944 /* Resource */,
 				C7638FEB288E4CD100D06944 /* Application */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
+				C73A837928916CBD008146D5 /* Picterest.xcdatamodeld */,
 			);
 			path = Picterest;
 			sourceTree = "<group>";
@@ -327,16 +339,20 @@
 				C77046B12890F247009CE7DE /* SavedPhotoListViewModel.swift in Sources */,
 				C77046B72890FA55009CE7DE /* SavedListCustomLayout.swift in Sources */,
 				C7704695288E521F009CE7DE /* PhotoListViewModel.swift in Sources */,
+				C73A837F28916E92008146D5 /* Picterest+CoreDataProperties.swift in Sources */,
 				C77046AF28903B02009CE7DE /* TabBarViewController.swift in Sources */,
 				C7638FEE288E4DEC00D06944 /* Photo.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				C770469E288E5764009CE7DE /* PhotoListView.swift in Sources */,
+				C73A838128917441008146D5 /* CoreDataManager.swift in Sources */,
+				C73A837E28916E92008146D5 /* Picterest+CoreDataClass.swift in Sources */,
 				C770469B288E56F3009CE7DE /* BaseViewController.swift in Sources */,
 				C77046A6288E595C009CE7DE /* PhotoListCollectionViewCell.swift in Sources */,
 				C7638FF1288E4E0100D06944 /* PhotoManager.swift in Sources */,
 				C77046A3288E57FD009CE7DE /* SavedPhotoListViewController.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				C77046A1288E57E7009CE7DE /* SavedPhotoListView.swift in Sources */,
+				C73A837B28916CBD008146D5 /* Picterest.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +558,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C73A837928916CBD008146D5 /* Picterest.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C73A837A28916CBD008146D5 /* Picterest.xcdatamodel */,
+			);
+			currentVersion = C73A837A28916CBD008146D5 /* Picterest.xcdatamodel */;
+			path = Picterest.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }

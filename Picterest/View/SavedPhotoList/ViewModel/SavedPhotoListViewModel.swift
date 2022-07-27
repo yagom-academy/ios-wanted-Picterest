@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreData
 
 class SavedPhotoListViewModel {
     
@@ -64,5 +65,16 @@ class SavedPhotoListViewModel {
         } catch {
             print(error.localizedDescription)
         }
+    }
+    
+    // MARK: Core Data
+    
+    func getDataFromCoreData() {
+        let temp = CoreDataManager.shared.getData()
+//        print(temp)
+    }
+    
+    func deleteDataInCoreData(_ object : NSManagedObject) {
+        CoreDataManager.shared.deleteData(object)
     }
 }

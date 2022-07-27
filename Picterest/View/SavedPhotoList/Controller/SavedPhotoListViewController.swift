@@ -21,17 +21,25 @@ class SavedPhotoListViewController: BaseViewController {
         self.view = savedPhotoListView
         configure()
         savedPhotoListView.savedPhotoCollectionView.dataSource = self
-        savedPhotoListView.savedPhotoCollectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getSavedPhotosFromFilemanager()
+        getImageDataFromCoreData()
         setBinding()
+        // 저장된 이미지가 없을 때 coredata 초기화
+        if savedPhotos?.isEmpty == true {
+            CoreDataManager.shared.deleteAllData()
+        }
     }
 
     func getSavedPhotosFromFilemanager() {
         savedPhotoListViewModel.getSavedPhotoListFromFilemanager()
+    }
+    
+    func getImageDataFromCoreData() {
+        savedPhotoListViewModel.getDataFromCoreData()
     }
     
     func configure() {
@@ -53,14 +61,16 @@ extension SavedPhotoListViewController {
 
 extension SavedPhotoListViewController : SavedCustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
-//        return CGFloat(savedPhotos?[indexPath.row].height ?? 0)
-//        코어데이터에서 꺼내오자
+//        guard let height = CoreDataManager.shared.images[indexPath.row].value(forKey: "height")  as? CGFloat else {return 0}
+//        return height
         return 100
+//        코어데이터에서 꺼내오자
     }
     
     func collectionView(_ collectionView: UICollectionView, widthForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
-//        return CGFloat(savedPhotos?[indexPath.row].width ?? 0)
 //        코어데이터에서 꺼내오자
+//        guard let width = CoreDataManager.shared.images[indexPath.row].value(forKey: "width")  as? CGFloat else {return 0}
+//        return width
         return 100
     }
 }
@@ -74,13 +84,11 @@ extension SavedPhotoListViewController : UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedPhotoListCollectionViewCell.identifier, for: indexPath) as? SavedPhotoListCollectionViewCell else { return UICollectionViewCell() }
         cell.imageView.image = savedPhotoListViewModel.getSavedPhotoFromFilemanager(savedPhotos?[indexPath.row] ?? "")
         cell.index = indexPath.row
+//        print(CoreDataManager.shared.images[indexPath.row])
+//        cell.rightLabel.text = CoreDataManager.shared.images[indexPath.row]
         cell.cellDelegate = self
         return cell
     }
-}
-
-extension SavedPhotoListViewController : UICollectionViewDelegate {
-    
 }
 
 extension SavedPhotoListViewController : ImageDelegate {
@@ -93,8 +101,8 @@ extension SavedPhotoListViewController : ImageDelegate {
             print("삭제")
             // filemanager에 이미지 삭제
             self?.savedPhotoListViewModel.deleteImageFromFilemanager(self?.savedPhotos?[cell.index ?? -1] ?? "")
-            // coredata에 데이터 저장
-            
+            // coredata에 데이터 삭제
+            self?.savedPhotoListViewModel.deleteDataInCoreData(CoreDataManager.shared.images[cell.index ?? -1])
             // savedPhotos에서 삭제
             self?.savedPhotos?.remove(at: cell.index ?? -1)
             DispatchQueue.main.async {
