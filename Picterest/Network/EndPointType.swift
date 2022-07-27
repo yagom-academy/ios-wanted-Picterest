@@ -9,6 +9,7 @@ import Foundation
 
 protocol EndPointType {
     
+    var apiKey: String { get }
     var baseURL: String { get }
     var path: String { get } // photos
     var query: [URLQueryItem] { get } // client_id

@@ -9,6 +9,8 @@ import Foundation
 
 enum PhotoListEndPoint: EndPointType {
     
+    case getPhotoList
+    
     var apiKey: String {
         return Bundle.main.apiKey
     }
@@ -24,4 +26,5 @@ enum PhotoListEndPoint: EndPointType {
     var query: [URLQueryItem] {
         return [URLQueryItem(name: "client_id", value: apiKey)]
     }
+    
 }
