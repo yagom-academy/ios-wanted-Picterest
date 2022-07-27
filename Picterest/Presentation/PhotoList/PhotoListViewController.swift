@@ -32,15 +32,18 @@ class PhotoListViewController: UIViewController {
     // MARK: - Properties
     
     private var photoListAPIProvider: PhotoListAPIProviderType?
+    private var URLImageProvider: URLImageProviderType?
     private var photos: [PhotoListResult] = []
     
     // MARK: - LifeCycle
     
     static func instantiate(
-        with photoListAPIProvider: PhotoListAPIProviderType
+        with photoListAPIProvider: PhotoListAPIProviderType,
+        _ URLImageProvider: URLImageProviderType
     ) -> PhotoListViewController {
         let viewController = PhotoListViewController()
         viewController.photoListAPIProvider = photoListAPIProvider
+        viewController.URLImageProvider = URLImageProvider
         return viewController
     }
     
@@ -58,6 +61,7 @@ class PhotoListViewController: UIViewController {
     }
     
     private func setupCollectionView() {
+        collectionView.dataSource = self
         [collectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -129,7 +133,17 @@ extension PhotoListViewController: UICollectionViewDataSource {
         }
         
         let photo: PhotoListResult = photos[indexPath.item]
-        cell.setupCell(photo: photo)
+//        cell.setupCell(photo: photo)
+        
+        URLImageProvider?.fetchImage(from: photo.urls.small, completion: { result in
+            switch result {
+            case .success(let image):
+                cell.setupCell(image)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+        
         
         return cell
     }
@@ -142,8 +156,8 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath indexPath: IndexPath
     ) -> CGFloat {
-//        return CGFloat(photos[indexPath.item].height)
-        return 100
+        return CGFloat(photos[indexPath.item].height)
+
     }
 
 }

@@ -15,10 +15,16 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UIProperties
     
-    private lazy var testLabel: UILabel = {
-        let label = UILabel()
-        label.text = "기본값"
-        return label
+//    private lazy var testImage: UILabel = {
+//        let label = UILabel()
+//        label.text = "기본값"
+//        return label
+//    }()
+    
+    private lazy var testImage: UIImageView = {
+        let imageView = UIImageView()
+
+        return imageView
     }()
     
     // MARK: - LifeCycle
@@ -42,30 +48,40 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
 
 extension PhotoListCollectionViewCell {
     
-    func setupCell(photo: PhotoListResult) {
-        testLabel.text = photo.id
+    func setupCell(_ image: UIImage) {
+        DispatchQueue.main.async { [weak self] in
+            self?.testImage.image = image
+        }
     }
     
     private func setupView() {
-        [testLabel].forEach {
+        [testImage].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
     }
     
     private func setupConstraints() {
-        setupConstraintsOfTestLabel()
+        setupConstraintsOfTestImage()
     }
     
-    private func setupConstraintsOfTestLabel() {
+    private func setupConstraintsOfTestImage() {
         NSLayoutConstraint.activate([
-            testLabel.leadingAnchor.constraint(
+            testImage.leadingAnchor.constraint(
                 equalTo: self.safeAreaLayoutGuide.leadingAnchor,
                 constant: Style.padding
             ),
-            testLabel.topAnchor.constraint(
+            testImage.topAnchor.constraint(
                 equalTo: self.safeAreaLayoutGuide.topAnchor,
                 constant: Style.padding
+            ),
+            testImage.trailingAnchor.constraint(
+                equalTo: self.safeAreaLayoutGuide.trailingAnchor,
+                constant: -Style.padding
+            ),
+            testImage.bottomAnchor.constraint(
+                equalTo: self.safeAreaLayoutGuide.bottomAnchor,
+                constant: -Style.padding
             )
         ])
     }

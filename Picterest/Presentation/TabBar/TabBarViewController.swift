@@ -24,8 +24,9 @@ class TabBarViewController: UITabBarController {
         
         let networkRequester = NetworkRequester()
         let photoListProvider = PhotoListAPIProvider(networkRequester: networkRequester)
+        let URLImageProvider = URLImageProvider(networkRequester: networkRequester)
         
-        let photoListVC = PhotoListViewController.instantiate(with: photoListProvider)
+        let photoListVC = PhotoListViewController.instantiate(with: photoListProvider, URLImageProvider)
         let photoListVCBarItem = Style.photoListTabBarItem
         let savedPhotoVC = SavedPhotoViewController()
         let savedPhotoVCBarItem = Style.savedPhotoTabBarItem

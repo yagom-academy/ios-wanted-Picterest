@@ -34,6 +34,8 @@ protocol NetworkRequesterType {
     
     func request(to endPoint: EndPointType, completion: @escaping (Result<Data, NetworkError>) -> Void)
     
+    func request(to urlString: String, completion: @escaping (Result<Data, NetworkError>) -> Void) -> URLSessionDataTask?
+    
 }
 
 struct NetworkRequester: NetworkRequesterType {
@@ -50,6 +52,21 @@ struct NetworkRequester: NetworkRequesterType {
         }
         dataTask(request: urlRequest, completion: completion).resume()
     }
+    
+    func request(
+        to urlString: String,
+        completion: @escaping (Result<Data, NetworkError>) -> Void
+    ) -> URLSessionDataTask? {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.invalidURL))
+            return nil
+        }
+        let urlRequest = URLRequest(url: url)
+        let task = dataTask(request: urlRequest, completion: completion)
+        task.resume()
+        return task
+    }
+    
     
     private func dataTask(
         request: URLRequest,
