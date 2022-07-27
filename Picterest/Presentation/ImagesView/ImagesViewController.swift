@@ -64,8 +64,31 @@ extension ImagesViewController: PicterstLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, sizeOfPhotoAtIndexPath indexPath: IndexPath) -> CGSize {
         return viewModel.imageSize(indexPath)
     }
+}
+
+extension ImagesViewController: CollectionViewCellDelegate {
     
-    
+    func showAlert(){
+        let downAlert = UIAlertController(title: "사진 다운로드", message: "메모를 작성하고 OK를 누르면 다운됩니다.", preferredStyle: .alert)
+        downAlert.addTextField { textField in
+            textField.placeholder = "사진에 남길 메모를 적어주세요!"
+        }
+        
+        let ok = UIAlertAction(title: "OK", style: .default) { ok in
+            guard let memo = downAlert.textFields?.first?.text else {
+                return
+            }
+            print("Down, 메모:", memo)
+        }
+        let cancel = UIAlertAction(title: "cancel", style: .cancel) { cancel in
+            //TODO cancel 누르면 토글 해제
+            print("다운 취소 및 토글 해제")
+        }
+        
+        downAlert.addAction(cancel)
+        downAlert.addAction(ok)
+        self.present(downAlert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - CollectionView DataSoucrce
@@ -74,8 +97,8 @@ extension ImagesViewController: UICollectionViewDataSource {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell else { return  ImageCell() }
         
-        cell.configure(data: viewModel.imageData(indexPath: indexPath))
-        
+        cell.configure(index: indexPath, data: viewModel.imageData(indexPath: indexPath))
+        cell.delegate = self
         return cell
     }
     

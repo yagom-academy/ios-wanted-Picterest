@@ -15,7 +15,6 @@ final class ImageCacheManager {
     
     func cachedImage(urlString: String) -> UIImage? {
         let cachedKey = NSString(string: urlString)
-        print("캐시키", cachedKey)
         if let cachedImage = storage.object(forKey: cachedKey) {
             return cachedImage
         }

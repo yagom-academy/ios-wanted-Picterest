@@ -86,8 +86,8 @@
 				FFB74C6B288ED490002CBB0E /* Extension */,
 				FFB74C64288EA210002CBB0E /* Entities */,
 				FFB74C5F288E9DBE002CBB0E /* Network */,
-				FFB74C5C288E5BBD002CBB0E /* Resource */,
 				FFB74C5B288E5B78002CBB0E /* Presentation */,
+				FFB74C5C288E5BBD002CBB0E /* Resource */,
 				FFB74C5A288E5B27002CBB0E /* Application */,
 			);
 			path = Picterest;
