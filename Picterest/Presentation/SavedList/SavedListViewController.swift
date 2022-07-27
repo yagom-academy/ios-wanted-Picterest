@@ -49,7 +49,14 @@ extension SavedListViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0.0, left: 16.0, bottom: 0.0, right: 16.0)
+        return UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
+    }
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return 16.0
     }
 }
 
