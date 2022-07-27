@@ -58,8 +58,8 @@ class CoreDataManager {
     }
     
     func remove(id: String) {
-        let aa = fetchObject().filter { $0.id == id }.first
-        context.delete(aa!)
+        guard let willRemoveItem = fetchObject().filter ({ $0.id == id }).first else { return }
+        context.delete(willRemoveItem)
         
         do {
             try context.save()
@@ -73,6 +73,17 @@ class CoreDataManager {
             return try context.fetch(SavedPhotoInfo.fetchRequest())
         } catch {
             return []
+        }
+    }
+    
+    func removeAll() {
+        let request: NSFetchRequest<NSFetchRequestResult> = SavedPhotoInfo.fetchRequest()
+        let delete = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try context.execute(delete)
+        } catch {
+            print("ERROR \(error.localizedDescription) 👊")
         }
     }
 }

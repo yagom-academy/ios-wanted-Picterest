@@ -30,11 +30,6 @@ class PhotoListViewController: UIViewController {
         bindUpdateCollectionView()
         bindSavePhoto()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print(CoreDataManager.shared.fetch(), "🤡🤡🤡🤡")
-    }
 }
 
 // MARK: - PhotoListCollectionViewLayoutDelegate

@@ -29,6 +29,7 @@
 		6BCD1FC92890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1FC72890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift */; };
 		6BCD1FCB2890C81F00F63E64 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1FCA2890C81F00F63E64 /* CoreDataManager.swift */; };
 		6BCD1FCD2890CB3400F63E64 /* CoreSavedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1FCC2890CB3400F63E64 /* CoreSavedPhoto.swift */; };
+		6BCD1FCF2890D39400F63E64 /* SavedListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1FCE2890D39400F63E64 /* SavedListTableViewCell.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66028604278003DD2F5 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65F28604278003DD2F5 /* PhotoListViewController.swift */; };
@@ -59,6 +60,7 @@
 		6BCD1FC72890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SavedPhotoInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6BCD1FCA2890C81F00F63E64 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		6BCD1FCC2890CB3400F63E64 /* CoreSavedPhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSavedPhoto.swift; sourceTree = "<group>"; };
+		6BCD1FCE2890D39400F63E64 /* SavedListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedListTableViewCell.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				6BCD1F90288E500700F63E64 /* SavedListViewController.swift */,
+				6BCD1FCE2890D39400F63E64 /* SavedListTableViewCell.swift */,
 			);
 			path = SavedList;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCD1FC82890C7E500F63E64 /* SavedPhotoInfo+CoreDataClass.swift in Sources */,
+				6BCD1FCF2890D39400F63E64 /* SavedListTableViewCell.swift in Sources */,
 				6BCD1FCD2890CB3400F63E64 /* CoreSavedPhoto.swift in Sources */,
 				6BCD1FBE288FBF7200F63E64 /* ImageTopViewModel.swift in Sources */,
 				6BCD1F93288E52ED00F63E64 /* Icon.swift in Sources */,
