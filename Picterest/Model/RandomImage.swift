@@ -22,7 +22,7 @@ struct RandomImageURL: Codable {
     let smallSizeImageURL: String
     
     enum CodingKeys: String, CodingKey {
-        case smallSizeImageURL = "small"
+        case smallSizeImageURL = "regular"
     }
 }
 

@@ -10,14 +10,19 @@ import Combine
 
 protocol StarImageViewModelInterface {
     var updateStarImages: PassthroughSubject<Void, Never> { get }
+    var starImageCount: Int { get }
+    
+    func fetcnStarImages()
+    func deleteImageToStorage(index: Int)
+    func starImageAtIndex(index: Int) -> StarImage
 }
 
 final class StarImageViewModel: StarImageViewModelInterface {
     
     // MARK: - Properties
     let updateStarImages = PassthroughSubject<Void, Never>()
-    private let storageManager = StorageManager()
-    private let coreDataManager = CoreDataManager()
+    private let storageManager: StorageManager
+    private let coreDataManager: CoreDataManager
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]() {
@@ -29,7 +34,12 @@ final class StarImageViewModel: StarImageViewModelInterface {
         starImages.count
     }
     
-    init() {
+    init(
+        storageManager: StorageManager,
+        coreDataManager: CoreDataManager
+    ) {
+        self.storageManager = storageManager
+        self.coreDataManager = coreDataManager
         bindingCoreDataManager()
         bindingStorageManager()
     }

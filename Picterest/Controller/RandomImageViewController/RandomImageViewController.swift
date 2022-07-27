@@ -26,10 +26,19 @@ final class RandomImageViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    let randomImageViewModel: RandomImageViewModelInterface = RandomImageViewModel()
+    private var randomImageViewModel: RandomImageViewModelInterface?
     private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
+    init(viewModel: RandomImageViewModelInterface) {
+        self.randomImageViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -37,7 +46,7 @@ final class RandomImageViewController: UIViewController {
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
         bindingUpdateRandomImages()
-        randomImageViewModel.fetchNewRandomImages()
+        randomImageViewModel?.fetchNewRandomImages()
     }
 }
 
@@ -48,7 +57,7 @@ extension RandomImageViewController {
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
             guard let memo = alert.textFields?[0].text else { return }
             button.isSelected = true
-            self?.randomImageViewModel.saveImageToStorage(image: image, index: index, memo: memo)
+            self?.randomImageViewModel?.saveImageToStorage(image: image, index: index, memo: memo)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(okAction)
@@ -61,7 +70,7 @@ extension RandomImageViewController {
     private func showImageDeleteAlert(_ index: Int, button: UIButton) {
         let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.randomImageViewModel.deleteImageToStorage(index: index)
+            self?.randomImageViewModel?.deleteImageToStorage(index: index)
             button.isSelected = false
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -75,7 +84,7 @@ extension RandomImageViewController {
 // MARK: - binding
 extension RandomImageViewController {
     private func bindingUpdateRandomImages() {
-        randomImageViewModel.updateRandomImages
+        randomImageViewModel?.updateRandomImages
             .sink { [weak self] in
                 self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
@@ -119,13 +128,15 @@ extension RandomImageViewController {
 // MARK: - UICollectionViewDataSource
 extension RandomImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return randomImageViewModel.randomImagesCount
+        return randomImageViewModel?.randomImagesCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        let randomImage = randomImageViewModel.randomImageAtIndex(index: indexPath.row)
+        guard let randomImage = randomImageViewModel?.randomImageAtIndex(index: indexPath.row) else {
+            return UICollectionViewCell()
+        }
         cell.configureCell(with: randomImage, index: indexPath.row)
         bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
         
@@ -137,7 +148,7 @@ extension RandomImageViewController: UICollectionViewDataSource {
 extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
-        let height = width * randomImageViewModel.randomImageAtIndex(index: indexPath.row).imageRatio
+        let height = width * (randomImageViewModel?.randomImageAtIndex(index: indexPath.row).imageRatio ?? 0.5)
         
         return height
     }
@@ -146,8 +157,8 @@ extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
 // MARK: - UICollectionViewDelegate
 extension RandomImageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row + 1 == randomImageViewModel.randomImagesCount {
-            randomImageViewModel.fetchNewRandomImages()
+        if indexPath.row + 1 == randomImageViewModel?.randomImagesCount {
+            randomImageViewModel?.fetchNewRandomImages()
         }
     }
 }

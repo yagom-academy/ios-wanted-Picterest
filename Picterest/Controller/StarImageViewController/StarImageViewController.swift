@@ -25,12 +25,21 @@ final class StarImageViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private let starImageViewModel = StarImageViewModel()
+    private var starImageViewModel: StarImageViewModelInterface?
     private var subscriptions = Set<AnyCancellable>()
     private var longPressCell: UICollectionViewCell?
     private var longPressStartIndexPath: IndexPath?
     
     // MARK: - LifeCycle
+    init(viewModel: StarImageViewModelInterface) {
+        self.starImageViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -38,12 +47,8 @@ final class StarImageViewController: UIViewController {
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
         bindingViewModel()
+        starImageViewModel?.fetcnStarImages()
         setLongPressGestureToStarImageCollectionView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        starImageViewModel.fetcnStarImages()
     }
 }
 
@@ -52,7 +57,7 @@ extension StarImageViewController {
     private func showImageDeleteAlert(_ index: Int) {
         let alert = UIAlertController(title: nil, message: "사진을 삭제하겠습니까?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.starImageViewModel.deleteImageToStorage(index: index)
+            self?.starImageViewModel?.deleteImageToStorage(index: index)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { [weak self] _ in
             UIView.animate(withDuration: 0.2) {
@@ -106,7 +111,7 @@ extension StarImageViewController {
 // MARK: - Binding
 extension StarImageViewController {
     private func bindingViewModel() {
-        starImageViewModel.updateStarImages
+        starImageViewModel?.updateStarImages
             .sink { [weak self] in
                 self?.starImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)
@@ -150,13 +155,15 @@ extension StarImageViewController {
 extension StarImageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return starImageViewModel.starImageCount
+        return starImageViewModel?.starImageCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        let starImage = starImageViewModel.starImageAtIndex(index: indexPath.row)
+        guard let starImage = starImageViewModel?.starImageAtIndex(index: indexPath.row) else {
+            return UICollectionViewCell()
+        }
         cell.configureCell(with: starImage)
         bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
         
@@ -167,7 +174,7 @@ extension StarImageViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension StarImageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let starImage = starImageViewModel.starImageAtIndex(index: indexPath.row)
+        guard let starImage = starImageViewModel?.starImageAtIndex(index: indexPath.row) else { return .zero }
         let width = (collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right))
         let height = width * starImage.imageRatio
         return CGSize(width: width, height: height)

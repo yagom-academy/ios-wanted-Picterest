@@ -22,9 +22,9 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
     
     // MARK: - Properties
     let updateRandomImages = PassthroughSubject<Void, Never>()
-    private let networkManager = NetworkManager()
-    private let storageManager = StorageManager()
-    private let coreDataManager = CoreDataManager()
+    private let networkManager: NetworkManager
+    private let storageManager: StorageManager
+    private let coreDataManager: CoreDataManager
     private var lastIndex: Int = 0
     private var lastMemo: String = ""
     private var lastID: String = ""
@@ -39,7 +39,14 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
         randomImages.count
     }
     
-    init() {
+    init(
+        networkManager: NetworkManager,
+        storageManager: StorageManager,
+        coreDataManager: CoreDataManager
+    ) {
+        self.networkManager = networkManager
+        self.storageManager = storageManager
+        self.coreDataManager = coreDataManager
         bindingStorageManger()
         bindingCoreDataManager()
     }

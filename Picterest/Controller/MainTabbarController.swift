@@ -16,8 +16,26 @@ final class MainTabbarController: UITabBarController {
     }
     
     private func configureTabbar() {
-        let randomImageVC = UINavigationController(rootViewController: RandomImageViewController())
-        let starImageVC = UINavigationController(rootViewController: StarImageViewController())
+        let networkManager = NetworkManager()
+        let storageManager = StorageManager()
+        let coreDataManager = CoreDataManager()
+        
+        let randomImageViewModel: RandomImageViewModelInterface = RandomImageViewModel(
+            networkManager: networkManager,
+            storageManager: storageManager,
+            coreDataManager: coreDataManager
+        )
+        let starImageViewModel: StarImageViewModelInterface = StarImageViewModel(
+            storageManager: storageManager,
+            coreDataManager: coreDataManager
+        )
+        
+        let randomImageVC = UINavigationController(
+            rootViewController: RandomImageViewController(
+                viewModel: randomImageViewModel))
+        let starImageVC = UINavigationController(
+            rootViewController: StarImageViewController(
+                viewModel: starImageViewModel))
         
         randomImageVC.tabBarItem.title = "Images"
         randomImageVC.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
@@ -29,5 +47,4 @@ final class MainTabbarController: UITabBarController {
         
         setViewControllers([randomImageVC, starImageVC], animated: true)
     }
-    
 }
