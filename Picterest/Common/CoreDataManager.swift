@@ -33,6 +33,7 @@ class CoreDataManager {
             savedPhoto.setValue(newPhoto.memo, forKey: "memo")
             savedPhoto.setValue(newPhoto.url, forKey: "url")
             savedPhoto.setValue(newPhoto.path, forKey: "path")
+            savedPhoto.setValue(newPhoto.ratio, forKey: "ratio")
         }
         
         do {
@@ -49,7 +50,8 @@ class CoreDataManager {
                     id: $0.id ?? "",
                     memo: $0.memo ?? "",
                     url: $0.url ?? "",
-                    path: $0.path ?? ""
+                    path: $0.path ?? "",
+                    ratio: $0.ratio ?? 0.0
                 )
             }
         } catch {

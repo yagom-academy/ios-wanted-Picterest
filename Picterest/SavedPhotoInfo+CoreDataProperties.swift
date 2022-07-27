@@ -20,6 +20,7 @@ extension SavedPhotoInfo {
     @NSManaged public var memo: String?
     @NSManaged public var url: String?
     @NSManaged public var path: String?
+    @NSManaged public var ratio: Double
 
 }
 

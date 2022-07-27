@@ -5,21 +5,23 @@
 //  Created by yc on 2022/07/27.
 //
 
-import Foundation
+import UIKit
 
 class SavedListViewModel {
-    
-    var savedListTableViewCellViewModel: SavedListTableViewCellViewModel? {
+    let starButtonTapped: Observable<(UIButton?, Photo?, UIImage?)> = Observable((nil, nil, nil))
+    var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
-            
+            newValue?.starButtonTapped.bind {
+                self.starButtonTapped.value = $0
+            }
         }
     }
     
-    func makeSavedListTableViewCellViewModel(
+    func makePhotoListCollectionViewCellViewModel(
         savedPhoto: CoreSavedPhoto
-    ) -> SavedListTableViewCellViewModel {
-        let viewModel = SavedListTableViewCellViewModel(savedPhoto: savedPhoto)
-        savedListTableViewCellViewModel = viewModel
+    ) -> PhotoListCollectionViewCellViewModel {
+        let viewModel = PhotoListCollectionViewCellViewModel(photo: savedPhoto)
+        photoListCollectionViewCellViewModel = viewModel
         return viewModel
     }
 }

@@ -21,11 +21,15 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     var viewModel: PhotoListCollectionViewCellViewModel?
     
     // MARK: - Setup
-    func setupView(index: Int) {
+    func setupView(photo: AAA, index: Int) {
         configUI()
         bindImage()
         topView.viewModel = viewModel?.imageTopViewModel
-        topView.setupView(index: index)
+        if let _ = photo as? Photo {
+            topView.setupView(text: "\(index)번째 사진")
+        } else if let savedPhoto = photo as? CoreSavedPhoto {
+            topView.setupView(text: savedPhoto.memo)
+        }
     }
     
     override func prepareForReuse() {

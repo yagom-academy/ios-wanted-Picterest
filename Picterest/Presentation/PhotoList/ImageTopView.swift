@@ -30,9 +30,9 @@ class ImageTopView: UIView {
     var viewModel: ImageTopViewModel?
     
     // MARK: - Setup
-    func setupView(index: Int) {
+    func setupView(text: String) {
         configUI()
-        indexLabel.text = "\(index)번째 사진"
+        indexLabel.text = text
     }
 }
 

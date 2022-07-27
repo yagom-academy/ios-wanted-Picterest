@@ -66,7 +66,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         
         let photo = viewModel.photoList.value[indexPath.item]
         cell.viewModel = viewModel.makePhotoListCollectionViewCellViewModel(photo: photo)
-        cell.setupView(index: indexPath.item)
+        cell.setupView(photo: photo, index: indexPath.item)
         
         return cell
     }

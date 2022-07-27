@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct CoreSavedPhoto {
+struct CoreSavedPhoto: AAA {
     let id: String
     let memo: String
     let url: String
     let path: String
+    let ratio: Double
 }

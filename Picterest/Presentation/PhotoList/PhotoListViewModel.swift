@@ -53,7 +53,8 @@ class PhotoListViewModel {
             id: photoInfo.id,
             memo: memo,
             url: photoInfo.urls.raw,
-            path: filePath ?? ""
+            path: filePath ?? "",
+            ratio: Double(photoInfo.height) / Double(photoInfo.width)
         )
         
         CoreDataManager.shared.save(newPhoto: newPhoto)

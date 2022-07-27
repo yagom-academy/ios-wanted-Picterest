@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct Photo: Codable {
+protocol AAA {}
+
+struct Photo: Codable, AAA {
     let id: String
     let width: Int
     let height: Int
