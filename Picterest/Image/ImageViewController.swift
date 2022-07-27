@@ -19,7 +19,7 @@ class ImageViewController: UIViewController {
         return cv
     }()
     private var viewModel = ImageViewModel()
-    private var photoList: [Photo] = []
+    var photoList: [Photo] = []
     private var startPage = 0
     private var totalPage = 0
     
@@ -42,7 +42,6 @@ extension ImageViewController {
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         imageCollectionView.prefetchDataSource = self
-        
         
         let customLayout = ImageColletionViewCustomLayout()
         customLayout.delegate = self

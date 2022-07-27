@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 class SaveViewController: UIViewController {
 
     private var saveTableView = UITableView()
     private var viewModel = SaveViewModel()
-    private var savePhotoList: [SavePhoto] = []
+    var savePhotoList: [SavePhoto] = []
+    var container: NSPersistentContainer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,7 @@ class SaveViewController: UIViewController {
         attribute()
         layout()
         bind(viewModel)
-        
+        fetchSavePhoto()
     }
 }
 
@@ -51,6 +53,19 @@ extension SaveViewController {
     
     private func bind(_ viewModel: SaveViewModel) {
         self.viewModel = viewModel
+    }
+    
+    private func fetchSavePhoto() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        do {
+            let savePhoto = try context.fetch(SavePhoto.fetchRequest()) as! [SavePhoto]
+            savePhotoList = savePhoto
+            saveTableView.reloadData()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
 }
 
