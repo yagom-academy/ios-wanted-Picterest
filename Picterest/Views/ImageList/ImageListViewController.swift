@@ -92,7 +92,7 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
         let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
         cell.delegate = self
         let imageData = viewModel.image(at: indexPath.row)
-        cell.fetchImageData(data: imageData, at: indexPath.row)
+        cell.fetchImageData(data: imageData, at: indexPath)
         return cell
     }
     
@@ -114,19 +114,16 @@ extension ImageListViewController: PinterestLayoutDelegate {
 }
 
 extension ImageListViewController: PicterestPhotoSavable {
-    func picterestCollectoinViewCell(imageInfo: ImageData, imageData: UIImage) {
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: ImageData, imageData: UIImage, idx: IndexPath) {
         let alert = UIAlertController(title: "이미지 메모", message: nil, preferredStyle: .alert)
         alert.addTextField()
         
         let action = UIAlertAction(title: "저장", style: .default) { [weak alert] (_) in
             let memo = alert?.textFields![0].text ?? ""
             
-            let fileUrl = PicterestFileManager.shared.createPictureId(fileName: imageInfo.id)
+            let fileUrl = PicterestFileManager.shared.savePicture(fileName: imageInfo.id, image: imageData)
             
-            if let data = imageData.pngData() {
-                try? data.write(to: fileUrl)
-            }
-            CoreDataManager.shared.createPictureData(id: imageInfo.id, memo: memo, originUrl: imageInfo.imageUrl.rawUrl, localUrl: fileUrl.path)
+            CoreDataManager.shared.createPictureData(id: imageInfo.id, memo: memo, originUrl: imageInfo.imageUrl.rawUrl, localUrl: fileUrl.path, imageSize: self.viewModel.imageSize(at: indexPath.row))
         }
         
         alert.addAction(action)
