@@ -17,12 +17,12 @@ enum NetworkError: Error {
 
 final class NetworkManager {
     
-    static let apiKey = "EYcGnmZWJmPQPhb1Hw9nXqv7mo7p_Vr4XpVnkkMqN5I"
+    let apiKey = "EYcGnmZWJmPQPhb1Hw9nXqv7mo7p_Vr4XpVnkkMqN5I"
     
     static let shared = NetworkManager()
     private init() {}
     
-    static func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
+    func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
         let urlStr = "https://api.unsplash.com/photos/random/?client_id=\(apiKey)&count=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.invalidURL))
@@ -46,6 +46,14 @@ final class NetworkManager {
             default:
                 print("Error - StatusCode: \(response.statusCode), Response: \(response)")
             }
+        }.resume()
+    }
+    
+    func fetchImage(url: String, completion: @escaping (UIImage) -> Void) {
+        guard let url = URL(string: url) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let fetchedData = data, let image = UIImage(data: fetchedData), error == nil else { return }
+            completion(image)
         }.resume()
     }
 }

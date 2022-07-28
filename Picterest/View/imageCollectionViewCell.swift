@@ -7,15 +7,10 @@
 
 import UIKit
 
-protocol SaveImageDelegate: AnyObject {
-    func starButtonTapped(didSave: Bool)
-}
-
 class imageCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "imagesCollectionViewCell"
-    
-    weak var delegate: SaveImageDelegate?
+    var starButtonTapped: (Bool) -> Void = { (bool) in }
     var isStar: Bool = false
     
     private lazy var imageView: UIImageView = {
@@ -51,7 +46,7 @@ class imageCollectionViewCell: UICollectionViewCell {
     }()
     
     @objc func starButtonTabbed() {
-        delegate?.starButtonTapped(didSave: isStar)
+        starButtonTapped(isStar)
         if isStar {
             starButton.setImage(UIImage(systemName: "star"), for: .normal)
             starButton.tintColor = .white

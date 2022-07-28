@@ -17,14 +17,10 @@ extension UIImageView {
             return
         }
             
-        guard let url = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let fetchedData = data, let image = UIImage(data: fetchedData), error == nil else { return }
-            ImageCacheManager.shared.setObject(image, forKey: key)
+        NetworkManager.shared.fetchImage(url: url) { image in
             DispatchQueue.main.async {
-                self?.image = image
+                self.image = image
             }
-            print("from download")
-        }.resume()
+        }
     }
 }

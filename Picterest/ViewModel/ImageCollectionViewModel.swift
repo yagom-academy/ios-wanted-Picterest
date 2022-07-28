@@ -22,7 +22,7 @@ class ImageCollectionViewModel {
     private var isFetching = false
     
     func fetchImages() {
-        NetworkManager.fetchImageList { [weak self] result in
+        NetworkManager.shared.fetchImageList { [weak self] result in
             switch result {
             case .success(let images):
                 self?.images.append(contentsOf: images)

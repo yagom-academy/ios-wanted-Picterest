@@ -52,8 +52,11 @@ extension ImagesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCollectionViewCell.reuseIdentifier, for: indexPath) as? imageCollectionViewCell else { return UICollectionViewCell() }
-        cell.configureCell(with: imageCollectionViewModel.imageAtIndex(indexPath.row), index: indexPath.row)
-        cell.delegate = self
+        let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
+        cell.configureCell(with: imageData, index: indexPath.row)
+        cell.starButtonTapped = { [weak self] (bool) in
+            self?.starButtonTapped(didSave: bool, data: imageData, index: indexPath.row)
+        }
         return cell
     }
 }
@@ -67,11 +70,13 @@ extension ImagesViewController: PicterestLayoutDelegate {
     }
 }
 
-extension ImagesViewController: SaveImageDelegate {
-    func starButtonTapped(didSave: Bool) {
+extension ImagesViewController {
+    func starButtonTapped(didSave: Bool, data: ImageViewModel, index: Int) {
         if !didSave {
             let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
-            let save = UIAlertAction(title: "저장", style: .default)
+            let save = UIAlertAction(title: "저장", style: .default) { _ in
+                LocalFileManager.shared.saveToLocal(data)
+            }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             alert.addAction(save)
             alert.addAction(cancel)
@@ -79,6 +84,8 @@ extension ImagesViewController: SaveImageDelegate {
                 textfield.placeholder = "내용을 입력해주세요"
             }
             present(alert, animated: true, completion: nil)
+        } else {
+            LocalFileManager.shared.deleteFromLocal(id: data.id)
         }
     }
 }
