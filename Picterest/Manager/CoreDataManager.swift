@@ -21,9 +21,10 @@ class CoreDataManager {
         }
         return container
     }()
+    
+    lazy var context = persistentContainer.viewContext
 
     func saveContext() {
-        let context = persistentContainer.viewContext
         if context.hasChanges {
             do {
                 try context.save()
@@ -34,7 +35,6 @@ class CoreDataManager {
     }
     
     func createSavePhoto(_ id: String, _ memo: String, _ originUrl: String, _ location: String, _ ratio: Double) {
-        let context = persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "SavePhoto", in: context)
 
         if let entity = entity {
@@ -45,15 +45,26 @@ class CoreDataManager {
             savePhoto.setValue(location, forKey: "location")
             savePhoto.setValue(ratio, forKey: "ratio")
 
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
-            }
+            saveContext()
         }
     }
     
-    func deleteSavePhoto() {
+    func fetchSavePhoto() -> [SavePhoto] {
+        var photos: [SavePhoto] = []
         
+        let request: NSFetchRequest<SavePhoto> = SavePhoto.fetchRequest()
+        do {
+            photos = try context.fetch(request)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        return photos
+    }
+    
+    func deleteSavePhoto(_ entity: SavePhoto) {
+        context.delete(entity)
+        
+        saveContext()
     }
 }

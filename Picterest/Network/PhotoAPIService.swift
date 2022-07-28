@@ -19,8 +19,6 @@ class PhotoAPIService {
     
     func getRandomPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
         var request = URLRequest(url: EndPoint.getPhoto(page).url)
-        request.httpMethod = HTTPMethod.get.rawValue.uppercased()
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil else {
@@ -44,8 +42,7 @@ class PhotoAPIService {
             }
             
             do {
-                let decoder = JSONDecoder()
-                let userData = try decoder.decode([Photo].self, from: data)
+                let userData = try JSONDecoder().decode([Photo].self, from: data)
                 completion(.success(userData))
             } catch {
                 completion(.failure(.invalidData))

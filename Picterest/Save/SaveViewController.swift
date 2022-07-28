@@ -61,15 +61,9 @@ extension SaveViewController {
     }
     
     private func fetchSavePhoto() {
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        
-        do {
-            let savePhoto = try context.fetch(SavePhoto.fetchRequest()) as! [SavePhoto]
-            savePhotoList = savePhoto
-            saveTableView.reloadData()
-        } catch {
-            print(error.localizedDescription)
-        }
+        let savePhoto = CoreDataManager.shared.fetchSavePhoto()
+        savePhotoList = savePhoto
+        saveTableView.reloadData()
     }
     
     private func LongPress() {

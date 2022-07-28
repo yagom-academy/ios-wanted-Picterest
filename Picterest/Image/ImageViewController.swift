@@ -69,11 +69,16 @@ extension ImageViewController {
     }
     
     private func fetchPhoto() {
+        print("fetchPhoto", startPage)
+        
         viewModel.getRandomPhoto(startPage) { [weak self] result in
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
                 self.photoList += photos
+                photos.forEach { photo in
+                    print(photo.id)
+                }
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
                 }
@@ -124,23 +129,25 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
 extension ImageViewController: SavePhotoImageDelegate {
     
     func tapStarButton(sender: UIButton, indexPath: IndexPath) {
+        
         let id = photoList[indexPath.row].id
         var text: String!
         let originUrl = photoList[indexPath.row].urls.small
         let ratio = photoList[indexPath.row].height / photoList[indexPath.row].width
         
-        let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        let ok = UIAlertAction(title: "저장", style: .default) { ok in
-            sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            
-            let location = PhotoFileManager.shared.createPhotoFile(self.viewModel.loadImage(originUrl), id).absoluteString
-            text = alert.textFields?[0].text
-            CoreDataManager.shared.createSavePhoto(id, text, originUrl, location, ratio)
+        if sender.isSelected {
+            // 저장
+            let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "저장", style: .default) { ok in
+                let location = PhotoFileManager.shared.createPhotoFile(self.viewModel.loadImage(originUrl), id).absoluteString
+                text = alert.textFields?[0].text
+                CoreDataManager.shared.createSavePhoto(id, text, originUrl, location, ratio)
+            }
+            alert.addTextField()
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+        } else {
+            // 지우기
         }
-        alert.addTextField()
-        alert.addAction(cancel)
-        alert.addAction(ok)
-        self.present(alert, animated: true)
     }
 }
