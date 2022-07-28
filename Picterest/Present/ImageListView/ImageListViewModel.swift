@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RandomImageListViewModel {
+final class ImageListViewModel {
     
     struct CellData {
         var thumbnailURL: String
@@ -21,6 +21,7 @@ final class RandomImageListViewModel {
     private let networkManager: NetworkManager
     private var networkDatas: [ImageInfo] = []
     private var cellDatas: [CellData] = []
+    private var currentPage: Int = 1
     var totalCellCount: Int {
         return cellDatas.count
     }
@@ -40,7 +41,7 @@ final class RandomImageListViewModel {
     }
     
     func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
-        networkManager.getRandomImageInfo { [weak self] result in
+        networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
             case .success(let infos):
                 self?.networkDatas += infos
@@ -48,6 +49,7 @@ final class RandomImageListViewModel {
                     return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: false, id: UUID())
                 })
                 print("success load data!")
+                self?.currentPage += 1
                 completion(.success(Void()))
             case .failure(let error):
                 print(error)

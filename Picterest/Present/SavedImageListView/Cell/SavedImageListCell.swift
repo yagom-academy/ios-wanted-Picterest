@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
+final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView = UIStackView()
     private let starButton = UIButton()

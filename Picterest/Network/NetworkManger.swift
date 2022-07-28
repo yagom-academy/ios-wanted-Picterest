@@ -18,9 +18,9 @@ final class NetworkManager {
         self.session = session
     }
     
-    func getRandomImageInfo(completion: @escaping (Result<[ImageInfo], CustomError>) -> ()) {
+    func getImageInfo(page: Int, completion: @escaping (Result<[ImageInfo], CustomError>) -> ()) {
         
-        guard let url = api.getRandomImageAPI().url else {
+        guard let url = api.getRandomImageAPI(page: page).url else {
             completion(.failure(CustomError.makeURLError))
             return
         }

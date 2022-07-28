@@ -19,7 +19,7 @@ final class MainTabBarController: UITabBarController {
     }
     
     private func setVC() {
-        let vc1 = RandomImageListViewController()
+        let vc1 = ImageListViewController()
         vc1.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
 
         let vc2 = SavedImageListViewController()

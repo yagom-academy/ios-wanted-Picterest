@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SavedImageListViewModel {
+final class SavedImageListViewModel {
     private var cellDatas: [CoreDataInfo] = []
     var totalCellCount: Int {
         return cellDatas.count

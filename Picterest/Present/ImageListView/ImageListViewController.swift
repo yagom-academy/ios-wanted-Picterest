@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class RandomImageListViewController: UIViewController {
+final class ImageListViewController: UIViewController {
     
     private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
-    private let viewModel = RandomImageListViewModel(networkManager: NetworkManager.shared)
+    private let viewModel = ImageListViewModel(networkManager: NetworkManager.shared)
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -36,7 +36,7 @@ final class RandomImageListViewController: UIViewController {
 }
 
 //MARK: - CustomCollectionViewLayoutDelegate
-extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
+extension ImageListViewController: CustomCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightMultiplierForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         return viewModel.cellHeightMultiplier(indexPath)
     }
@@ -51,9 +51,9 @@ extension RandomImageListViewController: CustomCollectionViewLayoutDelegate {
 }
 
 //MARK: - CollectionViewDa
-extension RandomImageListViewController: UICollectionViewDataSource {
+extension ImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RandomImageListCell.reuseIdentifier, for: indexPath) as? RandomImageListCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageListCell.reuseIdentifier, for: indexPath) as? ImageListCell else { return UICollectionViewCell() }
         cell.configure(indexPath: indexPath, data: viewModel.cellData(indexPath))
         cell.delegate = self
         return cell
@@ -73,7 +73,7 @@ extension RandomImageListViewController: UICollectionViewDataSource {
 }
 
 //MARK: - Cell Delegate 이벤트
-extension RandomImageListViewController: RandomImageListCellDelegate {
+extension ImageListViewController: ImageListCellDelegate {
     func tappedSaveButton(_ indexPath: IndexPath) {
         viewModel.tappedStarButton(indexPath: indexPath)
         collectionView.reloadData()
@@ -85,7 +85,7 @@ extension RandomImageListViewController: RandomImageListCellDelegate {
 }
 
 //MARK: - Footer Delegate 이벤트
-extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
+extension ImageListViewController: AddCellButtonFooterViewDelegate {
     func tappedAddCellButton() {
         viewModel.loadData { [weak self] result in
             switch result {
@@ -99,7 +99,7 @@ extension RandomImageListViewController: AddCellButtonFooterViewDelegate {
 }
 
 //MARK: - SaveImageAlertView Delegate 이벤트
-extension RandomImageListViewController: SaveImageAlertViewDelegate {
+extension ImageListViewController: SaveImageAlertViewDelegate {
     func tappedSavedButton(row: Int, message: String) {
         viewModel.saveImage(row: row, message: message) { result in
             switch result {
@@ -114,7 +114,7 @@ extension RandomImageListViewController: SaveImageAlertViewDelegate {
 }
 
 //MARK: - attribute, layout 메서드
-extension RandomImageListViewController {
+extension ImageListViewController {
     private func attribute() {
         //temp
         view.backgroundColor = .yellow
@@ -125,7 +125,7 @@ extension RandomImageListViewController {
         
         collectionView.backgroundColor = .purple
         collectionView.dataSource = self
-        collectionView.register(RandomImageListCell.self, forCellWithReuseIdentifier: RandomImageListCell.reuseIdentifier)
+        collectionView.register(ImageListCell.self, forCellWithReuseIdentifier: ImageListCell.reuseIdentifier)
         collectionView.register(AddCellButtonFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier)
     }
     

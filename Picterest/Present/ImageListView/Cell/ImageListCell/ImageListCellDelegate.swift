@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol RandomImageListCellDelegate: AnyObject {
+protocol ImageListCellDelegate: AnyObject {
     func tappedSaveButton(_ indexPath: IndexPath)
 }

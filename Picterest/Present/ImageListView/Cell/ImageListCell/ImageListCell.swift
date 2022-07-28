@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
+final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView = UIStackView()
     private let starButton = UIButton(type: .system)
@@ -16,7 +16,7 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private var indexPath:IndexPath?
     
-    weak var delegate: RandomImageListCellDelegate?
+    weak var delegate: ImageListCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
@@ -29,7 +29,7 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(indexPath: IndexPath, data: RandomImageListViewModel.CellData?) {
+    func configure(indexPath: IndexPath, data: ImageListViewModel.CellData?) {
         guard let data = data else {
             return
         }
