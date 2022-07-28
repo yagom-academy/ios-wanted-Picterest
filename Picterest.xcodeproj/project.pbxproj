@@ -37,6 +37,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B0E241CF2893348B00324FF6 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
+				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		B0E241D02893349E00324FF6 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E65F28604278003DD2F5 /* ViewController.swift */,
+				B0E241CD288EADA000324FF6 /* SecondViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		B0E241D1289334AA00324FF6 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
+				DE15E66928604279003DD2F5 /* Info.plist */,
+				DE15E66428604279003DD2F5 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +84,9 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
-				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
-				DE15E65F28604278003DD2F5 /* ViewController.swift */,
-				DE15E66428604279003DD2F5 /* Assets.xcassets */,
-				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
-				DE15E66928604279003DD2F5 /* Info.plist */,
-				B0E241CD288EADA000324FF6 /* SecondViewController.swift */,
+				B0E241D1289334AA00324FF6 /* Resource */,
+				B0E241D02893349E00324FF6 /* Presentation */,
+				B0E241CF2893348B00324FF6 /* Application */,
 			);
 			path = Picterest;
 			sourceTree = "<group>";
@@ -283,7 +307,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PSH4C5839A;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Picterest/Info.plist;
+				INFOPLIST_FILE = Picterest/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -311,7 +335,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PSH4C5839A;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Picterest/Info.plist;
+				INFOPLIST_FILE = Picterest/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
