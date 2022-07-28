@@ -75,9 +75,7 @@ extension ImageViewController {
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
-                for photo in photos {
-                    self.photoList.append(photo)
-                }
+                self.photoList += photos
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
                 }
@@ -150,7 +148,7 @@ extension ImageViewController: PhotoLabelEvnetDelegate {
         let ok = UIAlertAction(title: "저장", style: .default) { ok in
             text = alert.textFields?[0].text
             print(text)
-            self.saveCoreData(text)
+//            self.saveCoreData(text)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField()
@@ -160,25 +158,25 @@ extension ImageViewController: PhotoLabelEvnetDelegate {
     }
     
     func saveCoreData(_ text: String) {
-        guard let row = indexPath?.row else { return }
-        let path = PhotoFileManager().getPhotoFilePath(photoList[row].id)
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "SavePhoto", in: context)
-        
-        if let entity = entity {
-            let savePhoto = NSManagedObject(entity: entity, insertInto: context)
-            savePhoto.setValue(photoList[row].id, forKey: "id")
-            savePhoto.setValue(text, forKey: "memo")
-            savePhoto.setValue(photoList[row].urls.small, forKey: "originUrl")
-            savePhoto.setValue(path, forKey: "location")
-            
-            do {
-                try context.save()
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+//        guard let row = indexPath?.row else { return }
+//        let path = PhotoFileManager.shared.createPhotoFile(<#T##image: UIImage##UIImage#>, photoList[row].id)
+//
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "SavePhoto", in: context)
+//
+//        if let entity = entity {
+//            let savePhoto = NSManagedObject(entity: entity, insertInto: context)
+//            savePhoto.setValue(photoList[row].id, forKey: "id")
+//            savePhoto.setValue(text, forKey: "memo")
+//            savePhoto.setValue(photoList[row].urls.small, forKey: "originUrl")
+//            savePhoto.setValue(path, forKey: "location")
+//
+//            do {
+//                try context.save()
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
     }
 }
