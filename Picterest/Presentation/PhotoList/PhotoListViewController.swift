@@ -12,6 +12,11 @@ protocol CustomCollectionViewLayoutDelegate: AnyObject {
         heightForPhotoAtIndexPath indexPath: IndexPath
     ) -> CGFloat
     
+    func collectionView(
+        _ collectionView: UICollectionView,
+        widthForPhotoAtIndexPath indexPath: IndexPath
+    ) -> CGFloat
+    
 }
 
 class PhotoListViewController: UIViewController {
@@ -159,7 +164,13 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
         heightForPhotoAtIndexPath indexPath: IndexPath
     ) -> CGFloat {
         return CGFloat(photos[indexPath.item].height)
-
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        widthForPhotoAtIndexPath indexPath: IndexPath
+    ) -> CGFloat {
+        return CGFloat(photos[indexPath.item].width)
     }
 
 }
