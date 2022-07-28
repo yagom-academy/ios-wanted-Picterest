@@ -44,6 +44,9 @@ class ImageTopView: UIView {
         starButton.tintColor = .white
         indexLabel.text = nil
     }
+    func didLongPress() {
+        viewModel?.starButtonTapped.value = starButton
+    }
 }
 
 // MARK: - @objc Methods

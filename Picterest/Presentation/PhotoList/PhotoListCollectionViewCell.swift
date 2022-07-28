@@ -16,6 +16,11 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
         imageView.clipsToBounds = true
         return imageView
     }()
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer()
+        gesture.addTarget(self, action: #selector(didLongPressCell(_:)))
+        return gesture
+    }()
     
     // MARK: - Properties
     var viewModel: PhotoListCollectionViewCellViewModel?
@@ -35,6 +40,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
         } else if let savedPhoto = photo as? CoreSavedPhoto {
             topView.setupView(text: savedPhoto.memo)
             topView.fillStarButton()
+            contentView.addGestureRecognizer(longPressGesture)
         }
     }
     
@@ -51,6 +57,15 @@ private extension PhotoListCollectionViewCell {
             DispatchQueue.main.async {
                 self?.imageView.image = image
             }
+        }
+    }
+}
+
+// MARK: - @objc Methods
+private extension PhotoListCollectionViewCell {
+    @objc func didLongPressCell(_ recognizer: UILongPressGestureRecognizer) {
+        if recognizer.state == .began {
+            topView.didLongPress()
         }
     }
 }
