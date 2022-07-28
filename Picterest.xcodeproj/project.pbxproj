@@ -30,6 +30,7 @@
 		F0F56E2D288FED11007AED0C /* Picture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2B288FED11007AED0C /* Picture+CoreDataProperties.swift */; };
 		F0F56E2F288FED5B007AED0C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */; };
 		F0F56E312890D2C1007AED0C /* ImageRepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */; };
+		F0F56E3328924950007AED0C /* URLRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E3228924950007AED0C /* URLRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		F0F56E2B288FED11007AED0C /* Picture+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Picture+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryViewModel.swift; sourceTree = "<group>"; };
+		F0F56E3228924950007AED0C /* URLRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				F0F56DE5288E5617007AED0C /* HttpClient.swift */,
 				F0F56DEB288E68FB007AED0C /* ImageEndPoint.swift */,
 				F0F56E20288FE0F3007AED0C /* ImageLoader.swift */,
+				F0F56E3228924950007AED0C /* URLRepository.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				F0F56E2C288FED11007AED0C /* Picture+CoreDataClass.swift in Sources */,
 				F0F56DEE288E6D05007AED0C /* Repository.swift in Sources */,
 				F0F56DEA288E68A2007AED0C /* ImageModel.swift in Sources */,
+				F0F56E3328924950007AED0C /* URLRepository.swift in Sources */,
 				F0F56E03288EBB2C007AED0C /* ImageListViewModel.swift in Sources */,
 				F0F56DEC288E68FB007AED0C /* ImageEndPoint.swift in Sources */,
 				F0F56E29288FEC9B007AED0C /* PictureModel.xcdatamodeld in Sources */,
