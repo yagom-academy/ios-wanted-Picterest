@@ -7,13 +7,7 @@
 
 import UIKit
 
-protocol PhotoLabelEvnetDelegate {
-    func tapStarButton(sender: UIButton)
-}
-
 class LabelStackView: UIStackView {
-    
-    var delegate: PhotoLabelEvnetDelegate?
     
     let starButton: UIButton = {
         let button = UIButton()
@@ -33,7 +27,6 @@ class LabelStackView: UIStackView {
         
         configurationProperties()
         layout()
-        addTargetStarButton()
     }
     
     required init(coder: NSCoder) {
@@ -57,13 +50,5 @@ class LabelStackView: UIStackView {
             self.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-    }
-    
-    private func addTargetStarButton() {
-        starButton.addTarget(self, action: #selector(tapStarButton), for: .touchUpInside)
-    }
-
-    @objc func tapStarButton() {
-        delegate?.tapStarButton(sender: starButton)
     }
 }

@@ -19,7 +19,7 @@ protocol FileStatusReceivable: AnyObject {
 
 class PhotoFileManager {
     
-    var delegate: FileStatusReceivable?
+    weak var delegate: FileStatusReceivable?
     
     static let shared = PhotoFileManager()
     

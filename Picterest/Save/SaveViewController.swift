@@ -56,8 +56,7 @@ extension SaveViewController {
     }
     
     private func fetchSavePhoto() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         
         do {
             let savePhoto = try context.fetch(SavePhoto.fetchRequest()) as! [SavePhoto]
