@@ -89,7 +89,6 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
     return ((view.frame.width / CGFloat(layoutProvider.numberOfColumns)) - layoutProvider.cellPadding * 2) / widthRatio
   }
 
-  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let contentOffsetY = scrollView.contentOffset.y
     if contentOffsetY >= (scrollView.contentSize.height - scrollView.bounds.height) - 20 {
@@ -101,43 +100,14 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
       }
     }
   }
-    
-  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-    if self.isLoading {
-      return CGSize.zero
-    } else {
-      return CGSize(width: collectionView.bounds.size.width, height: 55)
-    }
-  }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: Footer.id, for: indexPath) as? Footer else {
         return UICollectionReusableView()
     }
+    loadingView = footer
+    loadingView?.activityIndicator.startAnimating()
     return footer
   }
-  
-//  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//    if kind == UICollectionView.elementKindSectionFooter {
-//      guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Footer.id, for: indexPath) as? Footer else {return UICollectionReusableView()}
-//      loadingView = footerView
-//      loadingView?.backgroundColor = .blue
-//      return footerView
-//    }
-//    return UICollectionReusableView()
-//  }
-
-//  func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
-//    if elementKind == UICollectionView.elementKindSectionFooter {
-//      self.loadingView?.activityIndicator.startAnimating()
-//    }
-//  }
-//
-//  func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-//    if elementKind == UICollectionView.elementKindSectionFooter {
-//      self.loadingView?.activityIndicator.stopAnimating()
-//    }
-//  }
-//
   
 }

@@ -23,7 +23,7 @@ final class HomeViewModel {
   }
   
   func fetchImages(count: Int = 15) {
-    let page = pageCount() + 1 
+    let page = pageCount() + 1
     let endPoint = EndPoint(path: .showList, query: .imagesPerPage(pageNumber: page, perPage: count))
     repository.fetchImages(endPoint: endPoint) { result in
       switch result {
