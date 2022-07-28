@@ -152,7 +152,9 @@ extension ImageViewController: SavePhotoImageDelegate {
             self.present(alert, animated: true)
         } else {
             // 지우기
-            
+            PhotoFileManager.shared.deletePhotoFile(photoList[indexPath.row].urls.small)
+            guard let entity = CoreDataManager.shared.searchSavePhoto(photoList[indexPath.row].id) else { return }
+            CoreDataManager.shared.deleteSavePhoto(entity)
         }
     }
 }

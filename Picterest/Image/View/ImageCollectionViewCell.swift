@@ -86,7 +86,7 @@ extension ImageCollectionViewCell {
 
     @objc func tapStarButton() {
         guard let currentIndexPath = currentIndexPath else { return }
-        labelStackView.starButton.isSelected = true
+        labelStackView.starButton.isSelected = !labelStackView.starButton.isSelected
         delegate?.tapStarButton(sender: labelStackView.starButton, indexPath: currentIndexPath)
     }
 }
