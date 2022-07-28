@@ -21,12 +21,15 @@ class SaveTableViewCell: UITableViewCell {
     
     func fetchData(_ photo: SavePhoto) {
         layout()
+        loadImage(photo)
     }
 }
 
 extension SaveTableViewCell {
     
     func layout() {
+        labelStackView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        
         [
             photoImageView, labelStackView
         ].forEach {

@@ -2,7 +2,7 @@
 //  SavePhoto+CoreDataProperties.swift
 //  Picterest
 //
-//  Created by 백유정 on 2022/07/27.
+//  Created by 백유정 on 2022/07/28.
 //
 //
 
@@ -16,10 +16,11 @@ extension SavePhoto {
         return NSFetchRequest<SavePhoto>(entityName: "SavePhoto")
     }
 
-    @NSManaged public var originUrl: String?
+    @NSManaged public var id: String?
     @NSManaged public var location: String?
     @NSManaged public var memo: String?
-    @NSManaged public var id: String?
+    @NSManaged public var originUrl: String?
+    @NSManaged public var ratio: Double
 
 }
 

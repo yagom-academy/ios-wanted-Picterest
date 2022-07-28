@@ -33,7 +33,7 @@ class CoreDataManager {
         }
     }
     
-    func createSavePhoto(_ id: String, _ memo: String, _ originUrl: String, _ location: String) {
+    func createSavePhoto(_ id: String, _ memo: String, _ originUrl: String, _ location: String, _ ratio: Double) {
         let context = persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "SavePhoto", in: context)
 
@@ -43,6 +43,7 @@ class CoreDataManager {
             savePhoto.setValue(memo, forKey: "memo")
             savePhoto.setValue(originUrl, forKey: "originUrl")
             savePhoto.setValue(location, forKey: "location")
+            savePhoto.setValue(ratio, forKey: "ratio")
 
             do {
                 try context.save()
@@ -50,5 +51,9 @@ class CoreDataManager {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func deleteSavePhoto() {
+        
     }
 }
