@@ -51,11 +51,19 @@ extension ImagesViewController: UICollectionViewDataSource {
         }
         
         let index = indexPath.row
+        guard let imageData = viewModel.getImage(at: index) else {
+            return UICollectionViewCell()
+        }
     
         cell.delegate = self
-        cell.view.imageView.loadImage(urlString: viewModel.getImage(at: index)?.urls.small, imageID: viewModel.images[index].id)
         cell.view.textLabel.text = "\(index)번째 사진"
-        cell.view.saveButton.tintColor = .white
+        cell.view.imageView.loadImage(urlString: imageData.urls.small, imageID: imageData.id)
+        if ImageFileManager.shared.fileExists(imageData.id as NSString) {
+            cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            cell.view.saveButton.tintColor = .yellow
+            cell.view.saveButton.isEnabled = false
+        }
+    
         return cell
     }
 }
