@@ -13,6 +13,7 @@ class PhotoListViewModel {
     let starButtonTapped: Observable<(UIButton?, AAA?, UIImage?)> = Observable((nil, nil, nil))
     let isSave: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let isRemove: Observable<(UIButton?, Bool)> = Observable((nil, false))
+    let updateSavedList: Observable<Bool> = Observable(false)
     
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
@@ -47,8 +48,6 @@ class PhotoListViewModel {
             fileName: photoInfo.id
         )
         
-        isSave.value = (sender, true)
-        
         let newPhoto = CoreSavedPhoto(
             id: photoInfo.id,
             memo: memo,
@@ -58,12 +57,15 @@ class PhotoListViewModel {
         )
         
         CoreDataManager.shared.save(newPhoto: newPhoto)
+        
+        isSave.value = (sender, true)
     }
     
     func removePhoto(sender: UIButton, photoInfo: Photo) {
         FileManager.remove(fileName: photoInfo.id)
-        isRemove.value = (sender, true)
         
         CoreDataManager.shared.remove(id: photoInfo.id)
+        
+        isRemove.value = (sender, true)
     }
 }

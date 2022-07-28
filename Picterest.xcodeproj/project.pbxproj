@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B1D292C289228B8002302F3 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D292B289228B8002302F3 /* TabBarViewModel.swift */; };
 		6BCD1F8F288E4D7300F63E64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */; };
 		6BCD1F91288E500700F63E64 /* SavedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F90288E500700F63E64 /* SavedListViewController.swift */; };
 		6BCD1F93288E52ED00F63E64 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F92288E52ED00F63E64 /* Icon.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B1D292B289228B8002302F3 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6BCD1F90288E500700F63E64 /* SavedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedListViewController.swift; sourceTree = "<group>"; };
 		6BCD1F92288E52ED00F63E64 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */,
+				6B1D292B289228B8002302F3 /* TabBarViewModel.swift */,
 				6BCD1F94288E52FF00F63E64 /* TabBar.swift */,
 				6BCD1F97288E540A00F63E64 /* PhotoList */,
 				6BCD1F98288E541400F63E64 /* SavedList */,
@@ -266,6 +269,7 @@
 				6BCD1FCB2890C81F00F63E64 /* CoreDataManager.swift in Sources */,
 				6BCD1F8F288E4D7300F63E64 /* TabBarController.swift in Sources */,
 				6BCD1FA8288ECE9200F63E64 /* URLComponents+.swift in Sources */,
+				6B1D292C289228B8002302F3 /* TabBarViewModel.swift in Sources */,
 				6BCD1FB0288EE8FE00F63E64 /* ImageLoader.swift in Sources */,
 				6BCD1F9C288E5E5100F63E64 /* PhotoListCollectionViewCell.swift in Sources */,
 				6BCD1FC92890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift in Sources */,
@@ -419,6 +423,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Picterest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -430,7 +435,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -445,6 +450,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TB9WF4459Q;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Picterest/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -456,7 +462,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest;
+				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest.;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

@@ -10,6 +10,8 @@ import UIKit
 class SavedListViewModel {
     let starButtonTapped: Observable<(UIButton?, AAA?, UIImage?)> = Observable((nil, nil, nil))
     let isRemove: Observable<Bool> = Observable(false)
+    let updateSavedList: Observable<Bool> = Observable(false)
+    
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
             newValue?.starButtonTapped.bind {

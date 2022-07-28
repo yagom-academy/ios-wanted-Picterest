@@ -20,7 +20,17 @@ class PhotoListViewController: UIViewController {
         return collectionView
     }()
     
-    private let viewModel = PhotoListViewModel()
+    // MARK: - Properties
+    private let viewModel: PhotoListViewModel
+    
+    // MARK: - Init
+    init(viewModel: PhotoListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -99,6 +109,7 @@ private extension PhotoListViewController {
             if isDone {
                 sender.setImage(Icon.starFill.image, for: .normal)
                 sender.tintColor = .systemYellow
+                self.viewModel.updateSavedList.value = true
             }
             self.viewModel.isSave.value = (nil, false)
         }
@@ -107,6 +118,7 @@ private extension PhotoListViewController {
             if isDone {
                 sender.setImage(Icon.star.image, for: .normal)
                 sender.tintColor = .white
+                self.viewModel.updateSavedList.value = true
             }
             self.viewModel.isRemove.value = (nil, false)
         }

@@ -23,25 +23,11 @@ enum TabBar: String, CaseIterable {
         case .savedList: return Icon.starBubbleFill.image
         }
     }
-    
-    private var tabBarItem: UITabBarItem {
+    var tabBarItem: UITabBarItem {
         UITabBarItem(
             title: rawValue,
             image: image,
             selectedImage: selectedImage
         )
-    }
-    
-    var viewController: UIViewController {
-        switch self {
-        case .photoList:
-            let vc = PhotoListViewController()
-            vc.tabBarItem = self.tabBarItem
-            return vc
-        case .savedList:
-            let vc = SavedListViewController()
-            vc.tabBarItem = self.tabBarItem
-            return vc
-        }
     }
 }
