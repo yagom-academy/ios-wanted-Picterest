@@ -30,15 +30,11 @@
 * * *
 
 
-# 🖼 디자인 패턴
+# 🖼 디자인 패턴과 설계
 ### MVVM
 
+![무제 drawio](https://user-images.githubusercontent.com/36326157/181514071-df0786e9-dfd1-43ac-a8ad-82c72e092785.png)
 
-<br>
-
-* * *
-
-# 📌 핵심 기술
 
 <br>
 
@@ -46,16 +42,18 @@
 
 # ⚠️ 트러블 슈팅
 
-## Repository collectionView에서 셀 삭제시 문제
+- ## Repository collectionView에서 셀 삭제시 문제
 
-- collectionView.deleteItem(at:)의 실행 플로우
-    - 우선 셀을 삭제한다(실제 보여지는 셀에서 삭제를 한다)
-    - 그후 다시 reload를 실행하여 변화된 데이터를 지워진 자리에 집어넣는다
-    - 이때 셀의 사이지의 변화가 있으면 변화 시켜서 집어 넣는다.
-- 문제점
-    - collectoinView를 reload 할 때 viewModel의 count를 가져와 쓴다.
-    - 삭제시 viewModel의 imageList를 갱신 시켜주지 않았다. (CoreData와 FileManager만 처리해 주었다.)
-    - 때문에 모든 정보가 삭제 되어도 imageList의 count는 삭제 되기 전 그대로이기 때문에 문제가 발생
+	- collectionView.deleteItem(at:)의 실행 플로우   
+    		
+		- 우선 셀을 삭제한다(실제 보여지는 셀에서 삭제를 한다)
+    	- 그후 다시 reload를 실행하여 변화된 데이터를 지워진 자리에 집어넣는다
+    	- 이때 셀의 사이지의 변화가 있으면 변화 시켜서 집어 넣는다.
+	
+	- 문제점
+		- collectoinView를 reload 할 때 viewModel의 count를 가져와 쓴다.
+   		- 삭제시 viewModel의 imageList를 갱신 시켜주지 않았다. (CoreData와 FileManager만 처리해 주었다.)
+    	- 때문에 모든 정보가 삭제 되어도 imageList의 count는 삭제 되기 전 그대로이기 때문에 문제가 발생
 
 ```Swift
 // ImageRepository VC
@@ -84,7 +82,9 @@ func deleteImage(at indexPath: IndexPath) {
 ```
 <br>
 
-## CollectionView Cell의 ContextMenu와의 싸움
+* * *
+
+- ## CollectionView Cell의 ContextMenu와의 싸움
 
 cell의 삭제시 contextMenu를 사용했다. 이 과정에서 내가 지정해준 cornerRadius와 시스템에서 제공되는 UITargetPreview의 cornerRadius가 맞지 않았다.   
 아래와 같이 preview의 cornerRadius 흰 부분이 cell의 크기보다 커서 매우 거슬리는 손톱 거스러미 같은 UI가 완성 되었다.  
@@ -115,7 +115,9 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
 
 <br>
 
-## Picture list에서의 삭제 기능
+* * *
+
+- ## Picture list에서의 삭제 기능
 
 이미지들의 리스트에서 별표 모양의 저장 버튼을 눌렀다 다시 한번 누르면 삭제 되는 기능을 추가하려 했다.
 
@@ -125,13 +127,13 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
 
 또한 cell의 재사용 문제 때문에 Picture List에선 CoreData에 저장여부가 중요하였다.
 
-- 저장한 코어데이터를 따로 가지고 있기?
+- ### 저장한 코어데이터를 따로 가지고 있기?
     
     저장 시점에서 코어데이터 entity를 따로 가지고 있으면 어떨까? 그렇다면 저장이 될 때 마다 coredata fetch를 하지 않아도 되서 효율적일 것 같다.
     
     ⇒ Reposity Scene에서 삭제가 되면 데이터의 업데이트를 알기 위해 어처피 fetch를 해와야 한다. 따라서 폐기.
     
-- 결국 fetch all
+- ### 결국 fetch all
     
     fetch all의 시간 복잡도는 O(n)이다. 배열을 전부 받아온다.
     
@@ -141,7 +143,7 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
     
     해쉬의 탐색은 최악의 경우 O(n)이기 때문에 오래 걸려봤자 O(2n)이다.
     
-- 비지니스 로직 변경
+- ### 비지니스 로직 변경
     
     ListVM과 RepoVM이 있다.
     
@@ -159,7 +161,7 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
     
     ListVC에서 viewWillAppear를 통해 list를 다시 한번 업데이트 시켜준다.
     
-- 새로운 데이터 구조 생성
+- ### 새로운 데이터 구조 생성
     
     기존 ImageData와 CoreData의 저장 여부를 알수 있는 모델을 만들었다.
     
@@ -187,6 +189,63 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
         return imageList[index]
     }
     ```
+<br>
+
+* * *
+
+## Invalid update 에러  
+
+- 셀을 저장하고 삭제 할때 마다. 즉 collectionView를 reload 할 때마다 이와 같은 에러가 발생 했다.
+
+```
+[UICollectionView] Performing reloadData as a fallback
+
+Invalid update: invalid number of items in section 0.
+The number of items contained in an existing section after the update (8)
+must be equal to the number of items contained in that section before the update (5) (...)
+```
+
+- 업데이트 이후 cell의 개수와 이전 cell의 개수가 다르다고 한다.
+- 당연한거 아닌가?
+
+### 핵심은 비동기
+
+```swift
+viewModel.imageListUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.picterestCollectionView.reloadData()
+            }
+        }
+
+```
+
+문제는 바로 저 main 쓰레드였다.
+
+너무나 당연하게 뷰의 업데이트는 main 쓰레드에서 진행 해야 하는것이였다.
+
+왜냐하면 우리가 보통 ImageList를 업데이트 하는 시점은 네트워크 통신이 끝나는 시점이다.
+
+그 쓰레드 안에서 해당 모델을 업데이트 해주기 때문에 UI 업데이트를 위해서 main 쓰레드에서 작업을 한다.
+
+하지만 coredata와 fileManager를 통해 데이터를 지워주는 행위와 collectoinView에 뿌려줄 데이터를 가지고 있는 ImageList를 지워주는 작업은 이미 메인 쓰레드에서 돌아가고 있다.
+
+```swift
+// ViewModel의 삭제
+func deleteImage(at indexPath: IndexPath) {
+        let item = imageList[indexPath.item]
+        CoreDataManager.shared.delete(entity: item)
+        PicterestFileManager.shared.deletePicture(fileName: item.id!)
+        imageList.remove(at: indexPath.row)
+        self.imageListUpdateAfterDelete()
+    }
+
+// View에서의 reloading
+viewModel.imageListUpdateAfterDelete = { [weak self] in
+            self?.picturesCollectionView.reloadData()
+        }
+```
+
+
 <br>
 
 * * *
