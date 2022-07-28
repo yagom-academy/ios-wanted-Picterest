@@ -154,6 +154,11 @@ private extension PhotoListViewController {
                 self?.photoListCollectionView.reloadData()
             }
         }
+        viewModel.updateStarButton.bind { [weak self] in
+            if $0 {
+                self?.photoListCollectionView.reloadData()
+            }
+        }
     }
 }
 

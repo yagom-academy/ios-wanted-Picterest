@@ -14,6 +14,7 @@ class PhotoListViewModel {
     let isSave: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let isRemove: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let updateSavedList: Observable<Bool> = Observable(false)
+    let updateStarButton: Observable<Bool> = Observable(false)
     
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {

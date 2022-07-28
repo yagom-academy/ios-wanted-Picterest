@@ -119,6 +119,7 @@ private extension SavedListViewController {
             if $0 {
                 self?.savedList = CoreDataManager.shared.fetch()
                 self?.savedListCollectionView.reloadData()
+                self?.viewModel.updateStarButton.value = true
             }
         }
     }

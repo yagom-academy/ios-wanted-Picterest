@@ -15,5 +15,8 @@ class TabBarViewModel {
         photoListViewModel.updateSavedList.bind { [weak self] in
             self?.savedListViewModel.updateSavedList.value = $0
         }
+        savedListViewModel.updateStarButton.bind { [weak self] in
+            self?.photoListViewModel.updateStarButton.value = $0
+        }
     }
 }
