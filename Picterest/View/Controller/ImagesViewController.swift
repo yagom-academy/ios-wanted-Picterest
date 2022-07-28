@@ -14,8 +14,8 @@ class ImagesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
-        collectionView.register(imageCollectionViewCell.self,
-                                forCellWithReuseIdentifier: imageCollectionViewCell.reuseIdentifier)
+        collectionView.register(ImageCollectionViewCell.self,
+                                forCellWithReuseIdentifier: ImageCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     
@@ -51,7 +51,7 @@ extension ImagesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCollectionViewCell.reuseIdentifier, for: indexPath) as? imageCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
         cell.configureCell(with: imageData, index: indexPath.row)
         cell.starButtonTapped = { [weak self] (bool) in

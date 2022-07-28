@@ -7,9 +7,10 @@
 
 import UIKit
 
-class imageCollectionViewCell: UICollectionViewCell {
+class ImageCollectionViewCell: UICollectionViewCell {
     
-    static let reuseIdentifier = "imagesCollectionViewCell"
+    static let reuseIdentifier = "imageCollectionViewCell"
+    
     var starButtonTapped: (Bool) -> Void = { (bool) in }
     var isStar: Bool = false
     
