@@ -11,8 +11,9 @@ struct SavableImageData {
     var imageData: ImageData
     var isSaved: Bool = false
     
-    init(imageData: ImageData) {
+    init(imageData: ImageData, isSaved: Bool = false) {
         self.imageData = imageData
+        self.isSaved = isSaved
     }
 }
 
