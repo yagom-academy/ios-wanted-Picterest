@@ -53,6 +53,8 @@ extension SavedViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell()}
         let savedData = viewModel.imageAtIndex(indexPath.row)
         cell.configureSavedCollectionCell(with: savedData, memo: savedData.memo)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(deleteItem(_:)))
+        cell.addGestureRecognizer(longPressGesture)
         return cell
     }
     
@@ -78,5 +80,20 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         CGSize(width: collectionView.frame.width - 32.0, height: 80.0)
+    }
+}
+
+extension SavedViewController {
+    @objc func deleteItem(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        let position = gestureRecognizer.location(in: collectionView)
+        guard let indexPath = collectionView.indexPathForItem(at: position) else { return }
+        let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            DataManager.shared.delete(data: self.viewModel.imageAtIndex(indexPath.row))
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 }

@@ -16,7 +16,7 @@ class DataManager {
         CoreDataManager.shared.saveData(data: data, memo: memo, localPath: localPath)
     }
     
-    func delete(data: ImageViewModel) {
+    func delete(data: SavedImageViewModel) {
         LocalFileManager.shared.deleteFromLocal(id: data.id)
         CoreDataManager.shared.deleteData(id: data.id)
     }
