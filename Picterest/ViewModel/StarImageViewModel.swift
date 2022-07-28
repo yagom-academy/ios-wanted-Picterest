@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-protocol StarImageViewModelInterface {
+protocol StarImageViewModelInterface: AnyObject {
     var updateImages: PassthroughSubject<Void, Never> { get }
     var imagesCount: Int { get }
     
