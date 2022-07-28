@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RandomImageEntity: Codable {
+struct RandomImageEntity: Codable, Image {
     let id: String
     let urls: RandomImageURL
     let width: Double
