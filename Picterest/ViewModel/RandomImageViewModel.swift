@@ -51,7 +51,7 @@ extension RandomImageViewModel {
     func fetchNewRandomImages() {
         let resource = Resource<[RandomImageEntity]>(
             params: [
-                "count": "15",
+                "per_page": "15",
                 "page": "\(page)"
             ])
         networkManager.fetchRandomImageInfo(resource: resource)

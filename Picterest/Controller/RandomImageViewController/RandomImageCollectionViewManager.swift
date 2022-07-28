@@ -37,7 +37,6 @@ class RandomImageCollectionViewManager: NSObject {
 // MARK: - UICollectionViewDataSource
 extension RandomImageCollectionViewManager: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(randomImageViewModel.imagesCount)
         return randomImageViewModel.imagesCount
     }
     
