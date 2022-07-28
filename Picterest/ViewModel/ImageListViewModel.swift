@@ -53,8 +53,6 @@ class ImageListViewModel {
     }
     
     func listUpdate() {
-        loading = true
-        loadingStarted()
         self.imageListUpdate()
     }
     
