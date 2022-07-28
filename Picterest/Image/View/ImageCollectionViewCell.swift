@@ -28,12 +28,13 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
+    func fetchData(_ photo: Photo, _ indexPath: IndexPath, _ isStarButtonSelected: Bool) {
         layout()
         loadImage(photo)
         addTargetStarButton()
         
         currentIndexPath = indexPath
+        labelStackView.starButton.isSelected = isStarButtonSelected
         labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
     }
 }

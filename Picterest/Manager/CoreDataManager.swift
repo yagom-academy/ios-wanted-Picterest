@@ -49,6 +49,23 @@ class CoreDataManager {
         }
     }
     
+    func searchSavePhoto(_ id: String) -> SavePhoto? {
+        var photoSet: [String: SavePhoto] = [String: SavePhoto]()
+        let request: NSFetchRequest<SavePhoto> = SavePhoto.fetchRequest()
+        do {
+            let photos = try context.fetch(request)
+            photos.forEach { savePhoto in
+                if let id = savePhoto.id {
+                    photoSet[id] = savePhoto
+                }
+            }
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        return photoSet[id]
+    }
+    
     func fetchSavePhoto() -> [SavePhoto] {
         var photos: [SavePhoto] = []
         

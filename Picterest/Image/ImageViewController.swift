@@ -98,7 +98,11 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.fetchData(photoList[indexPath.row], indexPath)
+        var isStarButtonSelected: Bool = false
+        if CoreDataManager.shared.searchSavePhoto(photoList[indexPath.row].id) != nil {
+            isStarButtonSelected = true
+        }
+        cell.fetchData(photoList[indexPath.row], indexPath, isStarButtonSelected)
         cell.delegate = self
         
         return cell
@@ -148,6 +152,7 @@ extension ImageViewController: SavePhotoImageDelegate {
             self.present(alert, animated: true)
         } else {
             // 지우기
+            
         }
     }
 }
