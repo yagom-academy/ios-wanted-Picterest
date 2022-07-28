@@ -15,9 +15,9 @@ class Repository {
     
     func fetchImage(completion: @escaping (Result<[ImageData], NetworkError>) -> Void) -> Void {
         
-        let params: [String:Any] = ["client_id": accessKey, "page": 1, "count": 15]
+        let params: [String:Any] = ["client_id": accessKey, "page": 1, "per_page": 15]
         
-        httpClient.getImageData(path: "/random", params: params) { result in
+        httpClient.getImageData(path: "", params: params) { result in
             switch result {
             case .success(let data):
                 do {
@@ -35,8 +35,8 @@ class Repository {
     
     
     func fetchNextImageData(page: Int, completion: @escaping (Result<[ImageData], NetworkError>) -> Void) {
-        let params: [String:Any] = ["client_id": accessKey, "page": page, "count": 15]
-        httpClient.getImageData(path: "/random", params: params) { result in
+        let params: [String:Any] = ["client_id": accessKey, "page": page, "per_page": 15]
+        httpClient.getImageData(path: "", params: params) { result in
             switch result {
             case .success(let data):
                 do {
