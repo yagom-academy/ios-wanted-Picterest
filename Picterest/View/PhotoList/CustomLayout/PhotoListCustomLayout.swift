@@ -56,8 +56,8 @@ class PhotoListCustomLayout : UICollectionViewLayout {
             
             let imageWidth = delegate?.collectionView(collectionView, widthForImageAtIndexPath: indexPath) ?? 0
             let imageHeight = delegate?.collectionView(collectionView, heightForImageAtIndexPath: indexPath) ?? 0
-            let ratio = imageHeight * contentWidth / imageWidth / 2
-            let height = cellPadding * 2 + ratio
+            let resizeHeight = imageHeight * contentWidth / 2 / imageWidth
+            let height = cellPadding * 2 + resizeHeight
             let frame : CGRect = {
                 if yOffset[0] <= yOffset[1] {
                     return CGRect(x: xOffset[0], y: yOffset[0], width: columnWidth, height: height)

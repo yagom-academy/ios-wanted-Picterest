@@ -18,13 +18,16 @@ class SavedPhotoListViewModel {
         
         guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
         let directoryURL = directory.appendingPathComponent("images")
-        print(directoryURL)
         do {
-            var temp = try FileManager.default.contentsOfDirectory(atPath: directoryURL.path)
-            if temp.contains(".DS_Store") {
-                temp.remove(at: temp.firstIndex(of: ".DS_Store") ?? -1)
-            }
-            savedPhotos = temp
+            let temp = try FileManager.default.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: [.creationDateKey], options: .skipsHiddenFiles)
+            let sortedTemp = temp.sorted(by: {
+                if let date1 = try? $0.resourceValues(forKeys: [.creationDateKey]).creationDate,
+                           let date2 = try? $1.resourceValues(forKeys: [.creationDateKey]).creationDate {
+                            return date1 < date2
+                }
+                return false
+            })
+            savedPhotos = sortedTemp.map { $0.absoluteString }
         } catch {
             print(error.localizedDescription)
         }
@@ -70,8 +73,7 @@ class SavedPhotoListViewModel {
     // MARK: Core Data
     
     func getDataFromCoreData() {
-        let temp = CoreDataManager.shared.getData()
-//        print(temp)
+        CoreDataManager.shared.getData()
     }
     
     func deleteDataInCoreData(_ object : NSManagedObject) {

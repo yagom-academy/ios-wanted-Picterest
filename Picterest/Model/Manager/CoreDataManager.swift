@@ -37,8 +37,8 @@ class CoreDataManager {
         }
     }
     
-    func getData() -> [NSManagedObject] {
-        guard let context = context else {return []}
+    func getData() {
+        guard let context = context else {return}
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Picterest")
         fetchRequest.returnsObjectsAsFaults = false
         
@@ -46,13 +46,9 @@ class CoreDataManager {
             let result = try context.fetch(fetchRequest)
             if self.images.isEmpty == true {
                 self.images = result
-            } else {
-                self.images.append(contentsOf: result)
             }
-            return result
         } catch {
             print(error.localizedDescription)
-            return []
         }
     }
     
