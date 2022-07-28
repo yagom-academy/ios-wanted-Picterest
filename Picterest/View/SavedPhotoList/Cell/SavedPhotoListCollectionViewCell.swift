@@ -34,9 +34,8 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
     var topStackView: UIStackView = {
         let topView = UIStackView()
         topView.axis = .horizontal
-        topView.backgroundColor = .gray
+        topView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
         topView.distribution = .equalSpacing
-        topView.alpha = 0.6
         topView.layoutMargins = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         topView.isLayoutMarginsRelativeArrangement = true
         return topView

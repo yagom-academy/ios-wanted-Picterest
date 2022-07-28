@@ -26,7 +26,6 @@ class PhotoListViewController: BaseViewController {
         photoListViewModel.getDataFromServer()
         photoListViewModel.getDataFromCoreData()
         setBinding()
-        print(CoreDataManager.shared.images.count)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,7 +114,6 @@ extension PhotoListViewController : SaveButtonDelegate {
             }))
             alert.addTextField()
             alert.addAction(UIAlertAction(title: "저장", style: .default, handler: { [weak self] _ in
-                print("저장")
                 cell.memoText = alert.textFields?[0].text
                 // filemanager에 이미지 저장
                 guard let photo = self?.photoList?[cell.index ?? -1] else {return}
@@ -132,8 +130,8 @@ extension PhotoListViewController : SaveButtonDelegate {
             // filemanager에 있는 이미지 삭제
             self.photoListViewModel.deleteImageFromFilemanager(self.photoList?[cell.index ?? -1].id ?? "")
             // coredata에 있는 정보 삭제
-            let result = CoreDataManager.shared.getData()
-            for object in result {
+            CoreDataManager.shared.getData()
+            for object in CoreDataManager.shared.images {
                 if object.value(forKey: "id") as? String == photoList?[cell.index ?? -1].id ?? "" {
                     self.photoListViewModel.deleteDataInCoreData(object)
                 }

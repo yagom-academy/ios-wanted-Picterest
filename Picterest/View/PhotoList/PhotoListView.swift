@@ -35,9 +35,9 @@ class PhotoListView: UIView {
     func setupConstraints() {
         NSLayoutConstraint.activate([
             photoCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
-            photoCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            photoCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            photoCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            photoCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            photoCollectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            photoCollectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
