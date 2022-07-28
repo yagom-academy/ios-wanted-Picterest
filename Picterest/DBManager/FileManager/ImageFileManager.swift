@@ -14,7 +14,7 @@ final class ImageFileManager {
     private let fileManager = FileManager.default
     private let documentPath: URL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     
-    func saveImageByURL(imageURL: String?, id: UUID, completion: @escaping (Result<Void,DBManagerError>) -> ()) {
+    func saveImageByURL(imageURL: String?, id: UUID, completion: @escaping (Result<String,DBManagerError>) -> ()) {
         guard let urlString = imageURL else {
             completion(.failure(.badURL))
             return
@@ -22,8 +22,11 @@ final class ImageFileManager {
         let filename = id.uuidString
         let cachedImage = ImageCacheManager.shared.cachedImage(urlString: urlString)
         if cachedImage != nil {
-            let result = saveImage(filename: filename, image: cachedImage)
-            completion(result ? .success(Void()) : .failure(.failToSaveImageFile))
+            guard let result = saveImage(filename: filename, image: cachedImage) else {
+                completion(.failure(.failToSaveImageFile))
+                return
+            }
+            completion(.success(result))
             return
         }
         
@@ -45,25 +48,23 @@ final class ImageFileManager {
             guard let result = self?.saveImage(filename: filename, image: image) else {
                 completion(.failure(.failToSaveImageFile))
                 return }
-            completion(result ? .success(Void()) : .failure(.failToSaveImageFile))
+            completion(.success(result))
         }.resume()
     }
     
-    func saveImage(filename: String, image: UIImage?) -> Bool {
+    func saveImage(filename: String, image: UIImage?) -> String? {
         guard let image = image else {
-            return false
+            return nil
         }
-        guard let imageData = image.jpegData(compressionQuality: 1) ?? image.pngData() else { return false }
+        guard let imageData = image.jpegData(compressionQuality: 1) ?? image.pngData() else { return nil }
         do {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyyMMdd_HHmmss"
-//            let filename = formatter.string(from: Date.now)
-            print(documentPath)
             try imageData.write(to: documentPath.appendingPathComponent(filename + ".png"))
-            return true
+            
+            let locationString = documentPath.absoluteString + filename + ".png"
+            return locationString
         } catch {
             print(error)
-            return false
+            return nil
         }
     }
     
