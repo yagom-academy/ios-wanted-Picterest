@@ -36,7 +36,7 @@ class ImageRepositoryViewModel {
     
     func list() {
         imageList.removeAll()
-        imageList = CoreDataManager.shared.fetchSurvey()
+        imageList = CoreDataManager.shared.fetchPicture()
         self.imageListUpdate()
     }
 }
