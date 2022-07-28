@@ -50,6 +50,10 @@ class SavedImageViewModel {
         self.memo = memo
     }
     
+    var id: String {
+        return image.id
+    }
+    
     var width: Int {
         return image.width
     }

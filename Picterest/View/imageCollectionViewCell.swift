@@ -35,7 +35,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         let starButton = UIButton()
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
         starButton.tintColor = .white
-        starButton.addTarget(self, action: #selector(starButtonTabbed), for: .touchUpInside)
         return starButton
     }()
     
@@ -58,11 +57,25 @@ class ImageCollectionViewCell: UICollectionViewCell {
         isStar.toggle()
     }
     
-    func configureCell(with imageViewModel: ImageViewModel, index: Int) {
+    func configureImageCollectionCell(with imageViewModel: ImageViewModel, index: Int) {
         setSubView()
         setConstraints()
         self.imageView.loadImage(url: imageViewModel.url)
         self.indexLabel.text = "\(index)번째 사진"
+        self.starButton.addTarget(self, action: #selector(starButtonTabbed), for: .touchUpInside)
+    }
+    
+    func configureSavedCollectionCell(with savedViewModel: SavedImageViewModel, memo: String) {
+        setSubView()
+        setConstraints()
+        LocalFileManager.shared.loadFromLocal(id: savedViewModel.id) { image in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
+        self.indexLabel.text = memo
+        self.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        self.starButton.tintColor = .yellow
     }
     
     private func setSubView() {

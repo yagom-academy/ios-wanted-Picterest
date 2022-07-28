@@ -53,7 +53,7 @@ extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
-        cell.configureCell(with: imageData, index: indexPath.row)
+        cell.configureImageCollectionCell(with: imageData, index: indexPath.row)
         cell.starButtonTapped = { [weak self] (bool) in
             self?.starButtonTapped(didSave: bool, data: imageData)
         }

@@ -17,6 +17,14 @@ class LocalFileManager {
         return local.path
     }
     
+    func loadFromLocal(id: String, completion: @escaping (UIImage) -> Void) {
+        guard let imageURL = documentURL?.appendingPathComponent(id) else { return }
+        if FileManager.default.fileExists(atPath: imageURL.path) {
+            guard let image = UIImage(contentsOfFile: imageURL.path) else { return }
+            completion(image)
+        }
+    }
+    
     func saveToLocal(_ imageViewModel: ImageViewModel) {
         guard let imageURL = documentURL?.appendingPathComponent(imageViewModel.id) else { return }
         NetworkManager.shared.fetchImage(url: imageViewModel.url) { image in
