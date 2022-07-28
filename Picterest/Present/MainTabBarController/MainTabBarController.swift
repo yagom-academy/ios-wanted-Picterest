@@ -23,7 +23,7 @@ final class MainTabBarController: UITabBarController {
         vc1.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
 
         let vc2 = SavedImageListViewController()
-        vc2.tabBarItem.image = UIImage(systemName:  "star.bubble")
+        vc2.tabBarItem.image = UIImage(systemName: "star.bubble")
 
         self.viewControllers = [vc1, vc2]
     }

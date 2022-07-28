@@ -75,8 +75,6 @@ extension ImageListViewController: UICollectionViewDataSource {
 //MARK: - Cell Delegate 이벤트
 extension ImageListViewController: ImageListCellDelegate {
     func tappedSaveButton(_ indexPath: IndexPath) {
-        viewModel.tappedStarButton(indexPath: indexPath)
-        collectionView.reloadData()
         let alert = SaveImageAlertViewController(row: indexPath.row)
         alert.delegate = self
         alert.modalPresentationStyle = .overFullScreen
@@ -101,15 +99,15 @@ extension ImageListViewController: AddCellButtonFooterViewDelegate {
 //MARK: - SaveImageAlertView Delegate 이벤트
 extension ImageListViewController: SaveImageAlertViewDelegate {
     func tappedSavedButton(row: Int, message: String) {
-        viewModel.saveImage(row: row, message: message) { result in
+        viewModel.saveImage(row: row, message: message) { [weak self] result in
             switch result {
             case .success():
                 print("성공!")
+                self?.collectionView.reloadData()
             case .failure(let error):
                 print(error.description)
             }
         }
-        print("확인")
     }
 }
 

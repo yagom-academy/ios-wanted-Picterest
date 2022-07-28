@@ -65,6 +65,19 @@ class CoreDataManager {
         }
     }
     
+    func containImage(imageURL: String) -> Bool {
+        let readResults = self.readImageInfos()
+        var result = false
+        for i in 0..<readResults.count {
+            guard let info = readResults[safe: i] else { break }
+            if info.imageURL == imageURL {
+                result = true
+                break
+            }
+        }
+        return result
+    }
+    
     private func readImageInfos() -> [ImageCoreInfo] {
         do {
             let request = ImageCoreInfo.fetchRequest()
