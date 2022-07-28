@@ -23,7 +23,7 @@ final class NetworkManager {
     private init() {}
     
     func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
-        let urlStr = "https://api.unsplash.com/photos/random/?client_id=\(apiKey)&count=15"
+        let urlStr = "https://api.unsplash.com/photos/?client_id=\(apiKey)&page=1&per_page=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.invalidURL))
             return
