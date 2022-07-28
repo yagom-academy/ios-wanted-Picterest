@@ -55,7 +55,7 @@ extension ImagesViewController: UICollectionViewDataSource {
         let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
         cell.configureCell(with: imageData, index: indexPath.row)
         cell.starButtonTapped = { [weak self] (bool) in
-            self?.starButtonTapped(didSave: bool, data: imageData, index: indexPath.row)
+            self?.starButtonTapped(didSave: bool, data: imageData)
         }
         return cell
     }
@@ -71,21 +71,21 @@ extension ImagesViewController: PicterestLayoutDelegate {
 }
 
 extension ImagesViewController {
-    func starButtonTapped(didSave: Bool, data: ImageViewModel, index: Int) {
+    func starButtonTapped(didSave: Bool, data: ImageViewModel) {
         if !didSave {
             let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
             let save = UIAlertAction(title: "저장", style: .default) { _ in
-                LocalFileManager.shared.saveToLocal(data)
+                guard let textField = alert.textFields else { return }
+                let text = textField[0].text
+                DataManager.shared.save(data: data, memo: text ?? "")
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             alert.addAction(save)
             alert.addAction(cancel)
-            alert.addTextField { textfield in
-                textfield.placeholder = "내용을 입력해주세요"
-            }
+            alert.addTextField()
             present(alert, animated: true, completion: nil)
         } else {
-            LocalFileManager.shared.deleteFromLocal(id: data.id)
+            DataManager.shared.delete(data: data)
         }
     }
 }

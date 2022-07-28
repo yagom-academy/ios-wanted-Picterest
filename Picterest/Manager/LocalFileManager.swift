@@ -30,7 +30,7 @@ class LocalFileManager {
         }
     }
     
-    func deleteFromLocal(id: String){
+    func deleteFromLocal(id: String) {
         guard let imageURL = documentURL?.appendingPathComponent(id) else { return }
         if FileManager.default.fileExists(atPath: imageURL.path) {
             do {
