@@ -28,7 +28,7 @@ class ImageColletionViewCustomLayout: UICollectionViewFlowLayout {
     }
     
     override func prepare() {
-        guard cache.isEmpty, let collectionView = collectionView else { return }
+        guard let collectionView = collectionView else { return }
         
         let numberOfColumns = 2
         let cellPadding: CGFloat = 6
