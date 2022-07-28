@@ -83,7 +83,8 @@ extension SaveViewController {
             if let indexPath = saveTableView.indexPathForRow(at: touchPoint) {
                 let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "취소", style: .cancel)
-                let delete = UIAlertAction(title: "삭제", style: .default) { _ in
+                let delete = UIAlertAction(title: "삭제", style: .default) { delete in
+                    PhotoFileManager.shared.deletePhotoFile(self.savePhotoList[indexPath.row].id!)
                     self.savePhotoList.remove(at: indexPath.row)
                     self.saveTableView.reloadData()
                 }

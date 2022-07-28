@@ -53,4 +53,18 @@ class PhotoFileManager {
     func getPhotoFilePath(_ fileName: String) -> URL {
         return directoryPath.appendingPathComponent(fileName)
     }
+    
+    func deletePhotoFile(_ fileName: String) {
+        let path = directoryPath.appendingPathComponent(fileName)
+        print(path)
+        if fileManager.fileExists(atPath: path.path) {
+            do {
+                try fileManager.removeItem(at: path)
+            } catch let error {
+                delegate?.fileManager(fileManager, error: FileError.canNotCreateDic, desc: error)
+            }
+        } else {
+            delegate?.fileManager(fileManager, error: FileError.fileDoesNotExit, desc: nil)
+        }
+    }
 }
