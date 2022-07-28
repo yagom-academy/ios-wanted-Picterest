@@ -12,12 +12,22 @@ class PhotoListViewController: UIViewController {
     @IBOutlet weak var photoListCollectionView: UICollectionView!
     
     private var photoList: [PhotoModel] = []
+    private var coreData: [Picterest] = []
     private var networkManager = NetworkManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
         getPhotoData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        photoListCollectionView.reloadData()
+        CoreDataManager.shared.fetchCoreData { data in
+            print(data.count, "count")
+            self.coreData = data
+        }
     }
 }
 
@@ -89,18 +99,8 @@ extension PhotoListViewController {
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
 
 extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(sender: UIButton, photoInfo: PhotoModel?, image: UIImage?) {
-        if sender.tintColor == .systemYellow {
-            sender.setImage(UIImage(systemName: "star"), for: .normal)
-            sender.tintColor = .white
-            guard let photoInfo = photoInfo else { return }
-            ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
-            CoreDataManager.shared.deleteCoreData(ID: photoInfo.id)
-            print(CoreDataManager.shared.fetchCoreData().count)
-            showDeleteAlertMessage()
-        } else {
-            sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            sender.tintColor = .systemYellow
+    func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
+        if isSelected {
             showSaveAlertMessage { memo in
                 guard let memo = memo else { return }
                 guard let photoInfo = photoInfo else { return }
@@ -117,9 +117,13 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                     width: photoInfo.width,
                     height: photoInfo.height
                 )
-                print(urlPath)
-                print(CoreDataManager.shared.fetchCoreData().count)
             }
+        } else {
+            guard let photoInfo = photoInfo else { return }
+            ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
+            CoreDataManager.shared.deleteCoreData(ID: photoInfo.id)
+            showDeleteAlertMessage()
+
         }
     }
 }
@@ -155,9 +159,16 @@ extension PhotoListViewController: UICollectionViewDataSource {
         ) as? PhotoListCollectionViewCell else {
             return UICollectionViewCell()
         }
+        var flag = false
+        
+        coreData.forEach {
+            if $0.id == photoList[indexPath.row].id {
+                flag = true
+            }
+        }
         photoCell.delegate = self
         photoCell.photoInfo = photoList[indexPath.row]
-        photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row])
+        photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row], isSelectedFlag: flag)
         photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
         return photoCell
     }

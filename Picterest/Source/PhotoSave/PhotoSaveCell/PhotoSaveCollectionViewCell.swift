@@ -10,7 +10,6 @@ import UIKit
 class PhotoSaveCollectionViewCell: UICollectionViewCell {
     
     var coreData = [Picterest]()
-    var deleteSavedData: (() -> Void)?
     
     @IBOutlet weak var savedButton: UIButton!
     @IBOutlet weak var savedImageView: UIImageView!
@@ -20,7 +19,6 @@ class PhotoSaveCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
-        coreData = CoreDataManager.shared.fetchCoreData()
     }
     
     override func prepareForReuse() {
@@ -36,8 +34,5 @@ class PhotoSaveCollectionViewCell: UICollectionViewCell {
                 print(error.localizedDescription)
             }
         }
-    }
-    @IBAction func didTapDeletePhotoData(_ sender: UIButton) {
-        deleteSavedData?()
     }
 }
