@@ -27,7 +27,7 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
-    private var randomImages = [RandomImageEntity]() {
+    private var randomImages: [Image] = [RandomImageEntity]() {
         didSet {
             updateImages.send()
         }
@@ -70,7 +70,9 @@ extension RandomImageViewModel {
     }
     
     func randomImageAtIndex(index: Int) -> RandomImage {
-        let randomImageEntity = randomImages[index]
+        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+            return RandomImage(imageUrlString: "", imageRatio: 0, isStar: false)
+        }
         var isStar: Bool
         if starImages.contains(where: { starImage in
             starImage.id == randomImageEntity.id
@@ -93,15 +95,21 @@ extension RandomImageViewModel {
     
     /// storage에 이미지 저장하기
     func saveImageToStorage(image: UIImage, index: Int, memo: String) {
+        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+            return
+        }
         lastIndex = index
         lastMemo = memo
-        let id = randomImages[index].id
+        let id = randomImageEntity.id
         storageManager.saveImage(image: image, id: id)
     }
     
     /// 스토리지에서 이미지 삭제하기
     func deleteImageToStorage(index: Int) {
-        let id = randomImages[index].id
+        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+            return
+        }
+        let id = randomImageEntity.id
         lastID = id
         storageManager.deleteImage(id: id)
     }
@@ -110,14 +118,16 @@ extension RandomImageViewModel {
 // MARK: - CoreData
 extension RandomImageViewModel {
     private func saveImageInfoToCoreData(storageURL: String) {
-        let randomImage = randomImages[lastIndex]
-        let networkURLString = randomImage.urls.regularSizeImageURL
+        guard let randomImageEntity = randomImages[lastIndex] as? RandomImageEntity else {
+            return
+        }
+        let networkURLString = randomImageEntity.urls.regularSizeImageURL
         let entity = StarImageEntity(
-            id: randomImage.id,
+            id: randomImageEntity.id,
             memo: lastMemo,
             networkURL: networkURLString,
             storageURL: storageURL,
-            imageRatio: randomImage.imageRatio
+            imageRatio: randomImageEntity.imageRatio
         )
         
         coreDataManager.saveStarImages(entity: entity)

@@ -22,7 +22,7 @@ final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterfa
     // MARK: - Properties
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
-    private var starImages = [StarImage]() {
+    private var starImages: [Image] = [StarImage]() {
         didSet {
             updateImages.send()
         }
@@ -48,7 +48,8 @@ extension StarImageViewModel {
     }
     
     func starImageAtIndex(index: Int) -> StarImage {
-        return starImages[index]
+        guard let starImage = starImages[index] as? StarImage else { return StarImage() }
+        return starImage
     }
 }
 
@@ -57,7 +58,8 @@ extension StarImageViewModel {
     
     /// 스토리지에서 이미지 삭제하기
     func deleteImageToStorage(index: Int) {
-        guard let id = starImages[index].id else { return }
+        guard let starImage = starImages[index] as? StarImage else { return }
+        guard let id = starImage.id else { return }
         lastIndex = index
         storageManager.deleteImage(id: id)
     }
@@ -66,7 +68,7 @@ extension StarImageViewModel {
 // MARK: - CoreDataManager
 extension StarImageViewModel {
     private func deleteImageInfoToCoreData() {
-        let starImage = starImages[lastIndex]
+        guard let starImage = starImages[lastIndex] as? StarImage else { return }
         
         coreDataManager.deleteStarImage(starImage: starImage)
     }
