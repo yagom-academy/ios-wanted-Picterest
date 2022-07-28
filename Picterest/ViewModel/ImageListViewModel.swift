@@ -12,7 +12,6 @@ class ImageListViewModel {
     private var repository = Repository()
     private var imageList: [SavableImageData] = [SavableImageData]()
     private var imageSizeList = [CGFloat]()
-    private var savedImageData = [Picture]()
     private var currentPage = 1
     
     private var loading = false
