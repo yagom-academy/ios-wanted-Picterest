@@ -19,7 +19,7 @@ struct NetworkAPI {
         var components = URLComponents()
         components.scheme = NetworkAPI.schema
         components.host = NetworkAPI.host
-        components.path = "/photos/random"
+        components.path = "/photos"
         
         components.queryItems = [
             URLQueryItem(name: "client_id", value: clientIdKey),

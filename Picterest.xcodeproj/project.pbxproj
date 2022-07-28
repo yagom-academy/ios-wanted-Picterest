@@ -17,6 +17,7 @@
 		FF2D51BF288FD4FB001D1922 /* PicterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51BE288FD4FB001D1922 /* PicterestLayout.swift */; };
 		FF2D51C1289017B0001D1922 /* Collection+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51C0289017B0001D1922 /* Collection+Custom.swift */; };
 		FF2D51C428901E27001D1922 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51C328901E27001D1922 /* ImageCacheManager.swift */; };
+		FF2D51CB28929A55001D1922 /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51CA28929A55001D1922 /* ImageFileManager.swift */; };
 		FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C5D288E6508002CBB0E /* SavedViewController.swift */; };
 		FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */; };
 		FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C62288EA109002CBB0E /* NetworkManager.swift */; };
@@ -41,6 +42,7 @@
 		FF2D51BE288FD4FB001D1922 /* PicterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestLayout.swift; sourceTree = "<group>"; };
 		FF2D51C0289017B0001D1922 /* Collection+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Custom.swift"; sourceTree = "<group>"; };
 		FF2D51C328901E27001D1922 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
+		FF2D51CA28929A55001D1922 /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageFileManager.swift; path = Picterest/Manager/ImageFileManager.swift; sourceTree = SOURCE_ROOT; };
 		FFB74C5D288E6508002CBB0E /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
 		FFB74C62288EA109002CBB0E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -82,10 +84,10 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				FF2D51C5289122C4001D1922 /* Manager */,
 				FF2D51C228901E0D001D1922 /* Cache */,
 				FFB74C6B288ED490002CBB0E /* Extension */,
 				FFB74C64288EA210002CBB0E /* Entities */,
-				FFB74C5F288E9DBE002CBB0E /* Network */,
 				FFB74C5B288E5B78002CBB0E /* Presentation */,
 				FFB74C5C288E5BBD002CBB0E /* Resource */,
 				FFB74C5A288E5B27002CBB0E /* Application */,
@@ -99,6 +101,23 @@
 				FF2D51C328901E27001D1922 /* ImageCacheManager.swift */,
 			);
 			path = Cache;
+			sourceTree = "<group>";
+		};
+		FF2D51C5289122C4001D1922 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				FF2D51C7289122DC001D1922 /* File */,
+				FFB74C5F288E9DBE002CBB0E /* Network */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		FF2D51C7289122DC001D1922 /* File */ = {
+			isa = PBXGroup;
+			children = (
+				FF2D51CA28929A55001D1922 /* ImageFileManager.swift */,
+			);
+			path = File;
 			sourceTree = "<group>";
 		};
 		FFB74C5A288E5B27002CBB0E /* Application */ = {
@@ -253,6 +272,7 @@
 				FF2D51BF288FD4FB001D1922 /* PicterestLayout.swift in Sources */,
 				FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ImagesViewController.swift in Sources */,
+				FF2D51CB28929A55001D1922 /* ImageFileManager.swift in Sources */,
 				FF2D51C428901E27001D1922 /* ImageCacheManager.swift in Sources */,
 				FF2D51C1289017B0001D1922 /* Collection+Custom.swift in Sources */,
 				FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */,

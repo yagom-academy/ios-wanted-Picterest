@@ -12,7 +12,7 @@ class NetworkManager {
     typealias Response = Int
     
     // MARK: - Properties
-    static let shard = NetworkManager()
+    static let shared = NetworkManager()
     private let api = NetworkAPI()
     private let session: URLSession
     

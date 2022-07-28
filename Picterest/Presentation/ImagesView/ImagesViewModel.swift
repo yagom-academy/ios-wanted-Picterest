@@ -21,7 +21,7 @@ final class ImagesViewModel {
     
     func fetchData(completion: @escaping () -> ()) {
         
-        NetworkManager.shard.fetchImages { result in
+        NetworkManager.shared.fetchImages { result in
             switch result {
             case .success(let result):
                 self.imageDatas = result
