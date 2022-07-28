@@ -46,8 +46,8 @@ extension UIAlertController {
             let imageCoreData = ImageCoreDataModel(id: imageID, memo: memo, originalURL: originalURL, savedLocation: savedLocation)
             
             CoreDataManager.shared.save(imageCoreData)
-            cell.saveImageButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            cell.saveImageButton.tintColor = .yellow
+            cell.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            cell.saveButton.tintColor = .yellow
         }
         
         return actionHandler
