@@ -124,12 +124,15 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
 extension ImageViewController: SavePhotoImageDelegate {
     
     func tapStarButton(sender: UIButton, indexPath: IndexPath) {
+        let id = photoList[indexPath.row].id
         var text: String!
+        let originUrl = photoList[indexPath.row].urls.small
+        let location = PhotoFileManager.shared.createPhotoFile(viewModel.loadImage(originUrl), id).absoluteString
+        
         let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
         let ok = UIAlertAction(title: "저장", style: .default) { ok in
             text = alert.textFields?[0].text
-            print(text)
-//            self.saveCoreData(text)
+            CoreDataManager.shared.createSavePhoto(id, text, originUrl, location)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField()
