@@ -22,14 +22,6 @@ final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterfa
     // MARK: - Properties
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
-//    private var starImages: [Image] = [StarImage]() {
-//        didSet {
-//            updateImages.send()
-//        }
-//    }
-//    var starImageCount: Int {
-//        starImages.count
-//    }
     
     override init(
         storageManager: StorageManager,

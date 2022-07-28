@@ -27,15 +27,7 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
-//    private var randomImages: [Image] = [RandomImageEntity]() {
-//        didSet {
-//            updateImages.send()
-//        }
-//    }
-//    var randomImagesCount: Int {
-//        randomImages.count
-//    }
-    
+
     init(
         networkManager: NetworkManager,
         storageManager: StorageManager,
