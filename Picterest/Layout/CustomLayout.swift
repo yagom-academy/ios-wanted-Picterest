@@ -17,7 +17,7 @@ class CustomLayout: UICollectionViewLayout {
     weak var delegate: CustomLayoutDelegate?
     
     private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 1.5
+    private let cellPadding: CGFloat = 4
     private var heightArray: [CGFloat] = [0, 0]
     private var cache: [UICollectionViewLayoutAttributes] = []
     
@@ -28,6 +28,7 @@ class CustomLayout: UICollectionViewLayout {
             return 0
         }
         let insets = collectionView.contentInset
+        print(insets)
         return collectionView.bounds.width - (insets.left + insets.right)
     }
     
@@ -36,45 +37,32 @@ class CustomLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        
-        /// 1
-        /// cache가 비어있고 collectionView가 존재할 때만 layout attributes 계산
         guard let collectionView = collectionView else {
             return
         }
         
-        let numberOfItemsInCollectionView = collectionView.numberOfItems(inSection: 0) // 다운받은 이미지의 갯수
+        let numberOfItems = collectionView.numberOfItems(inSection: 0)
         
-        if numberOfItemsInCollectionView == cache.count { // 다운받은 이미지 갯수 > 캐시
-            return
-        }
-        
-        
-        /// 2
-        /// x좌표 값, y좌표 값 지정
+        if numberOfItems == cache.count { return }
         
         cache.removeAll()
         heightArray = [0, 0]
         
         let columnWidth = contentWidth / CGFloat(numberOfColumns)
         var xOffset: [CGFloat] = []
+        
         for column in 0..<numberOfColumns {
             xOffset.append(CGFloat(column) * columnWidth)
         }
+        
         var column = calculateColumnValue()
         var yOffset: [CGFloat] = .init(repeating: 0, count: numberOfColumns)
         
-        /// 3
-        /// 첫번째 섹션에 있는 모든 아이템을 순회
-        for item in 0..<numberOfItemsInCollectionView {
+        for item in 0..<numberOfItems {
             let indexPath = IndexPath(item: item, section: 0)
-           
-            /// 4
-            ///
-            ///
             let photoWidth = delegate?.collectionView(collectionView, widthForPhotoAtIndexPath: indexPath) ?? 180
             let photoHeight = delegate?.collectionView(collectionView, heightForPhotoAtIndexPath: indexPath) ?? 180
-            let height = cellPadding * 2 + (photoHeight * columnWidth) / photoWidth
+            let height = cellPadding + (photoHeight * columnWidth) / photoWidth
             let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             

@@ -29,9 +29,9 @@ final class CellView: UIView {
     let headerView: UIView = {
         let headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.tintColor = .black
+        headerView.backgroundColor = .black
         headerView.isOpaque = false
-        headerView.alpha = 0.5
+        headerView.alpha = 0.7
         return headerView
     }()
     
@@ -48,14 +48,21 @@ final class CellView: UIView {
         let textLabel = UILabel()
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.text = ""
+        textLabel.textAlignment = .right
+        textLabel.textColor = .white
         return textLabel
     }()
     
     private func setView() {
+        self.clipsToBounds = true
+        self.layer.cornerRadius = Style.CellView.cornerRadius
         self.addSubview(imageView)
         self.addSubview(headerView)
         self.addSubview(saveButton)
         self.addSubview(textLabel)
+        self.bringSubviewToFront(headerView)
+        self.bringSubviewToFront(saveButton)
+        self.bringSubviewToFront(textLabel)
     }
     
     private func autoLayout() {
@@ -68,13 +75,14 @@ final class CellView: UIView {
             headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             headerView.topAnchor.constraint(equalTo: self.topAnchor),
-            headerView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
+            headerView.heightAnchor.constraint(equalToConstant: Style.CellView.headerViewHeight),
             
-            saveButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            saveButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Style.CellView.leadingConstant),
+            saveButton.widthAnchor.constraint(equalToConstant: 20),
             saveButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
             saveButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
             
-            textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 10),
+            textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Style.CellView.trailingConstant),
             textLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
         ])
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F136CC12892C45F00AEE4E7 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC02892C45F00AEE4E7 /* Style.swift */; };
 		9F1DD584288F6ED70065E57D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD583288F6ED70065E57D /* TabBarViewController.swift */; };
 		9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD585288F75C20065E57D /* SavedViewController.swift */; };
 		9F1DD588288F75CF0065E57D /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD587288F75CF0065E57D /* ImagesViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9F136CC02892C45F00AEE4E7 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		9F1DD583288F6ED70065E57D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9F1DD585288F75C20065E57D /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		9F1DD587288F75CF0065E57D /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F136CBD2892BDAA00AEE4E7 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				9F136CC02892C45F00AEE4E7 /* Style.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
 		9F1DD58F288FBA6F0065E57D /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +188,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				9F136CBD2892BDAA00AEE4E7 /* Constant */,
 				9F1DD59A288FD8430065E57D /* View */,
 				9F1DD59E288FD9300065E57D /* Layout */,
 				9F1DD5AF289112E90065E57D /* ViewModel */,
@@ -285,6 +296,7 @@
 				9F1DD59D288FD89A0065E57D /* CustomLayout.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				9F1DD5B328911D9A0065E57D /* ImageFileManager.swift in Sources */,
+				9F136CC12892C45F00AEE4E7 /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
