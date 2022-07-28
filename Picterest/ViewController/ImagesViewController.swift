@@ -63,7 +63,6 @@ extension ImagesViewController: UICollectionViewDataSource {
             cell.view.saveButton.tintColor = .yellow
             cell.view.saveButton.isEnabled = false
         }
-    
         return cell
     }
 }

@@ -29,8 +29,8 @@ final class SavedCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        view.textLabel.text = ""
         view.imageView.image = nil
-        
     }
     
     private func setView() {

@@ -33,8 +33,11 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        imageView.image = nil
-        
+        view.textLabel.text = ""
+        view.imageView.image = nil
+        view.saveButton.isEnabled = true
+        view.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
+        view.saveButton.tintColor = .white
     }
     
     @objc func tappedSaveImageButton() {
