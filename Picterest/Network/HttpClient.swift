@@ -35,13 +35,11 @@ enum NetworkError: LocalizedError {
 
 class HttpClient {
     
-    private let baseUrl = "https://api.unsplash.com/photos"
-    
-    func getImageData(path: String, params: [String: Any], completion: @escaping (Result<Data, NetworkError>) -> Void) {
+    func getImageData(baseUrl: String, path: String, params: [String: Any], completion: @escaping (Result<Data, NetworkError>) -> Void) {
         
         let queryParams = params.map { k, v in "\(k)=\(v)" }.joined(separator: "&")
 
-        var fullPath = path.hasPrefix("http") ? path : self.baseUrl + path
+        var fullPath = path.hasPrefix("http") ? path : baseUrl + path
         if !queryParams.isEmpty {
             fullPath += "?" + queryParams
         }
