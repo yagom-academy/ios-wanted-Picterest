@@ -114,23 +114,36 @@ extension ImageListViewController: PinterestLayoutDelegate {
 }
 
 extension ImageListViewController: PicterestPhotoSavable {
-    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: ImageData, imageData: UIImage, idx: IndexPath) {
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavableImageData, imageData: UIImage, idx: IndexPath) {
+        
+        if isSelected {
+            setImageSaveAlert(imageInfo: imageInfo, imageData: imageData, indexPath: idx)
+        } else {
+            setImageDeleteAlert(imageInfo: imageInfo, indexPath: idx)
+        }
+    }
+    
+    func setImageSaveAlert(imageInfo: SavableImageData, imageData: UIImage, indexPath: IndexPath) {
+        
         let alert = UIAlertController(title: "이미지 메모", message: nil, preferredStyle: .alert)
         alert.addTextField()
-        
-        let action = UIAlertAction(title: "저장", style: .default) { [weak alert] (_) in
+        let saveAction = UIAlertAction(title: "저장", style: .default) { [self, weak alert] (_) in
             let memo = alert?.textFields![0].text ?? ""
-            
-            let fileUrl = PicterestFileManager.shared.savePicture(fileName: imageInfo.id, image: imageData)
-            
-            CoreDataManager.shared.createPictureData(id: imageInfo.id, memo: memo, originUrl: imageInfo.imageUrl.rawUrl, localUrl: fileUrl.path, imageSize: self.viewModel.imageSize(at: indexPath.row))
+            viewModel.savePicuture(image: imageData, memo: memo, at: indexPath.item)
         }
         
-        alert.addAction(action)
+        alert.addAction(saveAction)
         
-        self.present(alert, animated: true) {
-            self.navigationController?.popViewController(animated: true)
+        self.present(alert, animated: true)
+    }
+    
+    func setImageDeleteAlert(imageInfo: SavableImageData, indexPath: IndexPath) {
+        let alert = UIAlertController(title: "삭제 되었습니다.", message: nil, preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+            viewModel.deletePicture(indexPath: indexPath)
         }
+        alert.addAction(deleteAction)
+        self.present(alert, animated: true)
     }
 }
 
