@@ -9,7 +9,7 @@ import Foundation
 
 class Repository {
     
-    private let accessKey = "wJsTICYs3d4ZfPFW_KsRfXmdKOaCzCKPDjSpFFyAeEQ"
+    private let accessKey = "r6IAzQw2BwX75Nx0Y9ACzqM1yc1MdVEvNavR2jnZ-Wc"
     
     private let httpClient = HttpClient()
     
