@@ -39,9 +39,10 @@ class ImageTopView: UIView {
         starButton.isSelected = true
         starButton.tintColor = .systemYellow
     }
-    func initStarButton() {
+    func initView() {
         starButton.isSelected = false
         starButton.tintColor = .white
+        indexLabel.text = nil
     }
 }
 
