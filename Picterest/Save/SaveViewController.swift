@@ -75,13 +75,20 @@ extension SaveViewController {
         if sender.state == .began {
             let touchPoint = sender.location(in: saveTableView)
             if let indexPath = saveTableView.indexPathForRow(at: touchPoint) {
+                
                 let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "취소", style: .cancel)
                 let delete = UIAlertAction(title: "삭제", style: .default) { delete in
-                    PhotoFileManager.shared.deletePhotoFile(self.savePhotoList[indexPath.row].id!)
+                    
+                    let savePhotoData = self.savePhotoList[indexPath.row]
+                    
+                    PhotoFileManager.shared.deletePhotoFile(savePhotoData.location!)
+                    CoreDataManager.shared.deleteSavePhoto(savePhotoData)
+                    
                     self.savePhotoList.remove(at: indexPath.row)
                     self.saveTableView.reloadData()
                 }
+                
                 alert.addAction(cancel)
                 alert.addAction(delete)
                 self.present(alert, animated: true)
@@ -112,6 +119,6 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
+        saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 20, bottom: 6, right: 20))
     }
 }
