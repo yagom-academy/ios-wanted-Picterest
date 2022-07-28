@@ -17,6 +17,8 @@ class PhotoListViewController: BaseViewController {
     var photoList : [Photo]?
     var disposalbleBag = Set<AnyCancellable>()
     
+    // MARK: View Life Cycle
+    
     override func loadView() {
         super.loadView()
         self.view = photoListView
@@ -39,6 +41,8 @@ class PhotoListViewController: BaseViewController {
     }
 }
 
+// MARK: Binding
+
 extension PhotoListViewController {
     func setBinding() {
         self.photoListViewModel.$photoList.sink {[weak self] updatedPhotoList in
@@ -49,6 +53,8 @@ extension PhotoListViewController {
         }.store(in: &disposalbleBag)
     }
 }
+
+// MARK: UICollectionViewDataSource
 
 extension PhotoListViewController : UICollectionViewDataSource {
     
@@ -79,6 +85,8 @@ extension PhotoListViewController : UICollectionViewDataSource {
     }
 }
 
+// MARK: LayoutDelegate
+
 extension PhotoListViewController : CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         return CGFloat(photoList?[indexPath.row].height ?? 0)
@@ -90,11 +98,11 @@ extension PhotoListViewController : CustomLayoutDelegate {
     
 }
 
+// MARK: UICollectionViewDelegate
+
 extension PhotoListViewController : UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if (photoListView.photoCollectionView.contentOffset.y > (photoListView.photoCollectionView.contentSize.height - photoListView.photoCollectionView.bounds.size.height)) {
             beginBatchFetch()
-        }
     }
     
     func beginBatchFetch() {
@@ -104,6 +112,8 @@ extension PhotoListViewController : UICollectionViewDelegate {
         }
     }
 }
+
+// MARK: SaveButtonDelegate
 
 extension PhotoListViewController : SaveButtonDelegate {
     func pressSaveButton(_ cell : PhotoListCollectionViewCell) {
@@ -136,7 +146,6 @@ extension PhotoListViewController : SaveButtonDelegate {
                     self.photoListViewModel.deleteDataInCoreData(object)
                 }
             }
-//            photoList?[cell.index ?? -1].id
         }
     }
 }

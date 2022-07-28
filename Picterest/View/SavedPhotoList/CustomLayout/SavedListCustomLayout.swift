@@ -40,11 +40,9 @@ class SavedPhotoListCustomLayout : UICollectionViewLayout {
         guard let collectionView = collectionView else { return }
         cache.removeAll()
         
-        // xOffset 계산
         let columnWidth: CGFloat = contentWidth
         let xOffset: CGFloat = 0
         
-        // yOffset 계산
         var column = 0
         var yOffset : CGFloat = 0
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
@@ -57,16 +55,13 @@ class SavedPhotoListCustomLayout : UICollectionViewLayout {
             let frame : CGRect = CGRect(x: xOffset, y: yOffset, width: columnWidth, height: height)
             let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
-            // cache 저장
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
             cache.append(attributes)
             
-            // 새로 계산된 항목의 프레임을 설명하도록 확장
             contentHeight = max(contentHeight, frame.maxY)
             yOffset += height
             
-            // 다음 항목이 다음 열에 배치되도록 설정
             column = column < (numberOfColumns - 1) ? (column + 1) : 0
         }
     }
@@ -74,7 +69,6 @@ class SavedPhotoListCustomLayout : UICollectionViewLayout {
         return cache.filter { rect.intersects($0.frame) }
     }
     
-    // indexPath에 따른 layoutAttribute를 얻는 메서드 재정의
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
     }

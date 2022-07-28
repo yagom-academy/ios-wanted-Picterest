@@ -16,6 +16,8 @@ class PhotoListViewModel : ObservableObject {
     var pageNumber = 1
     var perPage = 15
     let photoManager = PhotoManager()
+    
+    // MARK: Network (Server)
 
     func getDataFromServer() {
         photoManager.getData(perPage, pageNumber) { [weak self] photoList in
@@ -29,24 +31,7 @@ class PhotoListViewModel : ObservableObject {
         pageNumber += 1
     }
     
-    func imageCaching(_ data : [Photo]) {
-        for value in data {
-            makeImage(value.urls.small)
-        }
-    }
-    
-    func makeImage(_ url : String) -> UIImage? {
-        let cacheKey = NSString(string : url)
-        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
-            return cachedImage
-        } else {
-            guard let imageUrl = URL(string: url) else {return nil}
-            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
-            guard let image = UIImage(data: imageData) else {return nil}
-            CacheManager.shared.setObject(image, forKey: cacheKey)
-            return image
-        }
-    }
+    // MARK: FileManager
     
     func saveImageToFilemanager(_ image : UIImage, _ name : String) -> String {
         let fileManager = FileManager.default
@@ -84,6 +69,33 @@ class PhotoListViewModel : ObservableObject {
         }
     }
     
+    // MARK: Caching
+    
+    func makeImage(_ url : String) -> UIImage? {
+        let cacheKey = NSString(string : url)
+        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
+            return cachedImage
+        } else {
+            guard let imageUrl = URL(string: url) else {return nil}
+            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
+            guard let image = UIImage(data: imageData) else {return nil}
+            CacheManager.shared.setObject(image, forKey: cacheKey)
+            return image
+        }
+    }
+    
+    func imageCaching(_ data : [Photo]) {
+        for value in data {
+            let cacheKey = NSString(string : value.urls.small)
+            guard let imageUrl = URL(string: value.urls.small) else {return}
+            guard let imageData = try? Data(contentsOf: imageUrl) else {return}
+            guard let image = UIImage(data: imageData) else {return}
+            CacheManager.shared.setObject(image, forKey: cacheKey)
+        }
+    }
+    
+    // MARK: Util
+    
     func isSavedImage(_ name : String) -> Bool? {
         let fileManager = FileManager.default
         
@@ -104,8 +116,7 @@ class PhotoListViewModel : ObservableObject {
     }
     
     func getDataFromCoreData() {
-        let temp = CoreDataManager.shared.getData()
-//        print(temp)
+        CoreDataManager.shared.getData()
     }
     
     func deleteDataInCoreData(_ object : NSManagedObject) {
