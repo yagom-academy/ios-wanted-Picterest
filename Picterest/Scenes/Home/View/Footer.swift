@@ -20,6 +20,7 @@ class Footer: UICollectionReusableView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
+    backgroundColor = .blue
     self.addSubview(activityIndicator)
     NSLayoutConstraint.activate([
       activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
