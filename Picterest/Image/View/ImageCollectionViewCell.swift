@@ -40,6 +40,11 @@ class ImageCollectionViewCell: UICollectionViewCell {
 
 extension ImageCollectionViewCell {
     
+    override func prepareForReuse() {
+        photoImageView.image = nil
+        labelStackView.starButton.isSelected = false
+    }
+    
     private func layout() {
         [
             photoImageView, labelStackView
@@ -80,6 +85,7 @@ extension ImageCollectionViewCell {
 
     @objc func tapStarButton() {
         guard let currentIndexPath = currentIndexPath else { return }
+        labelStackView.starButton.isSelected = true
         delegate?.tapStarButton(sender: labelStackView.starButton, indexPath: currentIndexPath)
     }
 }

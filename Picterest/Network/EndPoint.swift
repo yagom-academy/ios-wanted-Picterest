@@ -12,19 +12,19 @@ enum EndPoint {
 }
 
 extension EndPoint {
-    static let accessKey = "RlALhP2d1f-1NTL_O2Y4t0RdHBvEgwgrrYRMxsF963Q"
+    static let accessKey = "dPMTVEjApqU-rj0AZl9TUAwwRgfZ5B6IwdKOPpeD874"
     static let per_page = 15
     
     var url: URL {
         switch self {
         case .getPhoto(let page):
-            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=\(EndPoint.per_page)&page=\(page)")
+            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=15&page=\(page)")
         }
     }
 }
 
 extension URL {
-    static let baseURL = "https://api.unsplash.com/photos/"
+    static let baseURL = "https://api.unsplash.com/photos"
     
     static func makeEndPoint(_ endpoint: String) -> URL {
         URL(string: baseURL + endpoint)!

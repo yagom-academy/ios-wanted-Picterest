@@ -40,6 +40,7 @@ class PhotoFileManager {
     
     func createPhotoFile(_ image: UIImage, _ fileName: String) -> URL {
         let path = directoryPath.appendingPathComponent(fileName)
+
         if let data = image.jpegData(compressionQuality: 1) ?? image.pngData() {
             do {
                 try data.write(to: path)
@@ -52,5 +53,15 @@ class PhotoFileManager {
     
     func getPhotoFilePath(_ fileName: String) -> URL {
         return directoryPath.appendingPathComponent(fileName)
+    }
+    
+    func deletePhotoFile(_ filePath: String) {
+        guard let url = URL(string: filePath) else { return }
+        
+        do {
+            try fileManager.removeItem(at: url)
+        } catch let error {
+            delegate?.fileManager(fileManager, error: FileError.canNotCreateDic, desc: error)
+        }
     }
 }
