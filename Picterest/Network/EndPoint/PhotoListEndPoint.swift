@@ -24,7 +24,9 @@ enum PhotoListEndPoint: EndPointType {
     }
     
     var query: [URLQueryItem] {
-        return [URLQueryItem(name: "client_id", value: apiKey)]
+        return [URLQueryItem(name: "client_id", value: apiKey),
+                URLQueryItem(name: "per_page", value: "15")]
+        
     }
     
 }

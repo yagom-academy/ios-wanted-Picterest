@@ -69,6 +69,8 @@ class PhotoListViewController: UIViewController {
     
     private func setupCollectionView() {
         collectionView.dataSource = self
+        collectionView.delegate = self
+        
         [collectionView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
@@ -153,6 +155,25 @@ extension PhotoListViewController: UICollectionViewDataSource {
         })
         
         return cell
+    }
+    
+}
+
+extension PhotoListViewController: UICollectionViewDelegate {
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        photoListAPIProvider?.fetchPhotoList(completion: { result in
+            switch result {
+            case .success(let photoLists):
+                self.photos += photoLists
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
     
 }
