@@ -28,10 +28,14 @@ final class RandomImageViewController: UIViewController {
     // MARK: - Properties
     private var randomImageViewModel: RandomImageViewModelInterface?
     private var subscriptions = Set<AnyCancellable>()
-    private lazy var collectionViewManager = RandomImageCollectionViewManager(viewModel: randomImageViewModel!)
+    private var collectionViewManager: RandomImageCollectionViewManager?
     
     // MARK: - LifeCycle
-    init(viewModel: RandomImageViewModelInterface) {
+    init(
+        viewModel: RandomImageViewModelInterface,
+        collectionViewManager: RandomImageCollectionViewManager
+    ) {
+        self.collectionViewManager = collectionViewManager
         self.randomImageViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -62,7 +66,7 @@ extension RandomImageViewController {
     }
     
     private func bindingCollectionViewManager() {
-        collectionViewManager.showAlert
+        collectionViewManager?.showAlert
             .sink { [weak self] alert in
                 self?.present(alert, animated: true)
             }.store(in: &subscriptions)

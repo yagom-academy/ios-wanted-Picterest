@@ -34,12 +34,19 @@ final class MainTabbarController: UITabBarController {
             coreDataManager: coreDataManager
         )
         
+        let randomImageCollectionViewManager = RandomImageCollectionViewManager(viewModel: randomImageViewModel)
+        let starImageCollectionViewManager = StarImageCollectionViewManager(viewModel: starImageViewModel)
+        
         let randomImageVC = UINavigationController(
             rootViewController: RandomImageViewController(
-                viewModel: randomImageViewModel))
+                viewModel: randomImageViewModel,
+                collectionViewManager: randomImageCollectionViewManager
+            ))
         let starImageVC = UINavigationController(
             rootViewController: StarImageViewController(
-                viewModel: starImageViewModel))
+                viewModel: starImageViewModel,
+                collectionViewManager: starImageCollectionViewManager
+            ))
         
         randomImageVC.tabBarItem.title = "Images"
         randomImageVC.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")

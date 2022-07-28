@@ -29,10 +29,14 @@ final class StarImageViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var longPressCell: UICollectionViewCell?
     private var longPressStartIndexPath: IndexPath?
-    private lazy var collectionViewManager = StarImageCollectionViewManager(viewModel: starImageViewModel!)
+    private var collectionViewManager: StarImageCollectionViewManager?
     
     // MARK: - LifeCycle
-    init(viewModel: StarImageViewModelInterface) {
+    init(
+        viewModel: StarImageViewModelInterface,
+        collectionViewManager: StarImageCollectionViewManager
+    ) {
+        self.collectionViewManager = collectionViewManager
         self.starImageViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -103,7 +107,7 @@ extension StarImageViewController {
     }
     
     private func bindingCollectionViewManager() {
-        collectionViewManager.showAlert
+        collectionViewManager?.showAlert
             .sink { [weak self] alert in
                 self?.present(alert, animated: true)
             }.store(in: &subscriptions)
