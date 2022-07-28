@@ -36,8 +36,12 @@ class ImageTopView: UIView {
         indexLabel.text = text
     }
     func fillStarButton() {
-        starButton.setImage(Icon.starFill.image, for: .normal)
+        starButton.isSelected = true
         starButton.tintColor = .systemYellow
+    }
+    func initStarButton() {
+        starButton.isSelected = false
+        starButton.tintColor = .white
     }
 }
 

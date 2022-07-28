@@ -40,6 +40,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     
     override func prepareForReuse() {
         imageView.image = nil
+        topView.initStarButton()
     }
 }
 
