@@ -18,7 +18,7 @@ class NetworkManager {
         var components = URLComponents(string: Constant.BASE_URL)
         let clientID = URLQueryItem(name: "client_id", value: PicterestKey.appKey)
         let count = URLQueryItem(name: "per_page", value: "15")
-        let page = URLQueryItem(name: "page", value: "\(page)")
+        let page = URLQueryItem(name: "page", value: "\(currentPage)")
         components?.queryItems = [clientID, count, page]
         
         guard let url = components?.url else { return  completion(.failure(.badUrl)) }

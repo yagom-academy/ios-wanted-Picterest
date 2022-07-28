@@ -6,7 +6,7 @@
 
 import UIKit
 
-public var page = 1
+public var currentPage = 1
 
 class PhotoListViewController: UIViewController {
     @IBOutlet weak var photoListCollectionView: UICollectionView!
@@ -14,6 +14,7 @@ class PhotoListViewController: UIViewController {
     private var photoList: [PhotoModel] = []
     private var coreData: [Picterest] = []
     private var networkManager = NetworkManager()
+    private var isDownLoadData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +26,7 @@ class PhotoListViewController: UIViewController {
         super.viewWillAppear(animated)
         photoListCollectionView.reloadData()
         CoreDataManager.shared.fetchCoreData { data in
-            print(data.count, "count")
+            print(data.count, "PhotoList::coreData::count")
             self.coreData = data
         }
     }
@@ -36,7 +37,6 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController {
     private func setCollectionView() {
         photoListCollectionView.dataSource = self
-        photoListCollectionView.prefetchDataSource = self
         if let layout = photoListCollectionView.collectionViewLayout as?
             PhotoListCollectionViewLayout {
             layout.delegate = self
@@ -123,7 +123,6 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
             ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
             CoreDataManager.shared.deleteCoreData(ID: photoInfo.id)
             showDeleteAlertMessage()
-
         }
     }
 }
@@ -160,7 +159,6 @@ extension PhotoListViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         var flag = false
-        
         coreData.forEach {
             if $0.id == photoList[indexPath.row].id {
                 flag = true
@@ -174,8 +172,3 @@ extension PhotoListViewController: UICollectionViewDataSource {
     }
 }
 
-extension PhotoListViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-
-    }
-}
