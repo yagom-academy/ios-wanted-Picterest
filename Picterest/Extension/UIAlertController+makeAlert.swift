@@ -32,7 +32,7 @@ extension UIAlertController {
         let actionHandler: (UIAlertAction) -> Void = { (action) -> Void in
             guard let textFields = self.textFields,
                   let memo = textFields[0].text,
-                  let image = cell.imageView.image else {
+                  let image = cell.view.imageView.image else {
                 return
             }
             
@@ -46,8 +46,8 @@ extension UIAlertController {
             let imageCoreData = ImageCoreDataModel(id: imageID, memo: memo, originalURL: originalURL, savedLocation: savedLocation)
             
             CoreDataManager.shared.save(imageCoreData)
-            cell.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            cell.saveButton.tintColor = .yellow
+            cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            cell.view.saveButton.tintColor = .yellow
         }
         
         return actionHandler

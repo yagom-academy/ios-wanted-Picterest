@@ -1,17 +1,13 @@
 //
-//  ImagesCollectionViewCell.swift
+//  SavedCollectionViewCell.swift
 //  Picterest
 //
-//  Created by hayeon on 2022/07/26.
+//  Created by hayeon on 2022/07/28.
 //
 
 import UIKit
 
-protocol ImageCollectionViewCellDelegate: AnyObject {
-    func alert(from cell: ImagesCollectionViewCell)
-}
-
-class ImagesCollectionViewCell: UICollectionViewCell {
+class SavedCollectionViewCell: UICollectionViewCell {
     
     let view: CellView = {
         let view = CellView()
@@ -29,20 +25,13 @@ class ImagesCollectionViewCell: UICollectionViewCell {
         autoLayout()
     }
     
-    weak var delegate: ImageCollectionViewCellDelegate?
-    
     override func prepareForReuse() {
         super.prepareForReuse()
-//        imageView.image = nil
+        view.imageView.image = nil
         
     }
     
-    @objc func tappedSaveImageButton() {
-        delegate?.alert(from: self)
-    }
-    
     private func setView() {
-        view.saveButton.addTarget(delegate, action: #selector(tappedSaveImageButton), for: .touchUpInside)
         self.addSubview(view)
     }
     
