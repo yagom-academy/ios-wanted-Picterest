@@ -39,6 +39,7 @@ class SavedListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
+        setupNavigationBar()
         bindRemovePhoto()
         
         viewModel.updateSavedList.bind { [weak self] _ in
@@ -127,6 +128,9 @@ private extension SavedListViewController {
 
 // MARK: - UI Methods
 private extension SavedListViewController {
+    func setupNavigationBar() {
+        navigationItem.title = "Saved Images"
+    }
     func configUI() {
         view.backgroundColor = .systemBackground
         

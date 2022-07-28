@@ -31,7 +31,8 @@ class TabBarController: UITabBarController {
             case .savedList:
                 let vc = SavedListViewController(viewModel: viewModel.savedListViewModel)
                 vc.tabBarItem = $0.tabBarItem
-                return vc
+                let nvc = UINavigationController(rootViewController: vc)
+                return nvc
             }
         }
     }
