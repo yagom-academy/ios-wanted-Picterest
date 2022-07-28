@@ -21,6 +21,7 @@ class SaveTableViewCell: UITableViewCell {
     
     func fetchData(_ photo: SavePhoto) {
         layout()
+        loadImage(photo)
     }
 }
 

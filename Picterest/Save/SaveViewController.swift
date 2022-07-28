@@ -12,8 +12,8 @@ class SaveViewController: UIViewController {
 
     private var saveTableView = UITableView()
     private var viewModel = SaveViewModel()
-    var savePhotoList: [SavePhoto] = []
-    var container: NSPersistentContainer!
+    private var savePhotoList: [SavePhoto] = []
+    private var container: NSPersistentContainer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +23,10 @@ class SaveViewController: UIViewController {
         attribute()
         layout()
         bind(viewModel)
+        fetchSavePhoto()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         fetchSavePhoto()
     }
 }
@@ -78,8 +82,17 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = saveTableView.dequeueReusableCell(withIdentifier: SaveTableViewCell.identifier, for: indexPath) as? SaveTableViewCell else { return UITableViewCell() }
         
         cell.fetchData(savePhotoList[indexPath.row])
-        cell.labelStackView.photoLabel.text = ""
+        cell.labelStackView.photoLabel.text = savePhotoList[indexPath.row].memo
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
     }
 }
