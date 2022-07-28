@@ -110,6 +110,11 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let width: CGFloat = (view.bounds.width - 4)
+        return (width * savePhotoList[indexPath.row].ratio)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
