@@ -27,6 +27,7 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
+    private var page: Int = 1
 
     init(
         networkManager: NetworkManager,
@@ -46,7 +47,11 @@ extension RandomImageViewModel {
     
     /// RandomImage 받아오기
     func fetchNewRandomImages() {
-        let resource = Resource<[RandomImageEntity]>()
+        let resource = Resource<[RandomImageEntity]>(
+            params: [
+                "count": "15",
+                "page": "\(page)"
+            ])
         networkManager.fetchRandomImageInfo(resource: resource)
             .receive(on: DispatchQueue.main)
             .sink { completion in
@@ -58,6 +63,7 @@ extension RandomImageViewModel {
                 }
             } receiveValue: { [weak self] randomImages in
                 self?.images.append(contentsOf: randomImages)
+                self?.page += 1
             }.store(in: &subscriptions)
     }
     

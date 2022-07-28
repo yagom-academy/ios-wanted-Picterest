@@ -147,7 +147,7 @@ extension RandomImageViewController: UICollectionViewDataSource {
 // MARK: - RandomImageCollectionViewLayoutDelegate
 extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right) - 7) / 2
+        let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right)) / 2
         let height = width * (randomImageViewModel?.randomImageAtIndex(index: indexPath.row).imageRatio ?? 0.5)
         
         return height

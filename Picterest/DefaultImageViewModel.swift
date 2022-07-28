@@ -13,7 +13,7 @@ class DefaultImageViewModel {
     let storageManager: StorageManager
     let coreDataManager: CoreDataManager
     var currentTab: CurrentTab = .randomImage
-    var images: [Image] = [RandomImageEntity]() {
+    var images: [Image] = [Image]() {
         didSet {
             updateImages.send()
         }
