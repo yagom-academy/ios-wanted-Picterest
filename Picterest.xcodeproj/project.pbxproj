@@ -89,9 +89,18 @@
 			isa = PBXGroup;
 			children = (
 				0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */,
-				0E90A007288FCA4200BE6461 /* StarImageViewModel.swift */,
 			);
 			path = StarImageViewController;
+			sourceTree = "<group>";
+		};
+		0EE61E50289251D600096DCF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				0EE61E4A2892268C00096DCF /* DefaultImageViewModel.swift */,
+				0EFF10F4288E8B9500CE8957 /* RandomImageViewModel.swift */,
+				0E90A007288FCA4200BE6461 /* StarImageViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		0EFF10D7288E48A200CE8957 /* Application */ = {
@@ -168,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */,
-				0EFF10F4288E8B9500CE8957 /* RandomImageViewModel.swift */,
 			);
 			path = RandomImageViewController;
 			sourceTree = "<group>";
@@ -205,9 +213,9 @@
 				0EFF10EA288E69C800CE8957 /* View */,
 				0EFF10E4288E599C00CE8957 /* Manager */,
 				0EFF10DF288E53E100CE8957 /* Model */,
+				0EE61E50289251D600096DCF /* ViewModel */,
 				0EFF10D8288E4A8700CE8957 /* Controller */,
 				0EFF10D7288E48A200CE8957 /* Application */,
-				0EE61E4A2892268C00096DCF /* DefaultImageViewModel.swift */,
 			);
 			path = Picterest;
 			sourceTree = "<group>";
