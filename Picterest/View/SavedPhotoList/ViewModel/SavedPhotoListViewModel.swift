@@ -13,6 +13,8 @@ class SavedPhotoListViewModel {
     
     @Published var savedPhotos : [String] = []
     
+    // MARK: FileManager
+    
     func getSavedPhotoListFromFilemanager() {
         let fileManager = FileManager.default
         
@@ -44,19 +46,6 @@ class SavedPhotoListViewModel {
         return image
     }
     
-    func makeImage(_ url : String) -> UIImage? {
-        let cacheKey = NSString(string : url)
-        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
-            return cachedImage
-        } else {
-            guard let imageUrl = URL(string: url) else {return nil}
-            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
-            guard let image = UIImage(data: imageData) else {return nil}
-            CacheManager.shared.setObject(image, forKey: cacheKey)
-            return image
-        }
-    }
-    
     func deleteImageFromFilemanager(_ name : String) {
         let fileManager = FileManager.default
         
@@ -67,6 +56,21 @@ class SavedPhotoListViewModel {
             try fileManager.removeItem(at: imagePathURL)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    // MARK: Util
+    
+    func makeImage(_ url : String) -> UIImage? {
+        let cacheKey = NSString(string : url)
+        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
+            return cachedImage
+        } else {
+            guard let imageUrl = URL(string: url) else {return nil}
+            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
+            guard let image = UIImage(data: imageData) else {return nil}
+            CacheManager.shared.setObject(image, forKey: cacheKey)
+            return image
         }
     }
     

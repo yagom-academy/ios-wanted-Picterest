@@ -27,10 +27,14 @@ class PhotoListView: UIView {
         super.init(coder: coder)
     }
     
+    // MARK: Setup
+    
     func setupView() {
         self.addSubview(photoCollectionView)
         photoCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    // MARK: AutoLayout
     
     func setupConstraints() {
         NSLayoutConstraint.activate([

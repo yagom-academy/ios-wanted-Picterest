@@ -65,6 +65,8 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
         cellDelegate?.longPressImage(self)
     }
     
+    // MARK: Setup
+    
     func setupView() {
         
         [saveButton, rightLabel].forEach {
@@ -78,6 +80,8 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
     }
+    
+    // MARK: AutoLayout
     
     func setupConstraints() {
         NSLayoutConstraint.activate([

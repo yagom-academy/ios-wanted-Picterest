@@ -16,6 +16,8 @@ class SavedPhotoListViewController: BaseViewController {
     var savedPhotos : [String]?
     var disposalbleBag = Set<AnyCancellable>()
     
+    // MARK: View Life Cycle
+    
     override func loadView() {
         super.loadView()
         self.view = savedPhotoListView
@@ -32,10 +34,16 @@ class SavedPhotoListViewController: BaseViewController {
         if savedPhotos?.isEmpty == true {
             CoreDataManager.shared.deleteAllData()
         }
-        DispatchQueue.main.async {
-            self.savedPhotoListView.savedPhotoCollectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            self?.savedPhotoListView.savedPhotoCollectionView.reloadData()
         }
     }
+    
+    deinit {
+        print("deinit")
+    }
+    
+    // MARK: FileManager
 
     func getSavedPhotosFromFilemanager() {
         savedPhotoListViewModel.getSavedPhotoListFromFilemanager()
@@ -51,6 +59,8 @@ class SavedPhotoListViewController: BaseViewController {
     }
 }
 
+// MARK: Binding
+
 extension SavedPhotoListViewController {
     func setBinding() {
         self.savedPhotoListViewModel.$savedPhotos.sink {[weak self] updatedSavedPhotoList in
@@ -62,21 +72,21 @@ extension SavedPhotoListViewController {
     }
 }
 
+// MARK: LayoutDelegate
+
 extension SavedPhotoListViewController : SavedCustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
         guard let height = CoreDataManager.shared.images[indexPath.row].value(forKey: "height")  as? CGFloat else {return 0}
         return height
-//        return 100
-//        코어데이터에서 꺼내오자
     }
     
     func collectionView(_ collectionView: UICollectionView, widthForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
-//        코어데이터에서 꺼내오자
         guard let width = CoreDataManager.shared.images[indexPath.row].value(forKey: "width")  as? CGFloat else {return 0}
         return width
-//        return 100
     }
 }
+
+// MARK: UICollectionViewDataSource
 
 extension SavedPhotoListViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -94,6 +104,8 @@ extension SavedPhotoListViewController : UICollectionViewDataSource {
     }
 }
 
+// MARK: ImageDelegate
+
 extension SavedPhotoListViewController : ImageDelegate {
     func longPressImage(_ cell: SavedPhotoListCollectionViewCell) {
         let alert = UIAlertController(title: "", message: "삭제 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
@@ -108,7 +120,7 @@ extension SavedPhotoListViewController : ImageDelegate {
             self?.savedPhotoListViewModel.deleteDataInCoreData(CoreDataManager.shared.images[cell.index ?? -1])
             // savedPhotos에서 삭제
             self?.savedPhotos?.remove(at: cell.index ?? -1)
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 self?.savedPhotoListView.savedPhotoCollectionView.reloadData()
             }
         }))
