@@ -41,7 +41,7 @@ class SavedListViewController: UIViewController {
         configUI()
         bindRemovePhoto()
         
-        viewModel.updateSavedList.bind {
+        viewModel.updateSavedList.bind { _ in
             self.savedList = CoreDataManager.shared.fetch()
             self.savedListCollectionView.reloadData()
         }

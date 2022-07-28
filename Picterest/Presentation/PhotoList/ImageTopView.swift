@@ -12,6 +12,7 @@ class ImageTopView: UIView {
     private lazy var starButton: UIButton = {
         let button = UIButton()
         button.setImage(Icon.star.image, for: .normal)
+        button.setImage(Icon.starFill.image, for: .selected)
         button.tintColor = .white
         button.addTarget(
             self,

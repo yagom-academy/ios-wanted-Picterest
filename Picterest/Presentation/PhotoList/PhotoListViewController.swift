@@ -90,7 +90,7 @@ private extension PhotoListViewController {
                   let photoInfo = photoInfo as? Photo,
                   let image = image else { return }
             
-            if sender.tintColor != .systemYellow {
+            if !sender.isSelected {
                 self.showAlert { memo in
                     self.viewModel.savePhoto(
                         sender: sender,
@@ -107,20 +107,18 @@ private extension PhotoListViewController {
         viewModel.isSave.bind { sender, isDone in
             guard let sender = sender else { return }
             if isDone {
-                sender.setImage(Icon.starFill.image, for: .normal)
+                sender.isSelected = true
                 sender.tintColor = .systemYellow
                 self.viewModel.updateSavedList.value = true
             }
-            self.viewModel.isSave.value = (nil, false)
         }
         viewModel.isRemove.bind { sender, isDone in
             guard let sender = sender else { return }
             if isDone {
-                sender.setImage(Icon.star.image, for: .normal)
+                sender.isSelected = false
                 sender.tintColor = .white
                 self.viewModel.updateSavedList.value = true
             }
-            self.viewModel.isRemove.value = (nil, false)
         }
     }
     func bindUpdateCollectionView() {
