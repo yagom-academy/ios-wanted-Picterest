@@ -53,8 +53,6 @@ class ImageListViewModel {
     }
     
     func listUpdate() {
-        loading = true
-        loadingStarted()
         self.imageListUpdate()
     }
     
@@ -81,7 +79,7 @@ class ImageListViewModel {
     }
     
     private func resizingImage(page: Int, completion: @escaping () -> Void) -> Void {
-        repository.fetchNextImageData(page: page) { [self] result in
+        repository.fetchImageData(.getImage, page: page) { [self] result in
             switch result {
             case .success(let imageList):
                 imageList.forEach {

@@ -21,7 +21,7 @@ enum ImageEndPoint: ImageEndPointType {
     var baseUrl: String {
         switch self {
         case .getImage:
-            return "https://api.unsplash.com/photos/random"
+            return URLRepository.baseUrl
         }
         
     }
