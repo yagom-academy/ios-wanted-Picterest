@@ -20,13 +20,16 @@ class ImageListViewModel {
     var loadingStarted: () -> Void = { }
     var loadingEnded: () -> Void = { }
     var imageListUpdate: () -> Void = { }
-    var imageListUpdateAfterDelete: () -> Void = { }
     
     var imageCount: Int {
         return imageList.count
     }
     
     func image(at index: Int) -> SavableImageData {
+        if CoreDataManager.shared.searchPicture(id: imageList[index].imageData.id) == nil {
+            imageList[index].isSaved = false
+            return imageList[index]
+        }
         return imageList[index]
     }
     
@@ -47,6 +50,12 @@ class ImageListViewModel {
         guard let entity = CoreDataManager.shared.searchPicture(id: item.imageData.id) else { return }
         CoreDataManager.shared.delete(entity: entity)
         PicterestFileManager.shared.deletePicture(fileName: item.imageData.id)
+    }
+    
+    func listUpdate() {
+        loading = true
+        loadingStarted()
+        self.imageListUpdate()
     }
     
     func list() {
@@ -76,7 +85,11 @@ class ImageListViewModel {
             switch result {
             case .success(let imageList):
                 imageList.forEach {
-                    self.imageList.append(SavableImageData(imageData: $0))
+                    if (CoreDataManager.shared.searchPicture(id: $0.id) != nil) {
+                        self.imageList.append(SavableImageData(imageData: $0, isSaved: true))
+                    } else {
+                        self.imageList.append(SavableImageData(imageData: $0))
+                    }
                 }
                 imageList.forEach {
                     let height = getImageHeight(height: CGFloat($0.height), width: CGFloat($0.width))
