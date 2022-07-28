@@ -26,7 +26,6 @@ class CoreDataManager {
         do {
             guard let fetchedImageInfoList = try context.fetch(request) as? [ImageInfo] else { return [] }
             imageInfoList = fetchedImageInfoList
-            print(imageInfoList)
             print("코어데이터 로드 성공")
         } catch {
             print("코어데이터 로드 실패")
@@ -40,6 +39,8 @@ class CoreDataManager {
               let imageInfo = NSManagedObject(entity: entity, insertInto: context) as? ImageInfo else { return }
         imageInfo.saveDate = Date()
         imageInfo.id = data.id
+        imageInfo.width = Int16(data.width)
+        imageInfo.height = Int16(data.height)
         imageInfo.url = data.url
         imageInfo.memo = memo
         imageInfo.localPath = localPath
