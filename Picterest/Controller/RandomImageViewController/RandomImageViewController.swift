@@ -84,7 +84,7 @@ extension RandomImageViewController {
 // MARK: - binding
 extension RandomImageViewController {
     private func bindingUpdateRandomImages() {
-        randomImageViewModel?.updateRandomImages
+        randomImageViewModel?.updateImages
             .sink { [weak self] in
                 self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)

@@ -107,7 +107,7 @@ extension StarImageViewController {
 // MARK: - Binding
 extension StarImageViewController {
     private func bindingViewModel() {
-        starImageViewModel?.updateStarImages
+        starImageViewModel?.updateImages
             .sink { [weak self] in
                 self?.starImageCollectionView.reloadSections(IndexSet(0...0))
             }.store(in: &subscriptions)

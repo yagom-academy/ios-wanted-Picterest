@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 protocol RandomImageViewModelInterface: AnyObject {
-    var updateRandomImages: PassthroughSubject<Void, Never> { get }
+    var updateImages: PassthroughSubject<Void, Never> { get }
     var randomImagesCount: Int { get }
     
     func fetchNewRandomImages()
@@ -18,22 +18,18 @@ protocol RandomImageViewModelInterface: AnyObject {
     func deleteImageToStorage(index: Int)
 }
 
-final class RandomImageViewModel: RandomImageViewModelInterface {
+final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInterface {
     
     // MARK: - Properties
-    let updateRandomImages = PassthroughSubject<Void, Never>()
     private let networkManager: NetworkManager
-    private let storageManager: StorageManager
-    private let coreDataManager: CoreDataManager
     private var lastIndex: Int = 0
     private var lastMemo: String = ""
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
-    private var currentTab: CurrentTab = .randomImage
     private var randomImages = [RandomImageEntity]() {
         didSet {
-            updateRandomImages.send()
+            updateImages.send()
         }
     }
     var randomImagesCount: Int {
@@ -46,11 +42,10 @@ final class RandomImageViewModel: RandomImageViewModelInterface {
         coreDataManager: CoreDataManager
     ) {
         self.networkManager = networkManager
-        self.storageManager = storageManager
-        self.coreDataManager = coreDataManager
+        super.init(storageManager: storageManager, coreDataManager: coreDataManager)
         bindingStorageManger()
         bindingCoreDataManager()
-        configureCurrentTabNotification()
+        coreDataManager.getAllStarImages()
     }
 }
 
@@ -90,24 +85,6 @@ extension RandomImageViewModel {
             imageRatio: randomImageEntity.imageRatio,
             isStar: isStar
         )
-    }
-    
-    private func configureCurrentTabNotification() {
-        NotificationCenter
-            .default
-            .addObserver(
-                self,
-                selector: #selector(currentTabNotificationAction(_:)),
-                name: .currentTab, object: nil
-            )
-    }
-}
-
-// MARK: - TargetMethod
-extension RandomImageViewModel {
-    @objc private func currentTabNotificationAction(_ sender: Notification) {
-        guard let currentTab = sender.userInfo?["currentTab"] as? CurrentTab else { return }
-        self.currentTab = currentTab
     }
 }
 
@@ -179,7 +156,7 @@ extension RandomImageViewModel {
         coreDataManager.getAllStarImageSuccess
             .sink { [weak self] starImages in
                 self?.starImages = starImages
-                self?.updateRandomImages.send()
+                self?.updateImages.send()
             }.store(in: &subscriptions)
     }
 }

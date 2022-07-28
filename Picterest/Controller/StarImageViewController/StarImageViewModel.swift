@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol StarImageViewModelInterface {
-    var updateStarImages: PassthroughSubject<Void, Never> { get }
+    var updateImages: PassthroughSubject<Void, Never> { get }
     var starImageCount: Int { get }
     
     func fetcnStarImages()
@@ -17,33 +17,27 @@ protocol StarImageViewModelInterface {
     func starImageAtIndex(index: Int) -> StarImage
 }
 
-final class StarImageViewModel: StarImageViewModelInterface {
+final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterface {
     
     // MARK: - Properties
-    let updateStarImages = PassthroughSubject<Void, Never>()
-    private let storageManager: StorageManager
-    private let coreDataManager: CoreDataManager
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
-    private var currentTab: CurrentTab = .randomImage
     private var starImages = [StarImage]() {
         didSet {
-            updateStarImages.send()
+            updateImages.send()
         }
     }
     var starImageCount: Int {
         starImages.count
     }
     
-    init(
+    override init(
         storageManager: StorageManager,
         coreDataManager: CoreDataManager
     ) {
-        self.storageManager = storageManager
-        self.coreDataManager = coreDataManager
+        super.init(storageManager: storageManager, coreDataManager: coreDataManager)
         bindingCoreDataManager()
         bindingStorageManager()
-        configureCurrentTabNotification()
     }
 }
 
@@ -55,24 +49,6 @@ extension StarImageViewModel {
     
     func starImageAtIndex(index: Int) -> StarImage {
         return starImages[index]
-    }
-    
-    private func configureCurrentTabNotification() {
-        NotificationCenter
-            .default
-            .addObserver(
-                self,
-                selector: #selector(currentTabNotificationAction(_:)),
-                name: .currentTab, object: nil
-            )
-    }
-}
-
-// MARK: - TargetMethod
-extension StarImageViewModel {
-    @objc private func currentTabNotificationAction(_ sender: Notification) {
-        guard let currentTab = sender.userInfo?["currentTab"] as? CurrentTab else { return }
-        self.currentTab = currentTab
     }
 }
 
