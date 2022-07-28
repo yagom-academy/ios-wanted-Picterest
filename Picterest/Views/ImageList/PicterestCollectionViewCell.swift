@@ -8,14 +8,14 @@
 import UIKit
 
 protocol PicterestPhotoSavable: AnyObject {
-    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: ImageData, imageData: UIImage, idx: IndexPath)
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavableImageData, imageData: UIImage, idx: IndexPath)
 }
 
 class PicterestCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: PicterestPhotoSavable?
     
-    private var currentImageInfo: ImageData?
+    private var currentImageInfo: SavableImageData?
     private var currentImageData: UIImage?
     private var currentIndexPath: IndexPath?
     
@@ -71,6 +71,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.starButton.isSelected = false
         self.picterestImageView.image = UIImage(systemName: "photo")
         self.indexTitleLabel.text = "n번째 사진"
     }
@@ -99,24 +100,10 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    private func setButtonAction() {
-        starButton.addTarget(self, action: #selector(starbuttonClicked), for: .touchUpInside)
-    }
-    
-    @objc func starbuttonClicked() {
-        if let delegate = delegate {
-            starButton.isSelected.toggle()
-            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo, let currentIndexPath = currentIndexPath else {
-                return
-            }
-            delegate.picterestCollectoinViewCell(isSelected: starButton.isSelected, imageInfo: currentImageInfo, imageData: currentImageData, idx: currentIndexPath)
-        }
-    }
-    
-    func fetchImageData(data: ImageData, at idx: IndexPath) {
+    func fetchImageData(data: SavableImageData, at idx: IndexPath) {
         currentImageInfo = data
         currentIndexPath = idx
-        ImageLoder().leadImage(url: data.imageUrl.smallUrl) { [self] result in
+        ImageLoder().leadImage(url: data.imageData.imageUrl.smallUrl) { [self] result in
             switch result {
             case .success(let image):
                 currentImageData = image
@@ -125,6 +112,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
                 print(error.localizedDescription)
             }
         }
+        starButton.isSelected = data.isSaved
         indexTitleLabel.text = "\(idx.row)번째 사진"
     }
     
@@ -142,6 +130,20 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         }
         
         indexTitleLabel.text = data.memo
+    }
+    
+    private func setButtonAction() {
+        starButton.addTarget(self, action: #selector(starbuttonClicked), for: .touchUpInside)
+    }
+    
+    @objc func starbuttonClicked() {
+        if let delegate = delegate {
+            starButton.isSelected.toggle()
+            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo, let currentIndexPath = currentIndexPath else {
+                return
+            }
+            delegate.picterestCollectoinViewCell(isSelected: starButton.isSelected, imageInfo: currentImageInfo, imageData: currentImageData, idx: currentIndexPath)
+        }
     }
     
     private func resizeImage(image: UIImage, width: CGFloat) -> UIImage {

@@ -45,17 +45,33 @@ class CoreDataManager {
         }
     }
     
-    func fetchSurvey() -> [Picture] {
-        var list = [Picture]()
+    func fetchPicture() -> [Picture] {
+        var pictureList = [Picture]()
         mainContext.performAndWait {
             let request: NSFetchRequest<Picture> = Picture.fetchRequest()
             do {
-                list = try mainContext.fetch(request)
+                pictureList = try mainContext.fetch(request)
             } catch {
                 print(error)
             }
         }
-        return list
+        return pictureList
+    }
+    
+    func searchPicture(id: String) -> Picture? {
+        var pictureSet = [String: Picture]()
+        mainContext.performAndWait {
+            let request: NSFetchRequest<Picture> = Picture.fetchRequest()
+            do {
+                try mainContext.fetch(request).forEach{
+                    guard let id = $0.id else { return }
+                    pictureSet[id] = $0
+                }
+            } catch {
+                print(error)
+            }
+        }
+        return pictureSet[id]
     }
     
     func delete(entity: Picture) {
