@@ -7,6 +7,15 @@
 
 import Foundation
 
+struct SavableImageData {
+    var imageData: ImageData
+    var isSaved: Bool = false
+    
+    init(imageData: ImageData) {
+        self.imageData = imageData
+    }
+}
+
 struct ImageData: Decodable {
     var id: String
     var width: Int
