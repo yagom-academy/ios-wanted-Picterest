@@ -34,6 +34,7 @@ class CoreDataManager {
             let managedObject = NSManagedObject(entity: entity, insertInto: context)
             managedObject.setValue(info.id, forKey: "id")
             managedObject.setValue(info.message, forKey: "message")
+            managedObject.setValue(info.aspectRatio, forKey: "aspectRatio")
             managedObject.setValue(info.imageURL, forKey: "imageURL")
             managedObject.setValue(info.imageFileLocation, forKey: "imageFileLocation")
             return saveToContext()
@@ -51,14 +52,17 @@ class CoreDataManager {
         }
     }
     
-    func getImageInfos() -> [CoreDataInfo] {
-        var infos: [CoreDataInfo] = []
-        let readResults = readImageInfos()
-        for result in readResults {
-            let info = CoreDataInfo(id: result.id ?? UUID(), message: result.message ?? "", imageURL: result.imageURL ?? "", imageFileLocation: result.imageFileLocation ?? "")
-            infos.append(info)
+    func getImageInfos(completion: @escaping ([CoreDataInfo]) -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            var infos: [CoreDataInfo] = []
+            let readResults = self.readImageInfos()
+            for result in readResults {
+                let info = CoreDataInfo(id: result.id ?? UUID(), message: result.message ?? "", aspectRatio: result.aspectRatio, imageURL: result.imageURL ?? "", imageFileLocation: result.imageFileLocation ?? "")
+                infos.append(info)
+            }
+            completion(infos)
         }
-        return infos
     }
     
     private func readImageInfos() -> [ImageCoreInfo] {

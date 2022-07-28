@@ -14,7 +14,6 @@ final class RandomImageListViewController: UIViewController {
     
     init() {
         super.init(nibName: nil, bundle: nil)
-        
         attribute()
         layout()
         loadCell()
@@ -60,7 +59,7 @@ extension RandomImageListViewController: UICollectionViewDataSource {
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.cellTotalCount
+        return viewModel.totalCellCount
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

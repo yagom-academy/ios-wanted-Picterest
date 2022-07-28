@@ -1,22 +1,18 @@
 //
-//  RandomImageListCollectionViewCell.swift
+//  SavedImageListCell.swift
 //  Picterest
 //
-//  Created by 김기림 on 2022/07/25.
+//  Created by 김기림 on 2022/07/28.
 //
 
 import UIKit
 
-final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
+class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView = UIStackView()
-    private let starButton = UIButton(type: .system)
+    private let starButton = UIButton()
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
-    
-    private var indexPath:IndexPath?
-    
-    weak var delegate: RandomImageListCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
@@ -29,19 +25,19 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(indexPath: IndexPath, data: RandomImageListViewModel.CellData?) {
+    func configure(data: CoreDataInfo?) {
         guard let data = data else {
             return
         }
-        self.indexPath = indexPath
-        titleLabel.text = "\(indexPath.row+1)번째 사진"
-        imageView.load(urlString: data.thumbnailURL)
-        starButton.setTitleColor(data.isSaved ? .yellow : .white, for: .normal)
-        starButton.setTitle(data.isSaved ? "★": "☆", for: .normal)
+        titleLabel.text = data.message
+        imageView.load(urlString: data.imageURL)
     }
+
     
     private func attribute() {
-        contentView.backgroundColor = .cyan
+        //temp
+        starButton.setTitleColor(.yellow, for: .normal)
+        
         contentView.layer.cornerRadius = 20
         contentView.clipsToBounds = true
         
@@ -50,19 +46,11 @@ final class RandomImageListCell: UICollectionViewCell, ReuseIdentifying {
         topBarStackView.alignment = .center
         topBarStackView.distribution = .fill
         
-        starButton.setTitle("☆", for: .normal)
-        starButton.setTitleColor(.white, for: .normal)
+        starButton.setTitle("★", for: .normal)
+        starButton.setTitleColor(.yellow, for: .normal)
         starButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .medium)
-        starButton.addTarget(self, action: #selector(tappedStarButton), for: .touchUpInside)
         
         titleLabel.textColor = .white
-    }
-    
-    @objc private func tappedStarButton() {
-        guard let indexPath = indexPath else {
-            return
-        }
-        delegate?.tappedSaveButton(indexPath)
     }
     
     private func layout() {

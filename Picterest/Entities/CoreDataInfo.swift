@@ -10,6 +10,7 @@ import Foundation
 struct CoreDataInfo {
     var id: UUID
     var message: String
+    var aspectRatio: Double
     var imageURL: String
     var imageFileLocation: String
 }

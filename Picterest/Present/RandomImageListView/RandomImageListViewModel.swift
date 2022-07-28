@@ -8,6 +8,7 @@
 import UIKit
 
 final class RandomImageListViewModel {
+    
     struct CellData {
         var thumbnailURL: String
         var isSaved: Bool
@@ -20,7 +21,7 @@ final class RandomImageListViewModel {
     private let networkManager: NetworkManager
     private var networkDatas: [ImageInfo] = []
     private var cellDatas: [CellData] = []
-    var cellTotalCount: Int {
+    var totalCellCount: Int {
         return cellDatas.count
     }
     
@@ -63,10 +64,12 @@ final class RandomImageListViewModel {
     func saveImage(row: Int, message: String, completion: @escaping (Result<Void, DBManagerError>) -> ()) {
         let imageURL = cellDatas[row].thumbnailURL
         let id = cellDatas[row].id
-        ImageFileManager.shared.saveImageByURL(imageURL: imageURL, id: id) { result in
+        ImageFileManager.shared.saveImageByURL(imageURL: imageURL, id: id) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let location):
-                let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, imageURL: imageURL, imageFileLocation: location))
+                let aspectRatio = Double(self.networkDatas[row].height)/Double(self.networkDatas[row].width)
+                let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, aspectRatio: aspectRatio, imageURL: imageURL, imageFileLocation: location))
                 completion(succeedSaveImageInfo ? .success(Void()) : .failure(.failToSaveImageInfo))
             case .failure(let error):
                 completion(.failure(error))

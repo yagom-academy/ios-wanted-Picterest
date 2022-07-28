@@ -29,9 +29,11 @@
 		FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B52891931900C7F358 /* CoreDataManager.swift */; };
 		FE6FC6B82891949000C7F358 /* CoreDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */; };
 		FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */; };
-		FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */; };
-		FE6FC6BF28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */; };
 		FE71B1F128922698001D000D /* DBManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1F028922698001D000D /* DBManagerError.swift */; };
+		FE71B1F4289256F0001D000D /* SavedImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1F3289256F0001D000D /* SavedImageListCell.swift */; };
+		FE71B1F62892584E001D000D /* SavedImageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1F52892584E001D000D /* SavedImageListViewModel.swift */; };
+		FE71B1FB28928260001D000D /* ImageCoreInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1F928928260001D000D /* ImageCoreInfo+CoreDataClass.swift */; };
+		FE71B1FC28928260001D000D /* ImageCoreInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1FA28928260001D000D /* ImageCoreInfo+CoreDataProperties.swift */; };
 		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
 		FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFA21FD289216CE00D485C1 /* ImageFileManager.swift */; };
 		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
@@ -65,9 +67,11 @@
 		FE6FC6B52891931900C7F358 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataInfo.swift; sourceTree = "<group>"; };
 		FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageInfoModel.xcdatamodel; sourceTree = "<group>"; };
-		FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
-		FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FE71B1F028922698001D000D /* DBManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManagerError.swift; sourceTree = "<group>"; };
+		FE71B1F3289256F0001D000D /* SavedImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListCell.swift; sourceTree = "<group>"; };
+		FE71B1F52892584E001D000D /* SavedImageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListViewModel.swift; sourceTree = "<group>"; };
+		FE71B1F928928260001D000D /* ImageCoreInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FE71B1FA28928260001D000D /* ImageCoreInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
 		FEFA21FD289216CE00D485C1 /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */,
+				FE71B1F52892584E001D000D /* SavedImageListViewModel.swift */,
+				FE71B1F2289256E3001D000D /* Cell */,
 			);
 			path = SavedImageListView;
 			sourceTree = "<group>";
@@ -233,11 +239,19 @@
 			path = DBManager;
 			sourceTree = "<group>";
 		};
+		FE71B1F2289256E3001D000D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				FE71B1F3289256F0001D000D /* SavedImageListCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		FEFA21FB289216A300D485C1 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */,
-				FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */,
+				FE71B1F928928260001D000D /* ImageCoreInfo+CoreDataClass.swift */,
+				FE71B1FA28928260001D000D /* ImageCoreInfo+CoreDataProperties.swift */,
 				FE6FC6B52891931900C7F358 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
@@ -350,7 +364,6 @@
 			files = (
 				FE56A66E288ECC3400EBD539 /* ImageCacheManager.swift in Sources */,
 				FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */,
-				FE6FC6BF28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift in Sources */,
 				FE24EB79288E4C2700A4527C /* CustomError.swift in Sources */,
 				FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */,
 				FE56A66B288EBBB900EBD539 /* RandomImageListViewModel.swift in Sources */,
@@ -361,13 +374,16 @@
 				FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */,
 				FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
+				FE71B1F62892584E001D000D /* SavedImageListViewModel.swift in Sources */,
 				FE71B1F128922698001D000D /* DBManagerError.swift in Sources */,
-				FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */,
+				FE71B1FB28928260001D000D /* ImageCoreInfo+CoreDataClass.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */,
+				FE71B1F4289256F0001D000D /* SavedImageListCell.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
 				FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */,
+				FE71B1FC28928260001D000D /* ImageCoreInfo+CoreDataProperties.swift in Sources */,
 				FE56A671288ECD3000EBD539 /* UIImageView+Extension.swift in Sources */,
 				FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */,
 				FE24EB72288E3C0000A4527C /* NetworkManger.swift in Sources */,

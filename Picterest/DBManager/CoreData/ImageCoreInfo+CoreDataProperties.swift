@@ -17,9 +17,10 @@ extension ImageCoreInfo {
     }
 
     @NSManaged public var id: UUID?
-    @NSManaged public var message: String?
-    @NSManaged public var imageURL: String?
     @NSManaged public var imageFileLocation: String?
+    @NSManaged public var imageURL: String?
+    @NSManaged public var message: String?
+    @NSManaged public var aspectRatio: Double
 
 }
 
