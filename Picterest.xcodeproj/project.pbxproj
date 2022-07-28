@@ -24,6 +24,7 @@
 		9F2D473828916D62007B0B21 /* UIAlertController+makeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */; };
 		9F2D473E28923031007B0B21 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473D28923031007B0B21 /* CellView.swift */; };
 		9F2D47402892314A007B0B21 /* SavedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473F2892314A007B0B21 /* SavedCollectionViewCell.swift */; };
+		9F2D474228925577007B0B21 /* SavedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D474128925577007B0B21 /* SavedViewModel.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66328604278003DD2F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE15E66128604278003DD2F5 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+makeAlert.swift"; sourceTree = "<group>"; };
 		9F2D473D28923031007B0B21 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		9F2D473F2892314A007B0B21 /* SavedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCollectionViewCell.swift; sourceTree = "<group>"; };
+		9F2D474128925577007B0B21 /* SavedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewModel.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				9F1DD591288FC90C0065E57D /* ImagesViewModel.swift */,
+				9F2D474128925577007B0B21 /* SavedViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				9F2D472E289147AB007B0B21 /* CoreDataManager.swift in Sources */,
 				9F2D47402892314A007B0B21 /* SavedCollectionViewCell.swift in Sources */,
 				9F1DD588288F75CF0065E57D /* ImagesViewController.swift in Sources */,
+				9F2D474228925577007B0B21 /* SavedViewModel.swift in Sources */,
 				9F1DD596288FD0CB0065E57D /* UIImageView+loadImage.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				9F1DD584288F6ED70065E57D /* TabBarViewController.swift in Sources */,

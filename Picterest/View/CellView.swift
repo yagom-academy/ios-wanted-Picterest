@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CellView: UIView {
+final class CellView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

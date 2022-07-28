@@ -49,4 +49,24 @@ extension CoreDataManager {
             print("Save Error")
         }
     }
+    
+    func load() -> [ImageCoreDataModel]? {
+        guard let context = context else { return nil }
+        var dataArray = [ImageCoreDataModel]()
+        let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            for result in results {
+                let imageCoreData = ImageCoreDataModel(id: result.id ?? "", memo: result.memo ?? "", originalURL: result.originalURL ?? "", savedLocation: result.savedLocation ?? "")
+                dataArray.append(imageCoreData)
+            }
+            return dataArray
+        } catch {
+            print("Could not retrieve")
+        }
+        
+        return nil
+              
+    }
 }

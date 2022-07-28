@@ -11,7 +11,7 @@ protocol ImageCollectionViewCellDelegate: AnyObject {
     func alert(from cell: ImagesCollectionViewCell)
 }
 
-class ImagesCollectionViewCell: UICollectionViewCell {
+final class ImagesCollectionViewCell: UICollectionViewCell {
     
     let view: CellView = {
         let view = CellView()

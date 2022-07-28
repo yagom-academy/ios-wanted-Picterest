@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SavedCollectionViewCell: UICollectionViewCell {
+final class SavedCollectionViewCell: UICollectionViewCell {
     
     let view: CellView = {
         let view = CellView()

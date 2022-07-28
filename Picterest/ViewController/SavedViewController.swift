@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class SavedViewController: UIViewController {
+    private let reuseIdentifier = "SavedCell"
+    private let viewModel = SavedViewModel()
+    private var cancellable = Set<AnyCancellable>()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -15,25 +19,48 @@ class SavedViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetch()
     }
     
 }
 
+extension SavedViewController {
+    private func bind() {
+        viewModel.$images
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.collectionView.reloadData()
+            }
+            .store(in: &cancellable)
+    }
+}
+
+
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return viewModel.getImagesCount()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SavedCell", for: indexPath) as? SavedCollectionViewCell else {
+        print("saved index: \(indexPath.row)")
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? SavedCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        let index = indexPath.row
+        guard let imageData = viewModel.getImage(at: indexPath.row) else {
+            print("get image data error")
+            return UICollectionViewCell()
+        }
 
-        cell.view.imageView.image = UIImage(systemName: "square")
-        cell.view.textLabel.text = "\(index)번째 사진"
-        cell.view.saveButton.tintColor = .white
+        cell.view.imageView.loadImage(urlString: imageData.originalURL, imageID: imageData.id)
+        cell.view.textLabel.text = imageData.memo
+        cell.view.saveButton.tintColor = .yellow
+        cell.view.saveButton.imageView?.image = UIImage(systemName: "star.fill")
         
         return cell
     }
@@ -52,7 +79,11 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
             return CGSize()
         }
         flow.scrollDirection = .vertical
-        let width: CGFloat = UIScreen.main.bounds.width - 10
-        return CGSize(width: width, height: 300)
+        
+        
+        
+//        let cellWidth: CGFloat = UIScreen.main.bounds.width - 50
+        
+        return CGSize(width: 500, height: 500)
     }
 }

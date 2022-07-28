@@ -25,7 +25,6 @@ final class ImagesViewController: UIViewController {
         viewModel.fetch()
         layout = collectionView.collectionViewLayout as? CustomLayout
         layout?.delegate = self
-        retrieveValues()
     }
 }
 
@@ -43,11 +42,11 @@ extension ImagesViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return viewModel.getImagesCount()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("images index: \(indexPath.row)")
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -107,29 +106,5 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
         alertController.addAlertAction(title: secondActionTitle, style: .default, handler: alertAction)
 
         present(alertController, animated: true)
-    }
-}
-
-extension ImagesViewController {
-    
-    func retrieveValues() {
-        let entityName = "ImageCoreData"
-        
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
-            
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                for result in results {
-//                    if let id = result.id, let memo = result.memo {
-//                        print("id: \(id), memo: \(memo)")
-//                    }
-                }
-            } catch {
-                print("Could not retrieve")
-            }
-        }
     }
 }
