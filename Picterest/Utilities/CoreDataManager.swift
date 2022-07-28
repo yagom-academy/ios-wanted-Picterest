@@ -54,7 +54,6 @@ extension CoreDataManager {
         
         do {
             let results = try context.fetch(fetchRequest)
-            print("data count: \(results.count)")
             return results
         } catch {
             print("Could not retrieve")

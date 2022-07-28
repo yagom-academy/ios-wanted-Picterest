@@ -37,6 +37,11 @@ final class SavedCollectionViewCell: UICollectionViewCell {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressImageView))
         view.imageView.isUserInteractionEnabled = true
         view.imageView.addGestureRecognizer(longPressGestureRecognizer)
+        
+        view.saveButton.isEnabled = false
+        view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        view.saveButton.tintColor = .yellow
+        
         self.addSubview(view)
     }
     

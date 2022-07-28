@@ -32,5 +32,6 @@ final class SavedViewModel {
             return
         }
         self.images = images
+        print("fetch")
     }
 }

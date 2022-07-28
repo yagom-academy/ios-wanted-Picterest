@@ -46,7 +46,6 @@ extension ImagesViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("images index: \(indexPath.row)")
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -79,7 +78,6 @@ extension ImagesViewController: UICollectionViewDelegate {
             DispatchQueue.main.async {
                 self.viewModel.increasePageIndex()
                 self.viewModel.fetch()
-                self.collectionView.reloadData()
             }
         }
     }

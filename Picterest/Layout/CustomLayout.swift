@@ -43,12 +43,10 @@ class CustomLayout: UICollectionViewLayout {
             return
         }
         
-        let numberOfItemsInCollectionView = collectionView.numberOfItems(inSection: 0)
+        let numberOfItemsInCollectionView = collectionView.numberOfItems(inSection: 0) // 다운받은 이미지의 갯수
         
-        if numberOfItemsInCollectionView == cache.count {
-            guard cache.isEmpty else {
-                return
-            }
+        if numberOfItemsInCollectionView == cache.count { // 다운받은 이미지 갯수 > 캐시
+            return
         }
         
         

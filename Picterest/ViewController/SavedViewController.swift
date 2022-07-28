@@ -20,6 +20,7 @@ final class SavedViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         bind()
+        viewModel.fetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,12 +43,11 @@ extension SavedViewController {
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("count: \(viewModel.getImagesCount())")
         return viewModel.getImagesCount()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("saved index: \(indexPath.row)")
-
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? SavedCollectionViewCell else {
             return UICollectionViewCell()
         }
@@ -63,8 +63,6 @@ extension SavedViewController: UICollectionViewDataSource {
         cell.delegate = self
         cell.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
         cell.view.textLabel.text = memo
-        cell.view.saveButton.tintColor = .yellow
-        cell.view.saveButton.imageView?.image = UIImage(systemName: "star.fill")
         
         return cell
     }
@@ -85,7 +83,9 @@ extension SavedViewController: CollectionViewCellDelegate {
         }
     
         guard let cell = cell as? SavedCollectionViewCell else { return }
-        let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData)
+        let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
+            self.viewModel.fetch()
+        }
         
         alertController.addAlertAction(title: firstActionTitle, style: .default)
         alertController.addAlertAction(title: secondActionTitle, style: .default, handler: alertAction)
@@ -106,7 +106,8 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
         // 이후 수정 예정
         // 아예 빈 값이 주어지면 X
         // 어떤 값이 주어지긴 해야 함.
-        return CGSize(width: 500, height: 500)
+        //
+        return CGSize(width: 100, height: 100)
     }
 }
 
