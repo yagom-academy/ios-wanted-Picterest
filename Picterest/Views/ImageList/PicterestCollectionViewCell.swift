@@ -71,6 +71,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.starButton.isSelected = false
         self.picterestImageView.image = UIImage(systemName: "photo")
         self.indexTitleLabel.text = "n번째 사진"
     }
@@ -97,20 +98,6 @@ class PicterestCollectionViewCell: UICollectionViewCell {
             cellTopBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             cellTopBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
-    }
-    
-    private func setButtonAction() {
-        starButton.addTarget(self, action: #selector(starbuttonClicked), for: .touchUpInside)
-    }
-    
-    @objc func starbuttonClicked() {
-        if let delegate = delegate {
-            starButton.isSelected.toggle()
-            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo, let currentIndexPath = currentIndexPath else {
-                return
-            }
-            delegate.picterestCollectoinViewCell(isSelected: starButton.isSelected, imageInfo: currentImageInfo, imageData: currentImageData, idx: currentIndexPath)
-        }
     }
     
     func fetchImageData(data: ImageData, at idx: IndexPath) {
@@ -142,6 +129,20 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         }
         
         indexTitleLabel.text = data.memo
+    }
+    
+    private func setButtonAction() {
+        starButton.addTarget(self, action: #selector(starbuttonClicked), for: .touchUpInside)
+    }
+    
+    @objc func starbuttonClicked() {
+        if let delegate = delegate {
+            starButton.isSelected.toggle()
+            guard let currentImageData = currentImageData, let currentImageInfo = currentImageInfo, let currentIndexPath = currentIndexPath else {
+                return
+            }
+            delegate.picterestCollectoinViewCell(isSelected: starButton.isSelected, imageInfo: currentImageInfo, imageData: currentImageData, idx: currentIndexPath)
+        }
     }
     
     private func resizeImage(image: UIImage, width: CGFloat) -> UIImage {
