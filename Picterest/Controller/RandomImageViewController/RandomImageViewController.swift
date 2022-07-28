@@ -13,11 +13,11 @@ final class RandomImageViewController: UIViewController {
     // MARK: - ViewProperties
     private lazy var randomImageCollectionView: UICollectionView = {
         let layout = RandomImageCollectionViewLayout()
-        layout.delegate = self
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView.dataSource = collectionViewManager
+        collectionView.delegate = collectionViewManager
+        layout.delegate = collectionViewManager
         collectionView.register(ImageCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
@@ -28,6 +28,7 @@ final class RandomImageViewController: UIViewController {
     // MARK: - Properties
     private var randomImageViewModel: RandomImageViewModelInterface?
     private var subscriptions = Set<AnyCancellable>()
+    private lazy var collectionViewManager = RandomImageCollectionViewManager(viewModel: randomImageViewModel!)
     
     // MARK: - LifeCycle
     init(viewModel: RandomImageViewModelInterface) {
@@ -46,38 +47,8 @@ final class RandomImageViewController: UIViewController {
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
         bindingUpdateRandomImages()
+        bindingCollectionViewManager()
         randomImageViewModel?.fetchNewRandomImages()
-    }
-}
-
-// MARK: - Method
-extension RandomImageViewController {
-    private func showImageSaveAlert(_ index: Int, button: UIButton, image: UIImage) {
-        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 저장하시겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            guard let memo = alert.textFields?[0].text else { return }
-            button.isSelected = true
-            self?.randomImageViewModel?.saveImageToStorage(image: image, index: index, memo: memo)
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        alert.addTextField()
-        
-        self.present(alert, animated: true)
-    }
-    
-    private func showImageDeleteAlert(_ index: Int, button: UIButton) {
-        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.randomImageViewModel?.deleteImageToStorage(index: index)
-            button.isSelected = false
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
     }
 }
 
@@ -90,17 +61,11 @@ extension RandomImageViewController {
             }.store(in: &subscriptions)
     }
     
-    private func bindingCellStarButtonTapped(
-        cell: ImageCollectionViewCell,
-        index: Int
-    ) {
-        cell.starButtonTapped = { [weak self] button, image in
-            if button.isSelected {
-                self?.showImageDeleteAlert(index, button: button)
-            } else {
-                self?.showImageSaveAlert(index, button: button, image: image)
-            }
-        }
+    private func bindingCollectionViewManager() {
+        collectionViewManager.showAlert
+            .sink { [weak self] alert in
+                self?.present(alert, animated: true)
+            }.store(in: &subscriptions)
     }
 }
 
@@ -122,43 +87,5 @@ extension RandomImageViewController {
             randomImageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             randomImageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension RandomImageViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return randomImageViewModel?.imagesCount ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        
-        guard let randomImage = randomImageViewModel?.randomImageAtIndex(index: indexPath.row) else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(with: randomImage, index: indexPath.row)
-        bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
-        
-        return cell
-    }
-}
-
-// MARK: - RandomImageCollectionViewLayoutDelegate
-extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForImageAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let width = (collectionView.frame.width - (collectionView.contentInset.left + collectionView.contentInset.right)) / 2
-        let height = width * (randomImageViewModel?.randomImageAtIndex(index: indexPath.row).imageRatio ?? 0.5)
-        
-        return height
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension RandomImageViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row + 1 == randomImageViewModel?.imagesCount {
-            randomImageViewModel?.fetchNewRandomImages()
-        }
     }
 }

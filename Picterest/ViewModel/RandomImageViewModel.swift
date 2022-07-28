@@ -16,6 +16,8 @@ protocol RandomImageViewModelInterface: AnyObject {
     func randomImageAtIndex(index: Int) -> RandomImage
     func saveImageToStorage(image: UIImage, index: Int, memo: String)
     func deleteImageToStorage(index: Int)
+    func showImageSaveAlert(_ index: Int, button: UIButton, image: UIImage) -> UIAlertController
+    func showImageDeleteAlert(_ index: Int, button: UIButton) -> UIAlertController
 }
 
 final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInterface {
@@ -85,6 +87,34 @@ extension RandomImageViewModel {
             imageRatio: randomImageEntity.imageRatio,
             isStar: isStar
         )
+    }
+    
+    func showImageSaveAlert(_ index: Int, button: UIButton, image: UIImage) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 저장하시겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            guard let memo = alert.textFields?[0].text else { return }
+            button.isSelected = true
+            self?.saveImageToStorage(image: image, index: index, memo: memo)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        alert.addTextField()
+        
+        return alert
+    }
+    
+    func showImageDeleteAlert(_ index: Int, button: UIButton) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "\(index)번째 사진을 삭제하겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.deleteImageToStorage(index: index)
+            button.isSelected = false
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        return alert
     }
 }
 
