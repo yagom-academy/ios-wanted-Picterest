@@ -30,8 +30,7 @@ class ImageListViewController: UIViewController {
         super.viewDidLoad()
         setDelegate()
         setLayout()
-        addViewModelObserver()
-        
+        setViewModelObserver()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,7 +63,7 @@ class ImageListViewController: UIViewController {
         ])
     }
     
-    private func addViewModelObserver() {
+    private func setViewModelObserver() {
         viewModel.loadingStarted = { [weak activity] in
             activity?.isHidden = false
             DispatchQueue.main.async {
