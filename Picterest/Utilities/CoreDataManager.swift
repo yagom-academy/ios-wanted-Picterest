@@ -29,44 +29,52 @@ final class CoreDataManager {
 }
 
 extension CoreDataManager {
-    func save(_ data: ImageCoreDataModel) {
+    
+    func makeEmptyObject() -> NSManagedObject? {
+        guard let context = context,
+              let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return nil }
+
+        let emptyObject = NSManagedObject(entity: entityDescription, insertInto: context)
+        return emptyObject
+    }
+    
+    func save(id: String, originalURL: String, memo: String, savedLocation: String) {
         guard let context = context,
               let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
 
         let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
         let keyArray = ["id", "memo", "originalURL", "savedLocation"]
-        let valueArray = [data.id, data.memo, data.originalURL, data.savedLocation]
+        let valueArray = [id, memo, originalURL, savedLocation]
 
         for index in 0..<keyArray.count {
             newValue.setValue(valueArray[index], forKey: keyArray[index])
         }
-
         do {
             try context.save()
             print("Save Success")
-            print("id: \(data.id), memo: \(data.memo)")
         } catch {
             print("Save Error")
         }
     }
     
-    func load() -> [ImageCoreDataModel]? {
+    func load() -> [NSManagedObject]? {
         guard let context = context else { return nil }
-        var dataArray = [ImageCoreDataModel]()
         let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
         
         do {
             let results = try context.fetch(fetchRequest)
-            for result in results {
-                let imageCoreData = ImageCoreDataModel(id: result.id ?? "", memo: result.memo ?? "", originalURL: result.originalURL ?? "", savedLocation: result.savedLocation ?? "")
-                dataArray.append(imageCoreData)
-            }
-            return dataArray
+            print("data count: \(results.count)")
+            return results
         } catch {
             print("Could not retrieve")
         }
         
         return nil
-              
+    }
+    
+    func remove(_ item: NSManagedObject) {
+        guard let context = context else { return }
+        context.delete(item)
+        print("remove Success")
     }
 }

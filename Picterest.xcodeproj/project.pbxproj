@@ -20,7 +20,6 @@
 		9F1DD5B328911D9A0065E57D /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD5B228911D9A0065E57D /* ImageFileManager.swift */; };
 		9F1DD5B628912F3C0065E57D /* ImageDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD5B428912F3C0065E57D /* ImageDataModel.xcdatamodeld */; };
 		9F2D472E289147AB007B0B21 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D472D289147AB007B0B21 /* CoreDataManager.swift */; };
-		9F2D473028914D1A007B0B21 /* ImageCoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D472F28914D1A007B0B21 /* ImageCoreDataModel.swift */; };
 		9F2D473828916D62007B0B21 /* UIAlertController+makeAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */; };
 		9F2D473E28923031007B0B21 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473D28923031007B0B21 /* CellView.swift */; };
 		9F2D47402892314A007B0B21 /* SavedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2D473F2892314A007B0B21 /* SavedCollectionViewCell.swift */; };
@@ -46,7 +45,6 @@
 		9F1DD5B228911D9A0065E57D /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		9F1DD5B528912F3C0065E57D /* ImageDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageDataModel.xcdatamodel; sourceTree = "<group>"; };
 		9F2D472D289147AB007B0B21 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		9F2D472F28914D1A007B0B21 /* ImageCoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCoreDataModel.swift; sourceTree = "<group>"; };
 		9F2D473728916D62007B0B21 /* UIAlertController+makeAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+makeAlert.swift"; sourceTree = "<group>"; };
 		9F2D473D28923031007B0B21 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
 		9F2D473F2892314A007B0B21 /* SavedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 			children = (
 				9F1DD58D288FB19A0065E57D /* ImageData.swift */,
 				9F1DD5B428912F3C0065E57D /* ImageDataModel.xcdatamodeld */,
-				9F2D472F28914D1A007B0B21 /* ImageCoreDataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,7 +280,6 @@
 				9F1DD598288FD1100065E57D /* ImageCacheManager.swift in Sources */,
 				9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */,
 				9F2D473828916D62007B0B21 /* UIAlertController+makeAlert.swift in Sources */,
-				9F2D473028914D1A007B0B21 /* ImageCoreDataModel.swift in Sources */,
 				9F1DD5B628912F3C0065E57D /* ImageDataModel.xcdatamodeld in Sources */,
 				9F1DD594288FCD720065E57D /* ImagesCollectionViewCell.swift in Sources */,
 				9F1DD59D288FD89A0065E57D /* CustomLayout.swift in Sources */,

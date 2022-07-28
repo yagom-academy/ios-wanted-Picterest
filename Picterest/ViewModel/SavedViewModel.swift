@@ -7,10 +7,11 @@
 
 import Foundation
 import Combine
+import CoreData
 
 final class SavedViewModel {
     
-    @Published var images = [ImageCoreDataModel]()
+    @Published var images = [NSManagedObject]()
     private let coreDataManager = CoreDataManager.shared
     
     
@@ -18,7 +19,7 @@ final class SavedViewModel {
         return images.count
     }
     
-    func getImage(at index: Int) -> ImageCoreDataModel? {
+    func getImage(at index: Int) -> NSManagedObject? {
         if index < 0 || index >= images.count {
             return nil
         }

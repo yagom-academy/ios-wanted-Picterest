@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 extension UIAlertController {
     
@@ -28,6 +29,7 @@ extension UIAlertController {
     func alertActionInImagesViewController(cell: ImagesCollectionViewCell, imageInformation: ImageInformation) -> ((UIAlertAction) -> Void) {
         
         let imageFileManager = ImageFileManager.shared
+        let coreDataManager = CoreDataManager.shared
         
         let actionHandler: (UIAlertAction) -> Void = { (action) -> Void in
             guard let textFields = self.textFields,
@@ -36,16 +38,14 @@ extension UIAlertController {
                 return
             }
             
-            let imageID = imageInformation.id
+            let id = imageInformation.id
             let originalURL = imageInformation.urls.small
             
-            guard let savedLocation = imageFileManager.save(imageID as NSString, image) else {
+            guard let savedLocation = imageFileManager.save(id as NSString, image) else {
                 return
             }
             
-            let imageCoreData = ImageCoreDataModel(id: imageID, memo: memo, originalURL: originalURL, savedLocation: savedLocation)
-            
-            CoreDataManager.shared.save(imageCoreData)
+            coreDataManager.save(id: id, originalURL: originalURL, memo: memo, savedLocation: savedLocation)
             cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             cell.view.saveButton.tintColor = .yellow
         }

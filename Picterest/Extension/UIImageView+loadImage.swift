@@ -25,14 +25,12 @@ extension UIImageView {
         
         if let cachedData = imageCacheManager.load(key) {
             image = UIImage(data: cachedData)
-            print("Cache have image data of \(key)")
             return
         }
         
         if imageFileManager.fileExists(key), let savedData = imageFileManager.load(key) {
             image = UIImage(data: savedData)
             imageCacheManager.save(key, savedData)
-            print("Device have image data of \(key)")
             return
         }
         

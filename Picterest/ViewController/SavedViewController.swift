@@ -52,13 +52,16 @@ extension SavedViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        guard let imageData = viewModel.getImage(at: indexPath.row) else {
+        guard let imageData = viewModel.getImage(at: indexPath.row),
+              let originalURL = imageData.value(forKey: "originalURL") as? String,
+              let imageID = imageData.value(forKey: "id") as? String,
+              let memo = imageData.value(forKey: "memo") as? String else {
             print("get image data error")
             return UICollectionViewCell()
         }
 
-        cell.view.imageView.loadImage(urlString: imageData.originalURL, imageID: imageData.id)
-        cell.view.textLabel.text = imageData.memo
+        cell.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
+        cell.view.textLabel.text = memo
         cell.view.saveButton.tintColor = .yellow
         cell.view.saveButton.imageView?.image = UIImage(systemName: "star.fill")
         
@@ -81,9 +84,9 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
         flow.scrollDirection = .vertical
         
         
-        
-//        let cellWidth: CGFloat = UIScreen.main.bounds.width - 50
-        
+        // 이후 수정 예정
+        // 아예 빈 값이 주어지면 X
+        // 어떤 값이 주어지긴 해야 함.
         return CGSize(width: 500, height: 500)
     }
 }
