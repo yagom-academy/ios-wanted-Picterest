@@ -128,7 +128,7 @@ extension RandomImageViewController {
 // MARK: - UICollectionViewDataSource
 extension RandomImageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return randomImageViewModel?.randomImagesCount ?? 0
+        return randomImageViewModel?.imagesCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -157,7 +157,7 @@ extension RandomImageViewController: RandomImageCollectionViewLayoutDelegate {
 // MARK: - UICollectionViewDelegate
 extension RandomImageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row + 1 == randomImageViewModel?.randomImagesCount {
+        if indexPath.row + 1 == randomImageViewModel?.imagesCount {
             randomImageViewModel?.fetchNewRandomImages()
         }
     }

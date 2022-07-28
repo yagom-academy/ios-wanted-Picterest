@@ -10,7 +10,7 @@ import Combine
 
 protocol RandomImageViewModelInterface: AnyObject {
     var updateImages: PassthroughSubject<Void, Never> { get }
-    var randomImagesCount: Int { get }
+    var imagesCount: Int { get }
     
     func fetchNewRandomImages()
     func randomImageAtIndex(index: Int) -> RandomImage
@@ -27,14 +27,14 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
     private var lastID: String = ""
     private var subscriptions = Set<AnyCancellable>()
     private var starImages = [StarImage]()
-    private var randomImages: [Image] = [RandomImageEntity]() {
-        didSet {
-            updateImages.send()
-        }
-    }
-    var randomImagesCount: Int {
-        randomImages.count
-    }
+//    private var randomImages: [Image] = [RandomImageEntity]() {
+//        didSet {
+//            updateImages.send()
+//        }
+//    }
+//    var randomImagesCount: Int {
+//        randomImages.count
+//    }
     
     init(
         networkManager: NetworkManager,
@@ -64,13 +64,13 @@ extension RandomImageViewModel {
                 case .finished :
                     break
                 }
-            } receiveValue: { [weak self] images in
-                self?.randomImages.append(contentsOf: images)
+            } receiveValue: { [weak self] randomImages in
+                self?.images.append(contentsOf: randomImages)
             }.store(in: &subscriptions)
     }
     
     func randomImageAtIndex(index: Int) -> RandomImage {
-        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+        guard let randomImageEntity = images[index] as? RandomImageEntity else {
             return RandomImage(imageUrlString: "", imageRatio: 0, isStar: false)
         }
         var isStar: Bool
@@ -95,7 +95,7 @@ extension RandomImageViewModel {
     
     /// storage에 이미지 저장하기
     func saveImageToStorage(image: UIImage, index: Int, memo: String) {
-        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+        guard let randomImageEntity = images[index] as? RandomImageEntity else {
             return
         }
         lastIndex = index
@@ -106,7 +106,7 @@ extension RandomImageViewModel {
     
     /// 스토리지에서 이미지 삭제하기
     func deleteImageToStorage(index: Int) {
-        guard let randomImageEntity = randomImages[index] as? RandomImageEntity else {
+        guard let randomImageEntity = images[index] as? RandomImageEntity else {
             return
         }
         let id = randomImageEntity.id
@@ -118,7 +118,7 @@ extension RandomImageViewModel {
 // MARK: - CoreData
 extension RandomImageViewModel {
     private func saveImageInfoToCoreData(storageURL: String) {
-        guard let randomImageEntity = randomImages[lastIndex] as? RandomImageEntity else {
+        guard let randomImageEntity = images[lastIndex] as? RandomImageEntity else {
             return
         }
         let networkURLString = randomImageEntity.urls.regularSizeImageURL

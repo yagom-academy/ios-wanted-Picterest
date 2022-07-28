@@ -151,7 +151,7 @@ extension StarImageViewController {
 extension StarImageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return starImageViewModel?.starImageCount ?? 0
+        return starImageViewModel?.imagesCount ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

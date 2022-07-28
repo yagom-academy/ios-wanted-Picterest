@@ -10,7 +10,7 @@ import Combine
 
 protocol StarImageViewModelInterface {
     var updateImages: PassthroughSubject<Void, Never> { get }
-    var starImageCount: Int { get }
+    var imagesCount: Int { get }
     
     func fetcnStarImages()
     func deleteImageToStorage(index: Int)
@@ -22,14 +22,14 @@ final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterfa
     // MARK: - Properties
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
-    private var starImages: [Image] = [StarImage]() {
-        didSet {
-            updateImages.send()
-        }
-    }
-    var starImageCount: Int {
-        starImages.count
-    }
+//    private var starImages: [Image] = [StarImage]() {
+//        didSet {
+//            updateImages.send()
+//        }
+//    }
+//    var starImageCount: Int {
+//        starImages.count
+//    }
     
     override init(
         storageManager: StorageManager,
@@ -48,7 +48,7 @@ extension StarImageViewModel {
     }
     
     func starImageAtIndex(index: Int) -> StarImage {
-        guard let starImage = starImages[index] as? StarImage else { return StarImage() }
+        guard let starImage = images[index] as? StarImage else { return StarImage() }
         return starImage
     }
 }
@@ -58,7 +58,7 @@ extension StarImageViewModel {
     
     /// 스토리지에서 이미지 삭제하기
     func deleteImageToStorage(index: Int) {
-        guard let starImage = starImages[index] as? StarImage else { return }
+        guard let starImage = images[index] as? StarImage else { return }
         guard let id = starImage.id else { return }
         lastIndex = index
         storageManager.deleteImage(id: id)
@@ -68,7 +68,7 @@ extension StarImageViewModel {
 // MARK: - CoreDataManager
 extension StarImageViewModel {
     private func deleteImageInfoToCoreData() {
-        guard let starImage = starImages[lastIndex] as? StarImage else { return }
+        guard let starImage = images[lastIndex] as? StarImage else { return }
         
         coreDataManager.deleteStarImage(starImage: starImage)
     }
@@ -79,7 +79,7 @@ extension StarImageViewModel {
     private func bindingCoreDataManager() {
         coreDataManager.getAllStarImageSuccess
             .sink { [weak self] starImages in
-                self?.starImages = starImages
+                self?.images = starImages
             }.store(in: &subscriptions)
     }
     
