@@ -51,7 +51,7 @@ class CoreDataManager {
                     memo: $0.memo ?? "",
                     url: $0.url ?? "",
                     path: $0.path ?? "",
-                    ratio: $0.ratio ?? 0.0
+                    ratio: $0.ratio
                 )
             }
         } catch {

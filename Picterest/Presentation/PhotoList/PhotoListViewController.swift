@@ -14,7 +14,6 @@ class PhotoListViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-//        collectionView.delaysContentTouches = true
         collectionView.register(
             PhotoListCollectionViewCell.self,
             forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier
