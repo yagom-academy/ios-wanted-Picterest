@@ -14,8 +14,8 @@ class SavedListViewModel {
     
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
-            newValue?.starButtonTapped.bind {
-                self.starButtonTapped.value = $0
+            newValue?.starButtonTapped.bind { [weak self] in
+                self?.starButtonTapped.value = $0
             }
         }
     }

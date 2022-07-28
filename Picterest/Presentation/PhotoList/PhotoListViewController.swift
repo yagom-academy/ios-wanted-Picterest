@@ -12,7 +12,9 @@ class PhotoListViewController: UIViewController {
         let layout = PhotoListCollectionViewLayout()
         layout.delegate = self
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
         collectionView.dataSource = self
+//        collectionView.delaysContentTouches = true
         collectionView.register(
             PhotoListCollectionViewCell.self,
             forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier
@@ -36,7 +38,7 @@ class PhotoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
-        viewModel.fetchPhotoList()
+        viewModel.fetchPhotoList(page: 1)
         bindUpdateCollectionView()
         bindSavePhoto()
     }
@@ -57,6 +59,22 @@ extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
         return ((collectionView.bounds.width / 2) - 12) * ratio
     }
 }
+
+// MARK: - UICollectionViewDelegate
+extension PhotoListViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        if indexPath.item % 15 == 14
+            && viewModel.currentPage == (indexPath.item / 15) + 1 {
+            viewModel.currentPage += 1
+            viewModel.fetchPhotoList(page: viewModel.currentPage)
+        }
+    }
+}
+
 // MARK: - UICollectionViewDataSource
 extension PhotoListViewController: UICollectionViewDataSource {
     func collectionView(
@@ -85,14 +103,14 @@ extension PhotoListViewController: UICollectionViewDataSource {
 // MARK: - Bind
 private extension PhotoListViewController {
     func bindSavePhoto() {
-        viewModel.starButtonTapped.bind { sender, photoInfo, image in
+        viewModel.starButtonTapped.bind { [weak self] sender, photoInfo, image in
             guard let sender = sender,
                   let photoInfo = photoInfo as? Photo,
                   let image = image else { return }
             
             if !sender.isSelected {
-                self.showAlert { memo in
-                    self.viewModel.savePhoto(
+                self?.showAlert { memo in
+                    self?.viewModel.savePhoto(
                         sender: sender,
                         photoInfo: photoInfo,
                         memo: memo ?? "",
@@ -100,31 +118,31 @@ private extension PhotoListViewController {
                     )
                 }
             } else {
-                self.viewModel.removePhoto(sender: sender, photoInfo: photoInfo)
+                self?.viewModel.removePhoto(sender: sender, photoInfo: photoInfo)
             }
         }
         
-        viewModel.isSave.bind { sender, isDone in
+        viewModel.isSave.bind { [weak self] sender, isDone in
             guard let sender = sender else { return }
             if isDone {
                 sender.isSelected = true
                 sender.tintColor = .systemYellow
-                self.viewModel.updateSavedList.value = true
+                self?.viewModel.updateSavedList.value = true
             }
         }
-        viewModel.isRemove.bind { sender, isDone in
+        viewModel.isRemove.bind { [weak self] sender, isDone in
             guard let sender = sender else { return }
             if isDone {
                 sender.isSelected = false
                 sender.tintColor = .white
-                self.viewModel.updateSavedList.value = true
+                self?.viewModel.updateSavedList.value = true
             }
         }
     }
     func bindUpdateCollectionView() {
-        viewModel.photoList.bind { _ in
+        viewModel.photoList.bind { [weak self] _ in
             DispatchQueue.main.async {
-                self.photoListCollectionView.reloadData()
+                self?.photoListCollectionView.reloadData()
             }
         }
     }

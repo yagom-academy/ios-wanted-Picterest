@@ -27,10 +27,10 @@ class PhotoListCollectionViewCellViewModel {
         }
         
         
-        imageTopViewModel.starButtonTapped.bind {
+        imageTopViewModel.starButtonTapped.bind { [weak self] in
             if $0 != nil {
-                self.starButtonTapped.value = ($0, photo, self.image.value)
-                self.imageTopViewModel.starButtonTapped.value = nil
+                self?.starButtonTapped.value = ($0, photo, self?.image.value)
+                self?.imageTopViewModel.starButtonTapped.value = nil
             }
         }
     }

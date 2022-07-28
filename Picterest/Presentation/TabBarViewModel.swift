@@ -12,8 +12,8 @@ class TabBarViewModel {
     let savedListViewModel = SavedListViewModel()
     
     init() {
-        photoListViewModel.updateSavedList.bind {
-            self.savedListViewModel.updateSavedList.value = $0
+        photoListViewModel.updateSavedList.bind { [weak self] in
+            self?.savedListViewModel.updateSavedList.value = $0
         }
     }
 }

@@ -37,10 +37,7 @@ class PhotoListCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        guard cache.isEmpty == true,
-              let collectionView = collectionView else {
-            return
-        }
+        guard let collectionView = collectionView else { return }
         
         let columnWidth = contentWidth / CGFloat(numberOfColumns) // 셀의 가로 길이
         var xOffset: [CGFloat] = [] // x좌표 배열

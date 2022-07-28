@@ -47,9 +47,9 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
 // MARK: - Bind
 private extension PhotoListCollectionViewCell {
     func bindImage() {
-        viewModel?.image.bind { image in
+        viewModel?.image.bind { [weak self] image in
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self?.imageView.image = image
             }
         }
     }

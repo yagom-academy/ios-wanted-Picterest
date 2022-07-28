@@ -17,17 +17,19 @@ class PhotoListViewModel {
     
     var photoListCollectionViewCellViewModel: PhotoListCollectionViewCellViewModel? {
         willSet {
-            newValue?.starButtonTapped.bind {
-                self.starButtonTapped.value = $0
+            newValue?.starButtonTapped.bind { [weak self] in
+                self?.starButtonTapped.value = $0
             }
         }
     }
     
-    func fetchPhotoList() {
-        Network(page: 1).get { result in
+    var currentPage = 1
+    
+    func fetchPhotoList(page: Int) {
+        Network(page: page).get { result in
             switch result {
             case .success(let photos):
-                self.photoList.value = photos
+                self.photoList.value.append(contentsOf: photos)
             case .failure(let error):
                 print("ERROR \(error)😶‍🌫️")
             }

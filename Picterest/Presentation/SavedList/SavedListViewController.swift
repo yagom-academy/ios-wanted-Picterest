@@ -41,9 +41,9 @@ class SavedListViewController: UIViewController {
         configUI()
         bindRemovePhoto()
         
-        viewModel.updateSavedList.bind { _ in
-            self.savedList = CoreDataManager.shared.fetch()
-            self.savedListCollectionView.reloadData()
+        viewModel.updateSavedList.bind { [weak self] _ in
+            self?.savedList = CoreDataManager.shared.fetch()
+            self?.savedListCollectionView.reloadData()
         }
     }
 }
@@ -101,20 +101,20 @@ extension SavedListViewController: UICollectionViewDataSource {
 // MARK: - Bind
 private extension SavedListViewController {
     func bindRemovePhoto() {
-        viewModel.starButtonTapped.bind { sender, photoInfo, image in
+        viewModel.starButtonTapped.bind { [weak self] sender, photoInfo, image in
             guard let _ = sender,
                   let photoInfo = photoInfo as? CoreSavedPhoto,
                   let _ = image else { return }
             
-            self.showAlert {
-                self.viewModel.remove(savedPhoto: photoInfo)
+            self?.showAlert {
+                self?.viewModel.remove(savedPhoto: photoInfo)
             }
         }
         
-        viewModel.isRemove.bind {
+        viewModel.isRemove.bind { [weak self] in
             if $0 {
-                self.savedList = CoreDataManager.shared.fetch()
-                self.savedListCollectionView.reloadData()
+                self?.savedList = CoreDataManager.shared.fetch()
+                self?.savedListCollectionView.reloadData()
             }
         }
     }
