@@ -36,6 +36,7 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController {
     private func setCollectionView() {
         photoListCollectionView.dataSource = self
+        photoListCollectionView.prefetchDataSource = self
         if let layout = photoListCollectionView.collectionViewLayout as?
             PhotoListCollectionViewLayout {
             layout.delegate = self
@@ -48,10 +49,10 @@ extension PhotoListViewController {
         )
         photoListCollectionView.register(
             UINib(
-                nibName: "PhotoListCollectionViewCell",
+                nibName: CellName.photoListCell,
                 bundle: nil
             ),
-            forCellWithReuseIdentifier: "PhotoListCollectionViewCell"
+            forCellWithReuseIdentifier: CellName.photoListCell
         )
     }
     
@@ -62,7 +63,6 @@ extension PhotoListViewController {
                 self.photoList.append(contentsOf: data)
                 DispatchQueue.main.async {
                     self.photoListCollectionView.reloadData()
-                    
                 }
             case .failure(let error):
                 print(error)
@@ -154,7 +154,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let photoCell = photoListCollectionView.dequeueReusableCell(
-            withReuseIdentifier: "PhotoListCollectionViewCell",
+            withReuseIdentifier: CellName.photoListCell,
             for: indexPath
         ) as? PhotoListCollectionViewCell else {
             return UICollectionViewCell()
@@ -171,5 +171,11 @@ extension PhotoListViewController: UICollectionViewDataSource {
         photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row], isSelectedFlag: flag)
         photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
         return photoCell
+    }
+}
+
+extension PhotoListViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+
     }
 }

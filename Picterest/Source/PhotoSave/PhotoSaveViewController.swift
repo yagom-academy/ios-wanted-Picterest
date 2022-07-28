@@ -50,10 +50,10 @@ extension PhotoSaveViewController {
         )
         saveListCollectionView.register(
             UINib(
-                nibName: "PhotoSaveCollectionViewCell",
+                nibName: CellName.saveListCell,
                 bundle: nil
             ),
-            forCellWithReuseIdentifier: "PhotoSaveCollectionViewCell"
+            forCellWithReuseIdentifier: CellName.saveListCell
         )
         let flowlayout = UICollectionViewFlowLayout()
         saveListCollectionView.collectionViewLayout = flowlayout
@@ -73,7 +73,7 @@ extension PhotoSaveViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let saveCell = saveListCollectionView.dequeueReusableCell(
-            withReuseIdentifier: "PhotoSaveCollectionViewCell",
+            withReuseIdentifier: CellName.saveListCell,
             for: indexPath
         ) as? PhotoSaveCollectionViewCell else {
             return UICollectionViewCell()
@@ -110,29 +110,29 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
     @objc func didTapDelete(gestureRecognizer: UILongPressGestureRecognizer) {
         let point = gestureRecognizer.location(in: self.saveListCollectionView)
         guard let indexPath = self.saveListCollectionView?.indexPathForItem(at: point) else { return }
+        let alertActionCell = UIAlertController(
+            title: "",
+            message: "사진을 삭제 하시겠습니까?",
+            preferredStyle: .alert
+        )
+        let deleteAction = UIAlertAction(
+            title: "삭제",
+            style: .destructive,
+            handler: { action in
+            guard let id = self.coreData[indexPath.row].id else { return }
+            ImageFileManager.shared.deleteImageFromLocal(named: id + ".png")
+            CoreDataManager.shared.deleteCoreData(ID: id)
+            self.coreData.remove(at: indexPath.item)
+            self.saveListCollectionView.deleteItems(at: [indexPath])
+            self.saveListCollectionView.reloadData()
 
-            let alertActionCell = UIAlertController(title: "", message: "삭제 할래?", preferredStyle: .alert)
-
-            // Configure Remove Item Action
-            let deleteAction = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
-        
-                    guard let id = self.coreData[indexPath.row].id else { return }
-                    ImageFileManager.shared.deleteImageFromLocal(named: id + ".png")
-                    CoreDataManager.shared.deleteCoreData(ID: id)
-                    self.coreData.remove(at: indexPath.item)
-                    self.saveListCollectionView.deleteItems(at: [indexPath])
-                    self.saveListCollectionView.reloadData()
-                    
-                    print(self.coreData)
-                   print("Cell Removed")
-//                self.saveListCollectionView!.reloadData()
-            })
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: { acion in
-                print("Cancel actionsheet")
-            })
-            alertActionCell.addAction(deleteAction)
-            alertActionCell.addAction(cancelAction)
-            self.present(alertActionCell, animated: true, completion: nil)
+                print(self.coreData.count)
+            print("Cell Removed")
+        })
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alertActionCell.addAction(deleteAction)
+        alertActionCell.addAction(cancelAction)
+        self.present(alertActionCell, animated: true, completion: nil)
     }
 }
 
