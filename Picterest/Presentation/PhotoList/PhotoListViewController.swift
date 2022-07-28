@@ -108,7 +108,11 @@ private extension PhotoListViewController {
                   let image = image else { return }
             
             if !sender.isSelected {
-                self?.showAlert { memo in
+                UIAlertController.showAlert(
+                    self,
+                    title: "사진 저장",
+                    isInTextField: true
+                ) { memo in
                     self?.viewModel.savePhoto(
                         sender: sender,
                         photoInfo: photoInfo,
@@ -117,7 +121,13 @@ private extension PhotoListViewController {
                     )
                 }
             } else {
-                self?.viewModel.removePhoto(sender: sender, photoInfo: photoInfo)
+                UIAlertController.showAlert(
+                    self,
+                    title: "사진 삭제",
+                    isInTextField: false
+                ) { _ in
+                    self?.viewModel.removePhoto(sender: sender, photoInfo: photoInfo)
+                }
             }
         }
         
@@ -149,21 +159,6 @@ private extension PhotoListViewController {
 
 // MARK: - UI Methods
 private extension PhotoListViewController {
-    func showAlert(handler: @escaping (String?) -> Void) {
-        let alert = UIAlertController(
-            title: "메모 작성",
-            message: nil,
-            preferredStyle: .alert
-        )
-        alert.addTextField()
-        let saveAction = UIAlertAction(title: "확인", style: .default) { _ in
-            handler(alert.textFields?.first?.text)
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        [saveAction, cancelAction].forEach { alert.addAction($0) }
-        present(alert, animated: true)
-    }
-    
     func configUI() {
         view.backgroundColor = .systemBackground
         

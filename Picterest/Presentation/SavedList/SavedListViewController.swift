@@ -106,7 +106,11 @@ private extension SavedListViewController {
                   let photoInfo = photoInfo as? CoreSavedPhoto,
                   let _ = image else { return }
             
-            self?.showAlert {
+            UIAlertController.showAlert(
+                self,
+                title: "사진 삭제",
+                isInTextField: false
+            ) { _ in
                 self?.viewModel.remove(savedPhoto: photoInfo)
             }
         }
@@ -122,22 +126,6 @@ private extension SavedListViewController {
 
 // MARK: - UI Methods
 private extension SavedListViewController {
-    func showAlert(handler: @escaping () -> Void) {
-        let alert = UIAlertController(
-            title: "사진 삭제",
-            message: nil,
-            preferredStyle: .alert
-        )
-        
-        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-            handler()
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        [cancelAction, okAction].forEach { alert.addAction($0) }
-        
-        present(alert, animated: true)
-    }
-    
     func configUI() {
         view.backgroundColor = .systemBackground
         
