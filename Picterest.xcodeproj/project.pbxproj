@@ -31,7 +31,9 @@
 		FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */; };
 		FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */; };
 		FE6FC6BF28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */; };
+		FE71B1F128922698001D000D /* DBManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE71B1F028922698001D000D /* DBManagerError.swift */; };
 		FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */; };
+		FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFA21FD289216CE00D485C1 /* ImageFileManager.swift */; };
 		FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */; };
 		FEFB54E928911097005EA2DD /* RandomImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */; };
 		FEFB54EE28911CC5005EA2DD /* SaveImageAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */; };
@@ -65,7 +67,9 @@
 		FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageInfoModel.xcdatamodel; sourceTree = "<group>"; };
 		FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FE71B1F028922698001D000D /* DBManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManagerError.swift; sourceTree = "<group>"; };
 		FEB73B312890038F00E165EC /* AddCellButtonFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterView.swift; sourceTree = "<group>"; };
+		FEFA21FD289216CE00D485C1 /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		FEFB54E62891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCellButtonFooterViewDelegate.swift; sourceTree = "<group>"; };
 		FEFB54E828911097005EA2DD /* RandomImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageListCellDelegate.swift; sourceTree = "<group>"; };
 		FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveImageAlertViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +132,7 @@
 				FE24EB76288E48B500A4527C /* ImageInfo.swift */,
 				FE24EB78288E4C2700A4527C /* CustomError.swift */,
 				FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */,
+				FE71B1F028922698001D000D /* DBManagerError.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -148,7 +153,7 @@
 			children = (
 				FE24EB7E288E6CE600A4527C /* RandomImageListViewController.swift */,
 				FE56A66A288EBBB900EBD539 /* RandomImageListViewModel.swift */,
-				FEFB54EC28911CAD005EA2DD /* SubComponents */,
+				FEFB54EC28911CAD005EA2DD /* AlertView */,
 				FE56A667288EB2FC00EBD539 /* Cell */,
 				FE56A664288EB1B000EBD539 /* CustomCollectionViewLayout */,
 			);
@@ -222,11 +227,28 @@
 		FE6FC6B4289192FF00C7F358 /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
+				FEFA21FC289216AD00D485C1 /* FileManager */,
+				FEFA21FB289216A300D485C1 /* CoreData */,
+			);
+			path = DBManager;
+			sourceTree = "<group>";
+		};
+		FEFA21FB289216A300D485C1 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
 				FE6FC6BC28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift */,
 				FE6FC6BD28919CD700C7F358 /* ImageCoreInfo+CoreDataProperties.swift */,
 				FE6FC6B52891931900C7F358 /* CoreDataManager.swift */,
 			);
-			path = DBManager;
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		FEFA21FC289216AD00D485C1 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				FEFA21FD289216CE00D485C1 /* ImageFileManager.swift */,
+			);
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 		FEFB54EA28911BA3005EA2DD /* RandomImageListCell */ = {
@@ -247,13 +269,13 @@
 			path = AddCellButtonFooter;
 			sourceTree = "<group>";
 		};
-		FEFB54EC28911CAD005EA2DD /* SubComponents */ = {
+		FEFB54EC28911CAD005EA2DD /* AlertView */ = {
 			isa = PBXGroup;
 			children = (
 				FEFB54ED28911CC5005EA2DD /* SaveImageAlertViewController.swift */,
 				FEFB54EF2891864F005EA2DD /* SaveImageAlertViewDelegate.swift */,
 			);
-			path = SubComponents;
+			path = AlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,8 +361,10 @@
 				FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */,
 				FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
+				FE71B1F128922698001D000D /* DBManagerError.swift in Sources */,
 				FE6FC6BE28919CD700C7F358 /* ImageCoreInfo+CoreDataClass.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
+				FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
 				FE24EB7F288E6CE600A4527C /* RandomImageListViewController.swift in Sources */,
 				FEB73B322890038F00E165EC /* AddCellButtonFooterView.swift in Sources */,
@@ -489,12 +513,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Picterest/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -504,6 +531,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -515,12 +543,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Picterest/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -530,6 +561,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = net.yagom.Picterest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

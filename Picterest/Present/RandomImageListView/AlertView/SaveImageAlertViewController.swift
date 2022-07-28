@@ -64,7 +64,7 @@ final class SaveImageAlertViewController: UIViewController {
         buttonContainerStackView.axis = .horizontal
         buttonContainerStackView.distribution = .fillEqually
         
-        titleLabel.text = "\(row)번째 사진을 저장하시겠습니까?"
+        titleLabel.text = "\(row+1)번째 사진을 저장하시겠습니까?"
         titleLabel.textAlignment = .center
         
         inputTextField.backgroundColor = .white

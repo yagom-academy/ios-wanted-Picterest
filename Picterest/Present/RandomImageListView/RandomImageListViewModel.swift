@@ -11,6 +11,7 @@ final class RandomImageListViewModel {
     struct CellData {
         var thumbnailURL: String
         var isSaved: Bool
+        var id: UUID
         mutating func toggleSavedState() {
             self.isSaved = !self.isSaved
         }
@@ -20,7 +21,7 @@ final class RandomImageListViewModel {
     private var networkDatas: [ImageInfo] = []
     private var cellDatas: [CellData] = []
     var cellTotalCount: Int {
-        return networkDatas.count
+        return cellDatas.count
     }
     
     init(networkManager: NetworkManager) {
@@ -43,7 +44,7 @@ final class RandomImageListViewModel {
             case .success(let infos):
                 self?.networkDatas += infos
                 self?.cellDatas += infos.map({ info in
-                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: false)
+                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: false, id: UUID())
                 })
                 print("success load data!")
                 completion(.success(Void()))
@@ -57,5 +58,19 @@ final class RandomImageListViewModel {
     func tappedStarButton(indexPath: IndexPath) {
         guard cellDatas[safe: indexPath.row] != nil else { return }
         cellDatas[indexPath.row].toggleSavedState()
+    }
+    
+    func saveImage(row: Int, message: String, completion: @escaping (Result<Void, DBManagerError>) -> ()) {
+        let imageURL = cellDatas[row].thumbnailURL
+        let id = cellDatas[row].id
+        ImageFileManager.shared.saveImageByURL(imageURL: imageURL, id: id) { result in
+            switch result {
+            case .success(let location):
+                let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, imageURL: imageURL, imageFileLocation: location))
+                completion(succeedSaveImageInfo ? .success(Void()) : .failure(.failToSaveImageInfo))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
 }
