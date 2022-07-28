@@ -12,15 +12,17 @@ class CoreDataManager {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var coreData = [Picterest]()
     
-    func fetchCoreData() -> [Picterest] {
-        let fetchRequest: NSFetchRequest<Picterest> = Picterest.fetchRequest()
+    func fetchCoreData(completion: @escaping ([Picterest]) -> Void) {
         let context = appDelegate.persistentContainer.viewContext
-        do {
-            self.coreData = try context.fetch(fetchRequest)
-            return coreData
-        } catch {
-            print(error)
-            return []
+        context.performAndWait {
+            let fetchRequest: NSFetchRequest<Picterest> = Picterest.fetchRequest()
+            do {
+                self.coreData = try context.fetch(fetchRequest)
+                completion(coreData)
+            } catch {
+                print(error)
+                return
+            }
         }
     }
         
@@ -28,23 +30,26 @@ class CoreDataManager {
         let context = appDelegate.persistentContainer.viewContext
         guard let entityDescription = NSEntityDescription.entity(forEntityName: "Picterest", in: context) else { return }
         guard let object = NSManagedObject(entity: entityDescription, insertInto: context) as? Picterest else { return }
-        
-        object.id = id
-        object.url = url
-        object.location = location
-        object.memo = memo
-        object.width = width
-        object.heigt = height
-        appDelegate.saveContext()
+        context.perform {
+            object.id = id
+            object.url = url
+            object.location = location
+            object.memo = memo
+            object.width = width
+            object.heigt = height
+            self.appDelegate.saveContext()
+        }
     }
     
     func deleteCoreData(ID: String) {
         let context = appDelegate.persistentContainer.viewContext
+        context.performAndWait {
         let object = coreData.first {
             $0.id == ID
         }
         guard let object = object else { return }
         context.delete(object)
         appDelegate.saveContext()
+        }
     }
 }

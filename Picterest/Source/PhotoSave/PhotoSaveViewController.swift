@@ -10,16 +10,23 @@ class PhotoSaveViewController: UIViewController {
     @IBOutlet weak var saveListCollectionView: UICollectionView!
     
     var coreData = [Picterest]()
+    var deleteSavedData: (() -> Void)?
+    var currentLongPressedCell: PhotoSaveCollectionViewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        didTapLongPressCell()
         setCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        coreData = CoreDataManager.shared.fetchCoreData()
-        saveListCollectionView.reloadData()
+        CoreDataManager.shared.fetchCoreData(completion: { coreData in
+            self.coreData = coreData
+            self.coreData = coreData.reversed()
+            self.saveListCollectionView.reloadData()
+            print("coreData", coreData.count)
+        })
     }
 }
 
@@ -71,10 +78,6 @@ extension PhotoSaveViewController: UICollectionViewDataSource {
         ) as? PhotoSaveCollectionViewCell else {
             return UICollectionViewCell()
         }
-        saveCell.deleteSavedData = {
-            ImageFileManager.shared.deleteImageFromLocal(named: self.coreData[indexPath.row].id ?? "")
-            CoreDataManager.shared.deleteCoreData(ID: self.coreData[indexPath.row].id ?? "")
-        }
         saveCell.savedMemo.text = coreData[indexPath.row].memo
         saveCell.fetchDataFromCollectionView(data: coreData[indexPath.row].url ?? "")
         return saveCell
@@ -92,3 +95,44 @@ extension PhotoSaveViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
+
+//MARK: - Extension: Long Pressed
+
+extension PhotoSaveViewController: UIGestureRecognizerDelegate {
+    private func didTapLongPressCell() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didTapDelete))
+        longPressGesture.minimumPressDuration = 0.5
+        longPressGesture.delegate = self
+        longPressGesture.delaysTouchesBegan = true
+        saveListCollectionView.addGestureRecognizer(longPressGesture)
+    }
+    
+    @objc func didTapDelete(gestureRecognizer: UILongPressGestureRecognizer) {
+        let point = gestureRecognizer.location(in: self.saveListCollectionView)
+        guard let indexPath = self.saveListCollectionView?.indexPathForItem(at: point) else { return }
+
+            let alertActionCell = UIAlertController(title: "", message: "삭제 할래?", preferredStyle: .alert)
+
+            // Configure Remove Item Action
+            let deleteAction = UIAlertAction(title: "삭제", style: .destructive, handler: { action in
+        
+                    guard let id = self.coreData[indexPath.row].id else { return }
+                    ImageFileManager.shared.deleteImageFromLocal(named: id + ".png")
+                    CoreDataManager.shared.deleteCoreData(ID: id)
+                    self.coreData.remove(at: indexPath.item)
+                    self.saveListCollectionView.deleteItems(at: [indexPath])
+                    self.saveListCollectionView.reloadData()
+                    
+                    print(self.coreData)
+                   print("Cell Removed")
+//                self.saveListCollectionView!.reloadData()
+            })
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: { acion in
+                print("Cancel actionsheet")
+            })
+            alertActionCell.addAction(deleteAction)
+            alertActionCell.addAction(cancelAction)
+            self.present(alertActionCell, animated: true, completion: nil)
+    }
+}
+
