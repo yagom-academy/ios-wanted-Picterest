@@ -28,6 +28,8 @@ class SaveTableViewCell: UITableViewCell {
 extension SaveTableViewCell {
     
     func layout() {
+        labelStackView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        
         [
             photoImageView, labelStackView
         ].forEach {

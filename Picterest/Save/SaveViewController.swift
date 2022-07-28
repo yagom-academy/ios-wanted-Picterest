@@ -110,12 +110,8 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 400
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6))
+        saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 10, bottom: 6, right: 10))
     }
 }

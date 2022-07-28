@@ -127,13 +127,16 @@ extension ImageViewController: SavePhotoImageDelegate {
         let id = photoList[indexPath.row].id
         var text: String!
         let originUrl = photoList[indexPath.row].urls.small
-        let location = PhotoFileManager.shared.createPhotoFile(viewModel.loadImage(originUrl), id).absoluteString
+        let ratio = photoList[indexPath.row].height / photoList[indexPath.row].width
         
         let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         let ok = UIAlertAction(title: "저장", style: .default) { ok in
+            sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            
+            let location = PhotoFileManager.shared.createPhotoFile(self.viewModel.loadImage(originUrl), id).absoluteString
             text = alert.textFields?[0].text
-            CoreDataManager.shared.createSavePhoto(id, text, originUrl, location)
+            CoreDataManager.shared.createSavePhoto(id, text, originUrl, location, ratio)
         }
         alert.addTextField()
         alert.addAction(cancel)
