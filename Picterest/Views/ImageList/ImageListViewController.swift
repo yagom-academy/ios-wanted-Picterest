@@ -34,6 +34,11 @@ class ImageListViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.listUpdate()
+    }
+    
     private func setDelegate() {
         picterestCollectionView.delegate = self
         picterestCollectionView.dataSource = self
