@@ -60,7 +60,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        imageView.image = UIImage(systemName: "photo.on.rectangle")
+        imageView.image = nil
     }
 }
 

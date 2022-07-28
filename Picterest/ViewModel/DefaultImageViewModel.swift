@@ -9,6 +9,8 @@ import UIKit
 import Combine
 
 class DefaultImageViewModel {
+    
+    // MARK: - Properties
     let updateImages = PassthroughSubject<Void, Never>()
     let storageManager: StorageManager
     let coreDataManager: CoreDataManager
@@ -22,6 +24,7 @@ class DefaultImageViewModel {
         images.count
     }
     
+    // MARK: - LifeCycle
     init(
         storageManager: StorageManager,
         coreDataManager: CoreDataManager

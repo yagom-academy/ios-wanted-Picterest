@@ -10,13 +10,16 @@ import Combine
 
 class RandomImageCollectionViewManager: NSObject {
     
-    let randomImageViewModel: RandomImageViewModelInterface
+    // MARK: - Properties
+    private let randomImageViewModel: RandomImageViewModelInterface
     let showAlert = PassthroughSubject<UIAlertController, Never>()
     
+    // MARK: - LifeCycle
     init(viewModel: RandomImageViewModelInterface) {
         self.randomImageViewModel = viewModel
     }
     
+    // MARK: - Method
     private func bindingCellStarButtonTapped(
         cell: ImageCollectionViewCell,
         index: Int

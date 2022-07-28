@@ -56,23 +56,6 @@ final class RandomImageViewController: UIViewController {
     }
 }
 
-// MARK: - binding
-extension RandomImageViewController {
-    private func bindingUpdateRandomImages() {
-        randomImageViewModel?.updateImages
-            .sink { [weak self] in
-                self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
-            }.store(in: &subscriptions)
-    }
-    
-    private func bindingCollectionViewManager() {
-        collectionViewManager?.showAlert
-            .sink { [weak self] alert in
-                self?.present(alert, animated: true)
-            }.store(in: &subscriptions)
-    }
-}
-
 // MARK: - UI
 extension RandomImageViewController {
     private func configureNavigation() {
@@ -91,5 +74,23 @@ extension RandomImageViewController {
             randomImageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             randomImageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
+    }
+}
+
+
+// MARK: - binding
+extension RandomImageViewController {
+    private func bindingUpdateRandomImages() {
+        randomImageViewModel?.updateImages
+            .sink { [weak self] in
+                self?.randomImageCollectionView.reloadSections(IndexSet(0...0))
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingCollectionViewManager() {
+        collectionViewManager?.showAlert
+            .sink { [weak self] alert in
+                self?.present(alert, animated: true)
+            }.store(in: &subscriptions)
     }
 }

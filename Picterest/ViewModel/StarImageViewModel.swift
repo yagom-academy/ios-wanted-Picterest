@@ -5,7 +5,6 @@
 //  Created by J_Min on 2022/07/26.
 //
 
-import Foundation
 import Combine
 import UIKit
 
@@ -25,6 +24,7 @@ final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterfa
     private var lastIndex: Int = 0
     private var subscriptions = Set<AnyCancellable>()
     
+    // MARK: - LifeCycle
     override init(
         storageManager: StorageManager,
         coreDataManager: CoreDataManager
@@ -59,7 +59,7 @@ extension StarImageViewModel {
     }
 }
 
-// MARK: - StorageManager
+// MARK: - Storage
 extension StarImageViewModel {
     
     /// 스토리지에서 이미지 삭제하기
@@ -71,7 +71,7 @@ extension StarImageViewModel {
     }
 }
 
-// MARK: - CoreDataManager
+// MARK: - CoreData
 extension StarImageViewModel {
     private func deleteImageInfoToCoreData() {
         guard let starImage = images[lastIndex] as? StarImage else { return }

@@ -9,13 +9,17 @@ import UIKit
 import Combine
 
 class StarImageCollectionViewManager: NSObject {
+    
+    // MARK: - Properties
     private let starImageViewModel: StarImageViewModelInterface
     let showAlert = PassthroughSubject<UIAlertController, Never>()
     
+    // MARK: - LifeCycle
     init(viewModel: StarImageViewModelInterface) {
         self.starImageViewModel = viewModel
     }
     
+    // MARK: - Method
     private func bindingCellStarButtonTapped(
         cell: ImageCollectionViewCell,
         index: Int

@@ -58,6 +58,45 @@ final class StarImageViewController: UIViewController {
     }
 }
 
+// MARK: - UI
+extension StarImageViewController {
+    
+    private func configureNavigation() {
+        navigationItem.title = "Star Images"
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func configureSubView() {
+        view.addSubview(starImageCollectionView)
+    }
+    
+    private func setConstraintsOfRandomImageCollectionView() {
+        NSLayoutConstraint.activate([
+            starImageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            starImageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            starImageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            starImageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+}
+
+// MARK: - Binding
+extension StarImageViewController {
+    private func bindingViewModel() {
+        starImageViewModel?.updateImages
+            .sink { [weak self] in
+                self?.starImageCollectionView.reloadSections(IndexSet(0...0))
+            }.store(in: &subscriptions)
+    }
+    
+    private func bindingCollectionViewManager() {
+        collectionViewManager?.showAlert
+            .sink { [weak self] alert in
+                self?.present(alert, animated: true)
+            }.store(in: &subscriptions)
+    }
+}
+
 // MARK: - Method
 extension StarImageViewController {
     private func setLongPressGestureToStarImageCollectionView() {
@@ -94,44 +133,5 @@ extension StarImageViewController {
                 self.present(alert, animated: true)
             }
         }
-    }
-}
-
-// MARK: - Binding
-extension StarImageViewController {
-    private func bindingViewModel() {
-        starImageViewModel?.updateImages
-            .sink { [weak self] in
-                self?.starImageCollectionView.reloadSections(IndexSet(0...0))
-            }.store(in: &subscriptions)
-    }
-    
-    private func bindingCollectionViewManager() {
-        collectionViewManager?.showAlert
-            .sink { [weak self] alert in
-                self?.present(alert, animated: true)
-            }.store(in: &subscriptions)
-    }
-}
-
-// MARK: - UI
-extension StarImageViewController {
-    
-    private func configureNavigation() {
-        navigationItem.title = "Star Images"
-        navigationController?.navigationBar.prefersLargeTitles = true
-    }
-    
-    private func configureSubView() {
-        view.addSubview(starImageCollectionView)
-    }
-    
-    private func setConstraintsOfRandomImageCollectionView() {
-        NSLayoutConstraint.activate([
-            starImageCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            starImageCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            starImageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            starImageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
     }
 }

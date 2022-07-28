@@ -15,12 +15,16 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
+    
+    // MARK: - Properties
     private let session: URLSession
     
+    // MARK: - LifeCycle
     init(configuration: URLSessionConfiguration = .default) {
         self.session = URLSession(configuration: configuration)
     }
     
+    // MARK: - Method
     func fetchRandomImageInfo<T>(resource: Resource<T>) -> AnyPublisher<T, Error> {
         guard let request = resource.urlRequest else {
             return Fail(error: NetworkError.failCreateRequest)
@@ -40,6 +44,7 @@ final class NetworkManager {
             .eraseToAnyPublisher()
     }
     
+    // MARK: - TypeMethod
     static func fetchImage(urlString: String, completion: @escaping (UIImage?) -> Void) {
         
         if let image = ImageCacheManager.shared.getImage(urlString) {

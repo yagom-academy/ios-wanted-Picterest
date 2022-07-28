@@ -24,7 +24,7 @@ final class StorageManager {
     // MARK: - Method
     private func createDirectory() {
         let directoryPath: URL = defaultDocumentPath.appendingPathComponent("starImage")
-        print(directoryPath)
+        
         do {
             try fileManager.createDirectory(at: directoryPath, withIntermediateDirectories: false, attributes: nil)
         } catch let error {
@@ -33,6 +33,32 @@ final class StorageManager {
         self.directoryPath = directoryPath
     }
     
+    func saveImage(image: UIImage, id: String) {
+        guard let data = uiImageToPngData(image),
+              let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
+        do {
+            try data.write(to: imagePath)
+            saveSuccess.send(imagePath)
+        } catch let error {
+            print(String(describing: error))
+        }
+    }
+    
+    func deleteImage(id: String) {
+        guard let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
+        do {
+            try fileManager.removeItem(at: imagePath)
+        } catch let error {
+            print(String(describing: error))
+        }
+        deleteSuccess.send()
+    }
+    
+    private func uiImageToPngData(_ image: UIImage) -> Data? {
+        return image.pngData()
+    }
+    
+    // MARK: - TypeMethod
     static func getImage(starImage: StarImage, completion: @escaping (UIImage?) -> Void) {
         
         let fileManager = FileManager.default
@@ -58,30 +84,5 @@ final class StorageManager {
                 }
             }
         }
-    }
-    
-    func saveImage(image: UIImage, id: String) {
-        guard let data = uiImageToPngData(image),
-              let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
-        do {
-            try data.write(to: imagePath)
-            saveSuccess.send(imagePath)
-        } catch let error {
-            print(String(describing: error))
-        }
-    }
-    
-    func deleteImage(id: String) {
-        guard let imagePath = directoryPath?.appendingPathComponent("\(id).png") else { return }
-        do {
-            try fileManager.removeItem(at: imagePath)
-            deleteSuccess.send()
-        } catch let error {
-            print(String(describing: error))
-        }
-    }
-    
-    private func uiImageToPngData(_ image: UIImage) -> Data? {
-        return image.pngData()
     }
 }

@@ -8,6 +8,8 @@
 import Foundation
 
 struct Resource<T: Codable> {
+    
+    // MARK: - Properties
     var base: String
     var path: String
     var params: [String: String]
@@ -29,6 +31,7 @@ struct Resource<T: Codable> {
         return request
     }
     
+    // MARK: - LifeCycle
     init(
         base: String = "https://api.unsplash.com",
         path: String = "/photos",

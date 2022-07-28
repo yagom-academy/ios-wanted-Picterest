@@ -15,8 +15,8 @@ protocol RandomImageCollectionViewLayoutDelegate: AnyObject {
 
 final class RandomImageCollectionViewLayout: UICollectionViewLayout {
     
+    // MARK: - Properties
     weak var delegate: RandomImageCollectionViewLayoutDelegate?
-    
     private let numberOfColumns: Int = 2
     private let cellPadding: CGFloat = 5
     private var imageHeight: CGFloat = 0
@@ -31,6 +31,7 @@ final class RandomImageCollectionViewLayout: UICollectionViewLayout {
         return CGSize(width: imageWidth, height: imageHeight)
     }
     
+    // MARK: - Method
     override func prepare() {
         guard let collectionView = collectionView else { return }
         

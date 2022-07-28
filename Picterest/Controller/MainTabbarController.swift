@@ -19,6 +19,7 @@ final class MainTabbarController: UITabBarController {
         configureTabbar()
     }
     
+    // MARK: - Method
     private func configureTabbar() {
         let networkManager = NetworkManager()
         let storageManager = StorageManager()
@@ -61,6 +62,7 @@ final class MainTabbarController: UITabBarController {
     }
 }
 
+// MARK: - UITabBarControllerDelegate
 extension MainTabbarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         if item.title == "Images" {

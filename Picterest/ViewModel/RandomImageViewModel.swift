@@ -31,6 +31,7 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
     private var starImages = [StarImage]()
     private var page: Int = 1
 
+    // MARK: - LifeCycle
     init(
         networkManager: NetworkManager,
         storageManager: StorageManager,
@@ -46,7 +47,6 @@ final class RandomImageViewModel: DefaultImageViewModel, RandomImageViewModelInt
 
 // MARK: - Method
 extension RandomImageViewModel {
-    
     /// RandomImage 받아오기
     func fetchNewRandomImages() {
         let resource = Resource<[RandomImageEntity]>(
