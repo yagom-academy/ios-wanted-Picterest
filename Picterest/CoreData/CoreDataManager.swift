@@ -63,7 +63,7 @@ class CoreDataManager {
         mainContext.performAndWait {
             let request: NSFetchRequest<Picture> = Picture.fetchRequest()
             do {
-                try mainContext.fetch(request).forEach{
+                try mainContext.fetch(request).forEach {
                     guard let id = $0.id else { return }
                     pictureSet[id] = $0
                 }
@@ -92,6 +92,5 @@ class CoreDataManager {
             }
         }
     }
-    
     
 }
