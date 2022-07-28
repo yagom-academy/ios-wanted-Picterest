@@ -15,8 +15,8 @@ final class StarImageViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionView.dataSource = collectionViewManager
+        collectionView.delegate = collectionViewManager
         collectionView.register(ImageCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
         collectionView.contentInset = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
@@ -29,6 +29,7 @@ final class StarImageViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var longPressCell: UICollectionViewCell?
     private var longPressStartIndexPath: IndexPath?
+    private lazy var collectionViewManager = StarImageCollectionViewManager(viewModel: starImageViewModel!)
     
     // MARK: - LifeCycle
     init(viewModel: StarImageViewModelInterface) {
@@ -47,6 +48,7 @@ final class StarImageViewController: UIViewController {
         configureSubView()
         setConstraintsOfRandomImageCollectionView()
         bindingViewModel()
+        bindingCollectionViewManager()
         starImageViewModel?.fetcnStarImages()
         setLongPressGestureToStarImageCollectionView()
     }
@@ -54,18 +56,6 @@ final class StarImageViewController: UIViewController {
 
 // MARK: - Method
 extension StarImageViewController {
-    private func showImageDeleteAlert(_ index: Int) {
-        let alert = UIAlertController(title: nil, message: "사진을 삭제하겠습니까?", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-            self?.starImageViewModel?.deleteImageToStorage(index: index)
-        }
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true)
-    }
-    
     private func setLongPressGestureToStarImageCollectionView() {
         let longPressGesture = UILongPressGestureRecognizer(
             target: self,
@@ -96,10 +86,9 @@ extension StarImageViewController {
                 self.longPressCell?.transform = .identity
             }
             if longPressStartIndexPath == indexPath {
-                showImageDeleteAlert(indexPath.row)
+                guard let alert = starImageViewModel?.showImageDeleteAlert(indexPath.row) else { return }
+                self.present(alert, animated: true)
             }
-        } else {
-            return
         }
     }
 }
@@ -113,15 +102,11 @@ extension StarImageViewController {
             }.store(in: &subscriptions)
     }
     
-    private func bindingCellStarButtonTapped(
-        cell: ImageCollectionViewCell,
-        index: Int
-    ) {
-        cell.starButtonTapped = { [weak self] button, image in
-            if button.isSelected {
-                self?.showImageDeleteAlert(index)
-            }
-        }
+    private func bindingCollectionViewManager() {
+        collectionViewManager.showAlert
+            .sink { [weak self] alert in
+                self?.present(alert, animated: true)
+            }.store(in: &subscriptions)
     }
 }
 
@@ -144,35 +129,5 @@ extension StarImageViewController {
             starImageCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             starImageCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-    }
-}
-
-// MARK: - UICollectionViewDataSource
-extension StarImageViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return starImageViewModel?.imagesCount ?? 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        
-        guard let starImage = starImageViewModel?.starImageAtIndex(index: indexPath.row) else {
-            return UICollectionViewCell()
-        }
-        cell.configureCell(with: starImage)
-        bindingCellStarButtonTapped(cell: cell, index: indexPath.row)
-        
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegateFlowLayout
-extension StarImageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let starImage = starImageViewModel?.starImageAtIndex(index: indexPath.row) else { return .zero }
-        let width = (collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right))
-        let height = width * starImage.imageRatio
-        return CGSize(width: width, height: height)
     }
 }

@@ -16,6 +16,7 @@
 		0EE61E4B2892268C00096DCF /* DefaultImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE61E4A2892268C00096DCF /* DefaultImageViewModel.swift */; };
 		0EE61E4E2892340C00096DCF /* StarImage+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE61E4C2892340C00096DCF /* StarImage+CoreDataClass.swift */; };
 		0EE61E522892523700096DCF /* RandomImageCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE61E512892523700096DCF /* RandomImageCollectionViewManager.swift */; };
+		0EE61E542892572D00096DCF /* StarImageCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE61E532892572D00096DCF /* StarImageCollectionViewManager.swift */; };
 		0EFF10DA288E4A9400CE8957 /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */; };
 		0EFF10DC288E4AC700CE8957 /* RandomImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */; };
 		0EFF10DE288E4AEC00CE8957 /* StarImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */; };
@@ -45,6 +46,7 @@
 		0EE61E4A2892268C00096DCF /* DefaultImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultImageViewModel.swift; sourceTree = "<group>"; };
 		0EE61E4C2892340C00096DCF /* StarImage+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StarImage+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0EE61E512892523700096DCF /* RandomImageCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageCollectionViewManager.swift; sourceTree = "<group>"; };
+		0EE61E532892572D00096DCF /* StarImageCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageCollectionViewManager.swift; sourceTree = "<group>"; };
 		0EFF10D9288E4A9400CE8957 /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		0EFF10DB288E4AC700CE8957 /* RandomImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomImageViewController.swift; sourceTree = "<group>"; };
 		0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarImageViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				0EFF10DD288E4AEC00CE8957 /* StarImageViewController.swift */,
+				0EE61E532892572D00096DCF /* StarImageCollectionViewManager.swift */,
 			);
 			path = StarImageViewController;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				0EFF10E9288E5D5A00CE8957 /* NetworkManager.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				0EFF10E7288E59A900CE8957 /* Resource.swift in Sources */,
+				0EE61E542892572D00096DCF /* StarImageCollectionViewManager.swift in Sources */,
 				0EFF10FC288EA64900CE8957 /* RandomImageCollectionViewLayout.swift in Sources */,
 				0EFF10F5288E8B9500CE8957 /* RandomImageViewModel.swift in Sources */,
 				0E652005288FB23300D8F4A7 /* StarImageEntity.swift in Sources */,

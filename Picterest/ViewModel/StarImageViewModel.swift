@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 protocol StarImageViewModelInterface {
     var updateImages: PassthroughSubject<Void, Never> { get }
@@ -15,6 +16,7 @@ protocol StarImageViewModelInterface {
     func fetcnStarImages()
     func deleteImageToStorage(index: Int)
     func starImageAtIndex(index: Int) -> StarImage
+    func showImageDeleteAlert(_ index: Int) -> UIAlertController 
 }
 
 final class StarImageViewModel: DefaultImageViewModel, StarImageViewModelInterface {
@@ -42,6 +44,18 @@ extension StarImageViewModel {
     func starImageAtIndex(index: Int) -> StarImage {
         guard let starImage = images[index] as? StarImage else { return StarImage() }
         return starImage
+    }
+    
+    func showImageDeleteAlert(_ index: Int) -> UIAlertController {
+        let alert = UIAlertController(title: nil, message: "사진을 삭제하겠습니까?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.deleteImageToStorage(index: index)
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        return alert
     }
 }
 
