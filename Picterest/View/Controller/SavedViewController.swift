@@ -17,6 +17,8 @@ class SavedViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.reuseIdentifier)
         collectionView.register(SavedCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SavedCollectionHeaderView.identifier)
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(deleteItem(_:)))
+        collectionView.addGestureRecognizer(longPressGesture)
         return collectionView
     }()
     
@@ -24,11 +26,6 @@ class SavedViewController: UIViewController {
         super.viewDidLoad()
         configureSubviews()
         viewModel.fetchSavedData()
-        viewModel.scrollViewUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
     }
     
     func configureSubviews() {
@@ -53,8 +50,6 @@ extension SavedViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell()}
         let savedData = viewModel.imageAtIndex(indexPath.row)
         cell.configureSavedCollectionCell(with: savedData, memo: savedData.memo)
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(deleteItem(_:)))
-        cell.addGestureRecognizer(longPressGesture)
         return cell
     }
     
