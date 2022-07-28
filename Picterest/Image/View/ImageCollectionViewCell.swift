@@ -7,9 +7,17 @@
 
 import UIKit
 
+protocol SavePhotoImageDelegate: AnyObject {
+    func tapStarButton(sender: UIButton, indexPath: IndexPath)
+}
+
 class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCollectionViewCell"
+    
+    weak var delegate: SavePhotoImageDelegate?
+    
+    private var currentIndexPath: IndexPath?
     
     let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
@@ -23,7 +31,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
     func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
         layout()
         loadImage(photo)
+        addTargetStarButton()
         
+        currentIndexPath = indexPath
         labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
     }
 }
@@ -62,5 +72,14 @@ extension ImageCollectionViewCell {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func addTargetStarButton() {
+        labelStackView.starButton.addTarget(self, action: #selector(tapStarButton), for: .touchUpInside)
+    }
+
+    @objc func tapStarButton() {
+        guard let currentIndexPath = currentIndexPath else { return }
+        delegate?.tapStarButton(sender: labelStackView.starButton, indexPath: currentIndexPath)
     }
 }
