@@ -24,15 +24,14 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var topStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [starButton, memoLabel])
+        let stackView = UIStackView(
+            arrangedSubviews: [starButton, memoLabel]
+        )
         stackView.alpha = Style.alpha
         stackView.backgroundColor = .black
         stackView.distribution = .equalSpacing
-        stackView.layoutMargins = UIEdgeInsets(top: 0,
-                                               left: Style.stackViewPadding,
-                                               bottom: 0,
-                                               right: Style.stackViewPadding)
         stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = Style.stackViewInsets
         return stackView
     }()
     
@@ -73,7 +72,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     @objc func tappedStarButton(_ button: UIButton) {
         button.isSelected.toggle()
-        print("button.isSelected:\(button.isSelected)")
     }
     
 }
@@ -115,20 +113,16 @@ extension PhotoListCollectionViewCell {
     private func setupConstraintsOfUnsplashImageView() {
         NSLayoutConstraint.activate([
             unsplashImageView.leadingAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.leadingAnchor,
-                constant: Style.padding
+                equalTo: self.safeAreaLayoutGuide.leadingAnchor
             ),
             unsplashImageView.topAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.topAnchor,
-                constant: Style.padding
+                equalTo: self.safeAreaLayoutGuide.topAnchor
             ),
             unsplashImageView.trailingAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.trailingAnchor,
-                constant: -Style.padding
+                equalTo: self.safeAreaLayoutGuide.trailingAnchor
             ),
             unsplashImageView.bottomAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.bottomAnchor,
-                constant: -Style.padding
+                equalTo: self.safeAreaLayoutGuide.bottomAnchor
             )
         ])
     }
@@ -144,7 +138,7 @@ extension PhotoListCollectionViewCell {
             topStackView.trailingAnchor.constraint(
                 equalTo: unsplashImageView.safeAreaLayoutGuide.trailingAnchor
             ),
-            topStackView.heightAnchor.constraint(equalToConstant: 40)
+            topStackView.heightAnchor.constraint(equalToConstant: Style.stackViewHeight)
         ])
     }
     
@@ -179,10 +173,12 @@ extension PhotoListCollectionViewCell {
     private enum Style {
         static let padding: CGFloat = 16
         static let cornerRadius: CGFloat = 10
-        static let stackViewPadding: CGFloat = 8
         static let alpha: CGFloat = 0.6
+        static let stackViewHeight: CGFloat = 40
         
         static let starImage = UIImage(systemName: "star")
         static let selectedStarImage = UIImage(systemName: "star.fill")
+        static let stackViewInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        
     }
 }

@@ -20,12 +20,14 @@ class PhotoListViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = CustomCollectionViewLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: layout
+        )
         collectionView.register(
             PhotoListCollectionViewCell.self,
             forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier
         )
-        collectionView.backgroundColor = .brown
         return collectionView
     }()
     
@@ -132,10 +134,11 @@ extension PhotoListViewController: UICollectionViewDataSource {
         }
         
         let photo: PhotoListResult = photos[indexPath.item]
+        let imageURL: String = photos[indexPath.item].urls.small
         
         cell.setupCell(photo: photo, index: indexPath.item)
         
-        URLImageProvider?.fetchImage(from: photo.urls.small, completion: { result in
+        URLImageProvider?.fetchImage(from: imageURL, completion: { result in
             switch result {
             case .success(let image):
                 cell.setupImage(image)
