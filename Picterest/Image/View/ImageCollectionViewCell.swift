@@ -28,12 +28,13 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
+    func fetchData(_ photo: Photo, _ indexPath: IndexPath, _ isStarButtonSelected: Bool) {
         layout()
         loadImage(photo)
         addTargetStarButton()
         
         currentIndexPath = indexPath
+        labelStackView.starButton.isSelected = isStarButtonSelected
         labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
     }
 }
@@ -85,7 +86,7 @@ extension ImageCollectionViewCell {
 
     @objc func tapStarButton() {
         guard let currentIndexPath = currentIndexPath else { return }
-        labelStackView.starButton.isSelected = true
+        labelStackView.starButton.isSelected = !labelStackView.starButton.isSelected
         delegate?.tapStarButton(sender: labelStackView.starButton, indexPath: currentIndexPath)
     }
 }
