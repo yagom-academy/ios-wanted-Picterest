@@ -11,6 +11,8 @@ class ImageRepositoryViewController: UIViewController {
     
     private let viewModel = ImageRepositoryViewModel()
     
+    private var longpressGesture: UILongPressGestureRecognizer?
+    
     private let picturesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -23,6 +25,7 @@ class ImageRepositoryViewController: UIViewController {
         super.viewDidLoad()
         setDelegate()
         setLayout()
+        setLongpressGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,8 +57,44 @@ class ImageRepositoryViewController: UIViewController {
                 self?.picturesCollectionView.reloadData()
             }
         }
+        
+        viewModel.imageListUpdateAfterDelete = { [weak self] in
+            self?.picturesCollectionView.reloadData()
+        }
+        
         viewModel.list()
     }
+    
+    private func setLongpressGesture() {
+        longpressGesture = UILongPressGestureRecognizer(target: self, action: #selector(pictureLongPresshandler))
+        guard let longpressGesture = longpressGesture else { return }
+        picturesCollectionView.addGestureRecognizer(longpressGesture)
+        
+    }
+    
+    @objc func pictureLongPresshandler(guesture: UILongPressGestureRecognizer) {
+        let position = guesture.location(in: picturesCollectionView)
+        
+        guard let indexPath = picturesCollectionView.indexPathForItem(at: position) else { return }
+        guard let cell = picturesCollectionView.cellForItem(at: indexPath) else { return }
+        
+        switch guesture.state {
+        case .began:
+            UIView.animate(withDuration: 0.2) {
+                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }
+            UIView.animate(withDuration: 0.2) {
+                cell.transform = CGAffineTransform.identity
+            } completion: { _ in
+                self.setImageDeleteAlert(indexPath: indexPath)
+            }
+        default:
+            UIView.animate(withDuration: 0.2) {
+                cell.transform = CGAffineTransform.identity
+            }
+        }
+    }
+    
 }
 
 extension ImageRepositoryViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -76,36 +115,18 @@ extension ImageRepositoryViewController: UICollectionViewDataSource, UICollectio
         return CGSize(width: view.frame.width * 0.9, height: viewModel.imageSize(at: indexPath.row) * 2)
     }
     
-    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
-    
-        return UIContextMenuConfiguration(identifier: NSIndexPath(item: indexPath.item, section: indexPath.section), previewProvider: nil) { suggestedActions in
-            let deleteAction = self.deleteAction(indexPath)
-            return UIMenu(title: "", children: [deleteAction])
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        
-        guard let indexPath = configuration.identifier as? IndexPath,
-              let cell = collectionView.cellForItem(at: indexPath) else { return nil }
-        
-        let parameters = UIPreviewParameters()
-        parameters.backgroundColor = .clear
-        parameters.visiblePath = UIBezierPath(roundedRect: cell.contentView.bounds, cornerRadius: cell.contentView.layer.cornerRadius)
-
-        return UITargetedPreview(view: cell, parameters: parameters)
-    }
-    
 }
 
 extension ImageRepositoryViewController {
-    func deleteAction(_ indexPath: IndexPath) -> UIAction {
-        let deleteAction = UIAction(title: "삭제",
-                                    image: UIImage(systemName: "trash"),
-                                    attributes: .destructive) { [self] action in
-            picturesCollectionView.deleteItems(at: [indexPath])
+    
+    func setImageDeleteAlert(indexPath: IndexPath) {
+        let alert = UIAlertController(title: "삭제 하시겠습니까?.", message: nil, preferredStyle: .alert)
+        let cancleAction = UIAlertAction(title: "아니오", style: .cancel)
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [self] _ in
             viewModel.deleteImage(at: indexPath)
         }
-        return deleteAction
+        alert.addAction(cancleAction)
+        alert.addAction(deleteAction)
+        self.present(alert, animated: true)
     }
 }
