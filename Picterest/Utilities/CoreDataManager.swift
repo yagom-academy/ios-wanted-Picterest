@@ -29,15 +29,6 @@ final class CoreDataManager {
 }
 
 extension CoreDataManager {
-    
-    func makeEmptyObject() -> NSManagedObject? {
-        guard let context = context,
-              let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return nil }
-
-        let emptyObject = NSManagedObject(entity: entityDescription, insertInto: context)
-        return emptyObject
-    }
-    
     func save(id: String, originalURL: String, memo: String, savedLocation: String) {
         guard let context = context,
               let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
@@ -75,6 +66,11 @@ extension CoreDataManager {
     func remove(_ item: NSManagedObject) {
         guard let context = context else { return }
         context.delete(item)
-        print("remove Success")
+        do {
+            try context.save()
+        } catch {
+            print("remove error")
+        }
+        
     }
 }

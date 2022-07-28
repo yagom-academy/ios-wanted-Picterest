@@ -86,8 +86,8 @@ extension ImagesViewController: UICollectionViewDelegate {
 
 }
 
-extension ImagesViewController: ImageCollectionViewCellDelegate {
-    func alert(from cell: ImagesCollectionViewCell) {
+extension ImagesViewController: CollectionViewCellDelegate {
+    func alert(from cell: UICollectionViewCell) {
         let title = "Picterest"
         let message = "사진을 다운 받으시겠습니까?"
         let firstActionTitle = "취소"
@@ -100,6 +100,7 @@ extension ImagesViewController: ImageCollectionViewCellDelegate {
             return
         }
     
+        guard let cell = cell as? ImagesCollectionViewCell else { return }
         let alertAction = alertController.alertActionInImagesViewController(cell: cell, imageInformation: imageInformation)
         
         alertController.addAlertAction(title: firstActionTitle, style: .default)

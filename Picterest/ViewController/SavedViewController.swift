@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SavedViewController: UIViewController {
+final class SavedViewController: UIViewController {
     private let reuseIdentifier = "SavedCell"
     private let viewModel = SavedViewModel()
     private var cancellable = Set<AnyCancellable>()
@@ -60,6 +60,7 @@ extension SavedViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
+        cell.delegate = self
         cell.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
         cell.view.textLabel.text = memo
         cell.view.saveButton.tintColor = .yellow
@@ -69,9 +70,27 @@ extension SavedViewController: UICollectionViewDataSource {
     }
 }
 
-extension SavedViewController: ImageCollectionViewCellDelegate {
-    func alert(from cell: ImagesCollectionViewCell) {
-        print("alert")
+extension SavedViewController: CollectionViewCellDelegate {
+    func alert(from cell: UICollectionViewCell) {
+        let title = "Picterest"
+        let message = "사진을 삭제하시겠습니까?"
+        let firstActionTitle = "취소"
+        let secondActionTitle = "확인"
+        
+        let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert)
+        
+        guard let index = self.collectionView.indexPath(for: cell)?.row,
+              let imageData = self.viewModel.getImage(at: index) else {
+            return
+        }
+    
+        guard let cell = cell as? SavedCollectionViewCell else { return }
+        let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData)
+        
+        alertController.addAlertAction(title: firstActionTitle, style: .default)
+        alertController.addAlertAction(title: secondActionTitle, style: .default, handler: alertAction)
+
+        present(alertController, animated: true)
     }
     
 }
@@ -90,3 +109,4 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 500, height: 500)
     }
 }
+

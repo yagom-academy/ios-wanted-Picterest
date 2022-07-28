@@ -52,4 +52,20 @@ extension UIAlertController {
         
         return actionHandler
     }
+    
+    func alertActionInSavedViewController(cell: SavedCollectionViewCell, imageData: NSManagedObject) -> ((UIAlertAction) -> Void) {
+        
+        let imageFileManager = ImageFileManager.shared
+        let coreDataManager = CoreDataManager.shared
+        
+        let actionHandler: (UIAlertAction) -> Void = { (action) -> Void in
+            
+            guard let id = imageData.value(forKey: "id") as? NSString else { return }
+            imageFileManager.remove(id)
+            coreDataManager.remove(imageData)
+            print("remove success")
+        }
+        
+        return actionHandler
+    }
 }

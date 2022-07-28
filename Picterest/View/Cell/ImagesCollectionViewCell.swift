@@ -7,8 +7,8 @@
 
 import UIKit
 
-protocol ImageCollectionViewCellDelegate: AnyObject {
-    func alert(from cell: ImagesCollectionViewCell)
+protocol CollectionViewCellDelegate: AnyObject {
+    func alert(from cell: UICollectionViewCell)
 }
 
 final class ImagesCollectionViewCell: UICollectionViewCell {
@@ -29,7 +29,7 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
         autoLayout()
     }
     
-    weak var delegate: ImageCollectionViewCellDelegate?
+    weak var delegate: CollectionViewCellDelegate?
     
     override func prepareForReuse() {
         super.prepareForReuse()

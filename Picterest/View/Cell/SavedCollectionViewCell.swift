@@ -25,6 +25,8 @@ final class SavedCollectionViewCell: UICollectionViewCell {
         autoLayout()
     }
     
+    weak var delegate: CollectionViewCellDelegate?
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         view.imageView.image = nil
@@ -32,6 +34,9 @@ final class SavedCollectionViewCell: UICollectionViewCell {
     }
     
     private func setView() {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressImageView))
+        view.imageView.isUserInteractionEnabled = true
+        view.imageView.addGestureRecognizer(longPressGestureRecognizer)
         self.addSubview(view)
     }
     
@@ -42,5 +47,12 @@ final class SavedCollectionViewCell: UICollectionViewCell {
             view.topAnchor.constraint(equalTo: self.topAnchor),
             view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
+    }
+}
+
+extension SavedCollectionViewCell {
+    
+    @objc func longPressImageView() {
+        delegate?.alert(from: self)
     }
 }
