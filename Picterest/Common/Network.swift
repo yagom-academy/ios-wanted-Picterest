@@ -12,17 +12,22 @@ enum NetworkError: Error {
 }
 
 class Network {
-    static let shard = Network()
-    private init() {}
+    private let page: Int
+    
+    init(page: Int) {
+        self.page = page
+    }
+    
     private let clientID = "7EoAQCEONksYSL9jv2U0iSUGUzpTffG6_YrGTdTXF2o"
-    private let count = 15
-    private let path = "https://api.unsplash.com/photos/random"
+    private let perPage = 15
+    private let path = "https://api.unsplash.com/photos"
     
     func get(completion: @escaping (Result<[Photo], NetworkError>) -> Void) {
         var urlComponent = URLComponents(string: path)
         urlComponent?.setQueryItems(with: [
             "client_id": clientID,
-            "count": "\(count)"
+            "page": "\(page)",
+            "per_page": "\(perPage)"
         ])
         
         guard let url = urlComponent?.url else {

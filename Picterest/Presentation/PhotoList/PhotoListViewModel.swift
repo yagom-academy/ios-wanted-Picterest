@@ -24,7 +24,7 @@ class PhotoListViewModel {
     }
     
     func fetchPhotoList() {
-        Network.shard.get { result in
+        Network(page: 1).get { result in
             switch result {
             case .success(let photos):
                 self.photoList.value = photos
