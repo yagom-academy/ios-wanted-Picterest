@@ -7,11 +7,21 @@
 
 import UIKit
 
+protocol CellActionDelegate: AnyObject {
+    
+    func starButtonTapped()
+    
+}
+
 class PhotoListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Type Properties
     
     static let identifier: String = "PhotoListCollectionViewCell"
+    
+    // MARK: - Properties
+    
+    weak var cellDelegate: CellActionDelegate?
     
     // MARK: - UIProperties
     
@@ -19,7 +29,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Style.cornerRadius
         imageView.layer.masksToBounds = true
-        
         return imageView
     }()
     
@@ -40,9 +49,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         button.setImage(Style.starImage, for: .normal)
         button.setImage(Style.selectedStarImage, for: .selected)
         button.tintColor = .white
-        button.addTarget(self,
-                         action: #selector(tappedStarButton(_:)),
-                         for: .touchUpInside)
         return button
     }()
     
@@ -59,6 +65,8 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupView()
         setupConstraints()
+        
+        self.starButton.addTarget(cellDelegate, action: #selector(starTapped), for: .touchUpInside)
     }
     
     @available(*, unavailable, message: "This initializer is not available.")
@@ -66,12 +74,11 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
         setupView()
         setupConstraints()
+        
     }
     
-    // MARK: - @objc
-    
-    @objc func tappedStarButton(_ button: UIButton) {
-        button.isSelected.toggle()
+    @objc func starTapped() {
+        cellDelegate?.starButtonTapped()
     }
     
 }
@@ -87,17 +94,15 @@ extension PhotoListCollectionViewCell {
     }
     
     func setupCell(photo: PhotoListResult, index: Int) {
-        memoLabel.text = "\(index)번째 사진"
+        memoLabel.text = "\(index + 1)번째 사진"
     }
     
     private func setupView() {
-        [unsplashImageView].forEach {
+        [unsplashImageView,
+        topStackView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
-        
-        unsplashImageView.addSubview(topStackView)
-        topStackView.translatesAutoresizingMaskIntoConstraints = false
         
         [starButton,
          memoLabel].forEach {

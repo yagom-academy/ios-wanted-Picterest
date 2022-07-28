@@ -9,7 +9,7 @@ import Foundation
 
 protocol PhotoListAPIProviderType {
     
-    func fetchPhotoList(
+    func fetchPhotoList(with page: Int,
         completion: @escaping (Result<[PhotoListResult], Error>
         ) -> Void)
     
@@ -19,10 +19,12 @@ struct PhotoListAPIProvider: PhotoListAPIProviderType {
     
     let networkRequester: NetworkRequesterType
     
-    func fetchPhotoList(
+
+    func fetchPhotoList(with page: Int,
         completion: @escaping (Result<[PhotoListResult], Error>
         ) -> Void) {
-        networkRequester.request(to: PhotoListEndPoint.getPhotoList) { result in
+        let photoListEndPoint = PhotoListEndPoint(page: page)
+        networkRequester.request(to: photoListEndPoint) { result in
             switch result {
             case .success(let data):
                 let decoder = JSONDecoder()

@@ -41,6 +41,7 @@ class PhotoListViewController: UIViewController {
     private var photoListAPIProvider: PhotoListAPIProviderType?
     private var URLImageProvider: URLImageProviderType?
     private var photos: [PhotoListResult] = []
+    private var page = 1
     
     // MARK: - LifeCycle
     
@@ -105,12 +106,13 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController {
     
     private func fetchPhotos() {
-        photoListAPIProvider?.fetchPhotoList(completion: { result in
+        photoListAPIProvider?.fetchPhotoList(with: page, completion: { [weak self] result in
             switch result {
             case .success(let photoLists):
-                self.photos += photoLists
+                self?.photos += photoLists
+                self?.page += 1
                 DispatchQueue.main.async {
-                    self.collectionView.reloadData()
+                    self?.collectionView.reloadData()
                 }
                 
             case .failure(let error):
@@ -143,6 +145,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         let photo: PhotoListResult = photos[indexPath.item]
         let imageURL: String = photos[indexPath.item].urls.small
         
+        cell.cellDelegate = self
         cell.setupCell(photo: photo, index: indexPath.item)
         
         URLImageProvider?.fetchImage(from: imageURL, completion: { result in
@@ -160,12 +163,13 @@ extension PhotoListViewController: UICollectionViewDataSource {
 }
 
 extension PhotoListViewController: UICollectionViewDelegate {
-    
+
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        photoListAPIProvider?.fetchPhotoList(completion: { result in
+        photoListAPIProvider?.fetchPhotoList(with: page, completion: { result in
             switch result {
             case .success(let photoLists):
                 self.photos += photoLists
+                self.page += 1
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
@@ -194,4 +198,11 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
         return CGFloat(photos[indexPath.item].width)
     }
 
+}
+
+extension PhotoListViewController: CellActionDelegate {
+    func starButtonTapped() {
+        print("이건됨?")
+    }
+    
 }

@@ -7,13 +7,7 @@
 
 import Foundation
 
-enum PhotoListEndPoint: EndPointType {
-    
-    case getPhotoList
-    
-    var apiKey: String {
-        return Bundle.main.apiKey
-    }
+class PhotoListEndPoint: EndPointType {
     
     var baseURL: String {
         return "https://api.unsplash.com"
@@ -25,8 +19,19 @@ enum PhotoListEndPoint: EndPointType {
     
     var query: [URLQueryItem] {
         return [URLQueryItem(name: "client_id", value: apiKey),
-                URLQueryItem(name: "per_page", value: "15")]
-        
+                URLQueryItem(name: "per_page", value: "15"),
+                URLQueryItem(name: "page", value: "\(page)")
+        ]
+    }
+    
+    var apiKey: String {
+        return Bundle.main.apiKey
+    }
+    
+    var page: Int
+    
+    init(page: Int) {
+        self.page = page
     }
     
 }
