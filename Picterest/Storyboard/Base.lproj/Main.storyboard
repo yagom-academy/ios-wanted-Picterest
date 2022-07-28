@@ -27,11 +27,10 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="28k-DN-0GD">
                                 <rect key="frame" x="10" y="40.5" width="29" height="54"/>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-hq-od6">
-                                <rect key="frame" x="87" y="384" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-hq-od6">
+                                <rect key="frame" x="5" y="89" width="404" height="724"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QZA-pg-8Aj">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QZA-pg-8Aj">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -39,7 +38,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SavedCell" id="Off-Eg-WSh" customClass="SavedCollectionViewCell" customModule="Picterest" customModuleProvider="target">
-                                        <rect key="frame" x="56" y="0.0" width="128" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pmG-aX-rjM">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
@@ -52,14 +51,18 @@
                         <viewLayoutGuide key="safeArea" id="cMa-64-mjT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="Eqt-hq-od6" firstAttribute="leading" secondItem="cMa-64-mjT" secondAttribute="leading" constant="5" id="86w-s0-GbH"/>
                             <constraint firstItem="ssg-wv-Xwb" firstAttribute="leading" secondItem="28k-DN-0GD" secondAttribute="trailing" constant="10" id="At6-CM-fcy"/>
                             <constraint firstItem="28k-DN-0GD" firstAttribute="centerY" secondItem="ssg-wv-Xwb" secondAttribute="centerY" id="FWz-mG-t6a"/>
                             <constraint firstItem="ssg-wv-Xwb" firstAttribute="top" secondItem="cMa-64-mjT" secondAttribute="top" constant="10" id="Jfg-t7-nZb"/>
                             <constraint firstItem="ssg-wv-Xwb" firstAttribute="height" secondItem="GMr-9i-GHb" secondAttribute="height" multiplier="0.03" id="Jsl-bZ-u6E"/>
                             <constraint firstItem="28k-DN-0GD" firstAttribute="width" secondItem="GMr-9i-GHb" secondAttribute="width" multiplier="0.07" id="L7c-f3-C8o"/>
                             <constraint firstItem="28k-DN-0GD" firstAttribute="height" secondItem="ssg-wv-Xwb" secondAttribute="height" multiplier="2" id="R9x-k6-DeB"/>
+                            <constraint firstItem="Eqt-hq-od6" firstAttribute="top" secondItem="28k-DN-0GD" secondAttribute="bottom" constant="-5.5" id="Rcy-T0-iwa"/>
                             <constraint firstItem="cMa-64-mjT" firstAttribute="trailing" secondItem="ssg-wv-Xwb" secondAttribute="trailing" id="YLO-bA-Bja"/>
+                            <constraint firstItem="cMa-64-mjT" firstAttribute="trailing" secondItem="Eqt-hq-od6" secondAttribute="trailing" constant="5" id="kk4-p4-kRt"/>
                             <constraint firstItem="28k-DN-0GD" firstAttribute="leading" secondItem="cMa-64-mjT" secondAttribute="leading" constant="10" id="phm-i3-KnE"/>
+                            <constraint firstItem="cMa-64-mjT" firstAttribute="bottom" secondItem="Eqt-hq-od6" secondAttribute="bottom" id="ucY-de-NQ4"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Saved" image="star.bubble" id="0le-zF-tub"/>

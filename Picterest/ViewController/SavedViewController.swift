@@ -21,7 +21,7 @@ class SavedViewController: UIViewController {
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 4
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -51,8 +51,8 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
         guard let flow = collectionViewLayout as? UICollectionViewFlowLayout else {
             return CGSize()
         }
-        
-//        flow.scrollDirection = .vertical
-        return CGSize(width: 100, height: 100)
+        flow.scrollDirection = .vertical
+        let width: CGFloat = UIScreen.main.bounds.width - 10
+        return CGSize(width: width, height: 300)
     }
 }
