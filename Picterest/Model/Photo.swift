@@ -18,4 +18,3 @@ struct Urls: Decodable {
     let small: String
     let full: String
 }
-

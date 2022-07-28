@@ -11,7 +11,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ImageCollectionViewCell"
     
-    private let labelStackView = LabelStackView()
+    let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
@@ -22,25 +22,15 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     func fetchData(_ photo: Photo, _ indexPath: IndexPath) {
         layout()
+        loadImage(photo)
         
         labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
-        
-        LoadImage().loadImage(photo.urls.small) { result in
-            switch result {
-            case .success(let image):
-                DispatchQueue.main.async {
-                    self.photoImageView.image = image
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
     }
 }
 
 extension ImageCollectionViewCell {
     
-    func layout() {
+    private func layout() {
         [
             photoImageView, labelStackView
         ].forEach {
@@ -59,5 +49,18 @@ extension ImageCollectionViewCell {
             labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             labelStackView.heightAnchor.constraint(equalToConstant: 30)
         ])
+    }
+    
+    private func loadImage(_ photo: Photo) {
+        LoadImage().loadImage(photo.urls.small) { result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.photoImageView.image = image
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

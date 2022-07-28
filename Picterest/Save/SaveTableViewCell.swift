@@ -10,7 +10,7 @@ import UIKit
 class SaveTableViewCell: UITableViewCell {
     static let identifier = "SaveTableViewCell"
     
-    private let labelStackView = LabelStackView()
+    let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
@@ -19,8 +19,8 @@ class SaveTableViewCell: UITableViewCell {
         return image
     }()
     
-    func fetchData() {
-        
+    func fetchData(_ photo: SavePhoto) {
+        layout()
     }
 }
 
@@ -45,5 +45,18 @@ extension SaveTableViewCell {
             labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             labelStackView.heightAnchor.constraint(equalToConstant: 30)
         ])
+    }
+    
+    private func loadImage(_ photo: SavePhoto) {
+        LoadImage().loadImage(photo.originUrl!) { result in
+            switch result {
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.photoImageView.image = image
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
