@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CollectionViewCellDelegate: AnyObject {
-    func showAlert(image: UIImage, imageID: String)
+    func showAlert(image: UIImage, imageID: String, index: IndexPath)
 }
 
 class ImageCell: UICollectionViewCell, ReuseIdentifying {
@@ -16,9 +16,9 @@ class ImageCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - Properties
     weak var delegate: CollectionViewCellDelegate?
     
-    
     private var cellimageUI: UIImage?
     private var cellimageID: String?
+    private var cellindex: IndexPath?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,7 +29,7 @@ class ImageCell: UICollectionViewCell, ReuseIdentifying {
     }()
     
     private lazy var imageTopStackView: UIStackView = {
-       let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +51,7 @@ class ImageCell: UICollectionViewCell, ReuseIdentifying {
     }()
     
     private lazy var imageNumberLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -75,18 +75,21 @@ extension ImageCell {
         //별이 채워진 경우 Saved화면으로 이동 -> 삭제 Alert보여줌
         starButton.isSelected.toggle()
         guard let cellimageUI = cellimageUI,
-              let cellimageID = cellimageID else { return }
+              let cellimageID = cellimageID,
+              let cellindex = cellindex
+        else { return }
         
-        delegate?.showAlert(image: cellimageUI, imageID: cellimageID)
+        delegate?.showAlert(image: cellimageUI, imageID: cellimageID, index: cellindex)
     }
 }
 
 // MARK: - Methods
 extension ImageCell {
-    func configure(index: IndexPath, data: ImagesViewModel.ImageData?) {
-        
+    func configure(index: IndexPath, data: ImagesViewModel.SaveData?) {
+        cellindex = index
         guard let data = data else { return }
         let imageIndex = index.row + 1
+        
         let image = imageView.load(urlString: data.imageURLString)
         let id = data.imageID
         cellimageUI = image
@@ -117,6 +120,6 @@ extension ImageCell {
         
         imageTopStackView.addArrangedSubview(starButton)
         imageTopStackView.addArrangedSubview(imageNumberLabel)
-     
+        
     }
 }

@@ -10,14 +10,15 @@ import UIKit
 final class ImagesViewModel {
     
     // MARK: - Properties
-    struct ImageData {
+    struct SaveData {
         var imageURLString: String
         var imageID: String
     }
     
     private var imageDatas: [ImageInfo] = []
+    private var saveDatas: [SaveData] = []
     var imagedDataCount:Int {
-        return imageDatas.count
+        return saveDatas.count
     }
     
     func fetchData(completion: @escaping () -> ()) {
@@ -26,6 +27,9 @@ final class ImagesViewModel {
             switch result {
             case .success(let result):
                 self.imageDatas = result
+                self.saveDatas = result.map({ imageInfo in
+                    SaveData(imageURLString: imageInfo.urls.regular, imageID: imageInfo.id)
+                })
                 completion()
             case .failure(let error):
                 print(error.localizedDescription)
@@ -33,13 +37,26 @@ final class ImagesViewModel {
         }
     }
     
-    func imageData(indexPath: IndexPath) -> ImageData? {
+    func saveImage(index: IndexPath, completion: @escaping (Result<Void, Error>) -> ()) {
+        let imageURL = saveDatas[index.row].imageURLString
+        let imageId = saveDatas[index.row].imageID
+        ImageFileManager.shared.saveImageUrl(imageUrl: imageURL, imageID: imageId) {  result in
+            switch result {
+            case.success(let path):
+                print(path)
+            case.failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func imageData(indexPath: IndexPath) -> SaveData? {
         
         let row = indexPath.row
         guard row < imagedDataCount else { return nil }
         let urlString = imageDatas[row].urls.regular
         let id = imageDatas[row].id
-        return ImageData(imageURLString: urlString, imageID: id)
+        return SaveData(imageURLString: urlString, imageID: id)
         
     }
     
