@@ -27,10 +27,9 @@ struct ImageURL: Decodable {
 
 extension ImageDTO {
   
-  func toDomain(index: Int) -> ImageEntity {
+  func toDomain() -> ImageEntity {
     return ImageEntity(id: self.id,
                        imageURL: self.imageURL.url,
-                       memo: "\(index)번째 사진",
                        isLiked: false,
                        width: CGFloat(self.width),
                        height: CGFloat(self.height))

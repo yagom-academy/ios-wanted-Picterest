@@ -37,9 +37,9 @@ private extension TabBarController {
     var viewController: UIViewController {
       switch self {
       case .home:
-        return HomeViewController()
+        return HomeViewController(viewModel: HomeViewModel())
       case .save:
-        return SaveViewController()
+        return SaveViewController(viewModel: SaveViewModel())
       }
     }
     

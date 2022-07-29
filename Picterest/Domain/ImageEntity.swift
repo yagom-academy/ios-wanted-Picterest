@@ -7,32 +7,42 @@
 
 import UIKit
 
-final class ImageEntity: Identifiable {  
+final class ImageEntity: Identifiable{
   let id: String
   let imageURL: URL
-  let width: CGFloat
-  let height: CGFloat
+  private(set) var width: CGFloat?
+  private(set) var height: CGFloat?
   private(set) var isLiked: Bool
-  private(set) var memo: String
+  private(set) var memo: String?
   private(set) var image: UIImage?
   private(set) var storedDirectory: URL?
   
-  init(id:String, imageURL:URL, memo: String, isLiked: Bool, width: CGFloat, height: CGFloat ){
+  init(id:String, imageURL:URL, isLiked: Bool, width: CGFloat, height: CGFloat) {
     self.id = id
-    self.memo = memo
     self.isLiked = isLiked
     self.imageURL = imageURL
     self.width = width
     self.height = height
   }
   
+  init(id:String, imageURL:URL, isLiked: Bool, memo: String, storedDirectory: URL) {
+    self.id = id
+    self.isLiked = isLiked
+    self.imageURL = imageURL
+    self.memo = memo
+    self.storedDirectory = storedDirectory
+  }
+  
 }
 
 extension ImageEntity {
   
-  func changePersonalizedStatus(completion: (Bool) -> String) {
+  func toogleLikeStates() {
     self.isLiked = !isLiked
-    self.memo = completion(self.isLiked)
+  }
+  
+  func configureMemo(memo: String) {
+    self.memo = memo
   }
   
   func saveImage(image:UIImage) {

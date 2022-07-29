@@ -7,10 +7,19 @@ import UIKit
 
 class HomeViewController: UIViewController {
   
-  let viewModel = HomeViewModel()
+  let viewModel: ImageConfigurable
   let layoutProvider = SceneLayout(scene: .home, cellPadding: 6)
   private var isLoading = false
-  var loadingView: Footer?
+  private var loadingView: Footer?
+
+  init(viewModel: ImageConfigurable) {
+    self.viewModel = viewModel
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   private lazy var collectionView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider)
@@ -24,6 +33,7 @@ class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = self
+//    CoreDataManager.shared.deleteAll()
     setConstraints()
     fetchImage()
     setDataBinding()
@@ -64,6 +74,29 @@ private extension HomeViewController {
     ])
   }
   
+  func didReceiveToogleLikeStatus(on cell: ImageCell) {
+    cell.saveDidTap = { selectedImageEntity in
+      let alert = MemoAlert.makeAlertController(title: nil,
+                                                message: "이미지를 저장 하시겠습니까?",
+                                                actions: .ok({
+        guard let memo = $0 else {return}
+        selectedImageEntity.configureMemo(memo: memo)
+        self.viewModel.toogleLikeState(item: selectedImageEntity) { error in
+          print(error?.localizedDescription)
+        }
+      }),
+                                                .cancel,
+                                                from: self)
+      alert.addTextField(configurationHandler: {(textField: UITextField) in
+        textField.placeholder = "어떤 영감을 받았나요?"
+        textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
+      })
+    }
+  }
+
+  @objc func textChanged(_ sender:UITextField) {
+    MemoAlert.memo = sender.text
+  }
 }
 
 extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, UICollectionViewDelegate {
@@ -79,16 +112,20 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
     else {
       return UICollectionViewCell()
     }
-    cell.configure(model: model)
+    cell.configure(model: model, indexPath: indexPath)
+    didReceiveToogleLikeStatus(on: cell)
     return cell
   }
-    
+  
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-    guard let image = viewModel[indexPath] else {return 0}
-    let widthRatio = image.width / image.height
+    guard let image = viewModel[indexPath],
+          let width = image.width,
+          let height = image.height
+    else {return 0}
+    let widthRatio = width / height
     return ((view.frame.width / CGFloat(layoutProvider.numberOfColumns)) - layoutProvider.cellPadding * 2) / widthRatio
   }
-
+  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     let contentOffsetY = scrollView.contentOffset.y
     if contentOffsetY >= (scrollView.contentSize.height - scrollView.bounds.height) - 20 {
@@ -103,7 +140,7 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: Footer.id, for: indexPath) as? Footer else {
-        return UICollectionReusableView()
+      return UICollectionReusableView()
     }
     loadingView = footer
     loadingView?.activityIndicator.startAnimating()

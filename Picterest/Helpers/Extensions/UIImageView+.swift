@@ -9,8 +9,8 @@ import UIKit
 
 extension UIImageView {
   
-  func setImage(url:URL, completion: @escaping (UIImage) -> Void){
-    ImageManager.shared.loadImage(url: url) { data in
+  func setImage(urlSource: ImageEntity, completion: @escaping (UIImage) -> Void){
+    ImageManager.shared.loadImage(urlSource: urlSource) { data in
       guard let data = data,
       let loadedImage = UIImage(data: data)
       else {return}

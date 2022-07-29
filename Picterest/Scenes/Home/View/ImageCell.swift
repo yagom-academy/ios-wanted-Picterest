@@ -11,8 +11,24 @@ final class ImageCell: UICollectionViewCell {
 
   static let id = "ImageCell"
   
+  private var model: ImageEntity? {
+    didSet{
+      guard let model = model else {return}
+      let buttonImage = model.isLiked == true ? likeImage: defaultLikeImage
+      self.imageView.setImage(urlSource: model){ image in
+        model.saveImage(image: image)
+      }
+      if let memo = model.memo {
+        memoLabel.text = memo
+      }
+      self.likeButton.setImage(buttonImage, for: .normal)
+    }
+  }
+  
+  var saveDidTap: ((ImageEntity) -> Void)?
+  
   private let likeImage: UIImage? = {
-    let image = UIImage(systemName: "star.fil")
+    let image = UIImage(systemName: "star.fill")
     return image
   }()
   
@@ -26,6 +42,7 @@ final class ImageCell: UICollectionViewCell {
     button.backgroundColor = .clear
     button.tintColor = .white
     button.setImage(defaultLikeImage, for: .normal)
+    button.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
     return button
   }()
   
@@ -68,16 +85,15 @@ final class ImageCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func configure(model: ImageEntity) {
-    self.imageView.setImage(url: model.imageURL){ image in
-      model.saveImage(image: image)
-    }
-    memoLabel.text = model.memo
+  func configure(model: ImageEntity, indexPath: IndexPath) {
+    self.memoLabel.text = "\(indexPath.item + 1)번째 사진"
+    self.model = model
   }
   
   override func prepareForReuse() {
     imageView.image = nil
-    
+    memoLabel.text = nil
+    likeButton.setImage(defaultLikeImage, for: .normal)
   }
 
 }
@@ -100,7 +116,19 @@ private extension ImageCell {
       labelStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
       labelStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
     ])
-    
+  }
+  
+  @objc func saveButtonDidTap(){
+    guard let model = self.model else {return}
+    saveDidTap?(model)
+  }
+  
+  func setLikeButtonToLike() {
+    likeButton.setImage(likeImage, for: .normal)
+  }
+  
+  func setLikeButtonToUndoLike() {
+    likeButton.setImage(defaultLikeImage, for: .normal)
   }
   
 }

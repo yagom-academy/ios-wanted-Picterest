@@ -23,8 +23,29 @@ struct HomeRepository {
     }
   }
   
-  func saveImage(imageEntity: ImageEntity) {
-    ImageManager.shared.saveImage(imageEntity)
+  func fetchSavedImageData() -> [ImageData] {
+    return ImageManager.shared.loadSavedImage()
+  }
+  
+  
+  func saveImage(imageEntity: ImageEntity, completion: @escaping ((Error?) -> Void)) {
+    ImageManager.shared.saveImage(imageEntity){ error in
+      if let error = error {
+        completion(error)
+      }else {
+        completion(nil)
+      }
+    }
+  }
+  
+  func deleteImage(imageEntity: ImageEntity, completion: @escaping ((Error?) -> Void)){
+    ImageManager.shared.deleteSavedImage(imageEntity: imageEntity){ error in
+      if let error = error {
+        completion(error)
+      }else {
+        completion(nil)
+      }
+    }
   }
   
   
