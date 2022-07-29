@@ -62,19 +62,4 @@ class CoreDataManager {
         }
         appDelegate?.saveContext()
     }
-    
-    func updateData(id: String, memo: String) {
-        guard let context = context else { return }
-        let request = NSFetchRequest<NSManagedObject>(entityName: self.modelName)
-        request.predicate = NSPredicate(format: "id == %@", id)
-        do {
-            guard let fetchedImageInfoList = try context.fetch(request) as? [ImageInfo],
-                  let targetData = fetchedImageInfoList.first else { return }
-            targetData.memo = memo
-            print("코어데이터 업데이트 성공")
-        } catch {
-            print("코어데이터 업데이트 실패")
-        }
-        appDelegate?.saveContext()
-    }
 }
