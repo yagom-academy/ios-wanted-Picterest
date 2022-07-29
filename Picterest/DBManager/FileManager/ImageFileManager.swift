@@ -61,7 +61,7 @@ final class ImageFileManager {
         do {
             try imageData.write(to: documentPath.appendingPathComponent(filename + ".png"))
             
-            let locationString = documentPath.absoluteString + filename + ".png"
+            let locationString = filename + ".png"
             return locationString
         } catch {
             print(error)
@@ -74,10 +74,11 @@ final class ImageFileManager {
         return result
     }
     
-    func removeImage(at urlString: String) throws {
+    func removeImage(at filename: String) throws {
         do {
-            print(urlString)
-            try fileManager.removeItem(atPath: urlString)
+            let urlString = documentPath.absoluteString + filename
+            let url = URL(string: urlString)!
+            try fileManager.removeItem(at: url)
         } catch {
             throw DBManagerError.failToRemoveImageFile
         }
