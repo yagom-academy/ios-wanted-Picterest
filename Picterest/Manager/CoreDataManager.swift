@@ -11,6 +11,36 @@ import UIKit
 class CoreDataManager {
     
     static let shared = CoreDataManager()
+    private init() { }
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        
+        let container = NSPersistentContainer(name: "PhotoModel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    
+    // MARK: - Core Data Saving support
+    
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
+}
+
+extension CoreDataManager {
     
     func save(
         id: String,
@@ -18,57 +48,47 @@ class CoreDataManager {
         imageURL: String,
         memo: String
     ) {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            
-            guard let entityDescription = NSEntityDescription.entity(
-                forEntityName: "PhotoEntity",
-                in: context
-            ) else { return }
-            
-            let newValue = NSManagedObject(entity: entityDescription,
-                                           insertInto: context)
-             
-            newValue.setValue(id, forKey: "id")
-            newValue.setValue(imagePath, forKey: "imagePath")
-            newValue.setValue(imageURL, forKey: "imageURL")
-            newValue.setValue(memo, forKey: "memo")
-            
-            do {
-                try context.save()
-                print("saved id: \(id)")
-                print("saved imagePath: \(imagePath)")
-                print("saved imageURL: \(imageURL)")
-                print("saved memo: \(memo)")
-            } catch {
-                print("saving error")
-            }
+        let context = persistentContainer.viewContext
+        guard let entityDescription = NSEntityDescription.entity(
+            forEntityName: "PhotoEntity",
+            in: context
+        ) else { return }
+        let image = NSManagedObject(entity: entityDescription, insertInto: context)
+        
+        image.setValue(id, forKey: "id")
+        image.setValue(imagePath, forKey: "imagePath")
+        image.setValue(imageURL, forKey: "imageURL")
+        image.setValue(memo, forKey: "memo")
+        
+        do {
+            try context.save()
+        } catch {
+            print("saving error")
         }
     }
     
-    func retrieveValues() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            let context = appDelegate.persistentContainer.viewContext
-            let fetchRequest = NSFetchRequest<PhotoEntity>(entityName: "PhotoEntity")
+    func load() -> [NSManagedObject]? {
+        let context = persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<PhotoEntity>(entityName: "PhotoEntity")
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results
             
-            do {
-                let results = try context.fetch(fetchRequest)
-                
-                for result in results {
-                    if let id = result.id,
-                       let imagePath = result.imagePath,
-                       let imageURL = result.imageURL,
-                       let memo = result.memo {
-                        print("id:\(id)")
-                        print("imagePath:\(imagePath)")
-                        print("imageURL:\(imageURL)")
-                        print("memo:\(memo)")
-                    }
-                }
-            } catch {
-                print("Could not retrieve")
-            }
-            
+        } catch {
+            print("Could not retrieve")
+        }
+        return nil
+    }
+    
+    func delete(item: NSManagedObject) {
+        let context = persistentContainer.viewContext
+        context.delete(item)
+        
+        do {
+            try context.save()
+        } catch {
+            print("failed delete")
         }
     }
 }

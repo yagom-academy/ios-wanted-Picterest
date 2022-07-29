@@ -31,13 +31,11 @@ class SavedPhotoViewController: UIViewController {
     }()
     
     // MARK: - LifeCycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
-//        photos = ImageManager.shared.loadImageFromAlbum(folderName: "Photo")
         
     }
     
