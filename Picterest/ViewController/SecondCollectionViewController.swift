@@ -8,7 +8,7 @@
 import UIKit
 class SecondCollectionViewController: UICollectionViewController {
     
-    let imageManager = ImageManager()
+    let imageManager = ImageManager.shared
     var savedImageListViewModel = SavedImageListViewModel()
     var numOfColumns = 0
     var selectedIndexPath = 0
@@ -68,7 +68,6 @@ class SecondCollectionViewController: UICollectionViewController {
             layout.reloadData()
             self.collectionView.reloadData()
         }
-        
     }
 }
 
@@ -86,9 +85,21 @@ extension SecondCollectionViewController: ImageCollectionViewLayoutDelegate {
         
         return height
     }
+}
+
+extension SecondCollectionViewController: ImageManagerDelegate {
+    func deleteImage() {
+        refresh()
+    }
+    
+    func saveImage() {
+        refresh()
+    }
+    
     
 }
 
 class CustomLongPressTapGesture: UILongPressGestureRecognizer {
     var indexPath: Int?
 }
+

@@ -9,9 +9,13 @@ import Foundation
 
 protocol ImageManagerDelegate {
     func deleteImage()
+    func saveImage()
 }
 
 class ImageManager {
+    
+    static let shared = ImageManager()
+    
     var delegate: ImageManagerDelegate?
     let coredataManager = CoredataManager.shared
     let saveLocalImageFileManager = LocalImageFileManager.shared
@@ -19,6 +23,7 @@ class ImageManager {
     func saveImageAndInfo(imageViewModel: ImageViewModel, memo: String){
         saveLocalImageFileManager.saveLocalImage(imageViewModel: imageViewModel) { imageFilePath in
             self.coredataManager.setImageInfo(imageViewModel, memo: memo, saveLocation: imageFilePath)
+            self.delegate?.saveImage()
         }
     }
     

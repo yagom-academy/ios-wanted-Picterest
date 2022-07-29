@@ -10,7 +10,7 @@ import UIKit
 class FirstCollectionViewController: UICollectionViewController {
     
     var imageListViewModel = ImageListViewModel()
-    var saveImageManager = ImageManager()
+    var imageManager = ImageManager.shared
     var numOfColumns = 0
     
     override func viewDidLoad() {
@@ -21,7 +21,7 @@ class FirstCollectionViewController: UICollectionViewController {
             numOfColumns = layout.getNumberOfColumns()
         }
         imageListViewModel.fetchImages()
-        saveImageManager.delegate = self
+        imageManager.delegate = self
         self.collectionView?.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.firstViewIdentifier)
         imageListViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
@@ -61,7 +61,6 @@ class FirstCollectionViewController: UICollectionViewController {
             if imageListViewModel.isPaginating == false{
                 print("fetch data")
                 imageListViewModel.fetchImages(pagination: true)
-                
             }
         }
     }
@@ -91,8 +90,8 @@ extension FirstCollectionViewController: ImageInfoViewDelegate {
         if !imageListViewModel.imageViewModelAtIndexPath(index: index).isSaved {
         let alert = UIAlertController(title: "이미지 다운로드", message: "해당 이미지를 다운로드하시겠습니까?", preferredStyle: .alert)
         let downloadAction = UIAlertAction(title: "확인", style: .default) { _ in
-            self.saveImageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: index), memo: textField.text ?? "")
-            self.collectionView.reloadData()
+            self.imageManager.saveImageAndInfo(imageViewModel: self.imageListViewModel.imageViewModelAtIndexPath(index: index), memo: textField.text ?? "")
+            self.collectionView.reloadSections(IndexSet(0...0))
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alert.addTextField { alertTextField in
@@ -107,7 +106,12 @@ extension FirstCollectionViewController: ImageInfoViewDelegate {
 }
 
 extension FirstCollectionViewController: ImageManagerDelegate {
+    func saveImage() {
+        
+    }
+    
 func deleteImage() {
+    print("delete")
     DispatchQueue.main.async {
         if let layout = self.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
             layout.reloadData()
