@@ -140,10 +140,18 @@ private extension SavedListViewController {
         let safeArea = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            savedListCollectionView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
-            savedListCollectionView.topAnchor.constraint(equalTo: safeArea.topAnchor),
-            savedListCollectionView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
-            savedListCollectionView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
+            savedListCollectionView
+                .leadingAnchor
+                .constraint(equalTo: safeArea.leadingAnchor),
+            savedListCollectionView
+                .topAnchor
+                .constraint(equalTo: safeArea.topAnchor),
+            savedListCollectionView
+                .trailingAnchor
+                .constraint(equalTo: safeArea.trailingAnchor),
+            savedListCollectionView
+                .bottomAnchor
+                .constraint(equalTo: safeArea.bottomAnchor)
         ])
     }
 }

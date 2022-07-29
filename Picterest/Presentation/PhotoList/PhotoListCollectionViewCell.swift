@@ -86,14 +86,28 @@ private extension PhotoListCollectionViewCell {
         contentView.bringSubviewToFront(topView)
         
         NSLayoutConstraint.activate([
-            topView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            topView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            topView
+                .leadingAnchor
+                .constraint(equalTo: contentView.leadingAnchor),
+            topView
+                .topAnchor
+                .constraint(equalTo: contentView.topAnchor),
+            topView
+                .trailingAnchor
+                .constraint(equalTo: contentView.trailingAnchor),
             
-            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            imageView
+                .leadingAnchor
+                .constraint(equalTo: contentView.leadingAnchor),
+            imageView
+                .topAnchor
+                .constraint(equalTo: contentView.topAnchor),
+            imageView
+                .trailingAnchor
+                .constraint(equalTo: contentView.trailingAnchor),
+            imageView
+                .bottomAnchor
+                .constraint(equalTo: contentView.bottomAnchor),
         ])
         
     }

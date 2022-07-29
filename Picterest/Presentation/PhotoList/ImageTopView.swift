@@ -28,6 +28,7 @@ class ImageTopView: UIView {
         return label
     }()
     
+    // MARK: - Properties
     var viewModel: ImageTopViewModel?
     
     // MARK: - Setup
@@ -52,7 +53,6 @@ class ImageTopView: UIView {
 // MARK: - @objc Methods
 private extension ImageTopView {
     @objc func didTapStarButton(_ sender: UIButton) {
-        print("didTapStarButton")
         viewModel?.starButtonTapped.value = sender
     }
 }

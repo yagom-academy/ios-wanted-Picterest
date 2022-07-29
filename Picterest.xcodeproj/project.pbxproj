@@ -87,6 +87,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B27713628938D6600212FE7 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				6BCD1FA1288EBB7B00F63E64 /* Network.swift */,
+				6BCD1FB5288FA82900F63E64 /* CacheManager.swift */,
+				6BCD1FCA2890C81F00F63E64 /* CoreDataManager.swift */,
+				6BCD1FAF288EE8FE00F63E64 /* ImageLoader.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		6BCD1F96288E540200F63E64 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,10 +136,7 @@
 		6BCD1F9A288E545E00F63E64 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				6BCD1FA1288EBB7B00F63E64 /* Network.swift */,
-				6BCD1FB5288FA82900F63E64 /* CacheManager.swift */,
-				6BCD1FCA2890C81F00F63E64 /* CoreDataManager.swift */,
-				6BCD1FAF288EE8FE00F63E64 /* ImageLoader.swift */,
+				6B27713628938D6600212FE7 /* Manager */,
 				6BCD1F92288E52ED00F63E64 /* Icon.swift */,
 				6BCD1F9D288E5E7E00F63E64 /* CellIdentifiable.swift */,
 				6BCD1FAD288EDE3600F63E64 /* Observable.swift */,

@@ -37,7 +37,7 @@ class PhotoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configUI()
-        viewModel.fetchPhotoList(page: 1)
+        viewModel.fetchPhotoList(page: viewModel.currentPage)
         bindUpdateCollectionView()
         bindSavePhoto()
     }
@@ -130,7 +130,6 @@ private extension PhotoListViewController {
                 }
             }
         }
-        
         viewModel.isSave.bind { [weak self] sender, isDone in
             guard let sender = sender else { return }
             if isDone {
