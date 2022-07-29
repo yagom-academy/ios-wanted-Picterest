@@ -13,7 +13,10 @@ enum NetworkError: Error {
 }
 
 class NetworkManager {
-    func getPhotoList(completion: @escaping (Result<[PhotoModel], NetworkError>) -> Void) {
+    func getPhotoList(
+        currentPage: Int,
+        completion: @escaping (Result<[PhotoModel], NetworkError>) -> Void
+    ) {
         let session = URLSession(configuration: .default)
         var components = URLComponents(string: Constant.BASE_URL)
         let clientID = URLQueryItem(name: "client_id", value: PicterestKey.appKey)

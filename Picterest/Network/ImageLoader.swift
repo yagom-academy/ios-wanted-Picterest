@@ -25,15 +25,13 @@ class ImageLoder {
             }
             return
         }
-        DispatchQueue.global().async {
             guard let imageUrl = URL(string: url) else { return }
-            let session = URLSession(configuration: .ephemeral)
+            let session = URLSession(configuration: .default)
             let task = session.dataTask(with: imageUrl) { data, response, error in
                 if let error = error {
-                    completion(.failure(error.self))
+                    completion(.failure(error))
                 }
-                guard let httpResponse = response as? HTTPURLResponse else { return }
-                guard 200..<300 ~= httpResponse.statusCode else {
+                guard 200..<300 ~= (response as? HTTPURLResponse)?.statusCode ?? -1 else {
                     completion(.failure(ImageLoaderError.noResponseError))
                     return
                 }
@@ -50,6 +48,5 @@ class ImageLoder {
                 }
             }
             task.resume()
-        }
     }
 }
