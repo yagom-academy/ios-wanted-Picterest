@@ -27,6 +27,7 @@
 		1888F4342892DDE50032D945 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888F4332892DDE50032D945 /* UIImage+.swift */; };
 		18CA5FE22890D6CA0073AA00 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA5FE12890D6CA0073AA00 /* CacheService.swift */; };
 		18CA5FE4289116F50073AA00 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA5FE3289116F50073AA00 /* UIColor+.swift */; };
+		18F956952893665D00F504A0 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F956942893665D00F504A0 /* Dictionary+.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66028604278003DD2F5 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65F28604278003DD2F5 /* TabViewController.swift */; };
@@ -55,6 +56,7 @@
 		1888F4332892DDE50032D945 /* UIImage+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+.swift"; sourceTree = "<group>"; };
 		18CA5FE12890D6CA0073AA00 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		18CA5FE3289116F50073AA00 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		18F956942893665D00F504A0 /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				1867C3EB288E5A22002C42F9 /* BundleExtension.swift */,
 				18CA5FE3289116F50073AA00 /* UIColor+.swift */,
 				1888F4332892DDE50032D945 /* UIImage+.swift */,
+				18F956942893665D00F504A0 /* Dictionary+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				1867C3E3288E52C1002C42F9 /* FeedViewController.swift in Sources */,
 				1888F42C2892B5C00032D945 /* SavedModel+CoreDataProperties.swift in Sources */,
 				1888F4302892BD870032D945 /* SavedCollectionCustomCell.swift in Sources */,
+				18F956952893665D00F504A0 /* Dictionary+.swift in Sources */,
 				1888F42B2892B5C00032D945 /* SavedModel+CoreDataClass.swift in Sources */,
 				181B8083288E86CD00ACF80C /* FeedCollectionLayout.swift in Sources */,
 				181B8085288EBE2100ACF80C /* KeyChainService.swift in Sources */,

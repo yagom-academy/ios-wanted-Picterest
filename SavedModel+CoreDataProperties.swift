@@ -13,7 +13,7 @@ import UIKit
 
 struct savedModel {
     var id: String?
-    var meme: String?
+    var memo: String?
     var file: String?
     var raw: String?
     
@@ -22,6 +22,13 @@ struct savedModel {
             return nil
         }
         return UIImage(data: imageData)
+    }
+    
+    var memoDescription: String {
+        guard let memo = memo else {
+            return ""
+        }
+        return memo
     }
 }
 
