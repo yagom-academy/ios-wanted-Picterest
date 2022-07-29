@@ -18,7 +18,7 @@ extension EndPoint {
     var url: URL {
         switch self {
         case .getPhoto(let page):
-            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=15&page=\(page)")
+            return .makeEndPoint("?client_id=\(EndPoint.accessKey)&per_page=\(EndPoint.per_page)&page=\(page)")
         }
     }
 }

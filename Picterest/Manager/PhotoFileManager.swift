@@ -51,10 +51,6 @@ class PhotoFileManager {
         return path
     }
     
-    func getPhotoFilePath(_ fileName: String) -> URL {
-        return directoryPath.appendingPathComponent(fileName)
-    }
-    
     func deletePhotoFile(_ filePath: String) {
         guard let url = URL(string: filePath) else { return }
         

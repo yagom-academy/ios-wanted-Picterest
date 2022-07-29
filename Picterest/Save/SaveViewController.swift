@@ -13,7 +13,6 @@ class SaveViewController: UIViewController {
     private var saveTableView = UITableView()
     private var viewModel = SaveViewModel()
     private var savePhotoList: [SavePhoto] = []
-    private var container: NSPersistentContainer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +22,6 @@ class SaveViewController: UIViewController {
         attribute()
         layout()
         bind(viewModel)
-        fetchSavePhoto()
         LongPress()
     }
     
@@ -82,8 +80,7 @@ extension SaveViewController {
                     
                     let savePhotoData = self.savePhotoList[indexPath.row]
                     
-                    PhotoFileManager.shared.deletePhotoFile(savePhotoData.location!)
-                    CoreDataManager.shared.deleteSavePhoto(savePhotoData)
+                    self.viewModel.deleteSavePhoto(savePhotoData)
                     
                     self.savePhotoList.remove(at: indexPath.row)
                     self.saveTableView.reloadData()
