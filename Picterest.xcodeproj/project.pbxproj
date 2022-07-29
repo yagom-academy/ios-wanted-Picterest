@@ -28,6 +28,7 @@
 		18CA5FE22890D6CA0073AA00 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA5FE12890D6CA0073AA00 /* CacheService.swift */; };
 		18CA5FE4289116F50073AA00 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18CA5FE3289116F50073AA00 /* UIColor+.swift */; };
 		18F956952893665D00F504A0 /* Dictionary+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F956942893665D00F504A0 /* Dictionary+.swift */; };
+		18F956D62893A1FB00F504A0 /* AlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F956D52893A1FB00F504A0 /* AlertViewController.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66028604278003DD2F5 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65F28604278003DD2F5 /* TabViewController.swift */; };
@@ -57,6 +58,7 @@
 		18CA5FE12890D6CA0073AA00 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		18CA5FE3289116F50073AA00 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		18F956942893665D00F504A0 /* Dictionary+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+.swift"; sourceTree = "<group>"; };
+		18F956D52893A1FB00F504A0 /* AlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		1867C3DD288E5253002C42F9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				18F956D42893A1EE00F504A0 /* AlertViewController */,
 				DE15E65F28604278003DD2F5 /* TabViewController.swift */,
 				1867C3E4288E52E5002C42F9 /* SavedView */,
 				1867C3E1288E528A002C42F9 /* FeedView */,
@@ -166,6 +169,14 @@
 				1867C3F4288E6AF6002C42F9 /* FeedCollectionCustomCell.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		18F956D42893A1EE00F504A0 /* AlertViewController */ = {
+			isa = PBXGroup;
+			children = (
+				18F956D52893A1FB00F504A0 /* AlertViewController.swift */,
+			);
+			path = AlertViewController;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -292,6 +303,7 @@
 				18CA5FE4289116F50073AA00 /* UIColor+.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				1888F42E2892BA7C0032D945 /* SavedCollectionViewLayout.swift in Sources */,
+				18F956D62893A1FB00F504A0 /* AlertViewController.swift in Sources */,
 				18CA5FE22890D6CA0073AA00 /* CacheService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
