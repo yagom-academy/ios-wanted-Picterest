@@ -30,7 +30,7 @@ final class CellView: UIView {
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.backgroundColor = .black
         headerView.isOpaque = false
-        headerView.alpha = 0.7
+        headerView.alpha = Style.CellView.headerViewAlpha
         return headerView
     }()
     
@@ -49,6 +49,7 @@ final class CellView: UIView {
         textLabel.text = ""
         textLabel.textAlignment = .right
         textLabel.textColor = .white
+        textLabel.font = UIFont.systemFont(ofSize: Style.CellView.fontSize)
         return textLabel
     }()
     
@@ -77,10 +78,9 @@ final class CellView: UIView {
             headerView.heightAnchor.constraint(equalToConstant: Style.CellView.headerViewHeight),
             
             saveButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Style.CellView.leadingConstant),
-            saveButton.widthAnchor.constraint(equalToConstant: 20),
+            saveButton.widthAnchor.constraint(equalToConstant: Style.CellView.saveButtonHeight),
             saveButton.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-            saveButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.2),
-            
+            saveButton.heightAnchor.constraint(equalToConstant: Style.CellView.saveButtonHeight),
             textLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: Style.CellView.trailingConstant),
             textLabel.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
         ])
