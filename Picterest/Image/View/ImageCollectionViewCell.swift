@@ -43,7 +43,7 @@ class ImageCollectionViewCell: UICollectionViewCell, ReusableCell {
         
         currentIndexPath = indexPath
         labelStackView.starButton.isSelected = isStarButtonSelected
-        labelStackView.photoLabel.text = "\(indexPath.row)번째 사진"
+        labelStackView.photoLabel.text = "\(indexPath.row + 1)번째 사진"
     }
 }
 
