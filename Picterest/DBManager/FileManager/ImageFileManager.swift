@@ -8,6 +8,7 @@
 import UIKit
 
 final class ImageFileManager {
+    
     static let shared = ImageFileManager()
     private init() { }
     
@@ -74,11 +75,9 @@ final class ImageFileManager {
     }
     
     func removeImage(at urlString: String) throws {
-        guard let url = URL(string: urlString) else {
-            throw DBManagerError.failToRemoveImageFile
-        }
         do {
-            try fileManager.removeItem(at: url)
+            print(urlString)
+            try fileManager.removeItem(atPath: urlString)
         } catch {
             throw DBManagerError.failToRemoveImageFile
         }

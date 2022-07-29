@@ -17,7 +17,7 @@ final class SavedImageListViewModel {
         return cellDatas[safe: indexPath.row]
     }
 
-    func loadData(completion: @escaping () -> ()) {
+    func updateData(completion: @escaping () -> ()) {
         CoreDataManager.shared.getImageInfos { [weak self] infos in
             self?.cellDatas = infos
             DispatchQueue.main.async {
@@ -39,12 +39,15 @@ final class SavedImageListViewModel {
             do {
                 let fileLocation = try CoreDataManager.shared.removeImageInfo(at: id)
                 try ImageFileManager.shared.removeImage(at: fileLocation)
-                self?.loadData(completion: completion)
+                self?.updateData(completion: completion)
             } catch {
                 if let error = error as? DBManagerError {
                     print(error.description)
                 } else {
                     print(error.localizedDescription)
+                }
+                DispatchQueue.main.async {
+                    self?.updateData(completion: completion)
                 }
             }
         }

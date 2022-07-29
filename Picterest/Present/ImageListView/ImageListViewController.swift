@@ -16,8 +16,7 @@ final class ImageListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         attribute()
         layout()
-        loadCell()
-        setRefresh()
+        initCellData()
     }
     
     required init?(coder: NSCoder) {
@@ -28,17 +27,6 @@ final class ImageListViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.updateCellState { [weak self] in
             self?.collectionView.reloadData()
-        }
-    }
-    
-    private func loadCell() {
-        viewModel.loadData { [weak self] result in
-            switch result {
-            case .success():
-                self?.collectionView.reloadData()
-            case .failure(let error):
-                print(error)
-            }
         }
     }
 }
@@ -84,15 +72,14 @@ extension ImageListViewController: UICollectionViewDataSource {
 extension ImageListViewController {
     private func setRefresh() {
         collectionView.refreshControl = UIRefreshControl()
-        collectionView.refreshControl?.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+        collectionView.refreshControl?.addTarget(self, action: #selector(initCellData), for: .valueChanged)
     }
 
-    @objc private func refreshCollectionView() {
-        viewModel.initLoadData { [weak self] result in
+    @objc private func initCellData() {
+        viewModel.initData { [weak self] result in
             switch result {
             case .success():
                 self?.collectionView.reloadData()
-//                self?.collectionView.collectionViewLayout.invalidateLayout()
             case .failure(let error):
                 print(error)
             }
@@ -114,7 +101,7 @@ extension ImageListViewController: ImageListCellDelegate {
 //MARK: - Footer Delegate 이벤트
 extension ImageListViewController: AddCellButtonFooterViewDelegate {
     func tappedAddCellButton() {
-        viewModel.loadData { [weak self] result in
+        viewModel.loadExtraData { [weak self] result in
             switch result {
             case .success():
                 self?.collectionView.reloadData()
@@ -142,14 +129,13 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
 //MARK: - attribute, layout 메서드
 extension ImageListViewController {
     private func attribute() {
-        //temp
-        view.backgroundColor = .yellow
+        setRefresh()
+        view.backgroundColor = .white
         
         if let layout = collectionView.collectionViewLayout as? CustomCollectionViewLayout {
           layout.delegate = self
         }
-        
-        collectionView.backgroundColor = .purple
+        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.register(ImageListCell.self, forCellWithReuseIdentifier: ImageListCell.reuseIdentifier)
         collectionView.register(AddCellButtonFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier)

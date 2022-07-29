@@ -30,7 +30,7 @@ final class SavedImageListViewController: UIViewController {
     }
     
     private func loadCell() {
-        viewModel.loadData { [weak self] in
+        viewModel.updateData { [weak self] in
             self?.collectionView.reloadData()
         }
     }
@@ -40,10 +40,9 @@ final class SavedImageListViewController: UIViewController {
 extension SavedImageListViewController {
     
     private func attribute() {
-        //temp
-        view.backgroundColor = .blue
-        collectionView.backgroundColor = .gray
+        view.backgroundColor = .white
         
+        collectionView.backgroundColor = .white
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SavedImageListCell.self, forCellWithReuseIdentifier: SavedImageListCell.reuseIdentifier)

@@ -11,9 +11,11 @@ final class SaveImageAlertViewController: UIViewController {
     enum Value {
         static let alertWidth = UIScreen.main.bounds.width*(2/3)
         static let alertHeight = alertWidth*(2/3)
+        static let textFieldLeftPadding = 10.0
+        static let cornerRadius = 15.0
         static let savedButtonTitle = " 저장"
         static let cancelButtonTitle = " 취소 "
-        static let placeholder = "  메시지를 입력하세요"
+        static let placeholder = "메시지를 입력하세요"
     }
     private let alertStackView = UIStackView()
     private let titleLabel = UILabel()
@@ -55,7 +57,7 @@ final class SaveImageAlertViewController: UIViewController {
     private func attribute() {
         view.backgroundColor = .white.withAlphaComponent(0.2)
         
-        alertStackView.layer.cornerRadius = 20
+        alertStackView.layer.cornerRadius = Value.cornerRadius
         alertStackView.backgroundColor = .green
         alertStackView.axis = .vertical
         alertStackView.alignment = .center
@@ -69,9 +71,13 @@ final class SaveImageAlertViewController: UIViewController {
         
         inputTextField.backgroundColor = .white
         inputTextField.placeholder = Value.placeholder
+        inputTextField.layer.cornerRadius = Value.cornerRadius
+        inputTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Value.textFieldLeftPadding, height: inputTextField.frame.height))
+        inputTextField.leftViewMode = .always
         
         savedButton.setTitle(Value.savedButtonTitle, for: .normal)
         savedButton.addTarget(self, action: #selector(tappedSavedButton), for: .touchUpInside)
+        
         cancelButton.setTitle(Value.cancelButtonTitle, for: .normal)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
@@ -85,10 +91,10 @@ final class SaveImageAlertViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        inputTextField.widthAnchor.constraint(equalToConstant: Value.alertWidth-60).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: Value.alertWidth*7/8).isActive = true
         inputTextField.heightAnchor.constraint(equalToConstant: Value.alertHeight/4).isActive = true
         
-        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.alertWidth-20).isActive = true
+        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.alertWidth).isActive = true
         
         [savedButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)

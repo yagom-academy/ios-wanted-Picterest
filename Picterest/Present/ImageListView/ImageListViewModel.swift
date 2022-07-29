@@ -52,7 +52,7 @@ final class ImageListViewModel {
         return multiplier
     }
     
-    func initLoadData(completion: @escaping (Result<Void,CustomError>)->()) {
+    func initData(completion: @escaping (Result<Void,CustomError>)->()) {
         currentPage = 1
         networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
@@ -71,7 +71,7 @@ final class ImageListViewModel {
         }
     }
     
-    func loadData(completion: @escaping (Result<Void,CustomError>)->()) {
+    func loadExtraData(completion: @escaping (Result<Void,CustomError>)->()) {
         networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
             case .success(let infos):
