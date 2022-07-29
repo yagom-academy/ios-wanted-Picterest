@@ -205,11 +205,11 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
 extension PhotoListViewController: CellActionDelegate {
     // TODO: [] alert class 따로 만들기
     func starButtonTapped(cell: PhotoListCollectionViewCell) {
-        guard let indexPath = collectionView.indexPath(for: cell) else { return
-        }
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
         
-        print(indexPath.item)
-        
+        let photo = photos[indexPath.item]
+        let imageID = photo.id
+        let imageURL = photo.urls.small
         let alert = UIAlertController(
             title: "사진 메모",
             message: "",
@@ -221,8 +221,17 @@ extension PhotoListViewController: CellActionDelegate {
             style: .default) {_ in
             if let textField = alert.textFields?.first,
                let text = textField.text {
-                print("등록완료:\(text)")
-            }
+                self.URLImageProvider?.fetchImage(from: imageURL, completion: { result in
+                    switch result {
+                    case .success(let image):
+                        _ = ImageManager.shared.saveImage(id: imageID, image: image)
+          // TODO: [] id, text, 사진url, 저장위치 CoreData에 저장
+                        print("text:\(text)")
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+                }
+            )}
         }
         
         let cancelButton = UIAlertAction(
