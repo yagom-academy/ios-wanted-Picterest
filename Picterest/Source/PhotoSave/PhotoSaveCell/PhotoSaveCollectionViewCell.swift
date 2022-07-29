@@ -23,6 +23,7 @@ class PhotoSaveCollectionViewCell: UICollectionViewCell, CellNamable {
     
     override func prepareForReuse() {
         savedImageView.image = nil
+        savedMemo.text = nil
     }
     
     func fetchDataFromCollectionView(data: String) {

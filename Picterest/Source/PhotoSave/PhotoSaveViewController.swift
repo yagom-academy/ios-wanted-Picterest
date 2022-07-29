@@ -111,7 +111,7 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
                 at: point
             ) else { return }
             let alertActionCell = UIAlertController(
-                title: "",
+                title: "사진 삭제",
                 message: "사진을 삭제 하시겠습니까?",
                 preferredStyle: .alert
             )
@@ -124,7 +124,6 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
                     CoreDataManager.shared.deleteCoreData(ID: id)
                     self?.coreData.remove(at: indexPath.item)
                     self?.saveListCollectionView.deleteItems(at: [indexPath])
-                    self?.saveListCollectionView.reloadData()
                     print("삭제 완료")
                 })
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
