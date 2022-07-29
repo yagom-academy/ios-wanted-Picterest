@@ -43,8 +43,8 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     private let starButton: UIButton = {
         var button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "star"), for: .normal)
-        button.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        button.setImage(GlobalConstants.Image.PictureCell.nomal.image, for: .normal)
+        button.setImage(GlobalConstants.Image.PictureCell.saved.image, for: .selected)
         button.tintColor = .systemYellow
         return button
     }()
@@ -72,7 +72,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.starButton.isSelected = false
-        self.picterestImageView.image = UIImage(systemName: "photo")
+        self.picterestImageView.image = GlobalConstants.Image.PictureCell.photo.image
         self.indexTitleLabel.text = "n번째 사진"
     }
     

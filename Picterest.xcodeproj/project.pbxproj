@@ -31,6 +31,7 @@
 		F0F56E2F288FED5B007AED0C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */; };
 		F0F56E312890D2C1007AED0C /* ImageRepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */; };
 		F0F56E3328924950007AED0C /* URLRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E3228924950007AED0C /* URLRepository.swift */; };
+		F0F56E392893B1E4007AED0C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F56E382893B1E4007AED0C /* GlobalConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		F0F56E2E288FED5B007AED0C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F0F56E302890D2C1007AED0C /* ImageRepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepositoryViewModel.swift; sourceTree = "<group>"; };
 		F0F56E3228924950007AED0C /* URLRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRepository.swift; sourceTree = "<group>"; };
+		F0F56E382893B1E4007AED0C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				F0F56E372893B1BA007AED0C /* GlobalConstants */,
 				F0F56E26288FEC7E007AED0C /* CoreData */,
 				F0F56E24288FE7DC007AED0C /* FileManager */,
 				F0F56E01288EBB1D007AED0C /* ViewModel */,
@@ -193,6 +196,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		F0F56E372893B1BA007AED0C /* GlobalConstants */ = {
+			isa = PBXGroup;
+			children = (
+				F0F56E382893B1E4007AED0C /* GlobalConstants.swift */,
+			);
+			path = GlobalConstants;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -275,6 +286,7 @@
 				F0F56DEE288E6D05007AED0C /* Repository.swift in Sources */,
 				F0F56DEA288E68A2007AED0C /* ImageModel.swift in Sources */,
 				F0F56E3328924950007AED0C /* URLRepository.swift in Sources */,
+				F0F56E392893B1E4007AED0C /* GlobalConstants.swift in Sources */,
 				F0F56E03288EBB2C007AED0C /* ImageListViewModel.swift in Sources */,
 				F0F56DEC288E68FB007AED0C /* ImageEndPoint.swift in Sources */,
 				F0F56E29288FEC9B007AED0C /* PictureModel.xcdatamodeld in Sources */,
