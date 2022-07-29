@@ -8,13 +8,17 @@
 import UIKit
 
 protocol CollectionViewCellDelegate: AnyObject {
-    func showAlert()
+    func showAlert(image: UIImage, imageID: String)
 }
 
 class ImageCell: UICollectionViewCell, ReuseIdentifying {
     
     // MARK: - Properties
     weak var delegate: CollectionViewCellDelegate?
+    
+    
+    private var cellimageUI: UIImage?
+    private var cellimageID: String?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -70,7 +74,10 @@ extension ImageCell {
         //별이 비어있는 경우에만 다운 Alert 보여줌
         //별이 채워진 경우 Saved화면으로 이동 -> 삭제 Alert보여줌
         starButton.isSelected.toggle()
-        delegate?.showAlert()
+        guard let cellimageUI = cellimageUI,
+              let cellimageID = cellimageID else { return }
+        
+        delegate?.showAlert(image: cellimageUI, imageID: cellimageID)
     }
 }
 
@@ -80,7 +87,11 @@ extension ImageCell {
         
         guard let data = data else { return }
         let imageIndex = index.row + 1
-        imageView.load(urlString: data.imageURLString)
+        let image = imageView.load(urlString: data.imageURLString)
+        let id = data.imageID
+        cellimageUI = image
+        cellimageID = id
+        
         imageNumberLabel.text = "\(imageIndex)번째 사진"
     }
     

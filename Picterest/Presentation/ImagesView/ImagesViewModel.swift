@@ -12,6 +12,7 @@ final class ImagesViewModel {
     // MARK: - Properties
     struct ImageData {
         var imageURLString: String
+        var imageID: String
     }
     
     private var imageDatas: [ImageInfo] = []
@@ -37,8 +38,8 @@ final class ImagesViewModel {
         let row = indexPath.row
         guard row < imagedDataCount else { return nil }
         let urlString = imageDatas[row].urls.regular
-        
-        return ImageData(imageURLString: urlString)
+        let id = imageDatas[row].id
+        return ImageData(imageURLString: urlString, imageID: id)
         
     }
     

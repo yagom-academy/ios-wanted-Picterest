@@ -9,6 +9,10 @@ class ImagesViewController: UIViewController {
     
     // MARK: - Properties
     private let viewModel = ImagesViewModel()
+    private let fileManager = FileManager.default
+    private let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    private lazy var picDownURL = documentURL.appendingPathComponent("PicDownFolder")
+    
     private lazy var collectionView: UICollectionView = {
         let picterestLayout = PicterestLayout()
         picterestLayout.delegate = self
@@ -24,6 +28,7 @@ class ImagesViewController: UIViewController {
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        initFolder()
         fetchData()
         configureUI()
     }
@@ -68,13 +73,14 @@ extension ImagesViewController: PicterstLayoutDelegate {
 
 extension ImagesViewController: CollectionViewCellDelegate {
     
-    func showAlert(){
+    func showAlert(image: UIImage, imageID: String){
         let downAlert = UIAlertController(title: "사진 다운로드", message: "메모를 작성하고 OK를 누르면 다운됩니다.", preferredStyle: .alert)
         downAlert.addTextField { textField in
             textField.placeholder = "사진에 남길 메모를 적어주세요!"
         }
         
         let ok = UIAlertAction(title: "OK", style: .default) { ok in
+            self.createFile(image, imageID)
             guard let memo = downAlert.textFields?.first?.text else {
                 return
             }
@@ -83,12 +89,48 @@ extension ImagesViewController: CollectionViewCellDelegate {
         let cancel = UIAlertAction(title: "cancel", style: .cancel) { cancel in
             //TODO cancel 누르면 토글 해제
             print("다운 취소 및 토글 해제")
+            
         }
         
         downAlert.addAction(cancel)
         downAlert.addAction(ok)
         self.present(downAlert, animated: true, completion: nil)
     }
+}
+
+// MARK: - 이미지파일매니저 관련
+extension ImagesViewController {
+    func initFolder() {
+        
+        //사진다운받을 파일 "picDownFolder"가 없으면 가드문 그냥 통과후 createFolder 함수 실행
+        guard !fileManager.fileExists(atPath: picDownURL.path) else { return }
+        
+        //없으면 picDownFolder 생성
+        createFolder()
+    }
+    
+    func createFolder() {
+        print("사진 다운받은 폴더", picDownURL)
+        do {
+            try fileManager.createDirectory(at: picDownURL, withIntermediateDirectories: false)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func createFile(_ image: UIImage, _ imageID: String) {
+        print(image)
+        let imageName = "\(imageID).png"
+        
+        //저장경로 -> picDownURL
+        var folderPath = URL(fileURLWithPath: picDownURL.path)
+        folderPath.appendPathComponent((imageName as NSString).lastPathComponent)
+        
+        if !fileManager.fileExists(atPath: folderPath.path) {
+            fileManager.createFile(atPath: folderPath.path, contents: image.pngData(), attributes: nil)
+        }
+    }
+
 }
 
 // MARK: - CollectionView DataSoucrce
