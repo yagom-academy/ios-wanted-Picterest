@@ -104,7 +104,6 @@
 		68035084288E6A99003AA3AD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				68C96FD8288FB39100E7D1AA /* LabelStackView.swift */,
 				6803507B288E5586003AA3AD /* ImageCollectionViewCell.swift */,
 				68035085288E6AD1003AA3AD /* ImageCollectionViewCustomLayout.swift */,
 			);
@@ -132,6 +131,14 @@
 				6803508B288E7B31003AA3AD /* Photo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		68462B142893F8ED001A84DC /* ReusableView */ = {
+			isa = PBXGroup;
+			children = (
+				68C96FD8288FB39100E7D1AA /* LabelStackView.swift */,
+			);
+			path = ReusableView;
 			sourceTree = "<group>";
 		};
 		68B9C8E62890F39000203C6A /* Manager */ = {
@@ -166,6 +173,7 @@
 				6803508A288E7B1A003AA3AD /* Model */,
 				68035087288E6F46003AA3AD /* Network */,
 				68035083288E5E81003AA3AD /* TabBar */,
+				68462B142893F8ED001A84DC /* ReusableView */,
 				6803507D288E558C003AA3AD /* Image */,
 				6803507E288E5593003AA3AD /* Save */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,

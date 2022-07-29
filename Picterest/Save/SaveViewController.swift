@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class SaveViewController: UIViewController {
+final class SaveViewController: UIViewController {
 
     private var saveTableView = UITableView()
     private var viewModel = SaveViewModel()

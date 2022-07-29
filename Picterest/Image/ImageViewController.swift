@@ -12,7 +12,7 @@ protocol CustomLayoutDelegate: AnyObject {
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class ImageViewController: UIViewController {
+final class ImageViewController: UIViewController {
     
     private var imageCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
