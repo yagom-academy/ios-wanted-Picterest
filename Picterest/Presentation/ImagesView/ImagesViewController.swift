@@ -4,10 +4,16 @@
 //
 
 import UIKit
+import CoreData
 
 class ImagesViewController: UIViewController {
     
     // MARK: - Properties
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    //Data for the table
+    var items:[ImageInfoEntity]?
+    
     private let viewModel = ImagesViewModel()
     
     private lazy var collectionView: UICollectionView = {
@@ -26,6 +32,9 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //CoreData 테스트
+        fetchImageInfoEntity()
+        
         fetchData()
         configureUI()
     }
@@ -41,6 +50,20 @@ class ImagesViewController: UIViewController {
 
 // MARK: - Methods
 extension ImagesViewController {
+    
+    private func fetchImageInfoEntity() {
+        //CoreData로 부터 패치해서 collectionView에 display -> 추후 SavedView에
+        do {
+            self.items = try context.fetch(ImageInfoEntity.fetchRequest())
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            
+        } catch {
+            
+        }
+    }
     
     private func fetchData() {
         viewModel.fetchData { [weak self] in
@@ -89,6 +112,28 @@ extension ImagesViewController: CollectionViewCellDelegate {
                 return
             }
             print("Down, 메모:", memo)
+            
+            //create ImageInfoEntity Object
+            let newImageInfoEntity = ImageInfoEntity(context: self.context)
+            newImageInfoEntity.id = imageID
+            newImageInfoEntity.memo = memo
+//            newImageInfoEntity.savePath = 로컬 파일 저장 위치
+//            newImageInfoEntity.originUrl = 원본 오리지날 path
+            
+            //Save the data
+            do {
+                try self.context.save()
+            } catch {
+                
+            }
+            
+            //Re-fetch the Data
+            self.fetchImageInfoEntity()
+            
+            //지우는 건  SavedView에서 test
+            //사진을 길게 눌러 삭제할 수 있습니다.
+            //Alert을 통해 삭제 여부를 재확인합니다.
+            //삭제 시, 관련 정보와 사진 파일 모두를 지웁니다.
         }
         let cancel = UIAlertAction(title: "cancel", style: .cancel) { cancel in
             //TODO cancel 누르면 토글 해제
@@ -112,6 +157,11 @@ extension ImagesViewController: UICollectionViewDataSource {
         
         cell.configure(index: indexPath, data: viewModel.imageData(indexPath: indexPath))
         cell.delegate = self
+        
+//        CoreData-> 나중에 SavedImage Tab에서 적용해보기
+//        let imageInfoEntity = self.items[indexPath.row]
+//        cell에 세팅 cell.memo.text = imageInfoEntity.memo
+        
         return cell
     }
     

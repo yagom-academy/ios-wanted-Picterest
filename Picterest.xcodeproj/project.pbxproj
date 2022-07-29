@@ -18,6 +18,9 @@
 		FF2D51C1289017B0001D1922 /* Collection+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51C0289017B0001D1922 /* Collection+Custom.swift */; };
 		FF2D51C428901E27001D1922 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51C328901E27001D1922 /* ImageCacheManager.swift */; };
 		FF2D51CB28929A55001D1922 /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51CA28929A55001D1922 /* ImageFileManager.swift */; };
+		FF2D51CE2893CB83001D1922 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51CC2893CB83001D1922 /* Model.xcdatamodeld */; };
+		FF2D51D12893D091001D1922 /* ImageInfoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51CF2893D091001D1922 /* ImageInfoEntity+CoreDataClass.swift */; };
+		FF2D51D22893D091001D1922 /* ImageInfoEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D51D02893D091001D1922 /* ImageInfoEntity+CoreDataProperties.swift */; };
 		FFB74C5E288E6508002CBB0E /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C5D288E6508002CBB0E /* SavedViewController.swift */; };
 		FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */; };
 		FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFB74C62288EA109002CBB0E /* NetworkManager.swift */; };
@@ -43,6 +46,9 @@
 		FF2D51C0289017B0001D1922 /* Collection+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Custom.swift"; sourceTree = "<group>"; };
 		FF2D51C328901E27001D1922 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		FF2D51CA28929A55001D1922 /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImageFileManager.swift; path = Picterest/Manager/ImageFileManager.swift; sourceTree = SOURCE_ROOT; };
+		FF2D51CD2893CB83001D1922 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		FF2D51CF2893D091001D1922 /* ImageInfoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageInfoEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		FF2D51D02893D091001D1922 /* ImageInfoEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageInfoEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FFB74C5D288E6508002CBB0E /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		FFB74C60288E9DCF002CBB0E /* NetworkAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAPI.swift; sourceTree = "<group>"; };
 		FFB74C62288EA109002CBB0E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				FF2D51D32893D1C2001D1922 /* CoreData */,
 				FF2D51C5289122C4001D1922 /* Manager */,
 				FF2D51C228901E0D001D1922 /* Cache */,
 				FFB74C6B288ED490002CBB0E /* Extension */,
@@ -118,6 +125,16 @@
 				FF2D51CA28929A55001D1922 /* ImageFileManager.swift */,
 			);
 			path = File;
+			sourceTree = "<group>";
+		};
+		FF2D51D32893D1C2001D1922 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				FF2D51CC2893CB83001D1922 /* Model.xcdatamodeld */,
+				FF2D51CF2893D091001D1922 /* ImageInfoEntity+CoreDataClass.swift */,
+				FF2D51D02893D091001D1922 /* ImageInfoEntity+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		FFB74C5A288E5B27002CBB0E /* Application */ = {
@@ -273,9 +290,12 @@
 				FFB74C63288EA109002CBB0E /* NetworkManager.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ImagesViewController.swift in Sources */,
 				FF2D51CB28929A55001D1922 /* ImageFileManager.swift in Sources */,
+				FF2D51CE2893CB83001D1922 /* Model.xcdatamodeld in Sources */,
 				FF2D51C428901E27001D1922 /* ImageCacheManager.swift in Sources */,
 				FF2D51C1289017B0001D1922 /* Collection+Custom.swift in Sources */,
+				FF2D51D12893D091001D1922 /* ImageInfoEntity+CoreDataClass.swift in Sources */,
 				FFB74C6D288ED4BC002CBB0E /* Picterest++Bundle.swift in Sources */,
+				FF2D51D22893D091001D1922 /* ImageInfoEntity+CoreDataProperties.swift in Sources */,
 				FFB74C61288E9DCF002CBB0E /* NetworkAPI.swift in Sources */,
 				FFB74C73288EF78E002CBB0E /* ReuseIdentifying.swift in Sources */,
 				FF2D51BB288FB5DF001D1922 /* ImagesViewModel.swift in Sources */,
@@ -490,6 +510,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FF2D51CC2893CB83001D1922 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FF2D51CD2893CB83001D1922 /* Model.xcdatamodel */,
+			);
+			currentVersion = FF2D51CD2893CB83001D1922 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DE15E65028604278003DD2F5 /* Project object */;
 }
