@@ -27,6 +27,8 @@ class PhotoListViewController: UIViewController {
         CoreDataManager.shared.fetchCoreData { [weak self] data in
             self?.coreData = data
         }
+        photoListCollectionView.reloadData()
+        print("will", coreData.count)
     }
 }
 
@@ -182,7 +184,7 @@ extension PhotoListViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        if indexPath.row > photoList.count - 3 {
+        if indexPath.row > photoList.count - 2 {
             currentPage += 1
             getPhotoData()
         }

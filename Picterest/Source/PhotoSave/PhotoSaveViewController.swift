@@ -24,6 +24,7 @@ class PhotoSaveViewController: UIViewController {
         CoreDataManager.shared.fetchCoreData(completion: { [weak self] coreData in
             self?.coreData = coreData
             self?.coreData = coreData.reversed()
+            self?.saveListCollectionView.reloadData()
             print("PhtoSaveView___coreData", coreData.count)
         })
     }

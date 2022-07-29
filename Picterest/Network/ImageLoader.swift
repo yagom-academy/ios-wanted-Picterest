@@ -16,16 +16,13 @@ class ImageLoder {
     static let imageCache = NSCache<NSString, UIImage>()
     
     func leadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        if url.isEmpty {
-            completion(.failure(ImageLoaderError.invalidImageURL))
-        }
         if let image = ImageLoder.imageCache.object(forKey: url as NSString) {
             DispatchQueue.main.async {
                 completion(.success(image))
             }
             return
         }
-            guard let imageUrl = URL(string: url) else { return }
+        guard let imageUrl = URL(string: url) else { return print(ImageLoaderError.invalidImageURL)}
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: imageUrl) { data, response, error in
                 if let error = error {
