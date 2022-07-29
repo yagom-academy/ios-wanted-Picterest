@@ -96,8 +96,8 @@ cell의 삭제시 contextMenu를 사용했다. 이 과정에서 내가 지정해
 
 **collectionView(_:previewForHighlightingContextMenuWithConfiguration:)** 를 사용하였다.
 
-preview에 접근하여 UIPreviewParameters의 backgroundColor을 clear로 바꿔주거나 visiblePath를 통해 preview 자체를 cell이 아닌 cell의 contentView로 깎아버렸다. 
-아버렸다. 
+preview에 접근하여 UIPreviewParameters의 backgroundColor을 clear로 바꿔주거나 visiblePath를 통해 preview 자체를 cell이 아닌 cell의 contentView로 깎아버렸다.   
+
 ```Swift
 func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
         
