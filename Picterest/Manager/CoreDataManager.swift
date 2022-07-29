@@ -26,7 +26,6 @@ class CoreDataManager {
         do {
             guard let fetchedImageInfoList = try context.fetch(request) as? [ImageInfo] else { return [] }
             imageInfoList = fetchedImageInfoList
-            print("코어데이터 로드 성공")
         } catch {
             print("코어데이터 로드 실패")
         }
@@ -44,7 +43,6 @@ class CoreDataManager {
         imageInfo.url = data.url
         imageInfo.memo = memo
         imageInfo.localPath = localPath
-        print("코어데이터 추가 완료")
         appDelegate?.saveContext()
     }
     
@@ -56,7 +54,6 @@ class CoreDataManager {
             guard let fetchedImageInfoList = try context.fetch(request) as? [ImageInfo],
                   let targetData = fetchedImageInfoList.first else { return }
             context.delete(targetData)
-            print("코어데이터 삭제 완료")
         } catch {
             print("코어데이터 삭제 실패")
         }
