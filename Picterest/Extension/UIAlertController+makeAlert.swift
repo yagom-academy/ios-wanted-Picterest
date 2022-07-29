@@ -40,12 +40,12 @@ extension UIAlertController {
             
             let id = imageInformation.id
             let originalURL = imageInformation.urls.small
+            let imageHeight = imageInformation.height
+            let imageWidth = imageInformation.width
             
-            guard let savedLocation = imageFileManager.save(id as NSString, image) else {
-                return
-            }
+            guard let savedLocation = imageFileManager.save(id as NSString, image) else { return }
             
-            coreDataManager.save(id: id, originalURL: originalURL, memo: memo, savedLocation: savedLocation)
+            coreDataManager.save(id: id, originalURL: originalURL, memo: memo, savedLocation: savedLocation, imageHeight: imageHeight, imageWidth: imageWidth)
             cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             cell.view.saveButton.tintColor = .yellow
         }

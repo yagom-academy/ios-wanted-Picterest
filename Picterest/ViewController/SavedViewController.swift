@@ -43,7 +43,6 @@ extension SavedViewController {
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("count: \(viewModel.getImagesCount())")
         return viewModel.getImagesCount()
     }
 
@@ -97,17 +96,19 @@ extension SavedViewController: CollectionViewCellDelegate {
 
 extension SavedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let flow = collectionViewLayout as? UICollectionViewFlowLayout else {
+        guard let flow = collectionViewLayout as? UICollectionViewFlowLayout,
+              let imageData = viewModel.getImage(at: indexPath.row),
+              let imageHeight = imageData.value(forKey: CoreDataKey.imageHeight) as? CGFloat,
+              let imageWidth = imageData.value(forKey: CoreDataKey.imageWidth) as? CGFloat else {
             return CGSize()
         }
+        
         flow.scrollDirection = .vertical
         
+        let cellWidth = Style.SavedCell.width
+        let cellHeight = imageHeight * cellWidth / imageWidth
         
-        // 이후 수정 예정
-        // 아예 빈 값이 주어지면 X
-        // 어떤 값이 주어지긴 해야 함.
-        //
-        return CGSize(width: 100, height: 100)
+        return CGSize(width: cellWidth, height: cellHeight)
     }
 }
 

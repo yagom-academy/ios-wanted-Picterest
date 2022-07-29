@@ -69,7 +69,6 @@ extension ImagesViewController: UICollectionViewDataSource {
 
 extension ImagesViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        
         return CGFloat(viewModel.images[indexPath.row].height)
     }
     

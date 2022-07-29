@@ -29,17 +29,18 @@ final class CoreDataManager {
 }
 
 extension CoreDataManager {
-    func save(id: String, originalURL: String, memo: String, savedLocation: String) {
+    func save(id: String, originalURL: String, memo: String, savedLocation: String, imageHeight: Int, imageWidth: Int) {
         guard let context = context,
               let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
 
         let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
-        let keyArray = ["id", "memo", "originalURL", "savedLocation"]
-        let valueArray = [id, memo, originalURL, savedLocation]
-
-        for index in 0..<keyArray.count {
-            newValue.setValue(valueArray[index], forKey: keyArray[index])
-        }
+        newValue.setValue(id, forKey: CoreDataKey.id)
+        newValue.setValue(memo, forKey: CoreDataKey.memo)
+        newValue.setValue(originalURL, forKey: CoreDataKey.originalURL)
+        newValue.setValue(savedLocation, forKey: CoreDataKey.savedLocation)
+        newValue.setValue(imageHeight, forKey: CoreDataKey.imageHeight)
+        newValue.setValue(imageWidth, forKey: CoreDataKey.imageWidth)
+        
         do {
             try context.save()
             print("Save Success")

@@ -28,7 +28,6 @@ class CustomLayout: UICollectionViewLayout {
             return 0
         }
         let insets = collectionView.contentInset
-        print(insets)
         return collectionView.bounds.width - (insets.left + insets.right)
     }
     
