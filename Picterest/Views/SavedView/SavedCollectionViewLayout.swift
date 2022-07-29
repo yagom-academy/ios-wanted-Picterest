@@ -47,7 +47,7 @@ class SavedCollectionViewLayout: UICollectionViewLayout {
                 collectionView,
                 heightForPhotoAtIndexPath: indexPath
             ) ?? 0
-            let frame = CGRect(x: 0, y: contentHeight, width: width, height: height)
+            let frame = CGRect(x: 0, y: contentHeight, width: width, height: height - (cellPadding * 2))
             let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attribute.frame = frame.insetBy(dx: cellPadding, dy: cellPadding)
             
@@ -74,5 +74,16 @@ class SavedCollectionViewLayout: UICollectionViewLayout {
         at indexPath: IndexPath
     ) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
+    }
+}
+
+extension SavedCollectionViewLayout {
+    func emptyCache() {
+        cache.removeAll()
+    }
+    
+    func resetLayout() {
+        contentHeight = 0
+        cache.removeAll()
     }
 }

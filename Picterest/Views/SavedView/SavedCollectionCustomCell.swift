@@ -11,6 +11,7 @@ class SavedCollectionCustomCell: UICollectionViewCell {
     static let identifier = "SavedCollectionCustomCell"
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     let topView = CellTopButtonView()
@@ -27,7 +28,10 @@ class SavedCollectionCustomCell: UICollectionViewCell {
     
     func configureUI() {
         self.autoresizesSubviews = true
+        self.backgroundColor = .clear
+        imageView.backgroundColor = .clear
         self.layer.cornerRadius = 15
+        self.clipsToBounds = true
         [
             imageView,
             topView
@@ -49,7 +53,7 @@ class SavedCollectionCustomCell: UICollectionViewCell {
             
         ])
         
-        imageView.frame = self.bounds
+        imageView.bounds = self.bounds
         imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         topView.backgroundColor = .black.withAlphaComponent(0.5)
         topView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
