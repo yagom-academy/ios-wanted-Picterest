@@ -227,6 +227,7 @@ extension PhotoListViewController: CellActionDelegate {
         let photo = photos[indexPath.item]
         let imageID = photo.id
         let imageURL = photo.urls.small
+        let localImagePath = ImageManager.shared.getImagePath(id: imageID)
         let alert = UIAlertController(
             title: "사진 메모",
             message: "",
@@ -240,11 +241,25 @@ extension PhotoListViewController: CellActionDelegate {
                let text = textField.text {
                 self.URLImageProvider?.fetchImage(from: imageURL, completion: { result in
                     switch result {
+                        
                     case .success(let image):
-                        _ = ImageManager.shared.saveImage(id: imageID, image: image)
-          // TODO: [] id, text, 사진url, 저장위치 CoreData에 저장
-                        cell.starButton.isSelected = true
-                        print("text:\(text)")
+                        let imageSaved = ImageManager.shared.saveImage(
+                            id: imageID,
+                            image: image
+                        )
+                        
+                        if imageSaved {
+                            cell.starButton.isSelected = true
+                            CoreDataManager.shared.save(
+                                id: imageID,
+                                imagePath: localImagePath,
+                                imageURL: imageURL,
+                                memo: text
+                            )
+                        } else {
+                            cell.starButton.isSelected = false
+                        }
+                        
                     case .failure(let error):
                         print(error.localizedDescription)
                     }

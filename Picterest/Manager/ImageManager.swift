@@ -20,19 +20,37 @@ class ImageManager {
             for: .documentDirectory,
             in: .userDomainMask
         ).first else { return nil }
-        
         let directoryURL = documentURL.appendingPathComponent("Photo")
+        
+        if !fileManager.fileExists(atPath: directoryURL.path) {
+            do {
+                try fileManager.createDirectory(
+                    at: directoryURL,
+                    withIntermediateDirectories: true,
+                    attributes: nil
+                )
+            } catch {
+                print("Failed create directory")
+            }
+        }
         
         return directoryURL
     }
     
+    func getImagePath(id: String) -> String {
+        guard let directoryURL = getDirectoryURL() else {
+            print("directoryURL을 찾을 수 없음.")
+            return "" }
+        let imagePath = directoryURL.appendingPathComponent(id)
+        
+        return imagePath.absoluteString
+    }
+    
     func saveImage(id: String, image: UIImage) -> Bool {
         guard let directoryURL = getDirectoryURL() else { return false }
-        
         guard let imageData = image.jpegData(compressionQuality: 1) else {
             return false
         }
-
         do {
             try imageData.write(to: directoryURL.appendingPathComponent(id))
             return true
