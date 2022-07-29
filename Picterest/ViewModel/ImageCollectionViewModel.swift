@@ -59,7 +59,7 @@ struct ImageViewModel {
     }
     
     var url: String {
-        return image.urls.thumb
+        return image.urls.small
     }
 }
 

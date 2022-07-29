@@ -15,5 +15,5 @@ struct Image: Decodable {
 }
 
 struct URLs: Decodable {
-    let thumb: String
+    let small: String
 }

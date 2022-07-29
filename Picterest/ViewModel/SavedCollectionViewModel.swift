@@ -29,7 +29,7 @@ class SavedCollectionViewModel {
                   let url = $0.url else { return }
             let width = Int($0.width)
             let height = Int($0.height)
-            let savedData = SavedImageViewModel(image: Image(id: id, width: width, height: height, urls: URLs(thumb: url)),
+            let savedData = SavedImageViewModel(image: Image(id: id, width: width, height: height, urls: URLs(small: url)),
                                                 memo: memo)
             savedImages.append(savedData)
         }
