@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0E241CE288EADA000324FF6 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241CD288EADA000324FF6 /* SecondViewController.swift */; };
 		B0E241D42893359C00324FF6 /* NetworkRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241D32893359C00324FF6 /* NetworkRequester.swift */; };
 		B0E241D72893383A00324FF6 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241D62893383A00324FF6 /* APIKey.swift */; };
 		B0E241D9289338D700324FF6 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241D8289338D700324FF6 /* EndPoint.swift */; };
 		B0E241DB289338DF00324FF6 /* APIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241DA289338DF00324FF6 /* APIEndPoint.swift */; };
 		B0E241DD28933C7600324FF6 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241DC28933C7600324FF6 /* NetworkService.swift */; };
 		B0E241E02893411A00324FF6 /* PhotoDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241DF2893411A00324FF6 /* PhotoDTO.swift */; };
+		B0E241E22893DB3100324FF6 /* TabbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241E12893DB3100324FF6 /* TabbarView.swift */; };
+		B0E241E52893DC8000324FF6 /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241E42893DC8000324FF6 /* PhotoCollectionView.swift */; };
+		B0E241E82893DCA900324FF6 /* PhotoFavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E241E72893DCA900324FF6 /* PhotoFavoriteView.swift */; };
 		DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65B28604278003DD2F5 /* AppDelegate.swift */; };
 		DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65D28604278003DD2F5 /* SceneDelegate.swift */; };
 		DE15E66028604278003DD2F5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15E65F28604278003DD2F5 /* ViewController.swift */; };
@@ -22,13 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B0E241CD288EADA000324FF6 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		B0E241D32893359C00324FF6 /* NetworkRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequester.swift; sourceTree = "<group>"; };
 		B0E241D62893383A00324FF6 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		B0E241D8289338D700324FF6 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		B0E241DA289338DF00324FF6 /* APIEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndPoint.swift; sourceTree = "<group>"; };
 		B0E241DC28933C7600324FF6 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		B0E241DF2893411A00324FF6 /* PhotoDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDTO.swift; sourceTree = "<group>"; };
+		B0E241E12893DB3100324FF6 /* TabbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarView.swift; sourceTree = "<group>"; };
+		B0E241E42893DC8000324FF6 /* PhotoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
+		B0E241E72893DCA900324FF6 /* PhotoFavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFavoriteView.swift; sourceTree = "<group>"; };
 		DE15E65828604278003DD2F5 /* Picterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Picterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE15E65B28604278003DD2F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DE15E65D28604278003DD2F5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,8 +65,10 @@
 		B0E241D02893349E00324FF6 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				B0E241E62893DC8600324FF6 /* PhotoFavoriteView */,
+				B0E241E32893DC6800324FF6 /* PhotoCollectionView */,
 				DE15E65F28604278003DD2F5 /* ViewController.swift */,
-				B0E241CD288EADA000324FF6 /* SecondViewController.swift */,
+				B0E241E12893DB3100324FF6 /* TabbarView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -103,6 +109,22 @@
 				B0E241DF2893411A00324FF6 /* PhotoDTO.swift */,
 			);
 			path = DataMapping;
+			sourceTree = "<group>";
+		};
+		B0E241E32893DC6800324FF6 /* PhotoCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				B0E241E42893DC8000324FF6 /* PhotoCollectionView.swift */,
+			);
+			path = PhotoCollectionView;
+			sourceTree = "<group>";
+		};
+		B0E241E62893DC8600324FF6 /* PhotoFavoriteView */ = {
+			isa = PBXGroup;
+			children = (
+				B0E241E72893DCA900324FF6 /* PhotoFavoriteView.swift */,
+			);
+			path = PhotoFavoriteView;
 			sourceTree = "<group>";
 		};
 		DE15E64F28604278003DD2F5 = {
@@ -203,13 +225,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E241E82893DCA900324FF6 /* PhotoFavoriteView.swift in Sources */,
 				B0E241E02893411A00324FF6 /* PhotoDTO.swift in Sources */,
-				B0E241CE288EADA000324FF6 /* SecondViewController.swift in Sources */,
 				DE15E66028604278003DD2F5 /* ViewController.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				B0E241D42893359C00324FF6 /* NetworkRequester.swift in Sources */,
+				B0E241E52893DC8000324FF6 /* PhotoCollectionView.swift in Sources */,
 				B0E241DD28933C7600324FF6 /* NetworkService.swift in Sources */,
 				B0E241D72893383A00324FF6 /* APIKey.swift in Sources */,
+				B0E241E22893DB3100324FF6 /* TabbarView.swift in Sources */,
 				B0E241D9289338D700324FF6 /* EndPoint.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				B0E241DB289338DF00324FF6 /* APIEndPoint.swift in Sources */,
