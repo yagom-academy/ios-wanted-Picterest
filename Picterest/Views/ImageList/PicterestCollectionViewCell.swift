@@ -8,14 +8,14 @@
 import UIKit
 
 protocol PicterestPhotoSavable: AnyObject {
-    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavableImageData, imageData: UIImage, idx: IndexPath)
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavablePictureData, imageData: UIImage, idx: IndexPath)
 }
 
 class PicterestCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: PicterestPhotoSavable?
     
-    private var currentImageInfo: SavableImageData?
+    private var currentImageInfo: SavablePictureData?
     private var currentImageData: UIImage?
     private var currentIndexPath: IndexPath?
     
@@ -100,7 +100,7 @@ class PicterestCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    func fetchImageData(data: SavableImageData, at idx: IndexPath) {
+    func fetchImageData(data: SavablePictureData, at idx: IndexPath) {
         currentImageInfo = data
         currentIndexPath = idx
         ImageLoder().leadImage(url: data.imageData.imageUrl.smallUrl) { [self] result in

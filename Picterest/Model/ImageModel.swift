@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct SavableImageData {
-    var imageData: ImageData
+struct SavablePictureData {
+    var imageData: PictureData
     var isSaved: Bool = false
     
-    init(imageData: ImageData, isSaved: Bool = false) {
+    init(imageData: PictureData, isSaved: Bool = false) {
         self.imageData = imageData
         self.isSaved = isSaved
     }
 }
 
-struct ImageData: Decodable {
+struct PictureData: Decodable {
     var id: String
     var width: Int
     var height: Int
@@ -57,11 +57,4 @@ struct ImageUrl: Decodable {
         smallUrl = try container.decode(String.self, forKey: .samllUrl)
     }
     
-}
-
-class ImageInfo {
-    var id = ""
-    var memo = ""
-    var originUrl = ""
-    var localUrl = ""
 }

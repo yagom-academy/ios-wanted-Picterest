@@ -118,7 +118,7 @@ extension ImageListViewController: PinterestLayoutDelegate {
 }
 
 extension ImageListViewController: PicterestPhotoSavable {
-    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavableImageData, imageData: UIImage, idx: IndexPath) {
+    func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavablePictureData, imageData: UIImage, idx: IndexPath) {
         
         if isSelected {
             setImageSaveAlert(imageInfo: imageInfo, imageData: imageData, indexPath: idx)
@@ -127,7 +127,7 @@ extension ImageListViewController: PicterestPhotoSavable {
         }
     }
     
-    func setImageSaveAlert(imageInfo: SavableImageData, imageData: UIImage, indexPath: IndexPath) {
+    func setImageSaveAlert(imageInfo: SavablePictureData, imageData: UIImage, indexPath: IndexPath) {
         
         let alert = UIAlertController(title: "이미지 메모", message: nil, preferredStyle: .alert)
         alert.addTextField()
@@ -141,7 +141,7 @@ extension ImageListViewController: PicterestPhotoSavable {
         self.present(alert, animated: true)
     }
     
-    func setImageDeleteAlert(imageInfo: SavableImageData, indexPath: IndexPath) {
+    func setImageDeleteAlert(imageInfo: SavablePictureData, indexPath: IndexPath) {
         let alert = UIAlertController(title: "삭제 되었습니다.", message: nil, preferredStyle: .alert)
         let deleteAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
             viewModel.deletePicture(indexPath: indexPath)
