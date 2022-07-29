@@ -22,8 +22,8 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
         super.awakeFromNib()
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
-        savedButton.setImage(UIImage(systemName: "star"), for: .normal)
-        savedButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        savedButton.setImage(Icon.star.image, for: .normal)
+        savedButton.setImage(Icon.starFill.image, for: .selected)
     }
     
     override func prepareForReuse() {
