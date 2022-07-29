@@ -8,20 +8,59 @@
 import UIKit
 
 private enum Value {
-    static let alertWidth = UIScreen.main.bounds.width*(2/3)
-    static let alertHeight = alertWidth*(2/3)
-    static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
-    static let removeButtonTitle = " 삭제 "
-    static let cancelButtonTitle = " 취소 "
+    enum Math {
+        static let alertWidth = UIScreen.main.bounds.width*(2/3)
+        static let alertHeight = alertWidth*(2/3)
+    }
+    
+    enum Text {
+        static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
+        static let removeButtonTitle = " 삭제 "
+        static let cancelButtonTitle = " 취소 "
+    }
+    
+    enum Style {
+        static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
+    }
 }
 
 final class CheckRemoveAlertViewController: UIViewController {
     
-    private let alertStackView = UIStackView()
-    private let titleLabel = UILabel()
-    private let buttonContainerStackView = UIStackView()
-    private let removeButton = UIButton()
-    private let cancelButton = UIButton()
+    private let alertStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.layer.cornerRadius = 20
+        stackView.backgroundColor = .green
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = Value.Text.titleLabelText
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let buttonContainerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private let removeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(Value.Text.removeButtonTitle, for: .normal)
+        return button
+    }()
+    
+    private let cancelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(Value.Text.cancelButtonTitle, for: .normal)
+        return button
+    }()
     
     weak var delegate: CheckRemoveAlertViewDelegate?
     private let id: UUID
@@ -54,47 +93,28 @@ final class CheckRemoveAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = .white.withAlphaComponent(0.2)
+        view.backgroundColor = Value.Style.backgroundColor
         
-        alertStackView.layer.cornerRadius = 20
-        alertStackView.backgroundColor = .green
-        alertStackView.axis = .vertical
-        alertStackView.alignment = .center
-        alertStackView.distribution = .equalSpacing
-        
-        buttonContainerStackView.axis = .horizontal
-        buttonContainerStackView.distribution = .fillEqually
-        
-        titleLabel.text = Value.titleLabelText
-        titleLabel.textAlignment = .center
-        
-        removeButton.setTitle(Value.removeButtonTitle, for: .normal)
         removeButton.addTarget(self, action: #selector(tappedRemoveButton), for: .touchUpInside)
-        cancelButton.setTitle(Value.cancelButtonTitle, for: .normal)
+        
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
     
     private func layout() {
-        setAlertFrame()
-
         view.addSubview(alertStackView)
+        alertStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        alertStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        alertStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
+        alertStackView.heightAnchor.constraint(equalToConstant: Value.Math.alertHeight).isActive = true
         [UIView(), titleLabel, buttonContainerStackView, UIView()].forEach {
             alertStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.alertWidth-20).isActive = true
+        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
         
         [removeButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)
         }
-    }
-    
-    private func setAlertFrame() {
-        let width = Value.alertWidth
-        let height = Value.alertHeight
-        let x = (UIScreen.main.bounds.width-width)/2.0
-        let y = (UIScreen.main.bounds.height-height)/2.0
-        alertStackView.frame = CGRect(x: x, y: y, width: width, height: height)
     }
 }

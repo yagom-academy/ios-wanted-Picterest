@@ -7,11 +7,53 @@
 
 import UIKit
 
+private enum Value {
+    enum Math {
+        static let starButtonFontSize:CGFloat = 30.0
+        static let cornerRadius:CGFloat = 20.0
+        static let topBarHeight:CGFloat = 60.0
+        static let topBarLeftPadding:CGFloat = 20.0
+        static let topBarRightPadding:CGFloat = 20.0
+        static let starButtonSize:CGFloat = topBarHeight/2
+    }
+    
+    enum NameSpace {
+        static let titleLabelText = "%@번째 사진"
+        static let starButtonSelected = "★"
+        static let starButtonDeSelected = "☆"
+    }
+    
+    enum Style {
+        static let topBarBackgroundColor:UIColor = .black.withAlphaComponent(0.6)
+        static let starButtonSelected:UIColor = .yellow
+        static let starButtonDeSelected:UIColor = .white
+        static let titleLabelTextColor:UIColor = .white
+    }
+}
+
 final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     
-    private let topBarStackView = UIStackView()
-    private let starButton = UIButton(type: .system)
-    private let titleLabel = UILabel()
+    private let topBarStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = Value.Style.topBarBackgroundColor
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        return stackView
+    }()
+    
+    private let starButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.titleLabel?.font = .systemFont(ofSize: Value.Math.starButtonFontSize, weight: .medium)
+        return button
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Value.Style.titleLabelTextColor
+        return label
+    }()
+    
     private let imageView = UIImageView()
     
     private var row: Int?
@@ -41,28 +83,17 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
             return
         }
         self.row = row
-        titleLabel.text = "\(row + 1)번째 사진"
+        titleLabel.text = String(format: Value.NameSpace.titleLabelText, arguments: [String(row + 1)])
         imageView.load(urlString: data.thumbnailURL)
-        starButton.setTitleColor(data.isSaved ? .yellow : .white, for: .normal)
-        starButton.setTitle(data.isSaved ? "★": "☆", for: .normal)
+        starButton.setTitleColor(data.isSaved ? Value.Style.starButtonSelected : Value.Style.starButtonDeSelected, for: .normal)
+        starButton.setTitle(data.isSaved ? Value.NameSpace.starButtonSelected: Value.NameSpace.starButtonDeSelected, for: .normal)
     }
     
     private func attribute() {
-        contentView.backgroundColor = .cyan
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = Value.Math.cornerRadius
         contentView.clipsToBounds = true
         
-        topBarStackView.backgroundColor = .black.withAlphaComponent(0.6)
-        topBarStackView.axis = .horizontal
-        topBarStackView.alignment = .center
-        topBarStackView.distribution = .fill
-        
-        starButton.setTitle("☆", for: .normal)
-        starButton.setTitleColor(.white, for: .normal)
-        starButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .medium)
         starButton.addTarget(self, action: #selector(tappedStarButton), for: .touchUpInside)
-        
-        titleLabel.textColor = .white
     }
     
     @objc private func tappedStarButton() {
@@ -86,7 +117,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
         topBarStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         topBarStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         topBarStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        topBarStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        topBarStackView.heightAnchor.constraint(equalToConstant: Value.Math.topBarHeight).isActive = true
         
         let leftPadding = UIView()
         let rightPadding = UIView()
@@ -95,9 +126,10 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
             topBarStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        leftPadding.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        rightPadding.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        leftPadding.widthAnchor.constraint(equalToConstant: Value.Math.topBarLeftPadding).isActive = true
+        rightPadding.widthAnchor.constraint(equalToConstant: Value.Math.topBarRightPadding).isActive = true
         
-        starButton.widthAnchor.constraint(equalTo: topBarStackView.heightAnchor, multiplier: 0.5).isActive = true
+        starButton.widthAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
+        starButton.heightAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
     }
 }

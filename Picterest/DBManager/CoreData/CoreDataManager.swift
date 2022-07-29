@@ -9,10 +9,19 @@ import CoreData
 import Foundation
 
 class CoreDataManager {
+    private enum NameSpace {
+        static let persistentContainerName = "Model"
+        static let imageInfoEntityName = "ImageCoreInfo"
+        static let idKey = "id"
+        static let messageKey = "message"
+        static let aspectRatioKey = "aspectRatio"
+        static let imageURLKey = "imageURL"
+        static let imageFileLocation = "imageFileLocation"
+    }
     static var shared: CoreDataManager = CoreDataManager()
     
     lazy private var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model")
+        let container = NSPersistentContainer(name: NameSpace.persistentContainerName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -26,17 +35,17 @@ class CoreDataManager {
     }
     
     private var imageInfoEntity: NSEntityDescription? {
-        return  NSEntityDescription.entity(forEntityName: "ImageCoreInfo", in: context)
+        return  NSEntityDescription.entity(forEntityName: NameSpace.imageInfoEntityName, in: context)
     }
     
     func saveImageInfo(_ info: CoreDataInfo) -> Bool {
         if let entity = imageInfoEntity {
             let managedObject = NSManagedObject(entity: entity, insertInto: context)
-            managedObject.setValue(info.id, forKey: "id")
-            managedObject.setValue(info.message, forKey: "message")
-            managedObject.setValue(info.aspectRatio, forKey: "aspectRatio")
-            managedObject.setValue(info.imageURL, forKey: "imageURL")
-            managedObject.setValue(info.imageFileLocation, forKey: "imageFileLocation")
+            managedObject.setValue(info.id, forKey: NameSpace.idKey)
+            managedObject.setValue(info.message, forKey: NameSpace.messageKey)
+            managedObject.setValue(info.aspectRatio, forKey: NameSpace.aspectRatioKey)
+            managedObject.setValue(info.imageURL, forKey: NameSpace.imageURLKey)
+            managedObject.setValue(info.imageFileLocation, forKey: NameSpace.imageFileLocation)
             return saveToContext()
         }
         return false
@@ -58,7 +67,11 @@ class CoreDataManager {
             var infos: [CoreDataInfo] = []
             let readResults = self.readImageInfos()
             for result in readResults {
-                let info = CoreDataInfo(id: result.id ?? UUID(), message: result.message ?? "", aspectRatio: result.aspectRatio, imageURL: result.imageURL ?? "", imageFileLocation: result.imageFileLocation ?? "")
+                guard let id = result.id,
+                      let message = result.message,
+                      let imageURL = result.imageURL,
+                      let imageFileLocation = result.imageFileLocation else { continue }
+                let info = CoreDataInfo(id: id, message: message, aspectRatio: result.aspectRatio, imageURL: imageURL, imageFileLocation: imageFileLocation)
                 infos.append(info)
             }
             completion(infos)
@@ -66,15 +79,15 @@ class CoreDataManager {
     }
     
     func containImage(imageURL: String) -> Bool {
-        let readResults = self.readImageInfos()
-        var isContain = false
-        for result in readResults {
-            if result.imageURL == imageURL {
-                isContain = true
+        let readInfos = self.readImageInfos()
+        var isContainImage = false
+        for info in readInfos {
+            if info.imageURL == imageURL {
+                isContainImage = true
                 break
             }
         }
-        return isContain
+        return isContainImage
     }
     
     func readImageInfos() -> [ImageCoreInfo] {

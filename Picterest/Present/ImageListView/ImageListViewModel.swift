@@ -13,12 +13,12 @@ final class ImageListViewModel {
         var thumbnailURL: String
         var isSaved: Bool
         var id: UUID
+        var aspectRatio: CGFloat
         mutating func toggleSavedState() {
             self.isSaved = !self.isSaved
         }
     }
     private let networkManager: NetworkManager
-    private var networkDatas: [ImageInfo] = []
     private var cellDatas: [CellData] = []
     private var currentPage: Int = 1
     var totalCellCount: Int {
@@ -45,9 +45,8 @@ final class ImageListViewModel {
     }
     
     func cellHeightMultiplier(_ row: Int) -> CGFloat {
-        guard let data = networkDatas[safe: row] else { return 0.0 }
-        let multiplier = CGFloat(data.height) / CGFloat(data.width)
-        return multiplier
+        guard let data = cellDatas[safe: row] else { return 0.0 }
+        return data.aspectRatio
     }
     
     func initData(completion: @escaping (Result<Void,CustomError>)->()) {
@@ -55,10 +54,10 @@ final class ImageListViewModel {
         networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
             case .success(let infos):
-                self?.networkDatas = infos
                 self?.cellDatas = infos.map({ info in
                     let isSaved:Bool = CoreDataManager.shared.containImage(imageURL: info.imageURL.thumbnail)
-                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID())
+                    let aspactRatio = CGFloat(info.height) / CGFloat(info.width)
+                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID(), aspectRatio: aspactRatio)
                 })
                 self?.currentPage += 1
                 completion(.success(Void()))
@@ -73,10 +72,10 @@ final class ImageListViewModel {
         networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
             case .success(let infos):
-                self?.networkDatas += infos
                 self?.cellDatas += infos.map({ info in
                     let isSaved:Bool = CoreDataManager.shared.containImage(imageURL: info.imageURL.thumbnail)
-                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID())
+                    let aspactRatio = CGFloat(info.height) / CGFloat(info.width)
+                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID(), aspectRatio: aspactRatio)
                 })
                 self?.currentPage += 1
                 completion(.success(Void()))
@@ -88,13 +87,17 @@ final class ImageListViewModel {
     }
     
     func saveImage(row: Int, message: String, completion: @escaping (Result<Void, DBManagerError>) -> ()) {
-        let imageURL = cellDatas[row].thumbnailURL
-        let id = cellDatas[row].id
+        guard let cellData = cellDatas[safe: row] else {
+            completion(.failure(.failToSaveImageFile))
+            return
+        }
+        let imageURL = cellData.thumbnailURL
+        let id = cellData.id
         ImageFileManager.shared.saveImageByURL(imageURL: imageURL, id: id) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let location):
-                let aspectRatio = Double(self.networkDatas[row].height)/Double(self.networkDatas[row].width)
+                let aspectRatio = cellData.aspectRatio
                 let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, aspectRatio: aspectRatio, imageURL: imageURL, imageFileLocation: location))
                 self.cellDatas[row].toggleSavedState()
                 completion(succeedSaveImageInfo ? .success(Void()) : .failure(.failToSaveImageInfo))

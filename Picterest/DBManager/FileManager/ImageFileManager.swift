@@ -8,7 +8,7 @@
 import UIKit
 
 final class ImageFileManager {
-    
+    private let filenameExtension = ".png"
     static let shared = ImageFileManager()
     private init() { }
     
@@ -59,9 +59,8 @@ final class ImageFileManager {
         }
         guard let imageData = image.jpegData(compressionQuality: 1) ?? image.pngData() else { return nil }
         do {
-            try imageData.write(to: documentPath.appendingPathComponent(filename + ".png"))
-            
-            let locationString = filename + ".png"
+            try imageData.write(to: documentPath.appendingPathComponent(filename + filenameExtension))
+            let locationString = filename + filenameExtension
             return locationString
         } catch {
             print(error)

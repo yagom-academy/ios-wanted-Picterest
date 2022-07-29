@@ -7,9 +7,27 @@
 
 import UIKit
 
+private enum Value {
+    enum Math {
+        static let footerHeight: CGFloat = 80.0
+        static let numberOfColumns: Int = 2
+        static let numberOfSections: Int = 1
+    }
+    enum Style {
+        static let collectionViewBackgroundColor: UIColor = .clear
+        static let backgroundColor: UIColor = .white
+    }
+}
+
 final class ImageListViewController: UIViewController {
     
-    private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
+    private let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
+        collectionView.backgroundColor = Value.Style.collectionViewBackgroundColor
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     private let viewModel = ImageListViewModel(networkManager: NetworkManager.shared)
     
     init() {
@@ -40,11 +58,11 @@ extension ImageListViewController: CustomCollectionViewLayoutDelegate {
     }
     
     func collectionView(heightFooterAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 80
+        return Value.Math.footerHeight
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
-        return 2
+        return Value.Math.numberOfColumns
     }
 }
 
@@ -66,8 +84,9 @@ extension ImageListViewController: UICollectionViewDataSource {
         footer.delegate = self
         return footer
     }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return Value.Math.numberOfSections
     }
 }
 
@@ -141,12 +160,11 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
 extension ImageListViewController {
     private func attribute() {
         setRefresh()
-        view.backgroundColor = .white
+        view.backgroundColor = Value.Style.backgroundColor
         
         if let layout = collectionView.collectionViewLayout as? CustomCollectionViewLayout {
           layout.delegate = self
         }
-        collectionView.backgroundColor = .clear
         collectionView.dataSource = self
         collectionView.register(ImageListCell.self, forCellWithReuseIdentifier: ImageListCell.reuseIdentifier)
         collectionView.register(AddCellButtonFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: AddCellButtonFooterView.reuseIdentifier)
@@ -154,7 +172,6 @@ extension ImageListViewController {
     
     private func layout() {
         view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

@@ -7,12 +7,60 @@
 
 import UIKit
 
+private enum Value {
+    enum Math {
+        static let starButtonFontSize:CGFloat = 30.0
+        static let longGestureMinimumPressDuration:CGFloat = 0.5
+        static let cornerRadius:CGFloat = 20.0
+        static let topBarStackViewHeight:CGFloat = 60.0
+        static let sidePadding:CGFloat = 20.0
+        static let starButtonSize:CGFloat = topBarStackViewHeight/2
+    }
+    
+    enum Text {
+        static let starButtonTitle = "★"
+    }
+    
+    enum Style {
+        static let topBarBackgroundColor:UIColor = .black.withAlphaComponent(0.6)
+        static let starButtonTitleColor:UIColor = .yellow
+        static let titleLabelColor:UIColor = .white
+    }
+}
+
 final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
-    private let topBarStackView = UIStackView()
-    private let starButton = UIButton()
-    private let titleLabel = UILabel()
-    private let imageView = UIImageView()
+    private let topBarStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = Value.Style.topBarBackgroundColor
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let starButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(Value.Text.starButtonTitle, for: .normal)
+        button.setTitleColor(Value.Style.starButtonTitleColor, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Value.Math.starButtonFontSize, weight: .medium)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Value.Style.titleLabelColor
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
     
     weak var delegate: SavedImageListCellDelegate?
     private var id: UUID?
@@ -47,7 +95,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
 
     private func addLongTappedGesture() {
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTappedGesture))
-        gesture.minimumPressDuration = 0.5
+        gesture.minimumPressDuration = Value.Math.longGestureMinimumPressDuration
         gesture.delaysTouchesBegan = true
         imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
@@ -61,28 +109,13 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func attribute() {
-        //temp
-        starButton.setTitleColor(.yellow, for: .normal)
-        
-        contentView.layer.cornerRadius = 20
+        contentView.layer.cornerRadius = Value.Math.cornerRadius
         contentView.clipsToBounds = true
-        
-        topBarStackView.backgroundColor = .black.withAlphaComponent(0.6)
-        topBarStackView.axis = .horizontal
-        topBarStackView.alignment = .center
-        topBarStackView.distribution = .fill
-        
-        starButton.setTitle("★", for: .normal)
-        starButton.setTitleColor(.yellow, for: .normal)
-        starButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .medium)
-        
-        titleLabel.textColor = .white
     }
     
     private func layout() {
         [imageView, topBarStackView].forEach {
             contentView.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
@@ -93,18 +126,21 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         topBarStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         topBarStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         topBarStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        topBarStackView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        topBarStackView.heightAnchor.constraint(equalToConstant: Value.Math.topBarStackViewHeight).isActive = true
         
         let leftPadding = UIView()
+        leftPadding.translatesAutoresizingMaskIntoConstraints = false
         let rightPadding = UIView()
+        rightPadding.translatesAutoresizingMaskIntoConstraints = false
         
         [leftPadding, starButton, UIView(), titleLabel, rightPadding].forEach {
             topBarStackView.addArrangedSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        leftPadding.widthAnchor.constraint(equalToConstant: 20).isActive = true
-        rightPadding.widthAnchor.constraint(equalToConstant: 20).isActive = true
         
-        starButton.widthAnchor.constraint(equalTo: topBarStackView.heightAnchor, multiplier: 0.5).isActive = true
+        leftPadding.widthAnchor.constraint(equalToConstant: Value.Math.sidePadding).isActive = true
+        rightPadding.widthAnchor.constraint(equalToConstant: Value.Math.sidePadding).isActive = true
+        
+        starButton.widthAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
+        starButton.heightAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
     }
 }

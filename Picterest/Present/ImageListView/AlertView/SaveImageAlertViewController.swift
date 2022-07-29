@@ -7,24 +7,75 @@
 
 import UIKit
 
-final class SaveImageAlertViewController: UIViewController {
-    private enum Value {
+private enum Value {
+    enum Math {
         static let alertWidth = UIScreen.main.bounds.width*(2/3)
         static let alertHeight = alertWidth*(2/3)
+        static let inputTextFieldWidth = alertWidth*(7/8)
+        static let inputTextFieldHeight = alertHeight/4
         static let textFieldLeftPadding = 10.0
         static let cornerRadius = 15.0
+    }
+    enum Text {
         static let savedButtonTitle = " 저장"
         static let cancelButtonTitle = " 취소 "
         static let placeholder = "메시지를 입력하세요"
+        static let titleLabelText = "%@번째 사진을 저장하시겠습니까?"
     }
+    enum Style {
+        static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
+        static let alertStackViewBackgroundColor:UIColor = .green
+        static let inputTextFieldBackgroundColor:UIColor = .white
+    }
+}
+
+final class SaveImageAlertViewController: UIViewController {
     
-    private let alertStackView = UIStackView()
-    private let titleLabel = UILabel()
-    private let inputTextField = UITextField()
+    private let alertStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.layer.cornerRadius = Value.Math.cornerRadius
+        stackView.backgroundColor = Value.Style.alertStackViewBackgroundColor
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
-    private let buttonContainerStackView = UIStackView()
-    private let savedButton = UIButton()
-    private let cancelButton = UIButton()
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let inputTextField: UITextField = {
+       let textField = UITextField()
+        textField.backgroundColor = Value.Style.inputTextFieldBackgroundColor
+        textField.placeholder = Value.Text.placeholder
+        textField.layer.cornerRadius = Value.Math.cornerRadius
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Value.Math.textFieldLeftPadding, height: 1.0))
+        textField.leftViewMode = .always
+        return textField
+    }()
+    
+    private let buttonContainerStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    
+    private let savedButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(Value.Text.savedButtonTitle, for: .normal)
+        return button
+    }()
+    
+    private let cancelButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle(Value.Text.cancelButtonTitle, for: .normal)
+        return button
+    }()
     
     weak var delegate: SaveImageAlertViewDelegate?
     private let row: Int
@@ -56,57 +107,30 @@ final class SaveImageAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = .white.withAlphaComponent(0.2)
-        
-        alertStackView.layer.cornerRadius = Value.cornerRadius
-        alertStackView.backgroundColor = .green
-        alertStackView.axis = .vertical
-        alertStackView.alignment = .center
-        alertStackView.distribution = .equalSpacing
-        
-        buttonContainerStackView.axis = .horizontal
-        buttonContainerStackView.distribution = .fillEqually
-        
-        titleLabel.text = "\(row+1)번째 사진을 저장하시겠습니까?"
-        titleLabel.textAlignment = .center
-        
-        inputTextField.backgroundColor = .white
-        inputTextField.placeholder = Value.placeholder
-        inputTextField.layer.cornerRadius = Value.cornerRadius
-        inputTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Value.textFieldLeftPadding, height: inputTextField.frame.height))
-        inputTextField.leftViewMode = .always
-        
-        savedButton.setTitle(Value.savedButtonTitle, for: .normal)
+        view.backgroundColor = Value.Style.backgroundColor
+        titleLabel.text = String(format: Value.Text.titleLabelText, arguments: [String(row + 1)])
         savedButton.addTarget(self, action: #selector(tappedSavedButton), for: .touchUpInside)
-        
-        cancelButton.setTitle(Value.cancelButtonTitle, for: .normal)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
     
     private func layout() {
-        setAlertFrame()
-
         view.addSubview(alertStackView)
+        alertStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        alertStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        alertStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
+        alertStackView.heightAnchor.constraint(equalToConstant: Value.Math.alertHeight).isActive = true
         [UIView(), titleLabel, inputTextField, buttonContainerStackView, UIView()].forEach {
             alertStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        inputTextField.widthAnchor.constraint(equalToConstant: Value.alertWidth*7/8).isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: Value.alertHeight/4).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: Value.Math.inputTextFieldWidth).isActive = true
+        inputTextField.heightAnchor.constraint(equalToConstant: Value.Math.inputTextFieldHeight).isActive = true
         
-        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.alertWidth).isActive = true
+        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
         
         [savedButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)
         }
-    }
-    
-    private func setAlertFrame() {
-        let width = Value.alertWidth
-        let height = Value.alertHeight
-        let x = (UIScreen.main.bounds.width-width)/2.0
-        let y = (UIScreen.main.bounds.height-height)/2.0
-        alertStackView.frame = CGRect(x: x, y: y, width: width, height: height)
     }
 }

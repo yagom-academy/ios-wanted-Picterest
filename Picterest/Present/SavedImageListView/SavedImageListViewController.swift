@@ -9,7 +9,14 @@ import UIKit
 
 final class SavedImageListViewController: UIViewController {
     
-    private let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private enum Value {
+        static let backgroundColor:UIColor = .white
+    }
+    
+    private let collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        return collectionView
+    }()
     
     private let viewModel = SavedImageListViewModel()
     
@@ -42,9 +49,7 @@ final class SavedImageListViewController: UIViewController {
 extension SavedImageListViewController {
     
     private func attribute() {
-        view.backgroundColor = .white
-        
-        collectionView.backgroundColor = .white
+        view.backgroundColor = Value.backgroundColor
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SavedImageListCell.self, forCellWithReuseIdentifier: SavedImageListCell.reuseIdentifier)
