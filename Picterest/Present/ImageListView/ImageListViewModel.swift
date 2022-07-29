@@ -17,7 +17,6 @@ final class ImageListViewModel {
             self.isSaved = !self.isSaved
         }
     }
-    
     private let networkManager: NetworkManager
     private var networkDatas: [ImageInfo] = []
     private var cellDatas: [CellData] = []
@@ -53,7 +52,26 @@ final class ImageListViewModel {
         return multiplier
     }
     
-    func loadData(completion: @escaping (Result<Void,CustomError>) -> ()) {
+    func initLoadData(completion: @escaping (Result<Void,CustomError>)->()) {
+        currentPage = 1
+        networkManager.getImageInfo(page: currentPage) { [weak self] result in
+            switch result {
+            case .success(let infos):
+                self?.networkDatas = infos
+                self?.cellDatas = infos.map({ info in
+                    let isSaved:Bool = CoreDataManager.shared.containImage(imageURL: info.imageURL.thumbnail)
+                    return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID())
+                })
+                self?.currentPage += 1
+                completion(.success(Void()))
+            case .failure(let error):
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func loadData(completion: @escaping (Result<Void,CustomError>)->()) {
         networkManager.getImageInfo(page: currentPage) { [weak self] result in
             switch result {
             case .success(let infos):
@@ -62,7 +80,6 @@ final class ImageListViewModel {
                     let isSaved:Bool = CoreDataManager.shared.containImage(imageURL: info.imageURL.thumbnail)
                     return CellData(thumbnailURL: info.imageURL.thumbnail, isSaved: isSaved, id: UUID())
                 })
-                print("success load data!")
                 self?.currentPage += 1
                 completion(.success(Void()))
             case .failure(let error):

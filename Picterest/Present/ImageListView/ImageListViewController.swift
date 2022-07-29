@@ -17,6 +17,7 @@ final class ImageListViewController: UIViewController {
         attribute()
         layout()
         loadCell()
+        setRefresh()
     }
     
     required init?(coder: NSCoder) {
@@ -76,6 +77,27 @@ extension ImageListViewController: UICollectionViewDataSource {
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
+    }
+}
+
+// MARK: - 셀데이터를 새로고침시키는 메서드(+콜렉션뷰를 당겼을 때)
+extension ImageListViewController {
+    private func setRefresh() {
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+    }
+
+    @objc private func refreshCollectionView() {
+        viewModel.initLoadData { [weak self] result in
+            switch result {
+            case .success():
+                self?.collectionView.reloadData()
+//                self?.collectionView.collectionViewLayout.invalidateLayout()
+            case .failure(let error):
+                print(error)
+            }
+            self?.collectionView.refreshControl?.endRefreshing()
+        }
     }
 }
 

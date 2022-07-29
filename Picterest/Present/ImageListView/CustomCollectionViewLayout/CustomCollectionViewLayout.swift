@@ -8,7 +8,7 @@
 import UIKit
 
 final class CustomCollectionViewLayout: UICollectionViewLayout {
-    struct CumulativeValue {
+    enum CumulativeValue {
         static var height: [Int:CGFloat] = [:]
         static var maxHeight: CGFloat = 0.0
     }
@@ -18,8 +18,8 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     private var windowWidth = UIScreen.main.bounds.width
     private var cellPadding: CGFloat = 6
 
-    private var cache = [UICollectionViewLayoutAttributes]()
-    private var sectionOneFooterCache: UICollectionViewLayoutAttributes? = nil
+    private var cache: [UICollectionViewLayoutAttributes]?
+    private var sectionOneFooterCache: UICollectionViewLayoutAttributes?
 
     private var contentHeight: CGFloat = 0
 
@@ -45,8 +45,11 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     private func initCumlativeValue() {
         CumulativeValue.height.removeAll()
         CumulativeValue.maxHeight = 0.0
+        contentHeight = 0.0
+        cache = [UICollectionViewLayoutAttributes]()
+        sectionOneFooterCache = nil
     }
-    
+
     private func prepareSectionOneCellLayout() {
         guard let collectionView = collectionView else {
             return
@@ -72,9 +75,10 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
             attributes.frame = insetFrame
-            cache.append(attributes)
+            cache?.append(attributes)
             
             contentHeight = max(contentHeight, frame.maxY)
+//            contentHeight = frame.maxY
             yOffset[column] = yOffset[column] + height
         }
         CumulativeValue.maxHeight = yOffset.reduce(0) { beforeValue, value in
@@ -94,6 +98,7 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             attributes.frame = insetFrame
             sectionOneFooterCache = attributes
             contentHeight = max(contentHeight, frame.maxY)
+//            contentHeight = frame.maxY
         }
     }
     
@@ -118,7 +123,10 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()
-        
+        guard let cache = cache else {
+            return []
+        }
+
         for attributes in cache {
             if attributes.frame.intersects(rect) {
                 visibleLayoutAttributes.append(attributes)
