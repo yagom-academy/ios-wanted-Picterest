@@ -67,15 +67,15 @@ class CoreDataManager {
     
     func containImage(imageURL: String) -> Bool {
         let readResults = self.readImageInfos()
-        var result = false
-        for i in 0..<readResults.count {
-            guard let info = readResults[safe: i] else { break }
-            if info.imageURL == imageURL {
-                result = true
+        var isContain = false
+        for result in readResults {
+//            guard let info = readResults[safe: i] else { break }
+            if result.imageURL == imageURL {
+                isContain = true
                 break
             }
         }
-        return result
+        return isContain
     }
     
     private func readImageInfos() -> [ImageCoreInfo] {
@@ -93,6 +93,17 @@ class CoreDataManager {
         let readResults = readImageInfos()
         for result in readResults {
             context.delete(result)
+        }
+        return saveToContext() && readResults.isEmpty
+    }
+    
+    func removeImageInfo(at id: UUID) -> Bool {
+        let readResults = readImageInfos()
+        for result in readResults {
+            if (result.id == id) {
+                context.delete(result)
+                break
+            }
         }
         return saveToContext() && readResults.isEmpty
     }

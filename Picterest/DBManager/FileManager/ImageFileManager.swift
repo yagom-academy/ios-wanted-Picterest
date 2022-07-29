@@ -72,4 +72,18 @@ final class ImageFileManager {
         let result = UIImage(contentsOfFile: URL(fileURLWithPath: documentPath.absoluteString).appendingPathComponent(named).path)
         return result
     }
+    
+    func removeImage(at urlString: String) -> Bool {
+        guard let url = URL(string: urlString) else {
+            print("이미지 파일 삭제 실패")
+            return false
+        }
+        do {
+            try fileManager.removeItem(at: url)
+            return true
+        } catch {
+            print("이미지 파일 삭제 실패")
+            return false
+        }
+    }
 }
