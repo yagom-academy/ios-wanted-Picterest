@@ -21,6 +21,7 @@ class SavedViewController: UIViewController {
             SavedCollectionCustomCell.self,
             forCellWithReuseIdentifier: SavedCollectionCustomCell.identifier
         )
+        collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = true
@@ -37,6 +38,16 @@ class SavedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         fetchData()
         super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        imageDatas.removeAll()
+        if let layout = collectionView.collectionViewLayout as? SavedCollectionViewLayout {
+            layout.resetLayout()
+        }
+        super.viewDidDisappear(animated)
+        collectionView.reloadData()
     }
     
     func fetchData() {
@@ -65,6 +76,7 @@ class SavedViewController: UIViewController {
         ])
     }
 }
+
 // MARK: - CollectionView DataSource
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(
@@ -95,8 +107,38 @@ extension SavedViewController: UICollectionViewDataSource {
         cell.topView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         cell.topView.delegate = self
         cell.tag = indexPath.row
-        
         return cell
+    }
+}
+
+extension SavedViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        
+        let previewController = UIViewController()
+        let image = imageDatas[indexPath.row].image
+        
+        let imageView = UIImageView(image: image)
+        previewController.view = imageView
+        let width = collectionView.frame.size.width
+        let height = (imageView.frame.size.height / imageView.frame.size.width) * width
+        imageView.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        previewController.preferredContentSize = imageView.frame.size
+        
+        
+        let configuration = UIContextMenuConfiguration(identifier: "savedImage" as NSCopying) {
+            previewController
+        } actionProvider: { _ in
+            let deleteAction = UIAction(title: "삭제하기", identifier: nil, discoverabilityTitle: nil) { action in
+                print(action)
+            }
+            return UIMenu(title: "메뉴", options: .displayInline, children: [deleteAction])
+        }
+        
+        return configuration
     }
 }
 
@@ -113,12 +155,12 @@ extension SavedViewController: SaveCollectionViewDelegate {
         }
         return (contentWidth - insetSize) * (image.size.height / image.size.width)
     }
+    
+    
 }
 
 extension SavedViewController: CellTopButtonDelegate {
-    func CellTopButton(to starButton: UIButton) {
-        print(starButton.tag)
-    }
+    func CellTopButton(to starButton: UIButton) { }
     
     
 }

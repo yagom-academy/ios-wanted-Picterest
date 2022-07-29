@@ -202,8 +202,8 @@ private extension FeedViewController {
                 sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
                 
                 let data = self.viewModel.imageDatas[sender.tag]
-                
-                let imageLoader = ImageLoader(baseURL: data.urls.regular, query: [:])
+                let width = self.collectionView.frame.size.width
+                let imageLoader = ImageLoader(baseURL: data.urls.regular, query: ["w":width.description])
                 
                 imageLoader.requestNetwork { result in
                     switch result {
