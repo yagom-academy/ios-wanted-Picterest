@@ -17,7 +17,7 @@ class PhotoListCollectionViewCellViewModel {
     init(photo: AAA) {
         self.photo = photo
         if let photo = photo as? Photo {
-            downloadImage(urlString: photo.urls.regular)
+            downloadImage(urlString: photo.urls.small)
             
         } else if let savedPhoto = photo as? CoreSavedPhoto {
             if let data = FileManager.fetch(fileName: savedPhoto.id),
@@ -25,7 +25,6 @@ class PhotoListCollectionViewCellViewModel {
                 image.value = savedImage
             }
         }
-        
         
         imageTopViewModel.starButtonTapped.bind { [weak self] in
             if $0 != nil {
