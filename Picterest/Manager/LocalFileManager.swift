@@ -17,12 +17,12 @@ class LocalFileManager {
         return local.path
     }
     
-    func loadFromLocal(id: String, completion: @escaping (UIImage) -> Void) {
-        guard let imageURL = documentURL?.appendingPathComponent(id) else { return }
+    func checkFileExistInLocal(id: String) -> Bool {
+        guard let imageURL = documentURL?.appendingPathComponent(id) else { return false }
         if FileManager.default.fileExists(atPath: imageURL.path) {
-            guard let image = UIImage(contentsOfFile: imageURL.path) else { return }
-            completion(image)
+            return true
         }
+        return false
     }
     
     func saveToLocal(_ imageViewModel: ImageViewModel) {
