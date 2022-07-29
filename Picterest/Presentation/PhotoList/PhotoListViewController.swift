@@ -99,6 +99,17 @@ class PhotoListViewController: UIViewController {
         ])
     }
     
+    private func checkFileExist(id: String) -> Bool {
+        guard let localURL = ImageManager.shared.getDirectoryURL() else { return false }
+        let localImagePath = localURL.appendingPathComponent(id).path
+        
+        if FileManager.default.fileExists(atPath: localImagePath) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }
 
 // MARK: - Fetch another page extension
@@ -149,6 +160,12 @@ extension PhotoListViewController: UICollectionViewDataSource {
         
         cell.cellDelegate = self
         cell.setupCell(photo: photo, index: indexPath.item)
+        
+        if checkFileExist(id: photo.id) {
+            cell.starButton.isSelected = true
+        } else {
+            cell.starButton.isSelected = false
+        }
         
         URLImageProvider?.fetchImage(from: imageURL, completion: { result in
             switch result {

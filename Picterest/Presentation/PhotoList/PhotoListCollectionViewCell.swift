@@ -32,16 +32,12 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var topStackView: UIStackView = {
-        let stackView = UIStackView(
-            arrangedSubviews: [starButton, memoLabel]
-        )
-        stackView.alpha = Style.alpha
-        stackView.backgroundColor = .black
-        stackView.distribution = .equalSpacing
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = Style.stackViewInsets
-        return stackView
+    private lazy var topView: UIView = {
+        let view = UIView()
+        view.alpha = Style.alpha
+        view.backgroundColor = .black
+        view.layer.cornerRadius = Style.cornerRadius
+        return view
     }()
     
     lazy var starButton: UIButton = {
@@ -83,7 +79,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     @objc func starTapped() {
         cellDelegate?.starButtonTapped(cell: self)
-//        starButton.isSelected = true
     }
     
 }
@@ -104,20 +99,19 @@ extension PhotoListCollectionViewCell {
     
     private func setupView() {
         [unsplashImageView,
-        topStackView].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview($0)
-        }
-        
-        [starButton,
+         topView,
+         starButton,
          memoLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
         }
     }
     
     private func setupConstraints() {
         setupConstraintsOfUnsplashImageView()
-        setupConstraintsOfTopStackView()
+        setupConstraintsOfTopView()
+        setupConstraintsOfStarButton()
+        setupConstraintsOfMemoLabel()
     }
     
     private func setupConstraintsOfUnsplashImageView() {
@@ -137,39 +131,41 @@ extension PhotoListCollectionViewCell {
         ])
     }
     
-    private func setupConstraintsOfTopStackView() {
+    private func setupConstraintsOfTopView() {
         NSLayoutConstraint.activate([
-            topStackView.leadingAnchor.constraint(
+            topView.leadingAnchor.constraint(
                 equalTo: unsplashImageView.safeAreaLayoutGuide.leadingAnchor
             ),
-            topStackView.topAnchor.constraint(
+            topView.topAnchor.constraint(
                 equalTo: unsplashImageView.safeAreaLayoutGuide.topAnchor
             ),
-            topStackView.trailingAnchor.constraint(
+            topView.trailingAnchor.constraint(
                 equalTo: unsplashImageView.safeAreaLayoutGuide.trailingAnchor
             ),
-            topStackView.heightAnchor.constraint(equalToConstant: Style.stackViewHeight)
+            topView.heightAnchor.constraint(equalToConstant: Style.stackViewHeight)
         ])
     }
     
     private func setupConstraintsOfStarButton() {
         NSLayoutConstraint.activate([
-            starButton.topAnchor.constraint(
-                equalTo: topStackView.safeAreaLayoutGuide.topAnchor
+            starButton.centerYAnchor.constraint(
+                equalTo: topView.centerYAnchor
             ),
             starButton.leadingAnchor.constraint(
-                equalTo: topStackView.leadingAnchor
+                equalTo: topView.leadingAnchor,
+                constant: Style.leadingPadding
             )
         ])
     }
     
     private func setupConstraintsOfMemoLabel() {
         NSLayoutConstraint.activate([
-            memoLabel.topAnchor.constraint(
-                equalTo: topStackView.safeAreaLayoutGuide.topAnchor
+            memoLabel.centerYAnchor.constraint(
+                equalTo: topView.centerYAnchor
             ),
             memoLabel.trailingAnchor.constraint(
-                equalTo: topStackView.trailingAnchor
+                equalTo: topView.trailingAnchor,
+                constant: Style.trailingPadding
             )
         ])
     }
@@ -182,8 +178,10 @@ extension PhotoListCollectionViewCell {
     
     private enum Style {
         static let padding: CGFloat = 16
+        static let leadingPadding: CGFloat = 8
+        static let trailingPadding: CGFloat = -8
         static let cornerRadius: CGFloat = 10
-        static let alpha: CGFloat = 0.6
+        static let alpha: CGFloat = 0.7
         static let stackViewHeight: CGFloat = 40
         
         static let starImage = UIImage(systemName: "star")
