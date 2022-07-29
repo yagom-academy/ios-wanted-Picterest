@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func setCoreDataSetting() {
-        CoreDataManager.shared.setup(modelName: GlobalConstants.Name.CoreData.modelName)
+        CoreDataManager.shared.setup(modelName: GlobalConstants.Text.CoreData.modelName)
     }
     
     private func setTabbarAppearance() {

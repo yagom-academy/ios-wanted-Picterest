@@ -27,13 +27,13 @@ class ImageTabbarController: UITabBarController, UITabBarControllerDelegate {
         repositoryVC.navigationController?.navigationBar.prefersLargeTitles = true
         repositoryVC.navigationItem.largeTitleDisplayMode = .always
         
-        pictureListVC.title = GlobalConstants.Name.ViewController.imageListVC
-        repositoryVC.title = GlobalConstants.Name.ViewController.imageRepositoryVC
+        pictureListVC.title = GlobalConstants.Text.ViewController.imageListVC
+        repositoryVC.title = GlobalConstants.Text.ViewController.imageRepositoryVC
         
-        let pictureListTabBarItem = UITabBarItem(title: GlobalConstants.Name.TabbarItem.imageListVC, image: GlobalConstants.Image.Tabbar.photo.image, tag: 1)
+        let pictureListTabBarItem = UITabBarItem(title: GlobalConstants.Text.TabbarItem.imageListVC, image: GlobalConstants.Image.Tabbar.photo.image, tag: 1)
         pictureListVC.tabBarItem = pictureListTabBarItem
         
-        let repositoryTabBarItem = UITabBarItem(title: GlobalConstants.Name.TabbarItem.repositoryVC, image: GlobalConstants.Image.Tabbar.star.image, tag: 2)
+        let repositoryTabBarItem = UITabBarItem(title: GlobalConstants.Text.TabbarItem.repositoryVC, image: GlobalConstants.Image.Tabbar.star.image, tag: 2)
         repositoryVC.tabBarItem = repositoryTabBarItem
 
         self.viewControllers = [pictureNaviVC, repositoryNaviVC]

@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 enum GlobalConstants {
-    
-    enum Name {
+    enum Text {
         enum ViewController {
             static var imageListVC: String = "Picterest"
             static var imageRepositoryVC: String = "Repository"
@@ -21,6 +20,15 @@ enum GlobalConstants {
         enum TabbarItem {
             static var imageListVC: String = "Images"
             static var repositoryVC: String = "Saved"
+        }
+        enum CollectionViewCell {
+            static var identifier = "cell"
+        }
+        enum Alert {
+            static var saveTitle = "메모를 함께 남겨주세요"
+            static var save = "저장"
+            static var deleteTitle = "삭제 되었습니다"
+            static var confirm = "확인"
         }
     }
     

@@ -21,7 +21,7 @@ class ImageListViewController: UIViewController {
     private var picterestCollectionView: UICollectionView = {
         let layout = PicterestCollectionViewLayout()
         var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(PicterestCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(PicterestCollectionViewCell.self, forCellWithReuseIdentifier: GlobalConstants.Text.CollectionViewCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -93,7 +93,7 @@ extension ImageListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PicterestCollectionViewCell
+        let cell = picterestCollectionView.dequeueReusableCell(withReuseIdentifier: GlobalConstants.Text.CollectionViewCell.identifier, for: indexPath) as! PicterestCollectionViewCell
         cell.delegate = self
         let imageData = viewModel.image(at: indexPath.row)
         cell.fetchImageData(data: imageData, at: indexPath)
@@ -129,9 +129,9 @@ extension ImageListViewController: PicterestPhotoSavable {
     
     func setImageSaveAlert(imageInfo: SavablePictureData, imageData: UIImage, indexPath: IndexPath) {
         
-        let alert = UIAlertController(title: "이미지 메모", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: GlobalConstants.Text.Alert.saveTitle, message: nil, preferredStyle: .alert)
         alert.addTextField()
-        let saveAction = UIAlertAction(title: "저장", style: .default) { [self, weak alert] (_) in
+        let saveAction = UIAlertAction(title: GlobalConstants.Text.Alert.save, style: .default) { [self, weak alert] (_) in
             let memo = alert?.textFields![0].text ?? ""
             viewModel.savePicuture(image: imageData, memo: memo, at: indexPath.item)
         }
@@ -142,8 +142,8 @@ extension ImageListViewController: PicterestPhotoSavable {
     }
     
     func setImageDeleteAlert(imageInfo: SavablePictureData, indexPath: IndexPath) {
-        let alert = UIAlertController(title: "삭제 되었습니다.", message: nil, preferredStyle: .alert)
-        let deleteAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+        let alert = UIAlertController(title: GlobalConstants.Text.Alert.deleteTitle, message: nil, preferredStyle: .alert)
+        let deleteAction = UIAlertAction(title: GlobalConstants.Text.Alert.confirm, style: .default) { [self] (_) in
             viewModel.deletePicture(indexPath: indexPath)
         }
         alert.addAction(deleteAction)

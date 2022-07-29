@@ -94,7 +94,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				F0F56E372893B1BA007AED0C /* GlobalConstants */,
+				F0F56E372893B1BA007AED0C /* MISC */,
 				F0F56E26288FEC7E007AED0C /* CoreData */,
 				F0F56E24288FE7DC007AED0C /* FileManager */,
 				F0F56E01288EBB1D007AED0C /* ViewModel */,
@@ -196,12 +196,12 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		F0F56E372893B1BA007AED0C /* GlobalConstants */ = {
+		F0F56E372893B1BA007AED0C /* MISC */ = {
 			isa = PBXGroup;
 			children = (
 				F0F56E382893B1E4007AED0C /* GlobalConstants.swift */,
 			);
-			path = GlobalConstants;
+			path = MISC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
