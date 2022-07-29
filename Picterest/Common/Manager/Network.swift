@@ -7,8 +7,13 @@
 
 import Foundation
 
-enum NetworkError: Error {
-    case unkown
+enum NetworkError: String, Error {
+    case invalidRequest
+    case jsonError
+    case serverError
+    case unknown
+    
+    var description: String { self.rawValue }
 }
 
 class Network {
@@ -31,23 +36,23 @@ class Network {
         ])
         
         guard let url = urlComponent?.url else {
-            completion(.failure(.unkown))
+            completion(.failure(.invalidRequest))
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                completion(.failure(.unkown))
+                completion(.failure(.invalidRequest))
                 return
             }
             
             guard (response as? HTTPURLResponse)?.statusCode == 200 else  {
-                completion(.failure(.unkown))
+                completion(.failure(.serverError))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.unkown))
+                completion(.failure(.unknown))
                 return
             }
             
@@ -55,7 +60,7 @@ class Network {
                 let photos = try JSONDecoder().decode([Photo].self, from: data)
                 completion(.success(photos))
             } catch {
-                completion(.failure(.unkown))
+                completion(.failure(.jsonError))
             }
         }.resume()
     }

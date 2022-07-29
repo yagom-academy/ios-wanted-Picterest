@@ -32,7 +32,7 @@ class PhotoListViewModel {
             case .success(let photos):
                 self.photoList.value.append(contentsOf: photos)
             case .failure(let error):
-                print("ERROR \(error)😶‍🌫️")
+                print("ERROR \(error.description)😶‍🌫️")
             }
         }
     }

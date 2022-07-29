@@ -40,7 +40,7 @@ class PhotoListCollectionViewCellViewModel {
             case .success(let image):
                 self.image.value = image
             case .failure(let error):
-                print("ERROR \(error)👹")
+                print("ERROR \(error.description)👹")
             }
         }
     }

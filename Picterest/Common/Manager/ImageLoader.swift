@@ -7,8 +7,13 @@
 
 import UIKit
 
-enum ImageLoaderError: Error {
+enum ImageLoaderError: String, Error {
+    case invalidURL
+    case invalidRequest
+    case serverError
     case unknown
+    
+    var description: String { self.rawValue }
 }
 
 class ImageLoader {
@@ -25,18 +30,18 @@ class ImageLoader {
         }
         
         guard let url = URL(string: urlString) else {
-            completion(.failure(.unknown))
+            completion(.failure(.invalidURL))
             return
         }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
-                completion(.failure(.unknown))
+                completion(.failure(.invalidRequest))
                 return
             }
             
             guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-                completion(.failure(.unknown))
+                completion(.failure(.serverError))
                 return
             }
             
