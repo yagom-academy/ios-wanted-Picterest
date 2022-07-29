@@ -12,8 +12,7 @@ extension UIAlertController {
         _ target: UIViewController?,
         title: String,
         isInTextField: Bool,
-        handler: @escaping (String?
-        ) -> Void) {
+        handler: @escaping (String?) -> Void) {
         let alert = UIAlertController(
             title: title,
             message: nil,

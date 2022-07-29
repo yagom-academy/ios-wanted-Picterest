@@ -23,6 +23,7 @@ class Network {
         self.page = page
     }
     
+//    private let clientID = "7EoAQCEONksYSL9jv2U0iSUGUzpTffG6_YrGTdTXF2o"
     private let clientID = "jGA9GAwx92PWFeD_ptnML18QqLz5M3zpjGVEqXIKw7g"
     private let perPage = 15
     private let path = "https://api.unsplash.com/photos"
