@@ -56,8 +56,8 @@ extension ImagesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
         let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
         cell.configureImageCollectionCell(with: imageData, index: indexPath.row)
-        cell.starButtonTapped = { [weak self] (bool) in
-            self?.starButtonTapped(didSave: bool, data: imageData)
+        cell.starButtonStatusChanged = { [weak self] in
+            self?.starButtonTapped(at: indexPath.row)
         }
         return cell
     }
@@ -86,17 +86,38 @@ extension ImagesViewController: PicterestLayoutDelegate {
 }
 
 extension ImagesViewController {
-    func starButtonTapped(didSave: Bool, data: ImageViewModel) {
-        let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
-        let save = UIAlertAction(title: "저장", style: .default) { _ in
-            guard let textField = alert.textFields else { return }
-            let text = textField[0].text
-            DataManager.shared.save(data: data, memo: text ?? "")
+    func starButtonTapped(at index: Int) {
+        let data = imageCollectionViewModel.imageAtIndex(index)
+        
+        if imageCollectionViewModel.checkFileExistInLocal(data: data) {
+            showAlertOfDelete(data: data)
+        } else {
+            showAlertOfSave(data: data)
         }
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(save)
+    }
+    
+    func showAlertOfSave(data: ImageViewModel) {
+        let alert = UIAlertController(title: "사진을 저장합니다 ", message: "메모를 남겨보세요", preferredStyle: .alert)
+        let save = UIAlertAction(title: "저장", style: .default) { _ in
+            guard let textField = alert.textFields,
+                  let text = textField[0].text else { return }
+            self.imageCollectionViewModel.save(data: data, with: text)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .default)
         alert.addAction(cancel)
+        alert.addAction(save)
         alert.addTextField()
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true)
+    }
+    
+    func showAlertOfDelete(data: ImageViewModel) {
+        let alert = UIAlertController(title: "즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            self.imageCollectionViewModel.deleteImage(id: data.id)
+        }
+        let cancel = UIAlertAction(title: "취소", style: .default)
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        present(alert, animated: true)
     }
 }

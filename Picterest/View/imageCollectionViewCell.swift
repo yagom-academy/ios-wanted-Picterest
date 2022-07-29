@@ -11,7 +11,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "imageCollectionViewCell"
     
-    var starButtonTapped: (Bool) -> Void = { (bool) in }
+    var starButtonStatusChanged: () -> Void = {}
     var isStar: Bool = false
     
     private lazy var imageView: UIImageView = {
@@ -35,6 +35,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         let starButton = UIButton()
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
         starButton.tintColor = .white
+        starButton.addTarget(self, action: #selector(starButtonTapped), for: .touchUpInside)
         return starButton
     }()
     
@@ -46,16 +47,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
         return indexLabel
     }()
     
-    @objc func starButtonTabbed() {
-        starButtonTapped(isStar)
-        if isStar {
-            starButton.setImage(UIImage(systemName: "star"), for: .normal)
-            starButton.tintColor = .white
-        } else {
-            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            starButton.tintColor = .yellow
-        }
-        isStar.toggle()
+    @objc func starButtonTapped() {
+        starButtonStatusChanged()
     }
     
     func configureImageCollectionCell(with imageViewModel: ImageViewModel, index: Int) {
@@ -63,20 +56,26 @@ class ImageCollectionViewCell: UICollectionViewCell {
         setConstraints()
         self.imageView.loadImage(url: imageViewModel.url)
         self.indexLabel.text = "\(index)번째 사진"
-        self.starButton.addTarget(self, action: #selector(starButtonTabbed), for: .touchUpInside)
+        let checkResult = LocalFileManager.shared.checkFileExistInLocal(id: imageViewModel.id)
+        setStarButton(didSaved: checkResult)
     }
     
     func configureSavedCollectionCell(with savedViewModel: SavedImageViewModel, memo: String) {
         setSubView()
         setConstraints()
-        LocalFileManager.shared.loadFromLocal(id: savedViewModel.id) { image in
-            DispatchQueue.main.async {
-                self.imageView.image = image
-            }
-        }
+        self.imageView.loadFromLocal(id: savedViewModel.id)
         self.indexLabel.text = memo
-        self.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        self.starButton.tintColor = .yellow
+        setStarButton(didSaved: true)
+    }
+    
+    private func setStarButton(didSaved: Bool = false) {
+        if didSaved {
+            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            starButton.tintColor = .yellow
+        } else {
+            starButton.setImage(UIImage(systemName: "star"), for: .normal)
+            starButton.tintColor = .white
+        }
     }
     
     private func setSubView() {

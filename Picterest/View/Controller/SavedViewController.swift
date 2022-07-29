@@ -28,6 +28,14 @@ class SavedViewController: UIViewController {
         viewModel.fetchSavedData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.savedImagesUpdated = {
+            self.collectionView.reloadData()
+        }
+        viewModel.refreshData()
+    }
+        
     func configureSubviews() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -84,7 +92,7 @@ extension SavedViewController {
         guard let indexPath = collectionView.indexPathForItem(at: position) else { return }
         let alert = UIAlertController(title: "사진 삭제", message: "사진을 삭제하시겠습니까?", preferredStyle: .alert)
         let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            DataManager.shared.delete(data: self.viewModel.imageAtIndex(indexPath.row))
+            self.viewModel.deleteData(at: indexPath.row)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(delete)

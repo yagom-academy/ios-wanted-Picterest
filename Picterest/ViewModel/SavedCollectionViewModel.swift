@@ -9,17 +9,13 @@ import UIKit
 import CloudKit
 
 class SavedCollectionViewModel {
-    private var savedImages: [SavedImageViewModel] = [] {
-        didSet {
-            scrollViewUpdate()
-        }
-    }
+    private var savedImages: [SavedImageViewModel] = []
     
     var savedImagesCount: Int {
         return savedImages.count
     }
     
-    var scrollViewUpdate: () -> Void = {}
+    var savedImagesUpdated: () -> Void = {}
     
     func fetchSavedData() {
         let imageInfoData = CoreDataManager.shared.loadData()
@@ -33,6 +29,21 @@ class SavedCollectionViewModel {
                                                 memo: memo)
             savedImages.append(savedData)
         }
+        DispatchQueue.main.async {
+            self.savedImagesUpdated()
+        }
+    }
+    
+    func deleteData(at index: Int) {
+        DataManager.shared.delete(id: savedImages[index].id)
+        savedImages.remove(at: index)
+        self.savedImagesUpdated()
+    }
+    
+    func refreshData() {
+        savedImages.removeAll()
+        fetchSavedData()
+        self.savedImagesUpdated()
     }
     
     func imageAtIndex(_ index: Int) -> SavedImageViewModel {

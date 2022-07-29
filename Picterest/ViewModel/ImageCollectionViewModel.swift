@@ -25,7 +25,11 @@ class ImageCollectionViewModel {
         NetworkManager.shared.fetchImageList(pageNumber: pageNumber) { [weak self] result in
             switch result {
             case .success(let images):
-                self?.images.append(contentsOf: images)
+                if self?.pageNumber == 1 {
+                    self?.images = images
+                } else {
+                    self?.images.append(contentsOf: images)
+                }
                 self?.pageNumber += 1
                 self?.isFetching = false
             case .failure(let error):
@@ -36,6 +40,19 @@ class ImageCollectionViewModel {
     
     func imageAtIndex(_ index: Int) -> ImageViewModel {
         return ImageViewModel(image: images[index])
+    }
+    
+    func checkFileExistInLocal(data: ImageViewModel) -> Bool {
+        let result = LocalFileManager.shared.checkFileExistInLocal(id: data.id)
+        return result
+    }
+    
+    func save(data: ImageViewModel, with memo: String) {
+        DataManager.shared.save(data: data, memo: memo)
+    }
+    
+    func deleteImage(id: String) {
+        DataManager.shared.delete(id: id)
     }
 }
 
