@@ -22,7 +22,6 @@ final class CellView: UIView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -61,8 +60,8 @@ final class CellView: UIView {
         self.addSubview(saveButton)
         self.addSubview(textLabel)
         self.bringSubviewToFront(headerView)
-        self.bringSubviewToFront(saveButton)
         self.bringSubviewToFront(textLabel)
+        self.bringSubviewToFront(saveButton)
     }
     
     private func autoLayout() {

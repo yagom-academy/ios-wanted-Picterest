@@ -61,7 +61,6 @@ extension ImagesViewController: UICollectionViewDataSource {
         if ImageFileManager.shared.fileExists(imageData.id as NSString) {
             cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             cell.view.saveButton.tintColor = .yellow
-            cell.view.saveButton.isEnabled = false
         }
         return cell
     }
