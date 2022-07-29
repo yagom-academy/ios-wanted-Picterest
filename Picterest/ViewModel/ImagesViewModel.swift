@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import Combine
 
 final class ImagesViewModel {
     
-    @Published var images = [ImageInformation]()
+    private var images = [ImageInformation]()
     
     private var pageIndex = 1
     private let numberOfImages = 15
@@ -29,7 +28,7 @@ final class ImagesViewModel {
         return images[index]
     }
     
-    func fetch() {
+    func fetch(completion: @escaping () -> Void) {
         guard let url = URL(string: downloadURL + "?" + "client_id=\(clientKey)" + "&per_page=\(numberOfImages)" + "&page=\(pageIndex)") else {
             print("Uncorrect url")
             return
@@ -39,6 +38,7 @@ final class ImagesViewModel {
             for photo in images {
                 self.images.append(photo)
             }
+            completion()
         }
     }
     

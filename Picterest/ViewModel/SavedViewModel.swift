@@ -6,12 +6,11 @@
 //
 
 import Foundation
-import Combine
 import CoreData
 
 final class SavedViewModel {
     
-    @Published var images = [NSManagedObject]()
+    private var images = [NSManagedObject]()
     private let coreDataManager = CoreDataManager.shared
     
     

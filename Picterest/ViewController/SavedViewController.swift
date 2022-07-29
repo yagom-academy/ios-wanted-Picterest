@@ -6,12 +6,10 @@
 //
 
 import UIKit
-import Combine
 
 final class SavedViewController: UIViewController {
     private let reuseIdentifier = "SavedCell"
     private let viewModel = SavedViewModel()
-    private var cancellable = Set<AnyCancellable>()
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -19,26 +17,14 @@ final class SavedViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.fetch()
+        collectionView.reloadData()
     }
     
 }
-
-extension SavedViewController {
-    private func bind() {
-        viewModel.$images
-            .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.collectionView.reloadData()
-            }
-            .store(in: &cancellable)
-    }
-}
-
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,6 +69,7 @@ extension SavedViewController: CollectionViewCellDelegate {
         guard let cell = cell as? SavedCollectionViewCell else { return }
         let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
             self.viewModel.fetch()
+            self.collectionView.reloadData()
         }
         
         alertController.addAlertAction(title: firstActionTitle, style: .default)

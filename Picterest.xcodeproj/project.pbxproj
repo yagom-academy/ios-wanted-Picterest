@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9F136CC12892C45F00AEE4E7 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC02892C45F00AEE4E7 /* Style.swift */; };
 		9F136CC328937A8100AEE4E7 /* CoreDataKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC228937A8100AEE4E7 /* CoreDataKey.swift */; };
-		9F1DD584288F6ED70065E57D /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD583288F6ED70065E57D /* TabBarViewController.swift */; };
 		9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD585288F75C20065E57D /* SavedViewController.swift */; };
 		9F1DD588288F75CF0065E57D /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD587288F75CF0065E57D /* ImagesViewController.swift */; };
 		9F1DD58A288FAE7A0065E57D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD589288FAE7A0065E57D /* NetworkManager.swift */; };
@@ -36,7 +35,6 @@
 /* Begin PBXFileReference section */
 		9F136CC02892C45F00AEE4E7 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		9F136CC228937A8100AEE4E7 /* CoreDataKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataKey.swift; sourceTree = "<group>"; };
-		9F1DD583288F6ED70065E57D /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9F1DD585288F75C20065E57D /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		9F1DD587288F75CF0065E57D /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		9F1DD589288FAE7A0065E57D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 		9F1DD599288FD81C0065E57D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				9F1DD583288F6ED70065E57D /* TabBarViewController.swift */,
 				9F1DD585288F75C20065E57D /* SavedViewController.swift */,
 				9F1DD587288F75CF0065E57D /* ImagesViewController.swift */,
 			);
@@ -290,7 +287,6 @@
 				9F2D474228925577007B0B21 /* SavedViewModel.swift in Sources */,
 				9F1DD596288FD0CB0065E57D /* UIImageView+loadImage.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
-				9F1DD584288F6ED70065E57D /* TabBarViewController.swift in Sources */,
 				9F2D473E28923031007B0B21 /* CellView.swift in Sources */,
 				9F1DD598288FD1100065E57D /* ImageCacheManager.swift in Sources */,
 				9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */,
