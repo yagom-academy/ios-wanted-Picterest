@@ -64,15 +64,15 @@ final class ImageListViewModel {
         let id = cellDatas[row].id
         ImageFileManager.shared.saveImageByURL(imageURL: imageURL, id: id) { [weak self] result in
             guard let self = self else { return }
-//            switch result {
-//            case .success(let location):
-//                let aspectRatio = Double(self.networkDatas[row].height)/Double(self.networkDatas[row].width)
-//                let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, aspectRatio: aspectRatio, imageURL: imageURL, imageFileLocation: location))
-//                self.cellDatas[row].toggleSavedState()
-//                completion(succeedSaveImageInfo ? .success(Void()) : .failure(.failToSaveImageInfo))
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
+            switch result {
+            case .success(let location):
+                let aspectRatio = Double(self.networkDatas[row].height)/Double(self.networkDatas[row].width)
+                let succeedSaveImageInfo = CoreDataManager.shared.saveImageInfo(CoreDataInfo(id: id, message: message, aspectRatio: aspectRatio, imageURL: imageURL, imageFileLocation: location))
+                self.cellDatas[row].toggleSavedState()
+                completion(succeedSaveImageInfo ? .success(Void()) : .failure(.failToSaveImageInfo))
+            case .failure(let error):
+                completion(.failure(error))
+            }
         }
     }
 }

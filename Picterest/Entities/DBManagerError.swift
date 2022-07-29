@@ -13,6 +13,8 @@ enum DBManagerError: Error {
     case failToSaveImageInfo
     case responseError
     case failParsingToImage
+    case failToRemoveImageFile
+    case failToRemoveImageInfo
     
     var description: String {
         switch self {
@@ -26,6 +28,10 @@ enum DBManagerError: Error {
             return "네트워크 에러"
         case .failParsingToImage:
             return "image로 파싱이 실패했습니다."
+        case .failToRemoveImageFile:
+            return "이미지파일 삭제에 실패했습니다."
+        case .failToRemoveImageInfo:
+            return "이미지정보 삭제에 실패했습니다."
         }
     }
 }

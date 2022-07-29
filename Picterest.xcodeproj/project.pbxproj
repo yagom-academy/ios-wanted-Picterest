@@ -28,6 +28,9 @@
 		FE56A673288ED11100EBD539 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A672288ED11100EBD539 /* Collection+Extension.swift */; };
 		FE6E3DA528935636001F8E92 /* ImageCoreInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6E3DA328935636001F8E92 /* ImageCoreInfo+CoreDataClass.swift */; };
 		FE6E3DA628935636001F8E92 /* ImageCoreInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6E3DA428935636001F8E92 /* ImageCoreInfo+CoreDataProperties.swift */; };
+		FE6E3DA828935B40001F8E92 /* SavedImageListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6E3DA728935B40001F8E92 /* SavedImageListCellDelegate.swift */; };
+		FE6E3DAB28935F7B001F8E92 /* CheckRemoveAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6E3DAA28935F7B001F8E92 /* CheckRemoveAlertViewController.swift */; };
+		FE6E3DAD2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6E3DAC2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift */; };
 		FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B52891931900C7F358 /* CoreDataManager.swift */; };
 		FE6FC6B82891949000C7F358 /* CoreDataInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */; };
 		FE6FC6BB2891956600C7F358 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */; };
@@ -66,6 +69,9 @@
 		FE56A672288ED11100EBD539 /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		FE6E3DA328935636001F8E92 /* ImageCoreInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		FE6E3DA428935636001F8E92 /* ImageCoreInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageCoreInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FE6E3DA728935B40001F8E92 /* SavedImageListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListCellDelegate.swift; sourceTree = "<group>"; };
+		FE6E3DAA28935F7B001F8E92 /* CheckRemoveAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRemoveAlertViewController.swift; sourceTree = "<group>"; };
+		FE6E3DAC2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckRemoveAlertViewDelegate.swift; sourceTree = "<group>"; };
 		FE6FC6B52891931900C7F358 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		FE6FC6B72891949000C7F358 /* CoreDataInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataInfo.swift; sourceTree = "<group>"; };
 		FE6FC6BA2891956600C7F358 /* ImageInfoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageInfoModel.xcdatamodel; sourceTree = "<group>"; };
@@ -170,6 +176,7 @@
 			children = (
 				FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */,
 				FE71B1F52892584E001D000D /* SavedImageListViewModel.swift */,
+				FE6E3DA928935F5B001F8E92 /* AlertView */,
 				FE71B1F2289256E3001D000D /* Cell */,
 			);
 			path = SavedImageListView;
@@ -246,6 +253,15 @@
 			path = MainTabBarController;
 			sourceTree = "<group>";
 		};
+		FE6E3DA928935F5B001F8E92 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				FE6E3DAA28935F7B001F8E92 /* CheckRemoveAlertViewController.swift */,
+				FE6E3DAC2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
 		FE6FC6B4289192FF00C7F358 /* DBManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				FE71B1F3289256F0001D000D /* SavedImageListCell.swift */,
+				FE6E3DA728935B40001F8E92 /* SavedImageListCellDelegate.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -391,9 +408,12 @@
 				FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
 				FE71B1F62892584E001D000D /* SavedImageListViewModel.swift in Sources */,
+				FE6E3DAD2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift in Sources */,
 				FE71B1F128922698001D000D /* DBManagerError.swift in Sources */,
 				FE6E3DA528935636001F8E92 /* ImageCoreInfo+CoreDataClass.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
+				FE6E3DAB28935F7B001F8E92 /* CheckRemoveAlertViewController.swift in Sources */,
+				FE6E3DA828935B40001F8E92 /* SavedImageListCellDelegate.swift in Sources */,
 				FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */,
 				FE71B1F4289256F0001D000D /* SavedImageListCell.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,

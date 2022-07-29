@@ -31,9 +31,7 @@ final class SavedImageListViewController: UIViewController {
     
     private func loadCell() {
         viewModel.loadData { [weak self] in
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
+            self?.collectionView.reloadData()
         }
     }
 }
@@ -73,6 +71,7 @@ extension SavedImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedImageListCell.reuseIdentifier, for: indexPath) as? SavedImageListCell else { return UICollectionViewCell() }
         cell.configure(data: viewModel.cellData(indexPath))
+        cell.delegate = self
         return cell
     }
 }
@@ -81,5 +80,24 @@ extension SavedImageListViewController: UICollectionViewDataSource {
 extension SavedImageListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return viewModel.cellSize(indexPath)
+    }
+}
+
+//MARK: - SavedImageListCell Delegate 메서드
+extension SavedImageListViewController: SavedImageListCellDelegate {
+    func didLongTappedCell(id: UUID) {
+        let alert = CheckRemoveAlertViewController(id: id)
+        alert.modalPresentationStyle = .overFullScreen
+        alert.delegate = self
+        self.present(alert, animated: false)
+    }
+}
+
+//MARK: - CheckRemoveAlertViewController Delegate 메서드
+extension SavedImageListViewController: CheckRemoveAlertViewDelegate {
+    func tappedRemoveButton(id: UUID) {
+        viewModel.removeCell(at: id) { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
 }

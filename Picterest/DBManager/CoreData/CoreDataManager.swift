@@ -69,7 +69,6 @@ class CoreDataManager {
         let readResults = self.readImageInfos()
         var isContain = false
         for result in readResults {
-//            guard let info = readResults[safe: i] else { break }
             if result.imageURL == imageURL {
                 isContain = true
                 break
@@ -78,7 +77,7 @@ class CoreDataManager {
         return isContain
     }
     
-    private func readImageInfos() -> [ImageCoreInfo] {
+    func readImageInfos() -> [ImageCoreInfo] {
         do {
             let request = ImageCoreInfo.fetchRequest()
             let results = try context.fetch(request)
@@ -90,21 +89,31 @@ class CoreDataManager {
     }
     
     func removeAllImageInfos() -> Bool {
-        let readResults = readImageInfos()
-        for result in readResults {
-            context.delete(result)
+        let readInfos = readImageInfos()
+        for info in readInfos {
+            context.delete(info)
         }
-        return saveToContext() && readResults.isEmpty
+        return saveToContext() && readInfos.isEmpty
     }
     
-    func removeImageInfo(at id: UUID) -> Bool {
-        let readResults = readImageInfos()
-        for result in readResults {
-            if (result.id == id) {
-                context.delete(result)
-                break
+    func removeImageInfo(at id: UUID) throws -> String {
+        let readInfos = readImageInfos()
+        var result: String?
+        for info in readInfos {
+            if (info.id == id) {
+                guard let imageFileLocation = info.imageFileLocation else { break }
+                context.delete(info)
+                if saveToContext() {
+                    result = imageFileLocation
+                    break
+                } else {
+                    throw DBManagerError.failToRemoveImageInfo
+                }
             }
         }
-        return saveToContext() && readResults.isEmpty
+        guard let result = result else {
+            throw DBManagerError.failToRemoveImageInfo
+        }
+        return result
     }
 }

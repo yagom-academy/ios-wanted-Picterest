@@ -1,37 +1,37 @@
 //
-//  InputMessageAlertView.swift
+//  CheckRemoveAlertViewController.swift
 //  Picterest
 //
-//  Created by 김기림 on 2022/07/27.
+//  Created by 김기림 on 2022/07/29.
 //
 
 import UIKit
 
-final class SaveImageAlertViewController: UIViewController {
+final class CheckRemoveAlertViewController: UIViewController {
     enum Value {
         static let alertWidth = UIScreen.main.bounds.width*(2/3)
         static let alertHeight = alertWidth*(2/3)
-        static let savedButtonTitle = " 저장"
+        static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
+        static let removeButtonTitle = " 삭제 "
         static let cancelButtonTitle = " 취소 "
-        static let placeholder = "  메시지를 입력하세요"
     }
     private let alertStackView = UIStackView()
     private let titleLabel = UILabel()
-    private let inputTextField = UITextField()
     
     private let buttonContainerStackView = UIStackView()
-    private let savedButton = UIButton()
+    private let removeButton = UIButton()
     private let cancelButton = UIButton()
     
-    weak var delegate: SaveImageAlertViewDelegate?
-    private let row: Int
+    weak var delegate: CheckRemoveAlertViewDelegate?
+    private let id: UUID
     
-    init(row: Int) {
-        self.row = row
+    init(id: UUID) {
+        self.id = id
         super.init(nibName: nil, bundle: nil)
         attribute()
         layout()
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         if touches.map({ $0.view }).contains(alertStackView) == false {
@@ -43,8 +43,8 @@ final class SaveImageAlertViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc private func tappedSavedButton() {
-        delegate?.tappedSavedButton(row: row, message: inputTextField.text ?? "")
+    @objc private func tappedRemoveButton() {
+        delegate?.tappedRemoveButton(id: id)
         dismiss(animated: false)
     }
     
@@ -64,14 +64,11 @@ final class SaveImageAlertViewController: UIViewController {
         buttonContainerStackView.axis = .horizontal
         buttonContainerStackView.distribution = .fillEqually
         
-        titleLabel.text = "\(row+1)번째 사진을 저장하시겠습니까?"
+        titleLabel.text = Value.titleLabelText
         titleLabel.textAlignment = .center
         
-        inputTextField.backgroundColor = .white
-        inputTextField.placeholder = Value.placeholder
-        
-        savedButton.setTitle(Value.savedButtonTitle, for: .normal)
-        savedButton.addTarget(self, action: #selector(tappedSavedButton), for: .touchUpInside)
+        removeButton.setTitle(Value.removeButtonTitle, for: .normal)
+        removeButton.addTarget(self, action: #selector(tappedRemoveButton), for: .touchUpInside)
         cancelButton.setTitle(Value.cancelButtonTitle, for: .normal)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
@@ -80,17 +77,14 @@ final class SaveImageAlertViewController: UIViewController {
         setAlertFrame()
 
         view.addSubview(alertStackView)
-        [UIView(), titleLabel, inputTextField, buttonContainerStackView, UIView()].forEach {
+        [UIView(), titleLabel, buttonContainerStackView, UIView()].forEach {
             alertStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        inputTextField.widthAnchor.constraint(equalToConstant: Value.alertWidth-60).isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: Value.alertHeight/4).isActive = true
-        
         buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.alertWidth-20).isActive = true
         
-        [savedButton, cancelButton].forEach {
+        [removeButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)
         }
     }

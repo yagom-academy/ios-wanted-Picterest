@@ -14,11 +14,15 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
     
+    weak var delegate: SavedImageListCellDelegate?
+    private var id: UUID?
+    
     override init(frame: CGRect) {
         super.init(frame: CGRect.zero)
         
         attribute()
         layout()
+        addLongTappedGesture()
     }
     
     required init?(coder: NSCoder) {
@@ -29,10 +33,25 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         guard let data = data else {
             return
         }
+        id = data.id
         titleLabel.text = data.message
         imageView.load(urlString: data.imageURL)
     }
 
+    private func addLongTappedGesture() {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTappedGesture))
+        gesture.minimumPressDuration = 0.5
+        gesture.delaysTouchesBegan = true
+        imageView.addGestureRecognizer(gesture)
+        imageView.isUserInteractionEnabled = true
+    }
+    
+    @objc private func handleLongTappedGesture() {
+        guard let id = id else {
+            return
+        }
+        delegate?.didLongTappedCell(id: id)
+    }
     
     private func attribute() {
         //temp

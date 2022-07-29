@@ -20,7 +20,9 @@ final class SavedImageListViewModel {
     func loadData(completion: @escaping () -> ()) {
         CoreDataManager.shared.getImageInfos { [weak self] infos in
             self?.cellDatas = infos
-            completion()
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
     
@@ -30,5 +32,21 @@ final class SavedImageListViewModel {
         let width = UIScreen.main.bounds.width - 2*padding
         let height = width*aspectRatio
         return CGSize(width: width, height: height)
+    }
+    
+    func removeCell(at id: UUID, completion: @escaping () -> ()) {
+        DispatchQueue.global().async { [weak self] in
+            do {
+                let fileLocation = try CoreDataManager.shared.removeImageInfo(at: id)
+                try ImageFileManager.shared.removeImage(at: fileLocation)
+                self?.loadData(completion: completion)
+            } catch {
+                if let error = error as? DBManagerError {
+                    print(error.description)
+                } else {
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
 }

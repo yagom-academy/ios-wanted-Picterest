@@ -102,7 +102,6 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
         viewModel.saveImage(row: row, message: message) { [weak self] result in
             switch result {
             case .success():
-                print("성공!")
                 self?.collectionView.reloadData()
             case .failure(let error):
                 print(error.description)

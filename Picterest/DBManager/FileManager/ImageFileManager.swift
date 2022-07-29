@@ -73,17 +73,14 @@ final class ImageFileManager {
         return result
     }
     
-    func removeImage(at urlString: String) -> Bool {
+    func removeImage(at urlString: String) throws {
         guard let url = URL(string: urlString) else {
-            print("이미지 파일 삭제 실패")
-            return false
+            throw DBManagerError.failToRemoveImageFile
         }
         do {
             try fileManager.removeItem(at: url)
-            return true
         } catch {
-            print("이미지 파일 삭제 실패")
-            return false
+            throw DBManagerError.failToRemoveImageFile
         }
     }
 }
