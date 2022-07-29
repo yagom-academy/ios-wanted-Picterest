@@ -15,16 +15,28 @@ final class SavedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        configure()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.fetch()
-        collectionView.reloadData()
+        viewModel.fetch {
+            self.collectionView.reloadData()
+        }
     }
     
 }
+
+// MARK: - Private
+
+extension SavedViewController {
+    private func configure() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+}
+
+// MARK: - UICollectionViewDataSource
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -36,21 +48,18 @@ extension SavedViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        guard let imageData = viewModel.getImage(at: indexPath.row),
-              let originalURL = imageData.value(forKey: "originalURL") as? String,
-              let imageID = imageData.value(forKey: "id") as? String,
-              let memo = imageData.value(forKey: "memo") as? String else {
-            print("get image data error")
+        guard let imageData = viewModel.getImage(at: indexPath.row) else {
             return UICollectionViewCell()
         }
 
         cell.delegate = self
-        cell.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
-        cell.view.textLabel.text = memo
+        cell.configure(with: imageData)
         
         return cell
     }
 }
+
+// MARK: - CollectionViewCellDelegate
 
 extension SavedViewController: CollectionViewCellDelegate {
     func alert(from cell: UICollectionViewCell) {
@@ -68,7 +77,9 @@ extension SavedViewController: CollectionViewCellDelegate {
     
         guard let cell = cell as? SavedCollectionViewCell else { return }
         let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
-            self.viewModel.fetch()
+            self.viewModel.fetch {
+                self.collectionView.reloadData()
+            }
             self.collectionView.reloadData()
         }
         
@@ -79,6 +90,8 @@ extension SavedViewController: CollectionViewCellDelegate {
     }
     
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension SavedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -91,7 +104,7 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
         
         flow.scrollDirection = .vertical
         
-        let cellWidth = Style.SavedCell.width
+        let cellWidth = UIStyle.SavedCell.width
         let cellHeight = imageHeight * cellWidth / imageWidth
         
         return CGSize(width: cellWidth, height: cellHeight)

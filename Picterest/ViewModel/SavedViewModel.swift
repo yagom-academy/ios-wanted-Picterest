@@ -25,12 +25,12 @@ final class SavedViewModel {
         return images[index]
     }
     
-    func fetch() {
+    func fetch(completion: @escaping () -> Void) {
         guard let images = self.coreDataManager.load() else {
             print("coreDataManager.load error")
             return
         }
         self.images = images
-        print("fetch")
+        completion()
     }
 }

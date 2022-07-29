@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Style {
+struct UIStyle {
     struct CellView {
         static let headerViewHeight: CGFloat = UIScreen.main.bounds.size.height / 20
         static let headerViewAlpha: CGFloat = 0.7
@@ -31,5 +31,10 @@ struct Style {
     
     struct CustomLayout {
         static let numberOfColumns = 2
+    }
+    
+    struct Icon {
+        static let starFill: String = "star.fill"
+        static let star: String = "star"
     }
 }

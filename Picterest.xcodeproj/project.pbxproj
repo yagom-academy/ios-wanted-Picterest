@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9F136CC12892C45F00AEE4E7 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC02892C45F00AEE4E7 /* Style.swift */; };
+		9F136CC12892C45F00AEE4E7 /* UIStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC02892C45F00AEE4E7 /* UIStyle.swift */; };
 		9F136CC328937A8100AEE4E7 /* CoreDataKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F136CC228937A8100AEE4E7 /* CoreDataKey.swift */; };
 		9F1DD586288F75C20065E57D /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD585288F75C20065E57D /* SavedViewController.swift */; };
 		9F1DD588288F75CF0065E57D /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DD587288F75CF0065E57D /* ImagesViewController.swift */; };
@@ -33,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9F136CC02892C45F00AEE4E7 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		9F136CC02892C45F00AEE4E7 /* UIStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStyle.swift; sourceTree = "<group>"; };
 		9F136CC228937A8100AEE4E7 /* CoreDataKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataKey.swift; sourceTree = "<group>"; };
 		9F1DD585288F75C20065E57D /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
 		9F1DD587288F75CF0065E57D /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		9F136CBD2892BDAA00AEE4E7 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				9F136CC02892C45F00AEE4E7 /* Style.swift */,
+				9F136CC02892C45F00AEE4E7 /* UIStyle.swift */,
 				9F136CC228937A8100AEE4E7 /* CoreDataKey.swift */,
 			);
 			path = Constant;
@@ -296,7 +296,7 @@
 				9F1DD59D288FD89A0065E57D /* CustomLayout.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				9F1DD5B328911D9A0065E57D /* ImageFileManager.swift in Sources */,
-				9F136CC12892C45F00AEE4E7 /* Style.swift in Sources */,
+				9F136CC12892C45F00AEE4E7 /* UIStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

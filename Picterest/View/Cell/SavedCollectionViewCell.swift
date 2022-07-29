@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import CoreData
 
 final class SavedCollectionViewCell: UICollectionViewCell {
-    
     let view: CellView = {
         let view = CellView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    weak var delegate: CollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,19 +27,25 @@ final class SavedCollectionViewCell: UICollectionViewCell {
         autoLayout()
     }
     
-    weak var delegate: CollectionViewCellDelegate?
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         view.textLabel.text = ""
         view.imageView.image = nil
+    }
+}
+
+// MARK: - Private
+
+extension SavedCollectionViewCell {
+    @objc private func longPressImageView() {
+        delegate?.alert(from: self)
     }
     
     private func setView() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressImageView))
         view.imageView.isUserInteractionEnabled = true
         view.imageView.addGestureRecognizer(longPressGestureRecognizer)
-        view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        view.saveButton.setImage(UIImage(systemName: UIStyle.Icon.starFill), for: .normal)
         view.saveButton.tintColor = .yellow
         view.isSaved = true
         self.addSubview(view)
@@ -54,8 +62,12 @@ final class SavedCollectionViewCell: UICollectionViewCell {
 }
 
 extension SavedCollectionViewCell {
-    
-    @objc func longPressImageView() {
-        delegate?.alert(from: self)
+    func configure(with imageData: NSManagedObject) {
+        guard let originalURL = imageData.value(forKey: CoreDataKey.originalURL) as? String,
+              let imageID = imageData.value(forKey: CoreDataKey.id) as? String,
+              let memo = imageData.value(forKey: CoreDataKey.memo) as? String else { return }
+
+        self.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
+        self.view.textLabel.text = memo
     }
 }

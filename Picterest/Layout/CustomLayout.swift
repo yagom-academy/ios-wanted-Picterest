@@ -16,10 +16,11 @@ class CustomLayout: UICollectionViewLayout {
     
     weak var delegate: CustomLayoutDelegate?
     
-    private let numberOfColumns = Style.CustomLayout.numberOfColumns
+    private let numberOfColumns = UIStyle.CustomLayout.numberOfColumns
     private let cellPadding: CGFloat = 4
-    private var yOffset: [CGFloat] = .init(repeating: 0, count: Style.CustomLayout.numberOfColumns)
+    private var yOffset: [CGFloat] = .init(repeating: 0, count: UIStyle.CustomLayout.numberOfColumns)
     private var cache: [UICollectionViewLayoutAttributes] = []
+    private var column = 0
     
     private var contentHeight: CGFloat = 0
     
@@ -49,8 +50,6 @@ class CustomLayout: UICollectionViewLayout {
         for column in 0..<numberOfColumns {
             xOffset.append(CGFloat(column) * columnWidth)
         }
-        
-        var column = yOffset[0] <= yOffset[1] ? 0 : 1
         
         for item in cache.count..<numberOfItems {
             let indexPath = IndexPath(item: item, section: 0)

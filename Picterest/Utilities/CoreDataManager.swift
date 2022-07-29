@@ -52,7 +52,6 @@ extension CoreDataManager {
     func load() -> [NSManagedObject]? {
         guard let context = context else { return nil }
         let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
-        
         do {
             let results = try context.fetch(fetchRequest)
             return results

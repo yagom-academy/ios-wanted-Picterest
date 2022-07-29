@@ -17,19 +17,37 @@ final class ImagesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        configure()
         viewModel.fetch {
             self.collectionView.reloadData()
         }
-        layout = collectionView.collectionViewLayout as? CustomLayout
-        layout?.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.reloadData()
     }
 }
+
+// MARK: - Private
+
+extension ImagesViewController {
+    private func configure() {
+        configureCollectionView()
+        configureLayout()
+    }
+    
+    private func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+    
+    private func configureLayout() {
+        layout = collectionView.collectionViewLayout as? CustomLayout
+        layout?.delegate = self
+    }
+}
+
+// MARK: - UICollectionViewDataSource
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -41,22 +59,18 @@ extension ImagesViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let index = indexPath.row
-        guard let imageData = viewModel.getImage(at: index) else {
+        guard let imageInformation = viewModel.getImage(at: indexPath.row) else {
             return UICollectionViewCell()
         }
     
         cell.delegate = self
-        cell.view.textLabel.text = "\(index + 1)번째 사진"
-        cell.view.imageView.loadImage(urlString: imageData.urls.small, imageID: imageData.id)
-        if ImageFileManager.shared.fileExists(imageData.id as NSString) {
-            cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            cell.view.saveButton.tintColor = .yellow
-            cell.view.isSaved = true
-        }
+        cell.configure(with: imageInformation, index: indexPath.row)
+        
         return cell
     }
 }
+
+// MARK: - CustomLayoutDelegate
 
 extension ImagesViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
@@ -74,10 +88,16 @@ extension ImagesViewController: CustomLayoutDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
 extension ImagesViewController: UICollectionViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if Int(scrollView.contentOffset.y) >= Int(scrollView.contentSize.height - scrollView.frame.size.height) {
+        let distanceFromOriginToVisiblePoint = scrollView.contentOffset.y
+        let totalHeightOfContentView = scrollView.contentSize.height
+        let visibleHeightOfContentView = scrollView.frame.size.height
+        
+        if Int(distanceFromOriginToVisiblePoint) >= Int(totalHeightOfContentView - visibleHeightOfContentView) {
             DispatchQueue.main.async {
                 self.viewModel.increasePageIndex()
                 self.viewModel.fetch {
@@ -86,11 +106,14 @@ extension ImagesViewController: UICollectionViewDelegate {
             }
         }
     }
-
 }
+
+
+// MARK: - CollectionViewCellDelegate
 
 extension ImagesViewController: CollectionViewCellDelegate {
     func alert(from cell: UICollectionViewCell) {
+        
         let title = "Picterest"
         let message = "사진을 다운 받으시겠습니까?"
         let firstActionTitle = "취소"

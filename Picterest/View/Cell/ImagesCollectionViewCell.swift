@@ -12,12 +12,13 @@ protocol CollectionViewCellDelegate: AnyObject {
 }
 
 final class ImagesCollectionViewCell: UICollectionViewCell {
-    
     let view: CellView = {
         let view = CellView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    weak var delegate: CollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,8 +30,6 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
         autoLayout()
     }
     
-    weak var delegate: CollectionViewCellDelegate?
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         view.isSaved = false
@@ -40,8 +39,12 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
         view.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
         view.saveButton.tintColor = .white
     }
-    
-    @objc func tappedSaveImageButton() {
+}
+
+// MARK: - Private
+
+extension ImagesCollectionViewCell {
+    @objc private func tappedSaveImageButton() {
         if self.view.isSaved { return }
         delegate?.alert(from: self)
     }
@@ -58,5 +61,20 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
             view.topAnchor.constraint(equalTo: self.topAnchor),
             view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
+    }
+}
+
+// MARK: - Configure cell
+
+extension ImagesCollectionViewCell {
+    func configure(with imageInformation: ImageInformation, index: Int) {
+        self.view.textLabel.text = "\(index + 1)번째 사진"
+        
+        self.view.imageView.loadImage(urlString: imageInformation.urls.small, imageID: imageInformation.id)
+        if ImageFileManager.shared.fileExists(imageInformation.id as NSString) {
+            self.view.saveButton.setImage(UIImage(systemName: UIStyle.Icon.starFill), for: .normal)
+            self.view.saveButton.tintColor = .yellow
+            self.view.isSaved = true
+        }
     }
 }

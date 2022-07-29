@@ -38,7 +38,7 @@
                                     <constraint firstItem="28k-DN-0GD" firstAttribute="width" secondItem="Ejl-Jo-6O8" secondAttribute="height" multiplier="0.45" id="rYh-qo-ug8"/>
                                 </constraints>
                             </stackView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-hq-od6">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-hq-od6">
                                 <rect key="frame" x="11.666666666666657" y="115.66666666666669" width="366.66666666666674" height="645.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QZA-pg-8Aj">
@@ -109,7 +109,7 @@
                                     <constraint firstItem="ooS-ah-kfu" firstAttribute="centerY" secondItem="cJg-Im-PSF" secondAttribute="centerY" id="m4Z-Lx-Jfi"/>
                                 </constraints>
                             </stackView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9sN-An-OeU">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9sN-An-OeU">
                                 <rect key="frame" x="7.6666666666666572" y="115.66666666666669" width="374.66666666666674" height="645.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewLayout key="collectionViewLayout" id="Q9u-DH-xms" customClass="CustomLayout" customModule="Picterest" customModuleProvider="target"/>
