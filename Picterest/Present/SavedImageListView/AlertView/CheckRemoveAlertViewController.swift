@@ -7,17 +7,18 @@
 
 import UIKit
 
+private enum Value {
+    static let alertWidth = UIScreen.main.bounds.width*(2/3)
+    static let alertHeight = alertWidth*(2/3)
+    static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
+    static let removeButtonTitle = " 삭제 "
+    static let cancelButtonTitle = " 취소 "
+}
+
 final class CheckRemoveAlertViewController: UIViewController {
-    enum Value {
-        static let alertWidth = UIScreen.main.bounds.width*(2/3)
-        static let alertHeight = alertWidth*(2/3)
-        static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
-        static let removeButtonTitle = " 삭제 "
-        static let cancelButtonTitle = " 취소 "
-    }
+    
     private let alertStackView = UIStackView()
     private let titleLabel = UILabel()
-    
     private let buttonContainerStackView = UIStackView()
     private let removeButton = UIButton()
     private let cancelButton = UIButton()

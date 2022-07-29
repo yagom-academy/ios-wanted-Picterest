@@ -8,7 +8,7 @@
 import UIKit
 
 final class SaveImageAlertViewController: UIViewController {
-    enum Value {
+    private enum Value {
         static let alertWidth = UIScreen.main.bounds.width*(2/3)
         static let alertHeight = alertWidth*(2/3)
         static let textFieldLeftPadding = 10.0
@@ -17,6 +17,7 @@ final class SaveImageAlertViewController: UIViewController {
         static let cancelButtonTitle = " 취소 "
         static let placeholder = "메시지를 입력하세요"
     }
+    
     private let alertStackView = UIStackView()
     private let titleLabel = UILabel()
     private let inputTextField = UITextField()

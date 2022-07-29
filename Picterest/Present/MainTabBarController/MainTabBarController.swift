@@ -18,6 +18,7 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.tintColor = .white
     }
     
+    //TODO: vc1,vc2 이름바꾸기
     private func setVC() {
         let vc1 = ImageListViewController()
         vc1.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")

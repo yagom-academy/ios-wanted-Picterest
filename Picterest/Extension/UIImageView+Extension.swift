@@ -8,10 +8,7 @@
 import UIKit
 
 extension UIImageView {
-    func load(urlString: String?) {
-        guard let urlString = urlString else {
-            return
-        }
+    func load(urlString: String) {
         let cachedImage = ImageCacheManager.shared.cachedImage(urlString: urlString)
         if cachedImage != nil {
             self.image = cachedImage

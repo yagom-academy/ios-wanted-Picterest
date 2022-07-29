@@ -9,7 +9,7 @@ import UIKit
 
 final class AddCellButtonFooterView: UICollectionReusableView, ReuseIdentifying {
     
-    private let addButton = UIButton()
+    private let addButton = UIButton(type: .system)
     weak var delegate: AddCellButtonFooterViewDelegate?
     
     override init(frame: CGRect) {
@@ -24,7 +24,8 @@ final class AddCellButtonFooterView: UICollectionReusableView, ReuseIdentifying 
     }
     
     private func attribute() {
-        self.backgroundColor = .yellow
+        backgroundColor = .systemGray
+        layer.cornerRadius = 20
         addButton.setTitle(" 더 보기 ", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
         addButton.titleLabel?.font = .systemFont(ofSize: 25, weight: .medium)

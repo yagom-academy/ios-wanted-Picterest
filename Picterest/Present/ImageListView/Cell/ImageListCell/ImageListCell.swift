@@ -29,12 +29,19 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = ""
+        delegate = nil
+        imageView.image = nil
+    }
+    
     func configure(indexPath: IndexPath, data: ImageListViewModel.CellData?) {
         guard let data = data else {
             return
         }
         self.indexPath = indexPath
-        titleLabel.text = "\(indexPath.row+1)번째 사진"
+        titleLabel.text = "\(indexPath.row + 1)번째 사진"
         imageView.load(urlString: data.thumbnailURL)
         starButton.setTitleColor(data.isSaved ? .yellow : .white, for: .normal)
         starButton.setTitle(data.isSaved ? "★": "☆", for: .normal)
@@ -62,6 +69,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
         guard let indexPath = indexPath else {
             return
         }
+        //TODO: indexpath -> row
         delegate?.tappedSaveButton(indexPath)
     }
     

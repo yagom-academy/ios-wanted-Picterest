@@ -7,12 +7,14 @@
 
 import UIKit
 
+//TODO: delegate 만들어서 구현해보기
 final class SavedImageListViewModel {
     private var cellDatas: [CoreDataInfo] = []
     var totalCellCount: Int {
         return cellDatas.count
     }
     
+    //TODO: indexpath ->row
     func cellData(_ indexPath: IndexPath) -> CoreDataInfo? {
         return cellDatas[safe: indexPath.row]
     }
@@ -20,9 +22,7 @@ final class SavedImageListViewModel {
     func updateData(completion: @escaping () -> ()) {
         CoreDataManager.shared.getImageInfos { [weak self] infos in
             self?.cellDatas = infos
-            DispatchQueue.main.async {
-                completion()
-            }
+            completion()
         }
     }
     
@@ -42,12 +42,12 @@ final class SavedImageListViewModel {
                 self?.updateData(completion: completion)
             } catch {
                 if let error = error as? DBManagerError {
+                    if (error == .failToRemoveImageFile) {
+                        self?.updateData(completion: completion)
+                    }
                     print(error.description)
                 } else {
                     print(error.localizedDescription)
-                }
-                DispatchQueue.main.async {
-                    self?.updateData(completion: completion)
                 }
             }
         }

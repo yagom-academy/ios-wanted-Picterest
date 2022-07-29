@@ -31,7 +31,9 @@ final class SavedImageListViewController: UIViewController {
     
     private func loadCell() {
         viewModel.updateData { [weak self] in
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
 }
@@ -96,7 +98,9 @@ extension SavedImageListViewController: SavedImageListCellDelegate {
 extension SavedImageListViewController: CheckRemoveAlertViewDelegate {
     func tappedRemoveButton(id: UUID) {
         viewModel.removeCell(at: id) { [weak self] in
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
 }

@@ -26,7 +26,9 @@ final class ImageListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.updateCellState { [weak self] in
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
 }
@@ -54,6 +56,7 @@ extension ImageListViewController: UICollectionViewDataSource {
         cell.delegate = self
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.totalCellCount
     }
@@ -79,11 +82,15 @@ extension ImageListViewController {
         viewModel.initData { [weak self] result in
             switch result {
             case .success():
-                self?.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }
-            self?.collectionView.refreshControl?.endRefreshing()
+            DispatchQueue.main.async {
+                self?.collectionView.refreshControl?.endRefreshing()
+            }
         }
     }
 }
@@ -104,7 +111,9 @@ extension ImageListViewController: AddCellButtonFooterViewDelegate {
         viewModel.loadExtraData { [weak self] result in
             switch result {
             case .success():
-                self?.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }
@@ -118,7 +127,9 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
         viewModel.saveImage(row: row, message: message) { [weak self] result in
             switch result {
             case .success():
-                self?.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error.description)
             }

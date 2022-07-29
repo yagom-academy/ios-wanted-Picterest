@@ -9,7 +9,6 @@ import Foundation
 
 final class NetworkManager {
     
-    // MARK: - Properties
     static let shared = NetworkManager()
     private let api = NetworkAPI()
     private let session: URLSession
@@ -31,32 +30,22 @@ final class NetworkManager {
         session.dataTask(with: request) { data, response, error in
             guard error == nil,
                   let httpResponse = response as? HTTPURLResponse else {
-                DispatchQueue.main.async {
-                    completion(.failure(.error(error: error)))
-                }
+                completion(.failure(.error(error: error)))
                 return
             }
             guard (200...299).contains(httpResponse.statusCode) else {
-                DispatchQueue.main.async {
-                    completion(.failure(CustomError.responseError(code:httpResponse.statusCode)))
-                }
+                completion(.failure(CustomError.responseError(code:httpResponse.statusCode)))
                 return
             }
             guard let data = data else {
-                DispatchQueue.main.async {
-                    completion(.failure(CustomError.noData))
-                }
+                completion(.failure(CustomError.noData))
                 return
             }
             do {
                 let hasData = try JSONDecoder().decode([ImageInfo].self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(hasData))
-                }
+                completion(.success(hasData))
             } catch {
-                DispatchQueue.main.async {
-                    completion(.failure(CustomError.decodingError))
-                }
+                completion(.failure(CustomError.decodingError))
             }
         }.resume()
     }

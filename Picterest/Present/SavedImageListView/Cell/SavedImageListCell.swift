@@ -29,6 +29,13 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+        titleLabel.text = ""
+        imageView.image = nil
+    }
+    
     func configure(data: CoreDataInfo?) {
         guard let data = data else {
             return

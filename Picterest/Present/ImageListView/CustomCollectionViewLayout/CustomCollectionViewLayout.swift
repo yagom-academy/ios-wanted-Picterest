@@ -78,7 +78,6 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             cache?.append(attributes)
             
             contentHeight = max(contentHeight, frame.maxY)
-//            contentHeight = frame.maxY
             yOffset[column] = yOffset[column] + height
         }
         CumulativeValue.maxHeight = yOffset.reduce(0) { beforeValue, value in
@@ -98,7 +97,6 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
             attributes.frame = insetFrame
             sectionOneFooterCache = attributes
             contentHeight = max(contentHeight, frame.maxY)
-//            contentHeight = frame.maxY
         }
     }
     
@@ -138,13 +136,4 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
         }
         return visibleLayoutAttributes
     }
-
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-        super.layoutAttributesForSupplementaryView(ofKind: elementKind, at: indexPath)
-        return sectionOneFooterCache
-    }
-
-//    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-//        return cache[indexPath.item]
-//    }
 }

@@ -40,9 +40,7 @@ final class ImageListViewModel {
                 guard let cell = self.cellDatas[safe: i] else { return }
                 self.cellDatas[i].isSaved = CoreDataManager.shared.containImage(imageURL: cell.thumbnailURL)
             }
-            DispatchQueue.main.async {
-                completion()
-            }
+            completion()
         }
     }
     
