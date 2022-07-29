@@ -33,7 +33,7 @@ class SaveViewController: UIViewController {
 extension SaveViewController {
     
     private func attribute() {
-        saveTableView.register(SaveTableViewCell.self, forCellReuseIdentifier: SaveTableViewCell.identifier)
+        saveTableView.register(cellType: SaveTableViewCell.self)
         saveTableView.delegate = self
         saveTableView.dataSource = self
     }
@@ -101,8 +101,7 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = saveTableView.dequeueReusableCell(withIdentifier: SaveTableViewCell.identifier, for: indexPath) as? SaveTableViewCell else { return UITableViewCell() }
-        
+        let cell = saveTableView.dequeueReusableCell(cellType: SaveTableViewCell.self, indexPath: indexPath)
         cell.fetchData(savePhotoList[indexPath.row])
         cell.labelStackView.photoLabel.text = savePhotoList[indexPath.row].memo
         
@@ -116,6 +115,7 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 20, bottom: 6, right: 20))
     }
 }

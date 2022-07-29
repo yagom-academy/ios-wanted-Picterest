@@ -11,20 +11,28 @@ protocol SavePhotoImageDelegate: AnyObject {
     func tapStarButton(sender: UIButton, indexPath: IndexPath)
 }
 
-class ImageCollectionViewCell: UICollectionViewCell {
+extension UICollectionView {
+    func register<T: UICollectionViewCell>(cellType: T.Type) where T: ReusableCell {
+        self.register(cellType, forCellWithReuseIdentifier: cellType.identifier)
+    }
     
-    static let identifier = "ImageCollectionViewCell"
+    func dequeueReusableCell<T: UICollectionViewCell>(cellType: T.Type, indexPath: IndexPath) -> T where T: ReusableCell {
+        guard let cell = self.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else { fatalError() }
+        return cell
+    }
+}
+
+class ImageCollectionViewCell: UICollectionViewCell, ReusableCell {
     
     weak var delegate: SavePhotoImageDelegate?
     
     private var currentIndexPath: IndexPath?
     
-    let labelStackView = LabelStackView()
+    private let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        
         return image
     }()
     

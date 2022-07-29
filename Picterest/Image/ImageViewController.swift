@@ -42,7 +42,7 @@ class ImageViewController: UIViewController {
 extension ImageViewController {
     
     private func attribute() {
-        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.identifier)
+        imageCollectionView.register(cellType: ImageCollectionViewCell.self)
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         imageCollectionView.prefetchDataSource = self
@@ -95,12 +95,13 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.identifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        let cell = imageCollectionView.dequeueReusableCell(cellType: ImageCollectionViewCell.self, indexPath: indexPath)
         
         var isStarButtonSelected: Bool = false
         if CoreDataManager.shared.searchSavePhoto(photoList[indexPath.row].id) != nil {
             isStarButtonSelected = true
         }
+        
         cell.fetchData(photoList[indexPath.row], indexPath, isStarButtonSelected)
         cell.delegate = self
         
