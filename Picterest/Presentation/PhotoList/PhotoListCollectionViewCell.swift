@@ -44,11 +44,11 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    private lazy var starButton: UIButton = {
+    lazy var starButton: UIButton = {
         let button = UIButton()
         button.setImage(Style.starImage, for: .normal)
         button.setImage(Style.selectedStarImage, for: .selected)
-        button.tintColor = .white
+        button.tintColor = .yellow
         return button
     }()
     
@@ -83,6 +83,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     @objc func starTapped() {
         cellDelegate?.starButtonTapped(cell: self)
+//        starButton.isSelected = true
     }
     
 }

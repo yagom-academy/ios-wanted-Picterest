@@ -226,6 +226,7 @@ extension PhotoListViewController: CellActionDelegate {
                     case .success(let image):
                         _ = ImageManager.shared.saveImage(id: imageID, image: image)
           // TODO: [] id, text, 사진url, 저장위치 CoreData에 저장
+                        cell.starButton.isSelected = true
                         print("text:\(text)")
                     case .failure(let error):
                         print(error.localizedDescription)
