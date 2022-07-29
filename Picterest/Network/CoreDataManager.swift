@@ -9,6 +9,7 @@ import CoreData
 
 class CoreDataManager {
     static let shared: CoreDataManager = CoreDataManager()
+    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var coreData = [Picterest]()
     
@@ -22,7 +23,8 @@ class CoreDataManager {
             print(error)
             return
         }
-    }    
+    }
+    
     func saveCoreData(
         id: String,
         memo: String,
@@ -58,6 +60,5 @@ class CoreDataManager {
         guard let object = object else { return }
         context.delete(object)
         appDelegate.saveContext()
-        
     }
 }
