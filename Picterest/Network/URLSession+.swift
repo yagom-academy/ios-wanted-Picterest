@@ -21,34 +21,32 @@ extension URLSession {
     
     static func request<T: Decodable>(_ session: URLSession = .shared, endpoint: URLRequest, completion: @escaping(Result<T, APIError>) -> Void) {
         session.dataTask(endpoint) { data, response, error in
-            DispatchQueue.main.async {
-                guard error == nil else {
-                    completion(.failure(.failed))
-                    return
-                }
-                
-                guard let data = data else {
-                    completion(.failure(.invalidData))
-                    return
-                }
-                
-                guard let response = response as? HTTPURLResponse else {
-                    completion(.failure(.invalidResponse))
-                    return
-                }
-                
-                guard response.statusCode == 200 else {
-                    completion(.failure(.unexpectedStatusCode(statusCode: "\(response.statusCode)")))
-                    return
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let userData = try decoder.decode(T.self, from: data)
-                    completion(.success(userData))
-                } catch {
-                    completion(.failure(.invalidData))
-                }
+            guard error == nil else {
+                completion(.failure(.failed))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.invalidData))
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                completion(.failure(.invalidResponse))
+                return
+            }
+            
+            guard response.statusCode == 200 else {
+                completion(.failure(.unexpectedStatusCode(statusCode: "\(response.statusCode)")))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let userData = try decoder.decode(T.self, from: data)
+                completion(.success(userData))
+            } catch {
+                completion(.failure(.invalidData))
             }
         }
     }
