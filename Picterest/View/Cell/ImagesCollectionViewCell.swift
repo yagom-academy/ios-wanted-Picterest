@@ -33,6 +33,7 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        view.isSaved = false
         view.textLabel.text = ""
         view.imageView.image = nil
         view.saveButton.isEnabled = true

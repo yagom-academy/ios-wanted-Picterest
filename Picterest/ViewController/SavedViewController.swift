@@ -20,7 +20,6 @@ final class SavedViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         bind()
-        viewModel.fetch()
     }
     
     override func viewWillAppear(_ animated: Bool) {

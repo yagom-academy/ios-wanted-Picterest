@@ -14,7 +14,6 @@ final class ImageFileManager {
     private init() { }
     
     private let fileManager = FileManager.default
-    private let directoryName = "Images"
     
     func save(_ fileName: NSString, _ image: UIImage?) -> String? {
         guard let image = image else {
@@ -28,9 +27,10 @@ final class ImageFileManager {
             try imageData?.write(to: imageFileURL)
         } catch {
             print(error.localizedDescription)
+            print("31")
         }
-        
-        return imageFileURL.absoluteString
+        print("path: \(imageFileURL.path)")
+        return imageFileURL.path
     }
     
     func load(_ fileName: NSString) -> Data? {
@@ -41,18 +41,19 @@ final class ImageFileManager {
             return imageData
         } catch {
             print(error.localizedDescription)
+            print("45")
         }
         
         return nil
     }
     
-    func remove(_ fileName: NSString) {
-        let imageFileURL = makeFileURL(using: fileName)
-        
+    func removeItem(at savedLocation: String) {
         do {
-            try fileManager.removeItem(at: imageFileURL)
+            try fileManager.removeItem(atPath: savedLocation)
+            print("file remove well")
         } catch {
             print(error.localizedDescription)
+            print("hi")
         }
     }
 
