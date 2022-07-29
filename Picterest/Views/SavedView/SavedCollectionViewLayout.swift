@@ -16,7 +16,7 @@ protocol SaveCollectionViewDelegate: AnyObject {
 
 class SavedCollectionViewLayout: UICollectionViewLayout {
     weak var delegate: SaveCollectionViewDelegate?
-    private let cellPadding: CGFloat = 10
+    private let cellPadding: CGFloat = 5
     
     private var cache: [UICollectionViewLayoutAttributes] = []
     

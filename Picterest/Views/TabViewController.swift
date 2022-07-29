@@ -23,7 +23,7 @@ class TabViewController: UITabBarController {
         let feedNavController = UINavigationController(rootViewController: feedController)
         feedController.tabBarItem = feedTabBarItem
         
-        let savedController = SavedViewController()
+        let savedController = SavedViewController(savedViewModel: SavedViewModel())
         savedController.tabBarItem = savedTabBarItem
         
         setViewControllers([feedNavController,savedController], animated: true)

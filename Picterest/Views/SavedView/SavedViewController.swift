@@ -7,14 +7,14 @@
 
 import UIKit
 import CoreData
+import Combine
 
 class SavedViewController: UIViewController {
-    let coreDataService = CoreDataService.shared
-    let downloadManager = DownLoadManager()
-    private var imageDatas: [savedModel] = []
-    private let imageDownLoader = DownLoadManager()
+    let savedViewModel: SavedViewModel
+    private var subscription = Set<AnyCancellable>()
+    private lazy var titleView = SaveCollectionTitleView()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let layout = SavedCollectionViewLayout()
         layout.delegate = self
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -30,51 +30,30 @@ class SavedViewController: UIViewController {
         return collectionView
     }()
     
+    init(savedViewModel: SavedViewModel) {
+        self.savedViewModel = savedViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        coreDataService.deleteAll() // 전체 삭제 메서드
         configureUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchData()
+        savedViewModel.fetchData()
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+        bindSavedImage()
+        bindReloadImage()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        imageDatas.removeAll()
-        if let layout = collectionView.collectionViewLayout as? SavedCollectionViewLayout {
-            layout.resetLayout()
-        }
+        resetCollectionView()
         super.viewDidDisappear(animated)
-        collectionView.reloadData()
-    }
-    
-    func fetchData() {
-        if let datas = coreDataService.fetch() as? [SavedModel] {
-            datas.forEach { model in
-                let savedModel = savedModel(id: model.id,
-                                            memo: model.memo,
-                                            file: model.fileURL,
-                                            raw: model.rawURL)
-
-                self.imageDatas.append(savedModel)
-            }
-        }
-    }
-    
-    func configureUI() {
-        view.backgroundColor = .systemBackground
-        collectionView.backgroundColor = .clear
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
     }
 }
 
@@ -84,7 +63,7 @@ extension SavedViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return imageDatas.count
+        return savedViewModel.savedImages.count
     }
     
     func collectionView(
@@ -97,43 +76,32 @@ extension SavedViewController: UICollectionViewDataSource {
         ) as? SavedCollectionCustomCell else {
             return UICollectionViewCell()
         }
-        
-        let data = imageDatas[indexPath.row]
+        let data = savedViewModel.savedImages[indexPath.row]
         if let image = data.image {
             cell.imageView.image = image.resizeImageTo(newWidth: cell.bounds.width)
         }
-        cell.topView.indexLabel.text = data.memoDescription
-        
-        cell.topView.starButton.isSelected = true
-        cell.topView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        cell.topView.delegate = self
-        cell.tag = indexPath.row
+        configureTopButton(cell: cell, memo: data.memoDescription)
         return cell
     }
 }
 
+// MARK: - Collection View Delegate
 extension SavedViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         contextMenuConfigurationForItemAt indexPath: IndexPath,
         point: CGPoint
     ) -> UIContextMenuConfiguration? {
-        
-        let previewController = UIViewController()
-        let image = imageDatas[indexPath.row].image
-        
-        let imageView = UIImageView(image: image)
-        previewController.view = imageView
-        let width = collectionView.frame.size.width
-        let height = (imageView.frame.size.height / imageView.frame.size.width) * width
-        imageView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        previewController.preferredContentSize = imageView.frame.size
-        
-        
+        let previewController = makePreviewController(indexPath.row)
         let configuration = UIContextMenuConfiguration(identifier: "savedImage" as NSCopying) {
             previewController
         } actionProvider: { _ in
-            let deleteAction = UIAction(title: "삭제하기", identifier: nil, discoverabilityTitle: nil) { action in
+            let deleteAction = UIAction(
+                title: "삭제하기",
+                image: UIImage(systemName: "trash.fill"),
+                identifier: nil,
+                attributes: .destructive
+            ) { action in
                 self.presentAlertView(indexPath.row)
             }
             return UIMenu(title: "메뉴", options: .displayInline, children: [deleteAction])
@@ -142,46 +110,43 @@ extension SavedViewController: UICollectionViewDelegate {
         return configuration
     }
     
+    func makePreviewController(_ index: Int) -> UIViewController {
+        let previewController = UIViewController()
+        let image = savedViewModel.savedImages[index].image
+        let preview = UIImageView(image: image)
+        previewController.view = preview
+        let width = collectionView.frame.size.width
+        let height = (preview.frame.size.height / preview.frame.size.width) * width
+        preview.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        previewController.preferredContentSize = preview.frame.size
+        return previewController
+    }
+    
     private func presentAlertView(_ index: Int) {
         let alert = AlertViewController(
             titleText: "삭제 안내",
             messageText: "정말 삭제하시겠습니다?\n삭제 후에는 복원할 수 없습니다.",
             alertType: .confirmAndCancel
-        ) { _ in
-            //TODO: - 삭제 메서드 만들고 core Data 삭제 후, FileManager 삭제하기
-            let data = self.imageDatas[index]
-            let result = self.coreDataService.fetch()
-            self.coreDataService.delete(object: result[index])
-//            let item = self.imageDatas[index]
-//            coreDataService.context.delete()
-            if self.coreDataService.delete(object: result[index]) {
-                if self.downloadManager.removeData(data.file ?? "") {
-                    self.imageDatas.removeAll()
-                    if let layout = self.collectionView.collectionViewLayout as? SavedCollectionViewLayout {
-                        layout.resetLayout()
-                    }
-                    self.fetchData()
-                    self.collectionView.reloadData()
-                    print("삭제 완료",index)
-                }
-            }
-
+        ) { [weak self] _ in
+            self?.savedViewModel.deleteData(index)
         }
         
-        alert.modalPresentationStyle = .overFullScreen
-        self.present(alert, animated: true)
+        self.present(alert, animated: false)
     }
+    
 }
 
+// MARK: - Save Collection View Delegate
 extension SavedViewController: SaveCollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         heightForPhotoAtIndexPath: IndexPath
     ) -> CGFloat {
+        let index = heightForPhotoAtIndexPath.row
         let inset = collectionView.contentInset
         let insetSize = inset.left + inset.right
         let contentWidth = collectionView.frame.width
-        guard let image = imageDatas[heightForPhotoAtIndexPath.row].image else {
+        guard let image = savedViewModel.savedImages[index].image else {
             return 0
         }
         return (contentWidth - insetSize) * (image.size.height / image.size.width)
@@ -190,8 +155,69 @@ extension SavedViewController: SaveCollectionViewDelegate {
     
 }
 
-extension SavedViewController: CellTopButtonDelegate {
-    func CellTopButton(to starButton: UIButton) { }
+// MARK: - Data Method
+extension SavedViewController {
+    func bindSavedImage() {
+        savedViewModel.$savedImages
+            .sink { [weak self] _ in
+                if let layout = self?.collectionView.collectionViewLayout as? SavedCollectionViewLayout {
+                    layout.resetLayout()
+                }
+                self?.collectionView.reloadData()
+            }
+            .store(in: &subscription)
+    }
     
+    func bindReloadImage() {
+        savedViewModel.$isReLoadView
+            .sink { [weak self] isReLoad in
+                if isReLoad {
+                    self?.resetCollectionView()
+                }
+            }
+            .store(in: &subscription)
+    }
+}
+
+// MARK: - UI Configure
+
+private extension SavedViewController {
+    func configureUI() {
+        view.backgroundColor = .systemBackground
+        collectionView.backgroundColor = .clear
+        [titleView,collectionView].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let safeArea = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            
+            
+            titleView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            titleView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            titleView.heightAnchor.constraint(equalToConstant: 50),
+            titleView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+
+        ])
+    }
     
+    func configureTopButton(cell: SavedCollectionCustomCell, memo: String) {
+        cell.topView.starButton.isSelected = true
+        cell.topView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        cell.topView.starButton.isEnabled = false
+        cell.topView.indexLabel.text = memo
+    }
+    
+    func resetCollectionView() {
+        savedViewModel.resetData()
+        savedViewModel.fetchData()
+        savedViewModel.isReLoadView = false
+    }
 }

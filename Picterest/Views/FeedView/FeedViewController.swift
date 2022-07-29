@@ -10,9 +10,7 @@ import Combine
 import CoreData
 
 class FeedViewController: UIViewController {
-    private let coreDataService = CoreDataService.shared
-    let viewModel: FeedViewModel
-    private var isLoading: Bool = false
+    private let viewModel: FeedViewModel
     
     lazy var collectionView: UICollectionView = {
         let layout = FeedCollectionLayout()
@@ -26,13 +24,14 @@ class FeedViewController: UIViewController {
         return collectionView
     }()
     
-    init(observable: FeedViewModelObservable) {
-        self.viewModel = FeedViewModel(imageDataLoader: observable.imageDataLoader)
+    init(observable: FeedViewModel) {
+        self.viewModel = observable
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        self.viewModel = FeedViewModel(imageDataLoader: ImageDataLoader(apiKey: KeyChainService.shared.key))
+        let imageDataLoader = ImageDataLoader(apiKey: KeyChainService.shared.key)
+        self.viewModel = FeedViewModel(imageDataLoader: imageDataLoader)
         super.init(coder: coder)
     }
     
@@ -45,43 +44,18 @@ class FeedViewController: UIViewController {
     
 }
 
-private extension CoreDataService {
-    func save(pictureId: String, memo: String, rawURL: String, fileLocation: String) -> Bool {
-        let context = self.persistentContrainer.viewContext
-        
-        let object = NSEntityDescription.insertNewObject(forEntityName: "SavedModel", into: context)
-        
-        object.setValue(pictureId, forKey: "id")
-        object.setValue(memo, forKey: "memo")
-        object.setValue(rawURL, forKey: "rawURL")
-        object.setValue(fileLocation, forKey: "fileURL")
-        do {
-            self.saveContext()
-            return true
-        } catch {
-            context.rollback()
-            return false
-        }
-    }
-}
-
 // MARK: - ScrollView Delegate
 extension FeedViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         let position = scrollView.contentOffset.y
-        
         if position > collectionView.contentSize.height - 100 - scrollView.frame.size.height {
             guard !viewModel.isLoading else {
                 return
             }
-            
             viewModel.loadImageData()
         }
     }
 }
-
-
 
 // MARK: - Cell Top Button Delegate
 extension FeedViewController: CellTopButtonDelegate {
@@ -93,6 +67,7 @@ extension FeedViewController: CellTopButtonDelegate {
         }
     }
 }
+
 // MARK: - CollectionView Delegate
 extension FeedViewController: UICollectionViewDelegate {}
 
@@ -128,16 +103,11 @@ extension FeedViewController: UICollectionViewDataSource {
         cell.topButtonView.starButton.tag = indexPath.row
         cell.blurColor = UIColor(hexString: imageData.color)
         
-        if let fetchedData = coreDataService.fetch() as? [SavedModel] {
-            let fetchIDs = fetchedData.compactMap {
-                $0.id
-            }
-            print(fetchIDs)
-            print(imageData.id)
-            if fetchIDs.contains(imageData.id) {
-                cell.topButtonView.starButton.isSelected = true
-                cell.topButtonView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            }
+        let fetchIDs = viewModel.coreSavedImage.compactMap { $0.id }
+        
+        if fetchIDs.contains(imageData.id) {
+            cell.topButtonView.starButton.isSelected = true
+            cell.topButtonView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         }
         
         cell.topButtonView.indexLabel.text = indexPath.row.description + "번째 사진입니다."
@@ -155,7 +125,6 @@ extension FeedViewController: FeedCollectionLayoutDelegate {
         return item.ratio
     }
 }
-
 
 // MARK: - Binding Methods
 private extension FeedViewController {
@@ -200,31 +169,9 @@ private extension FeedViewController {
     func confirmAction(sender: UIButton, inputValue: String) {
         sender.isSelected = true
         sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        let width = self.collectionView.frame.size.width.description
         
-        let data = self.viewModel.imageDatas[sender.tag]
-        let width = self.collectionView.frame.size.width
-        let imageLoader = ImageLoader(baseURL: data.urls.regular, query: ["w":width.description])
-        
-        imageLoader.requestNetwork { result in
-            switch result {
-            case .success(let image):
-                if let image = image as? UIImage, let imageData = image.pngData() {
-                    let imageKey = data.id.description + ".png"
-                    if DownLoadManager().uploadData(imageKey, data: imageData) {
-                        let _ = self.coreDataService.save(
-                            pictureId: data.id,
-                            memo: inputValue,
-                            rawURL: data.urls.raw,
-                            fileLocation: imageKey
-                        )
-                    }
-                }
-            case .failure(_):
-                print("Error in download image")
-            }
-        }
-        
-        imageLoader.task?.resume()
+        viewModel.saveImageInFile(index: sender.tag, width: width, inputValue: inputValue)
     }
     
     func setUpNavBar() {

@@ -19,7 +19,7 @@ class FeedCollectionLayout: UICollectionViewLayout {
     weak var delegate: FeedCollectionLayoutDelegate?
 
     private let numberOfColumns = 2
-    private let cellPadding: CGFloat = 1
+    private let cellPadding: CGFloat = 2
     
     private var cache: [UICollectionViewLayoutAttributes] = []
     

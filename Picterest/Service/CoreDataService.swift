@@ -38,13 +38,28 @@ class CoreDataService {
     
     func fetch<T: NSManagedObject>(
         request: NSFetchRequest<T> = NSFetchRequest(entityName: "SavedModel")
-    ) -> [T] {
+    ) -> [savedModel] {
         //TODO: - Sort 메서드 추가하기
+        do {
+            var values: [savedModel] = []
+            let result = try context.fetch(request) as? [SavedModel]
+            result?.forEach {
+                let value = savedModel(id: $0.id, memo: $0.memo, file: $0.fileURL, raw: $0.rawURL)
+                values.append(value)
+            }
+            return values
+        } catch {
+            print(error.localizedDescription)
+            return []
+        }
+    }
+    
+    func fetchManagement<T: NSManagedObject>(request: NSFetchRequest<T> = NSFetchRequest(entityName: "SavedModel")) -> [T] {
         do {
             let result = try context.fetch(request)
             return result
         } catch {
-            print(error.localizedDescription)
+            print("Error in fetch Management \(error)")
             return []
         }
     }
