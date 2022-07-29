@@ -29,6 +29,10 @@ class PicterestLayout: UICollectionViewFlowLayout {
         return CGSize(width: contentWidth, height: contentHeight)
     }
     
+    func reloadData() {
+        cache.removeAll()
+    }
+    
     override func prepare() {
         guard let collectionView = collectionView, cache.isEmpty else { return }
         

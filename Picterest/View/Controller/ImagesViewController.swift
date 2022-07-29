@@ -14,6 +14,8 @@ class ImagesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
+        collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.register(ImageCollectionViewCell.self,
                                 forCellWithReuseIdentifier: ImageCollectionViewCell.reuseIdentifier)
         return collectionView
@@ -22,11 +24,11 @@ class ImagesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         picterestLayout.delegate = self
-        collectionView.dataSource = self
         configureSubviews()
         imageCollectionViewModel.fetchImages()
         imageCollectionViewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
+                self?.picterestLayout.reloadData()
                 self?.collectionView.reloadData()
             }
         }
@@ -61,6 +63,19 @@ extension ImagesViewController: UICollectionViewDataSource {
     }
 }
 
+extension ImagesViewController: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+        let yOffset = scrollView.contentOffset.y
+        if yOffset > (contentHeight - frameHeight) {
+            if imageCollectionViewModel.isFetching == false {
+                imageCollectionViewModel.fetchImages(needToFetch: true)
+            }
+        }
+    }
+}
+
 extension ImagesViewController: PicterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let imageViewModel = imageCollectionViewModel.imageAtIndex(indexPath.row)
@@ -72,20 +87,16 @@ extension ImagesViewController: PicterestLayoutDelegate {
 
 extension ImagesViewController {
     func starButtonTapped(didSave: Bool, data: ImageViewModel) {
-        if !didSave {
-            let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
-            let save = UIAlertAction(title: "저장", style: .default) { _ in
-                guard let textField = alert.textFields else { return }
-                let text = textField[0].text
-                DataManager.shared.save(data: data, memo: text ?? "")
-            }
-            let cancel = UIAlertAction(title: "취소", style: .cancel)
-            alert.addAction(save)
-            alert.addAction(cancel)
-            alert.addTextField()
-            present(alert, animated: true, completion: nil)
-        } else {
-            DataManager.shared.delete(data: data)
+        let alert = UIAlertController(title: "사진 저장", message: "메모를 남겨보세요", preferredStyle: .alert)
+        let save = UIAlertAction(title: "저장", style: .default) { _ in
+            guard let textField = alert.textFields else { return }
+            let text = textField[0].text
+            DataManager.shared.save(data: data, memo: text ?? "")
         }
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(save)
+        alert.addAction(cancel)
+        alert.addTextField()
+        present(alert, animated: true, completion: nil)
     }
 }

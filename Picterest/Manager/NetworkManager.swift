@@ -22,8 +22,8 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func fetchImageList(completion: @escaping (Result<[Image], NetworkError>) -> Void) {
-        let urlStr = "https://api.unsplash.com/photos/?client_id=\(apiKey)&page=1&per_page=15"
+    func fetchImageList(pageNumber: Int, completion: @escaping (Result<[Image], NetworkError>) -> Void) {
+        let urlStr = "https://api.unsplash.com/photos/?client_id=\(apiKey)&page=\(pageNumber)&per_page=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.invalidURL))
             return

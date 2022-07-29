@@ -8,24 +8,26 @@
 import UIKit
 
 class ImageCollectionViewModel {
-    private var pageNumber = 0
+    private var pageNumber = 1
     private var images: [Image] = [] {
         didSet {
             collectionViewUpdate()
         }
     }
     var collectionViewUpdate: () -> Void = {}
+    var isFetching = false
     var imagesCount: Int {
         return images.count
     }
     
-    private var isFetching = false
-    
-    func fetchImages() {
-        NetworkManager.shared.fetchImageList { [weak self] result in
+    func fetchImages(needToFetch: Bool = false) {
+        if needToFetch { isFetching = true }
+        NetworkManager.shared.fetchImageList(pageNumber: pageNumber) { [weak self] result in
             switch result {
             case .success(let images):
                 self?.images.append(contentsOf: images)
+                self?.pageNumber += 1
+                self?.isFetching = false
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
             }
