@@ -37,6 +37,7 @@ class AlertViewController: UIViewController, AlertAble {
         self.completion = completion
         
         super.init(nibName: nil, bundle: nil)
+        modalPresentationStyle = .overFullScreen
     }
     
     required init?(coder: NSCoder) {
@@ -116,12 +117,55 @@ class AlertViewController: UIViewController, AlertAble {
         self.dismiss(animated: true)
     }
     
+    @objc func keyboardWillshow(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        guard let keyboardSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        self.view.frame.origin.y = 0 - (keyboardSize.height * 0.5)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButtonStackView()
         configureContentView()
         configureUI()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillshow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillshow(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut) { [weak self] in
+            self?.containerView.transform = .identity
+            self?.containerView.isHidden = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut) { [weak self] in
+            self?.containerView.transform = .identity
+            self?.containerView.isHidden = true
+        }
     }
     
     func configureContentView() {
@@ -160,13 +204,9 @@ class AlertViewController: UIViewController, AlertAble {
     
     func configureUI() {
         containerView.addSubview(containerStackView)
-        [containerView].forEach {
-            view.addSubview($0)
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        containerView.addSubview(containerStackView)
-        view.layer.backgroundColor = UIColor.black.withAlphaComponent(0.2).cgColor
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(containerView)
+        view.layer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
         
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 32),

@@ -49,6 +49,18 @@ class CoreDataService {
         }
     }
     
+    @discardableResult
+    func delete(object: NSManagedObject) -> Bool {
+        self.context.delete(object)
+        
+        do {
+            try context.save()
+            return true
+        } catch {
+            return false
+        }
+    }
+    
     func deleteAll() -> Bool {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "SavedModel")
         let delete = NSBatchDeleteRequest(fetchRequest: request)

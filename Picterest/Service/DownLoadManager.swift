@@ -36,6 +36,15 @@ class DownLoadManager {
         return true
     }
     
+    func removeData(_ key: String) -> Bool {
+        guard let writeURL = folderURL?.appendingPathComponent(key) else {
+            return false
+        }
+        print(writeURL)
+        try? FileManager.default.removeItem(at: writeURL)
+        return true
+    }
+    
     private func createFolder() {
         guard let folderURL = folderURL else {
             return
