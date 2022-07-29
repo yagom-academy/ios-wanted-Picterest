@@ -23,4 +23,15 @@ extension UIImageView {
             }
         }
     }
+    
+    func loadFromLocal(id: String) {
+        let documentURL = LocalFileManager.shared.documentURL
+        guard let imageURL = documentURL?.appendingPathComponent(id) else { return }
+        if FileManager.default.fileExists(atPath: imageURL.path) {
+            guard let image = UIImage(contentsOfFile: imageURL.path) else { return }
+            DispatchQueue.main.async {
+                self.image = image
+            }
+        }
+    }
 }
