@@ -33,6 +33,10 @@ class ImageViewController: UIViewController {
         bind(viewModel)
         fetchPhoto()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        imageCollectionView.reloadData()
+    }
 }
 
 extension ImageViewController {
