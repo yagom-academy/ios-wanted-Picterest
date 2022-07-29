@@ -116,7 +116,13 @@ extension FeedViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         let imageData = viewModel.imageDatas[indexPath.row]
-        cell.imageLoader = ImageLoader(baseURL: imageData.urls.raw)
+        
+        let imageSizeQuery = [
+            "w": cell.frame.size.width.description,
+            "h": cell.frame.size.height.description
+        ]
+        
+        cell.imageLoader = ImageLoader(baseURL: imageData.urls.raw, query: imageSizeQuery)
         cell.setUpTask()
         cell.topButtonView.delegate = self
         cell.topButtonView.starButton.tag = indexPath.row
@@ -197,9 +203,9 @@ private extension FeedViewController {
                 
                 let data = self.viewModel.imageDatas[sender.tag]
                 
-                let imageLoader = ImageLoader(baseURL: data.urls.regular)
+                let imageLoader = ImageLoader(baseURL: data.urls.regular, query: [:])
                 
-                imageLoader.requestNetwork(query: nil) { result in
+                imageLoader.requestNetwork { result in
                     switch result {
                     case .success(let image):
                         if let image = image as? UIImage, let imageData = image.pngData() {

@@ -16,43 +16,60 @@ protocol NetWorkAble {
     var baseURL: String { get }
     var pageNumber: Int { get set }
     var apiKey: String { get }
-    func configureURL(query: [String: String]?) -> URL?
-    func requestNetwork(query: [String: String]?, completion: @escaping (Result<Any, NetWorkError>) -> Void)
+    var query: [String: String]? { get }
+    
+    func configureURL() -> URL?
+    func toQueryItem() -> [URLQueryItem]
+    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void)
 }
 
-class ImageLoader: NetWorkAble {
-    var baseURL: String
-    
-    var pageNumber: Int
-    
-    var apiKey: String
-    var task: URLSessionDataTask?
-    
-    init(baseURL: String, pageNumber: Int = 0, apiKey: String = "") {
-        self.baseURL = baseURL
-        self.pageNumber = pageNumber
-        self.apiKey = apiKey
+extension NetWorkAble {
+    func toQueryItem() -> [URLQueryItem] {
+        if let query = query {
+            return query.configureQuerys()
+        } else {
+            let queryItem = [
+                "client_id": apiKey,
+                "page": "\(pageNumber)",
+                "per_page": "15"
+            ]
+            return queryItem.configureQuerys()
+        }
     }
-    
-    func configureURL(query: [String: String]?) -> URL? {
+
+    func configureURL() -> URL? {
         guard var components = URLComponents(string: baseURL) else {
             return nil
         }
-        if let query = query {
-            let queryItems = query.map { URLQueryItem(name: $0.key, value: $0.value) }
-            components.queryItems = queryItems
-        }
         
+        components.queryItems = toQueryItem()
+
         guard let url = components.url else {
             return nil
         }
         
         return url
     }
+}
+
+class ImageLoader: NetWorkAble {
+    var baseURL: String
+    var query: [String : String]?
+    var pageNumber: Int
     
-    func requestNetwork(query: [String : String]?, completion: @escaping (Result<Any, NetWorkError>) -> Void) {
+    var apiKey: String
+    var task: URLSessionDataTask?
+    
+    init(baseURL: String, pageNumber: Int = 0, apiKey: String = "", query: [String:String]?) {
+        self.baseURL = baseURL
+        self.pageNumber = pageNumber
+        self.apiKey = apiKey
+        self.query = query
+    }
+    
+    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void) {
         
-        if let imageLoadURL = configureURL(query: query) {
+        if let imageLoadURL = configureURL() {
             task = URLSession.shared.dataTask(with: imageLoadURL) { data, response, error in
                 guard error == nil else {
                     completion(.failure(.unknown))
@@ -82,33 +99,20 @@ class ImageDataLoader: NetWorkAble {
     var baseURL: String
     var pageNumber: Int
     var apiKey: String
+    var query: [String : String]?
     
-    init(baseURL: String = "https://api.unsplash.com/photos/", pageNumber: Int = 1, apiKey: String) {
+    init(
+        baseURL: String = "https://api.unsplash.com/photos/",
+        pageNumber: Int = 1,
+        apiKey: String,
+        query: [String: String]? = nil
+    ) {
         self.baseURL = baseURL
         self.pageNumber = pageNumber
         self.apiKey = apiKey
     }
     
-    func configureURL(query: [String : String]? = nil) -> URL? {
-        guard var components = URLComponents(string: baseURL) else {
-            return nil
-        }
-        let queryItems = [
-            "client_id": apiKey,
-            "page": "\(pageNumber)",
-            "per_page": "15"
-        ].map {
-            URLQueryItem(name: $0.key, value: $0.value)
-        }
-        
-        components.queryItems = queryItems
-        guard let url = components.url else {
-            return nil
-        }
-        return url
-    }
-    
-    func requestNetwork(query: [String : String]?, completion: @escaping (Result<Any, NetWorkError>) -> Void) {
+    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void) {
         
         if let imageDataLoadURL = configureURL() {
             URLSession.shared.dataTask(with: imageDataLoadURL) { data, response, error in

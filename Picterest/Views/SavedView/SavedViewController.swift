@@ -43,7 +43,7 @@ class SavedViewController: UIViewController {
         if let datas = coreDataService.fetch() as? [SavedModel] {
             datas.forEach { model in
                 let savedModel = savedModel(id: model.id,
-                                            meme: model.memo,
+                                            memo: model.memo,
                                             file: model.fileURL,
                                             raw: model.rawURL)
 
@@ -84,13 +84,18 @@ extension SavedViewController: UICollectionViewDataSource {
         ) as? SavedCollectionCustomCell else {
             return UICollectionViewCell()
         }
-        guard let image = imageDatas[indexPath.row].image else {
-            return UICollectionViewCell()
-        }
-        cell.imageView.image = image.resizeImageTo(newWidth: cell.bounds.width)
         
+        let data = imageDatas[indexPath.row]
+        if let image = data.image {
+            cell.imageView.image = image.resizeImageTo(newWidth: cell.bounds.width)
+        }
+        cell.topView.indexLabel.text = data.memoDescription
+        
+        cell.topView.starButton.isSelected = true
+        cell.topView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
         cell.topView.delegate = self
         cell.tag = indexPath.row
+        
         return cell
     }
 }

@@ -89,13 +89,7 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawAble {
 
 extension FeedCollectionCustomCell {
     func setUpTask() {
-        
-        let query = [
-            "w": self.bounds.size.width.description,
-            "h": self.bounds.size.height.description
-        ]
-        
-        imageLoader?.requestNetwork(query: query, completion: { result in
+        imageLoader?.requestNetwork(completion: { result in
             switch result {
             case .success(let data):
                 if let image = data as? UIImage {
