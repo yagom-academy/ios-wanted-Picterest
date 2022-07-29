@@ -14,7 +14,7 @@ protocol PhotoListCollectionViewLayoutDelegate {
     ) -> CGFloat
 }
 
-class PhotoListCollectionViewLayout: UICollectionViewLayout {
+final class PhotoListCollectionViewLayout: UICollectionViewLayout {
     var delegate: PhotoListCollectionViewLayoutDelegate?
     private var numberOfcolumns = 2
     private var cellPadding: CGFloat = 5
@@ -33,7 +33,7 @@ class PhotoListCollectionViewLayout: UICollectionViewLayout {
     }
     
     override func prepare() {
-        guard cache.isEmpty == true, let collectionView = collectionView else {
+        guard let collectionView = collectionView else {
             return
         }
         let columnWidth = contentWidth / CGFloat(numberOfcolumns)

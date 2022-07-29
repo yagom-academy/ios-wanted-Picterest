@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoSaveCollectionViewCell: UICollectionViewCell {
+class PhotoSaveCollectionViewCell: UICollectionViewCell, CellNamable {
     
     var coreData = [Picterest]()
     
@@ -26,10 +26,10 @@ class PhotoSaveCollectionViewCell: UICollectionViewCell {
     }
     
     func fetchDataFromCollectionView(data: String) {
-        ImageLoder().leadImage(url: data) { result in
+        ImageLoder().leadImage(url: data) { [weak self] result in
             switch result {
             case .success(let photos):
-                self.savedImageView.image = photos
+                self?.savedImageView.image = photos
             case .failure(let error):
                 print(error.localizedDescription)
             }

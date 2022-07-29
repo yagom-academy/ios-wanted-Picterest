@@ -10,7 +10,7 @@ protocol DidTapPhotoSaveButtonDelegate {
     func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?)
 }
 
-class PhotoListCollectionViewCell: UICollectionViewCell {
+class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
     @IBOutlet weak var radomImageView: UIImageView!
     @IBOutlet weak var savedButton: UIButton!
     @IBOutlet weak var captionLabel: UILabel!
@@ -44,13 +44,14 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         if isSelectedFlag {
             savedButton.isSelected = true
         }
-        ImageLoder().leadImage(url: data.urls.regular) { result in
+        ImageLoder().leadImage(url: data.urls.small) { [weak self] result in
             switch result {
             case .success(let photos):
-                self.radomImageView.image = photos
+                self?.radomImageView.image = photos
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
+    
 }
