@@ -98,12 +98,32 @@
 			path = Manager;
 			sourceTree = "<group>";
 		};
+		6B2771372893A00400212FE7 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6BCD1FC62890C7E500F63E64 /* SavedPhotoInfo+CoreDataClass.swift */,
+				6BCD1FC72890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift */,
+				6BCD1FC32890C75000F63E64 /* SavedPhoto.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		6B2771382893A03500212FE7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				6BCD1F9B288E5E5100F63E64 /* PhotoListCollectionViewCell.swift */,
+				6BCD1FB1288EEC0D00F63E64 /* PhotoListCollectionViewCellViewModel.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		6BCD1F96288E540200F63E64 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */,
 				6B1D292B289228B8002302F3 /* TabBarViewModel.swift */,
 				6BCD1F94288E52FF00F63E64 /* TabBar.swift */,
+				6B2771382893A03500212FE7 /* Common */,
 				6BCD1F97288E540A00F63E64 /* PhotoList */,
 				6BCD1F98288E541400F63E64 /* SavedList */,
 			);
@@ -116,8 +136,6 @@
 				DE15E65F28604278003DD2F5 /* PhotoListViewController.swift */,
 				6BCD1FAB288EDACF00F63E64 /* PhotoListViewModel.swift */,
 				6BCD1F9F288E611D00F63E64 /* PhotoListCollectionViewLayout.swift */,
-				6BCD1F9B288E5E5100F63E64 /* PhotoListCollectionViewCell.swift */,
-				6BCD1FB1288EEC0D00F63E64 /* PhotoListCollectionViewCellViewModel.swift */,
 				6BCD1FB3288EF17800F63E64 /* ImageTopView.swift */,
 				6BCD1FBD288FBF7200F63E64 /* ImageTopViewModel.swift */,
 			);
@@ -136,11 +154,11 @@
 		6BCD1F9A288E545E00F63E64 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				6B27713628938D6600212FE7 /* Manager */,
-				6BCD1F92288E52ED00F63E64 /* Icon.swift */,
 				6BCD1F9D288E5E7E00F63E64 /* CellIdentifiable.swift */,
+				6BCD1F92288E52ED00F63E64 /* Icon.swift */,
 				6BCD1FAD288EDE3600F63E64 /* Observable.swift */,
 				6BCD1FA9288ECEA500F63E64 /* Extension */,
+				6B27713628938D6600212FE7 /* Manager */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -188,9 +206,7 @@
 				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
-				6BCD1FC62890C7E500F63E64 /* SavedPhotoInfo+CoreDataClass.swift */,
-				6BCD1FC72890C7E500F63E64 /* SavedPhotoInfo+CoreDataProperties.swift */,
-				6BCD1FC32890C75000F63E64 /* SavedPhoto.xcdatamodeld */,
+				6B2771372893A00400212FE7 /* CoreData */,
 				6BCD1FAA288ECEB700F63E64 /* Model */,
 				6BCD1F9A288E545E00F63E64 /* Common */,
 				6BCD1F96288E540200F63E64 /* Presentation */,
