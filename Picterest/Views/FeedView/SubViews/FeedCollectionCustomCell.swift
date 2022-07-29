@@ -89,13 +89,28 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawAble {
 
 extension FeedCollectionCustomCell {
     func setUpTask() {
+        guard let imagePath = imageLoader?.baseURL else {
+            return
+        }
+        
+        if let imageData = cache.fetchData(imagePath) {
+            let image = UIImage(data: imageData)
+            self.imageView.image = image
+            print("Image get cache storage")
+            return
+        }
+        
+        
         imageLoader?.requestNetwork(completion: { result in
             switch result {
             case .success(let data):
-                if let image = data as? UIImage {
+                if let image = data as? UIImage,
+                   let imageData = image.pngData() {
                     DispatchQueue.main.async {
                         self.imageView.image = image
                     }
+                    self.cache.uploadData(key: imagePath, data: imageData)
+                    
                 }
             case .failure(let error):
                 print("Error in download mage \(error)")
