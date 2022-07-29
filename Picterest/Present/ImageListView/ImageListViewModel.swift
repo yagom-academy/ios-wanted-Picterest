@@ -34,6 +34,19 @@ final class ImageListViewModel {
         return cellDatas[safe: indexPath.row]
     }
     
+    func updateCellState(completion: @escaping ()->()) {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
+            for i in 0..<self.cellDatas.count {
+                guard let cell = self.cellDatas[safe: i] else { return }
+                self.cellDatas[i].isSaved = CoreDataManager.shared.containImage(imageURL: cell.thumbnailURL)
+            }
+            DispatchQueue.main.async {
+                completion()
+            }
+        }
+    }
+    
     func cellHeightMultiplier(_ indexPath: IndexPath) -> CGFloat {
         guard let data = networkDatas[safe: indexPath.row] else { return 0.0 }
         let multiplier = CGFloat(data.height) / CGFloat(data.width)

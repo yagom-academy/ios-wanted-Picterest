@@ -23,6 +23,13 @@ final class ImageListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.updateCellState { [weak self] in
+            self?.collectionView.reloadData()
+        }
+    }
+    
     private func loadCell() {
         viewModel.loadData { [weak self] result in
             switch result {
