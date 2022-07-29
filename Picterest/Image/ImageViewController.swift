@@ -20,7 +20,7 @@ class ImageViewController: UIViewController {
         return cv
     }()
     private var viewModel = ImageViewModel()
-    var photoList: [Photo] = []
+    private var photoList: [Photo] = []
     private var startPage = 0
     
     override func viewDidLoad() {
@@ -69,16 +69,11 @@ extension ImageViewController {
     }
     
     private func fetchPhoto() {
-        print("fetchPhoto", startPage)
-        
         viewModel.getRandomPhoto(startPage) { [weak self] result in
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
                 self.photoList += photos
-                photos.forEach { photo in
-                    print(photo.id)
-                }
                 DispatchQueue.main.async {
                     self.imageCollectionView.reloadData()
                 }
