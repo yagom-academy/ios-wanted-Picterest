@@ -42,6 +42,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
         let indexLabel = UILabel()
         indexLabel.font = .systemFont(ofSize: 15)
         indexLabel.textColor = .white
+        indexLabel.textAlignment = .right
         return indexLabel
     }()
     
@@ -121,6 +122,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private func setConstraintOfIndexLabel() {
         NSLayoutConstraint.activate([
+            indexLabel.leadingAnchor.constraint(equalTo: starButton.trailingAnchor, constant: 10),
             indexLabel.centerYAnchor.constraint(equalTo: descriptionView.centerYAnchor),
             indexLabel.heightAnchor.constraint(equalToConstant: 30),
             indexLabel.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -10)
