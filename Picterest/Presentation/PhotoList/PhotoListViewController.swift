@@ -101,7 +101,7 @@ class PhotoListViewController: UIViewController {
     
 }
 
-// MARK: - Extensions
+// MARK: - Fetch another page extension
 
 extension PhotoListViewController {
     
@@ -121,6 +121,8 @@ extension PhotoListViewController {
         })
     }
 }
+
+// MARK: - CollectionView DataSource extension
 
 extension PhotoListViewController: UICollectionViewDataSource {
     
@@ -201,8 +203,42 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
 }
 
 extension PhotoListViewController: CellActionDelegate {
-    func starButtonTapped() {
-        print("이건됨?")
+    // TODO: [] alert class 따로 만들기
+    func starButtonTapped(cell: PhotoListCollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return
+        }
+        
+        print(indexPath.item)
+        
+        let alert = UIAlertController(
+            title: "사진 메모",
+            message: "",
+            preferredStyle: .alert
+        )
+        
+        let saveButton = UIAlertAction(
+            title: "저장",
+            style: .default) {_ in
+            if let textField = alert.textFields?.first,
+               let text = textField.text {
+                print("등록완료:\(text)")
+            }
+        }
+        
+        let cancelButton = UIAlertAction(
+            title: "취소",
+            style: .destructive,
+            handler: nil
+        )
+        
+        alert.addTextField { textField in
+            textField.placeholder = "메모를 입력해주세요."
+        }
+        alert.addAction(cancelButton)
+        alert.addAction(saveButton)
+        
+        self.present(alert, animated: true)
+        
     }
     
 }

@@ -9,7 +9,7 @@ import UIKit
 
 protocol CellActionDelegate: AnyObject {
     
-    func starButtonTapped()
+    func starButtonTapped(cell: PhotoListCollectionViewCell)
     
 }
 
@@ -66,7 +66,11 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         setupView()
         setupConstraints()
         
-        self.starButton.addTarget(cellDelegate, action: #selector(starTapped), for: .touchUpInside)
+        self.starButton.addTarget(
+            self,
+            action: #selector(starTapped),
+            for: .touchUpInside
+        )
     }
     
     @available(*, unavailable, message: "This initializer is not available.")
@@ -78,7 +82,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func starTapped() {
-        cellDelegate?.starButtonTapped()
+        cellDelegate?.starButtonTapped(cell: self)
     }
     
 }
