@@ -26,6 +26,10 @@ final class ImagesViewController: UIViewController {
         layout = collectionView.collectionViewLayout as? CustomLayout
         layout?.delegate = self
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
 }
 
 extension ImagesViewController {
