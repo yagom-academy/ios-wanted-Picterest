@@ -14,20 +14,18 @@ class PhotoListViewController: UIViewController {
     private var photoList: [PhotoModel] = []
     private var coreData: [Picterest] = []
     private var networkManager = NetworkManager()
-    private var isDownLoadData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionView()
         getPhotoData()
+        print(currentPage, "didload")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        photoListCollectionView.reloadData()
-        CoreDataManager.shared.fetchCoreData { data in
-            print(data.count, "PhotoList::coreData::count")
-            self.coreData = data
+        CoreDataManager.shared.fetchCoreData { [weak self] data in
+            self?.coreData = data
         }
     }
 }
@@ -36,6 +34,7 @@ class PhotoListViewController: UIViewController {
 
 extension PhotoListViewController {
     private func setCollectionView() {
+        photoListCollectionView.delegate = self
         photoListCollectionView.dataSource = self
         if let layout = photoListCollectionView.collectionViewLayout as?
             PhotoListCollectionViewLayout {
@@ -49,20 +48,20 @@ extension PhotoListViewController {
         )
         photoListCollectionView.register(
             UINib(
-                nibName: CellName.photoListCell,
+                nibName: PhotoListCollectionViewCell.identifier,
                 bundle: nil
             ),
-            forCellWithReuseIdentifier: CellName.photoListCell
+            forCellWithReuseIdentifier: PhotoListCollectionViewCell.identifier
         )
     }
     
     private func getPhotoData() {
-        networkManager.getPhotoList { result in
+        networkManager.getPhotoList(currentPage: currentPage) { [weak self] result in
             switch result {
             case .success(let data):
-                self.photoList.append(contentsOf: data)
+                self?.photoList.append(contentsOf: data)
                 DispatchQueue.main.async {
-                    self.photoListCollectionView.reloadData()
+                    self?.photoListCollectionView.reloadData()
                 }
             case .failure(let error):
                 print(error)
@@ -78,6 +77,7 @@ extension PhotoListViewController {
         )
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             completion(alertController.textFields?[0].text)
+            
         }
         alertController.addTextField()
         alertController.addAction(saveAction)
@@ -112,7 +112,7 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                 CoreDataManager.shared.saveCoreData(
                     id: photoInfo.id,
                     memo: memo,
-                    url:photoInfo.urls.regular,
+                    url:photoInfo.urls.small,
                     location: urlPath,
                     width: photoInfo.width,
                     height: photoInfo.height
@@ -145,6 +145,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
+        print(photoList.count, "photoCount")
         return photoList.count
     }
     
@@ -153,7 +154,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let photoCell = photoListCollectionView.dequeueReusableCell(
-            withReuseIdentifier: CellName.photoListCell,
+            withReuseIdentifier: PhotoListCollectionViewCell.identifier,
             for: indexPath
         ) as? PhotoListCollectionViewCell else {
             return UICollectionViewCell()
@@ -166,9 +167,24 @@ extension PhotoListViewController: UICollectionViewDataSource {
         }
         photoCell.delegate = self
         photoCell.photoInfo = photoList[indexPath.row]
-        photoCell.fetchDataFromCollectionView(data: photoList[indexPath.row], isSelectedFlag: flag)
+        photoCell.fetchDataFromCollectionView(
+            data: photoList[indexPath.row],
+            isSelectedFlag: flag
+        )
         photoCell.captionLabel.text = "\(indexPath.row)번째 사진"
         return photoCell
     }
 }
 
+extension PhotoListViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        if indexPath.row > photoList.count - 3 {
+            currentPage += 1
+            getPhotoData()
+        }
+    }
+}
