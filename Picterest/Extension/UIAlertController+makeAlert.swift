@@ -61,9 +61,8 @@ extension UIAlertController {
         
         let actionHandler: (UIAlertAction) -> Void = { (action) -> Void in
             
-            guard let savedLocation = imageData.value(forKey: CoreDataKey.savedLocation) as? String else { return }
-            print("savedLocation: \(savedLocation)")
-            imageFileManager.removeItem(at: savedLocation)
+            guard let id = imageData.value(forKey: CoreDataKey.id) as? NSString else { return }
+            imageFileManager.remove(id)
             coreDataManager.remove(imageData)
             completion()
             print("remove success")

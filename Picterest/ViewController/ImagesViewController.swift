@@ -113,6 +113,11 @@ extension ImagesViewController: UICollectionViewDelegate {
 
 extension ImagesViewController: CollectionViewCellDelegate {
     func alert(from cell: UICollectionViewCell) {
+        guard let cell = cell as? ImagesCollectionViewCell,
+              let index = self.collectionView.indexPath(for: cell)?.row,
+              let imageInformation = self.viewModel.getImage(at: index) else {
+            return
+        }
         
         let title = "Picterest"
         let message = "사진을 다운 받으시겠습니까?"
@@ -120,13 +125,6 @@ extension ImagesViewController: CollectionViewCellDelegate {
         let secondActionTitle = "확인"
         
         let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert, hasTextField: true)
-        
-        guard let index = self.collectionView.indexPath(for: cell)?.row,
-              let imageInformation = self.viewModel.getImage(at: index) else {
-            return
-        }
-    
-        guard let cell = cell as? ImagesCollectionViewCell else { return }
         let alertAction = alertController.alertActionInImagesViewController(cell: cell, imageInformation: imageInformation)
         
         alertController.addAlertAction(title: firstActionTitle, style: .default)

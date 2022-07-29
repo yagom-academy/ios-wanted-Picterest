@@ -41,19 +41,17 @@ final class ImageFileManager {
             return imageData
         } catch {
             print(error.localizedDescription)
-            print("45")
         }
         
         return nil
     }
     
-    func removeItem(at savedLocation: String) {
+    func remove(_ fileName: NSString) {
         do {
-            try fileManager.removeItem(atPath: savedLocation)
-            print("file remove well")
+            let imageFileURL = makeFileURL(using: fileName)
+            try fileManager.removeItem(atPath: imageFileURL.path)
         } catch {
             print(error.localizedDescription)
-            print("hi")
         }
     }
 
