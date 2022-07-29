@@ -8,12 +8,12 @@
 import UIKit
 
 class CustomCollectionViewLayout: UICollectionViewLayout {
-
+    
     weak var delegate: CustomCollectionViewLayoutDelegate?
     
     private let numberOfColums = 2
     private let cellPadding: CGFloat = 3.0
-    
+    var yOffset: [CGFloat] = Array(repeating: 0, count: 2)
     private var cache: [UICollectionViewLayoutAttributes] = []
     
     private var contentHeight: CGFloat = 0
@@ -34,21 +34,18 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
         
         let collectionViewItems = collectionView.numberOfItems(inSection: 0)
         
-        if collectionViewItems == cache.count {
-            return
-        }
+        if collectionViewItems == cache.count { return }
         
-        cache.removeAll()
+        //        cache.removeAll()
         
         let columnWidth = contentWidth / CGFloat(numberOfColums)
         var xOffset: [CGFloat] = []
+        var column = yOffset[0] <= yOffset[1] ? 0 : 1
         for column in 0..<numberOfColums {
             xOffset.append(CGFloat(column) * columnWidth)
         }
-
-        var yOffset: [CGFloat] = Array(repeating: 0, count: numberOfColums)
         
-        for item in 0..<collectionView.numberOfItems(inSection: 0) {
+        for item in cache.count..<collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             
             let photoHeight = delegate?.collectionView(
@@ -62,31 +59,18 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
             ) ?? columnWidth
             let height = cellPadding * 2 + columnWidth * photoHeight / photoWidth
             
-            let frame1 = CGRect(x: xOffset[0], y: yOffset[0], width: columnWidth, height: height)
-            let frame2 = CGRect(x: xOffset[1], y: yOffset[1], width: columnWidth, height: height)
-
-            if frame1.maxY > frame2.maxY {
-                // frame2에 몰아야함
-                let insetFrame = frame2.insetBy(dx: cellPadding, dy: cellPadding)
-                
-                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                attributes.frame = insetFrame
-                cache.append(attributes)
-                
-                contentHeight = max(contentHeight, frame2.maxY)
-                yOffset[1] = yOffset[1] + height
-
-            } else {
-                let insetFrame = frame1.insetBy(dx: cellPadding, dy: cellPadding)
-                
-                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                attributes.frame = insetFrame
-                cache.append(attributes)
-                
-                contentHeight = max(contentHeight, frame1.maxY)
-                yOffset[0] = yOffset[0] + height
-
-            }
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+            
+            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            
+            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            attributes.frame = insetFrame
+            cache.append(attributes)
+            
+            contentHeight = max(contentHeight, frame.maxY)
+            yOffset[column] = yOffset[column] + height
+            
+            column = yOffset[0] <= yOffset[1] ? 0 : 1
         }
     }
     
