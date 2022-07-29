@@ -28,12 +28,11 @@ class ImageCollectionViewCell: UICollectionViewCell, ReusableCell {
     
     private var currentIndexPath: IndexPath?
     
-    let labelStackView = LabelStackView()
+    private let labelStackView = LabelStackView()
     private let photoImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        
         return image
     }()
     

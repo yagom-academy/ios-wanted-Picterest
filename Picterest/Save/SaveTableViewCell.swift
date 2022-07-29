@@ -35,7 +35,6 @@ class SaveTableViewCell: UITableViewCell, ReusableCell {
         let image = UIImageView()
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        
         return image
     }()
     

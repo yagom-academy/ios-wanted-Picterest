@@ -115,6 +115,7 @@ extension SaveViewController: UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         saveTableView.frame = saveTableView.frame.inset(by: UIEdgeInsets(top: 6, left: 20, bottom: 6, right: 20))
     }
 }
