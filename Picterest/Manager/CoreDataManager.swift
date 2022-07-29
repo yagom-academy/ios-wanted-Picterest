@@ -8,14 +8,14 @@
 import UIKit
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
     static let shared = CoreDataManager()
     private init() {}
     
-    let modelName: String = "ImageInfo"
+    private let modelName: String = "ImageInfo"
     
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    lazy var context = appDelegate?.persistentContainer.viewContext
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    private lazy var context = appDelegate?.persistentContainer.viewContext
     
     func loadData() -> [ImageInfo] {
         var imageInfoList: [ImageInfo] = []

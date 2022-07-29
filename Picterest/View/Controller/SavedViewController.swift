@@ -7,8 +7,8 @@
 
 import UIKit
 
-class SavedViewController: UIViewController {
-    let viewModel = SavedCollectionViewModel()
+final class SavedViewController: UIViewController {
+    private let viewModel = SavedCollectionViewModel()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,7 +36,7 @@ class SavedViewController: UIViewController {
         viewModel.refreshData()
     }
         
-    func configureSubviews() {
+    private func configureSubviews() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
         

@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ImagesViewController: UIViewController {
+final class ImagesViewController: UIViewController {
     
-    let imageCollectionViewModel = ImageCollectionViewModel()
-    let picterestLayout = PicterestLayout()
+    private let imageCollectionViewModel = ImageCollectionViewModel()
+    private let picterestLayout = PicterestLayout()
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: picterestLayout)
@@ -86,7 +86,7 @@ extension ImagesViewController: PicterestLayoutDelegate {
 }
 
 extension ImagesViewController {
-    func starButtonTapped(at index: Int) {
+    private func starButtonTapped(at index: Int) {
         let data = imageCollectionViewModel.imageAtIndex(index)
         
         if imageCollectionViewModel.checkFileExistInLocal(data: data) {
@@ -96,7 +96,7 @@ extension ImagesViewController {
         }
     }
     
-    func showAlertOfSave(data: ImageViewModel) {
+    private func showAlertOfSave(data: ImageViewModel) {
         let alert = UIAlertController(title: "사진을 저장합니다 ", message: "메모를 남겨보세요", preferredStyle: .alert)
         let save = UIAlertAction(title: "저장", style: .default) { _ in
             guard let textField = alert.textFields,
@@ -110,7 +110,7 @@ extension ImagesViewController {
         present(alert, animated: true)
     }
     
-    func showAlertOfDelete(data: ImageViewModel) {
+    private func showAlertOfDelete(data: ImageViewModel) {
         let alert = UIAlertController(title: "즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
         let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
             self.imageCollectionViewModel.deleteImage(id: data.id)

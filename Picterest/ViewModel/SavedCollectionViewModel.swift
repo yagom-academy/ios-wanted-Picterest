@@ -6,9 +6,8 @@
 //
 
 import UIKit
-import CloudKit
 
-class SavedCollectionViewModel {
+final class SavedCollectionViewModel {
     private var savedImages: [SavedImageViewModel] = []
     
     var savedImagesCount: Int {
@@ -51,7 +50,7 @@ class SavedCollectionViewModel {
     }
 }
 
-class SavedImageViewModel {
+struct SavedImageViewModel {
     
     var image: Image
     var memo: String

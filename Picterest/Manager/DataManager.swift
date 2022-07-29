@@ -9,6 +9,7 @@ import Foundation
 
 class DataManager {
     static let shared = DataManager()
+    private init() {}
     
     func save(data: ImageViewModel, memo: String) {
         LocalFileManager.shared.saveToLocal(data)

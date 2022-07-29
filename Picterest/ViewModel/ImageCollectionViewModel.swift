@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageCollectionViewModel {
+final class ImageCollectionViewModel {
     private var pageNumber = 1
     private var images: [Image] = [] {
         didSet {

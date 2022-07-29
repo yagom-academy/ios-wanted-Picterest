@@ -145,6 +145,17 @@
 			path = PicterestLayout;
 			sourceTree = "<group>";
 		};
+		12BB7EF22893E5F900D0039E /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
+				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
+				DE15E66428604279003DD2F5 /* Assets.xcassets */,
+				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		DE15E64F28604278003DD2F5 = {
 			isa = PBXGroup;
 			children = (
@@ -164,17 +175,14 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				12275A3A2891811F00F1335E /* CoreData */,
-				127EBA4A289048CD0069B28D /* Extension */,
-				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
-				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
-				DE15E66428604279003DD2F5 /* Assets.xcassets */,
-				DE15E66628604279003DD2F5 /* LaunchScreen.storyboard */,
 				DE15E66928604279003DD2F5 /* Info.plist */,
 				127EBA3D28903A510069B28D /* Model */,
 				127EBA26289012DE0069B28D /* View */,
 				127EBA3E28903A6B0069B28D /* ViewModel */,
 				127EBA4528903B760069B28D /* Manager */,
+				127EBA4A289048CD0069B28D /* Extension */,
+				12275A3A2891811F00F1335E /* CoreData */,
+				12BB7EF22893E5F900D0039E /* Application */,
 			);
 			path = Picterest;
 			sourceTree = "<group>";

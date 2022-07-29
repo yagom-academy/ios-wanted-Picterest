@@ -7,9 +7,10 @@
 
 import UIKit
 
-class LocalFileManager {
+final class LocalFileManager {
     
     static let shared = LocalFileManager()
+    private init() {}
     
     let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     var localPath: String {

@@ -11,7 +11,7 @@ protocol PicterestLayoutDelegate: AnyObject {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-class PicterestLayout: UICollectionViewLayout {
+final class PicterestLayout: UICollectionViewLayout {
     
     weak var delegate: PicterestLayoutDelegate?
     

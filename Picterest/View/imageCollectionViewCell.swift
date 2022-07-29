@@ -7,12 +7,11 @@
 
 import UIKit
 
-class ImageCollectionViewCell: UICollectionViewCell {
+final class ImageCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "imageCollectionViewCell"
     
     var starButtonStatusChanged: () -> Void = {}
-    var isStar: Bool = false
     
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
