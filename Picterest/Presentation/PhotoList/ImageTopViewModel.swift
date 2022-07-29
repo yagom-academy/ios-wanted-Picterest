@@ -7,6 +7,6 @@
 
 import UIKit
 
-class ImageTopViewModel {
+final class ImageTopViewModel {
     let starButtonTapped: Observable<UIButton?> = Observable(nil)
 }

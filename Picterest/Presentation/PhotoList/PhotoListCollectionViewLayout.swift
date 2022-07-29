@@ -14,7 +14,7 @@ protocol PhotoListCollectionViewLayoutDelegate: AnyObject {
     ) -> CGFloat
 }
 
-class PhotoListCollectionViewLayout: UICollectionViewLayout {
+final class PhotoListCollectionViewLayout: UICollectionViewLayout {
     weak var delegate: PhotoListCollectionViewLayoutDelegate?
     
     private let numberOfColumns = 2

@@ -13,22 +13,21 @@ enum NetworkError: String, Error {
     case serverError
     case unknown
     
-    var description: String { self.rawValue }
+    var description: String { rawValue }
 }
 
-class Network {
+final class Network {
     private let page: Int
+    //    private let clientID = "7EoAQCEONksYSL9jv2U0iSUGUzpTffG6_YrGTdTXF2o"
+    private let clientID = "jGA9GAwx92PWFeD_ptnML18QqLz5M3zpjGVEqXIKw7g"
+    private let perPage = 15
+    private let path = "https://api.unsplash.com/photos"
     
     init(page: Int) {
         self.page = page
     }
     
-//    private let clientID = "7EoAQCEONksYSL9jv2U0iSUGUzpTffG6_YrGTdTXF2o"
-    private let clientID = "jGA9GAwx92PWFeD_ptnML18QqLz5M3zpjGVEqXIKw7g"
-    private let perPage = 15
-    private let path = "https://api.unsplash.com/photos"
-    
-    func get(completion: @escaping (Result<[Photo], NetworkError>) -> Void) {
+    func fetch(completion: @escaping (Result<[Photo], NetworkError>) -> Void) {
         var urlComponent = URLComponents(string: path)
         urlComponent?.setQueryItems(with: [
             "client_id": clientID,

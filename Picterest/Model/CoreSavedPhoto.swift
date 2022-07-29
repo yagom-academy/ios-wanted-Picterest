@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CoreSavedPhoto: AAA {
+struct CoreSavedPhoto: Photable {
     let id: String
     let memo: String
     let url: String

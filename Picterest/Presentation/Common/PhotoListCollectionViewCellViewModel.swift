@@ -7,14 +7,16 @@
 
 import UIKit
 
-class PhotoListCollectionViewCellViewModel {
+final class PhotoListCollectionViewCellViewModel {
     
-    let photo: AAA
+    let photo: Photable
     let image: Observable<UIImage> = Observable(UIImage())
-    let starButtonTapped: Observable<(UIButton?, AAA?, UIImage?)> = Observable((nil, nil, nil))
+    let starButtonTapped: Observable<(UIButton?, Photable?, UIImage?)> = Observable(
+        (nil, nil, nil)
+    )
     let imageTopViewModel = ImageTopViewModel()
     
-    init(photo: AAA) {
+    init(photo: Photable) {
         self.photo = photo
         if let photo = photo as? Photo {
             downloadImage(urlString: photo.urls.small)
@@ -40,7 +42,7 @@ class PhotoListCollectionViewCellViewModel {
             case .success(let image):
                 self.image.value = image
             case .failure(let error):
-                print("ERROR \(error.description)👹")
+                debugPrint("ERROR \(error.description)👹")
             }
         }
     }

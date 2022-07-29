@@ -8,21 +8,21 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
     static let shared = CoreDataManager()
     
-    private init() {}
-    
-    private lazy var persistentContainer: NSPersistentContainer = {
+    private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "SavedPhoto")
         container.loadPersistentStores { _, error in
             if let error = error {
-                print("ERROR \(error.localizedDescription) 😳")
+                debugPrint("ERROR \(error.localizedDescription) 😳")
             }
         }
         return container
     }()
     private lazy var context = persistentContainer.viewContext
+    
+    private init() {}
     
     func save(newPhoto: CoreSavedPhoto) {
         let entity = NSEntityDescription.entity(forEntityName: "SavedPhotoInfo", in: context)
@@ -39,7 +39,7 @@ class CoreDataManager {
         do {
             try context.save()
         } catch {
-            print("ERROR \(error.localizedDescription) 🥵")
+            debugPrint("ERROR \(error.localizedDescription) 🥵")
         }
     }
     
@@ -66,26 +66,26 @@ class CoreDataManager {
         do {
             try context.save()
         } catch {
-            print("ERROR \(error.localizedDescription) 💀")
+            debugPrint("ERROR \(error.localizedDescription) 💀")
         }
     }
+    
+//    func removeAll() {
+//        let request: NSFetchRequest<NSFetchRequestResult> = SavedPhotoInfo.fetchRequest()
+//        let delete = NSBatchDeleteRequest(fetchRequest: request)
+//
+//        do {
+//            try context.execute(delete)
+//        } catch {
+//            debugPrint("ERROR \(error.localizedDescription) 👊")
+//        }
+//    }
     
     private func fetchObject() -> [SavedPhotoInfo] {
         do {
             return try context.fetch(SavedPhotoInfo.fetchRequest())
         } catch {
             return []
-        }
-    }
-    
-    func removeAll() {
-        let request: NSFetchRequest<NSFetchRequestResult> = SavedPhotoInfo.fetchRequest()
-        let delete = NSBatchDeleteRequest(fetchRequest: request)
-        
-        do {
-            try context.execute(delete)
-        } catch {
-            print("ERROR \(error.localizedDescription) 👊")
         }
     }
 }

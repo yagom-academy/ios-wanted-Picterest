@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TabBarViewModel {
+final class TabBarViewModel {
     let photoListViewModel = PhotoListViewModel()
     let savedListViewModel = SavedListViewModel()
     

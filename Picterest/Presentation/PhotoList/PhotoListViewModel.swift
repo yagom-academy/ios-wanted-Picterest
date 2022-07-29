@@ -7,10 +7,12 @@
 
 import UIKit
 
-class PhotoListViewModel {
+final class PhotoListViewModel {
     let photoList: Observable<[Photo]> = Observable([])
     
-    let starButtonTapped: Observable<(UIButton?, AAA?, UIImage?)> = Observable((nil, nil, nil))
+    let starButtonTapped: Observable<(UIButton?, Photable?, UIImage?)> = Observable(
+        (nil, nil, nil)
+    )
     let isSave: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let isRemove: Observable<(UIButton?, Bool)> = Observable((nil, false))
     let updateSavedList: Observable<Bool> = Observable(false)
@@ -27,12 +29,12 @@ class PhotoListViewModel {
     var currentPage = 1
     
     func fetchPhotoList(page: Int) {
-        Network(page: page).get { result in
+        Network(page: page).fetch { result in
             switch result {
             case .success(let photos):
                 self.photoList.value.append(contentsOf: photos)
             case .failure(let error):
-                print("ERROR \(error.description)😶‍🌫️")
+                debugPrint("ERROR \(error.description)😶‍🌫️")
             }
         }
     }

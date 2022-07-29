@@ -5,7 +5,7 @@
 
 import UIKit
 
-class PhotoListViewController: UIViewController {
+final class PhotoListViewController: UIViewController {
     
     // MARK: - UI Components
     private lazy var photoListCollectionView: UICollectionView = {
@@ -66,7 +66,7 @@ extension PhotoListViewController: UICollectionViewDelegate {
         willDisplay cell: UICollectionViewCell,
         forItemAt indexPath: IndexPath
     ) {
-        if indexPath.item % 15 == 14
+        if indexPath.item % 15 == 12
             && viewModel.currentPage == (indexPath.item / 15) + 1 {
             viewModel.currentPage += 1
             viewModel.fetchPhotoList(page: viewModel.currentPage)
@@ -82,6 +82,7 @@ extension PhotoListViewController: UICollectionViewDataSource {
     ) -> Int {
         return viewModel.photoList.value.count
     }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -147,6 +148,7 @@ private extension PhotoListViewController {
             }
         }
     }
+    
     func bindUpdateCollectionView() {
         viewModel.photoList.bind { [weak self] _ in
             DispatchQueue.main.async {

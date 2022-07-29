@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol AAA {}
+protocol Photable {}
 
-struct Photo: Codable, AAA {
+struct Photo: Decodable, Photable {
     let id: String
     let width: Int
     let height: Int
-    let urls: UrlInfo
+    let urls: URLInfo
     
-    struct UrlInfo: Codable {
+    struct URLInfo: Decodable {
         let raw: String
         let full: String
         let regular: String

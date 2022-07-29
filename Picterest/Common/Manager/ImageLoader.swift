@@ -13,11 +13,12 @@ enum ImageLoaderError: String, Error {
     case serverError
     case unknown
     
-    var description: String { self.rawValue }
+    var description: String { rawValue }
 }
 
-class ImageLoader {
+final class ImageLoader {
     static let shared = ImageLoader()
+    
     private init() {}
     
     func downloadImage(

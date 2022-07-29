@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
+final class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     // MARK: - UI Components
     private lazy var topView = ImageTopView()
     private lazy var imageView: UIImageView = {
@@ -26,7 +26,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     var viewModel: PhotoListCollectionViewCellViewModel?
     
     // MARK: - Setup
-    func setupView(photo: AAA, index: Int) {
+    func setupView(photo: Photable, index: Int) {
         configUI()
         bindImage()
         topView.viewModel = viewModel?.imageTopViewModel
@@ -45,6 +45,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellIdentifiable {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         imageView.image = nil
         topView.initView()
     }

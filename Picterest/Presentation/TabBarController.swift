@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     
     private let viewModel: TabBarViewModel
     
@@ -25,14 +25,20 @@ class TabBarController: UITabBarController {
         viewControllers = TabBar.allCases.map {
             switch $0 {
             case .photoList:
-                let vc = PhotoListViewController(viewModel: viewModel.photoListViewModel)
-                vc.tabBarItem = $0.tabBarItem
-                return vc
+                let viewController = PhotoListViewController(
+                    viewModel: viewModel.photoListViewModel
+                )
+                viewController.tabBarItem = $0.tabBarItem
+                return viewController
             case .savedList:
-                let vc = SavedListViewController(viewModel: viewModel.savedListViewModel)
-                vc.tabBarItem = $0.tabBarItem
-                let nvc = UINavigationController(rootViewController: vc)
-                return nvc
+                let viewController = SavedListViewController(
+                    viewModel: viewModel.savedListViewModel
+                )
+                viewController.tabBarItem = $0.tabBarItem
+                let navigationViewController = UINavigationController(
+                    rootViewController: viewController
+                )
+                return navigationViewController
             }
         }
     }

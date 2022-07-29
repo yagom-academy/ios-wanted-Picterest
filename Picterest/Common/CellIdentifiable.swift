@@ -12,5 +12,5 @@ protocol CellIdentifiable {
 }
 
 extension CellIdentifiable {
-    static var identifier: String { String(describing: Self.self) }
+    static var identifier: String { String(describing: self) }
 }

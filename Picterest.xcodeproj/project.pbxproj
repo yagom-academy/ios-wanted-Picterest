@@ -91,9 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				6BCD1FA1288EBB7B00F63E64 /* Network.swift */,
+				6BCD1FAF288EE8FE00F63E64 /* ImageLoader.swift */,
 				6BCD1FB5288FA82900F63E64 /* CacheManager.swift */,
 				6BCD1FCA2890C81F00F63E64 /* CoreDataManager.swift */,
-				6BCD1FAF288EE8FE00F63E64 /* ImageLoader.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";

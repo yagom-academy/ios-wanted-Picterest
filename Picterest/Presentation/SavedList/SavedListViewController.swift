@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SavedListViewController: UIViewController {
+final class SavedListViewController: UIViewController {
     
     // MARK: - UI Components
     private lazy var savedListCollectionView: UICollectionView = {
@@ -41,11 +41,7 @@ class SavedListViewController: UIViewController {
         configUI()
         setupNavigationBar()
         bindRemovePhoto()
-        
-        viewModel.updateSavedList.bind { [weak self] _ in
-            self?.savedList = CoreDataManager.shared.fetch()
-            self?.savedListCollectionView.reloadData()
-        }
+        bindUpdateSavedList()
     }
 }
 
@@ -60,6 +56,7 @@ extension SavedListViewController: UICollectionViewDelegateFlowLayout {
         let height = width * savedList[indexPath.item].ratio
         return CGSize(width: width, height: height)
     }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -67,6 +64,7 @@ extension SavedListViewController: UICollectionViewDelegateFlowLayout {
     ) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0.0, left: 16.0, bottom: 16.0, right: 16.0)
     }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
@@ -84,6 +82,7 @@ extension SavedListViewController: UICollectionViewDataSource {
     ) -> Int {
         return savedList.count
     }
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -124,6 +123,13 @@ private extension SavedListViewController {
             }
         }
     }
+    
+    func bindUpdateSavedList() {
+        viewModel.updateSavedList.bind { [weak self] _ in
+            self?.savedList = CoreDataManager.shared.fetch()
+            self?.savedListCollectionView.reloadData()
+        }
+    }
 }
 
 // MARK: - UI Methods
@@ -131,6 +137,7 @@ private extension SavedListViewController {
     func setupNavigationBar() {
         navigationItem.title = "Saved Images"
     }
+    
     func configUI() {
         view.backgroundColor = .systemBackground
         

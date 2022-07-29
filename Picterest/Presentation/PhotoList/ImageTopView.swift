@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageTopView: UIView {
+final class ImageTopView: UIView {
     // MARK: - UI Components
     private lazy var starButton: UIButton = {
         let button = UIButton()
@@ -36,15 +36,18 @@ class ImageTopView: UIView {
         configUI()
         indexLabel.text = text
     }
+    
     func fillStarButton() {
         starButton.isSelected = true
         starButton.tintColor = .systemYellow
     }
+    
     func initView() {
         starButton.isSelected = false
         starButton.tintColor = .white
         indexLabel.text = nil
     }
+    
     func didLongPress() {
         viewModel?.starButtonTapped.value = starButton
     }
