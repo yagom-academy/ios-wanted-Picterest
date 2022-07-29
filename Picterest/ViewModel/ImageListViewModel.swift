@@ -10,7 +10,7 @@ import UIKit
 class ImageListViewModel {
     
     private var repository = Repository()
-    private var imageList: [SavableImageData] = [SavableImageData]()
+    private var imageList: [SavablePictureData] = [SavablePictureData]()
     private var imageSizeList = [CGFloat]()
     private var currentPage = 1
     
@@ -24,7 +24,7 @@ class ImageListViewModel {
         return imageList.count
     }
     
-    func image(at index: Int) -> SavableImageData {
+    func image(at index: Int) -> SavablePictureData {
         if CoreDataManager.shared.searchPicture(id: imageList[index].imageData.id) == nil {
             imageList[index].isSaved = false
             return imageList[index]
@@ -83,9 +83,9 @@ class ImageListViewModel {
             case .success(let imageList):
                 imageList.forEach {
                     if (CoreDataManager.shared.searchPicture(id: $0.id) != nil) {
-                        self.imageList.append(SavableImageData(imageData: $0, isSaved: true))
+                        self.imageList.append(SavablePictureData(imageData: $0, isSaved: true))
                     } else {
-                        self.imageList.append(SavableImageData(imageData: $0))
+                        self.imageList.append(SavablePictureData(imageData: $0))
                     }
                 }
                 imageList.forEach {

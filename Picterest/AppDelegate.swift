@@ -8,28 +8,23 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
-
+        setTabbarAppearance()
+        setCoreDataSetting()
+        return true
+    }
+    
+    private func setCoreDataSetting() {
+        CoreDataManager.shared.setup(modelName: GlobalConstants.Text.CoreData.modelName)
+    }
+    
+    private func setTabbarAppearance() {
         if #available(iOS 15, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
             UITabBar.appearance().standardAppearance = appearance
             UITabBar.appearance().scrollEdgeAppearance = appearance
         }
-        setCoreDataSetting()
-        return true
-    }
-    
-    private func setCoreDataSetting() {
-        CoreDataManager.shared.setup(modelName: "PictureModel")
     }
 
     // MARK: UISceneSession Lifecycle

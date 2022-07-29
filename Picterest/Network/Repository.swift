@@ -11,13 +11,13 @@ class Repository {
     
     private let httpClient = HttpClient()
     
-    func fetchImageData(_ method: ImageEndPoint, page: Int, completion: @escaping (Result<[ImageData], NetworkError>) -> Void) {
+    func fetchImageData(_ method: ImageEndPoint, page: Int, completion: @escaping (Result<[PictureData], NetworkError>) -> Void) {
         let params: [String:Any] = ["client_id": method.accessKey, "page": page, "per_page": 15]
         httpClient.getImageData(baseUrl: method.baseUrl, path: "", params: params) { result in
             switch result {
             case .success(let data):
                 do {
-                    let decodedData = try JSONDecoder().decode([ImageData].self, from: data)
+                    let decodedData = try JSONDecoder().decode([PictureData].self, from: data)
                     completion(.success(decodedData))
                 } catch {
                     completion(.failure(.decodeError))
