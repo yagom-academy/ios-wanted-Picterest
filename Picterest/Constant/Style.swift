@@ -28,4 +28,8 @@ struct Style {
     struct SavedCell {
         static let width: CGFloat = UIScreen.main.bounds.size.width * 0.94
     }
+    
+    struct CustomLayout {
+        static let numberOfColumns = 2
+    }
 }
