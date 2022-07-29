@@ -9,4 +9,9 @@ import Foundation
 
 class SaveViewModel {
     
+    func deleteSavePhoto(_ savePhotoData: SavePhoto) {
+        guard let location = savePhotoData.location else { return }
+        PhotoFileManager.shared.deletePhotoFile(location)
+        CoreDataManager.shared.deleteSavePhoto(savePhotoData)
+    }
 }

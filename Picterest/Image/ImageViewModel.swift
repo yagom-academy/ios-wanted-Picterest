@@ -11,8 +11,8 @@ class ImageViewModel {
     
     private let photoAPIService = PhotoAPIService()
     
-    func getRandomPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
-        photoAPIService.getRandomPhoto(page, completion)
+    func getPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
+        photoAPIService.getPhoto(page, completion)
     }
     
     func loadImage(_ url: String) -> UIImage {
@@ -28,5 +28,20 @@ class ImageViewModel {
         }
         
         return img ?? UIImage()
+    }
+    
+    func savePhoto(_ photoData: Photo, _ memo: String) {
+        let id = photoData.id
+        let originUrl = photoData.urls.small
+        let location = PhotoFileManager.shared.createPhotoFile(loadImage(originUrl), id).absoluteString
+        let ratio = photoData.height / photoData.width
+        
+        CoreDataManager.shared.createSavePhoto(id, memo, originUrl, location, ratio)
+    }
+    
+    func deletePhoto(_ photoData: Photo) {
+        PhotoFileManager.shared.deletePhotoFile(photoData.urls.small)
+        guard let entity = CoreDataManager.shared.searchSavePhoto(photoData.id) else { return }
+        CoreDataManager.shared.deleteSavePhoto(entity)
     }
 }

@@ -73,7 +73,7 @@ extension ImageViewController {
     }
     
     private func fetchPhoto() {
-        viewModel.getRandomPhoto(startPage) { [weak self] result in
+        viewModel.getPhoto(startPage) { [weak self] result in
             guard let self = self  else { return }
             switch result {
             case .success(let photos):
@@ -132,28 +132,19 @@ extension ImageViewController: UICollectionViewDataSourcePrefetching {
 extension ImageViewController: SavePhotoImageDelegate {
     
     func tapStarButton(sender: UIButton, indexPath: IndexPath) {
-        
-        let id = photoList[indexPath.row].id
-        var text: String!
-        let originUrl = photoList[indexPath.row].urls.small
-        let ratio = photoList[indexPath.row].height / photoList[indexPath.row].width
+        var memo: String!
         
         if sender.isSelected {
-            // 저장
             let alert = UIAlertController(title: "사진 저장", message: "저장할 메시지", preferredStyle: .alert)
             let ok = UIAlertAction(title: "저장", style: .default) { ok in
-                let location = PhotoFileManager.shared.createPhotoFile(self.viewModel.loadImage(originUrl), id).absoluteString
-                text = alert.textFields?[0].text
-                CoreDataManager.shared.createSavePhoto(id, text, originUrl, location, ratio)
+                memo = alert.textFields?[0].text
+                self.viewModel.savePhoto(self.photoList[indexPath.row], memo)
             }
             alert.addTextField()
             alert.addAction(ok)
             self.present(alert, animated: true)
         } else {
-            // 지우기
-            PhotoFileManager.shared.deletePhotoFile(photoList[indexPath.row].urls.small)
-            guard let entity = CoreDataManager.shared.searchSavePhoto(photoList[indexPath.row].id) else { return }
-            CoreDataManager.shared.deleteSavePhoto(entity)
+            viewModel.deletePhoto(photoList[indexPath.row])
         }
     }
 }

@@ -17,7 +17,7 @@ enum APIError: Error {
 
 class PhotoAPIService {
     
-    func getRandomPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
+    func getPhoto(_ page: Int, _ completion: @escaping (Result<[Photo], APIError>) -> Void) {
         let request = URLRequest(url: EndPoint.getPhoto(page).url)
         URLSession.request(endpoint: request, completion: completion)
     }
