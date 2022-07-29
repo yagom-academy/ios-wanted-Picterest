@@ -133,12 +133,26 @@ extension SavedViewController: UICollectionViewDelegate {
             previewController
         } actionProvider: { _ in
             let deleteAction = UIAction(title: "삭제하기", identifier: nil, discoverabilityTitle: nil) { action in
-                print(action)
+                self.presentAlertView(indexPath.row)
             }
             return UIMenu(title: "메뉴", options: .displayInline, children: [deleteAction])
         }
         
         return configuration
+    }
+    
+    private func presentAlertView(_ index: Int) {
+        let alert = AlertViewController(
+            titleText: "삭제 안내",
+            messageText: "정말 삭제하시겠습니다?\n삭제 후에는 복원할 수 없습니다.",
+            alertType: .confirmAndCancel
+        ) { _ in
+            //TODO: - 삭제 메서드 만들고 core Data 삭제 후, FileManager 삭제하기
+            print("삭제 완료",index)
+        }
+        
+        alert.modalPresentationStyle = .overFullScreen
+        self.present(alert, animated: true)
     }
 }
 
