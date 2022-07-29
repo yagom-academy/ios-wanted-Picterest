@@ -14,9 +14,8 @@ final class SavedImageListViewModel {
         return cellDatas.count
     }
     
-    //TODO: indexpath ->row
-    func cellData(_ indexPath: IndexPath) -> CoreDataInfo? {
-        return cellDatas[safe: indexPath.row]
+    func cellData(_ row: Int) -> CoreDataInfo? {
+        return cellDatas[safe: row]
     }
 
     func updateData(completion: @escaping () -> ()) {
@@ -26,8 +25,8 @@ final class SavedImageListViewModel {
         }
     }
     
-    func cellSize(_ indexPath: IndexPath) -> CGSize {
-        let aspectRatio = cellDatas[indexPath.row].aspectRatio
+    func cellSize(_ row: Int) -> CGSize {
+        let aspectRatio = cellDatas[row].aspectRatio
         let padding = 10.0
         let width = UIScreen.main.bounds.width - 2*padding
         let height = width*aspectRatio

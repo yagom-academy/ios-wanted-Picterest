@@ -36,7 +36,7 @@ final class ImageListViewController: UIViewController {
 //MARK: - CustomCollectionViewLayoutDelegate
 extension ImageListViewController: CustomCollectionViewLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightMultiplierForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return viewModel.cellHeightMultiplier(indexPath)
+        return viewModel.cellHeightMultiplier(indexPath.row)
     }
     
     func collectionView(heightFooterAtIndexPath indexPath: IndexPath) -> CGFloat {
@@ -52,7 +52,7 @@ extension ImageListViewController: CustomCollectionViewLayoutDelegate {
 extension ImageListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageListCell.reuseIdentifier, for: indexPath) as? ImageListCell else { return UICollectionViewCell() }
-        cell.configure(indexPath: indexPath, data: viewModel.cellData(indexPath))
+        cell.configure(row: indexPath.row, data: viewModel.cellData(indexPath.row))
         cell.delegate = self
         return cell
     }
@@ -97,8 +97,8 @@ extension ImageListViewController {
 
 //MARK: - Cell Delegate 이벤트
 extension ImageListViewController: ImageListCellDelegate {
-    func tappedSaveButton(_ indexPath: IndexPath) {
-        let alert = SaveImageAlertViewController(row: indexPath.row)
+    func tappedSaveButton(_ row: Int) {
+        let alert = SaveImageAlertViewController(row: row)
         alert.delegate = self
         alert.modalPresentationStyle = .overFullScreen
         present(alert, animated: false)

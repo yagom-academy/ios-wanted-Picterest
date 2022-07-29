@@ -14,7 +14,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
     
-    private var indexPath:IndexPath?
+    private var row: Int?
     
     weak var delegate: ImageListCellDelegate?
     
@@ -36,12 +36,12 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
         imageView.image = nil
     }
     
-    func configure(indexPath: IndexPath, data: ImageListViewModel.CellData?) {
+    func configure(row: Int, data: ImageListViewModel.CellData?) {
         guard let data = data else {
             return
         }
-        self.indexPath = indexPath
-        titleLabel.text = "\(indexPath.row + 1)번째 사진"
+        self.row = row
+        titleLabel.text = "\(row + 1)번째 사진"
         imageView.load(urlString: data.thumbnailURL)
         starButton.setTitleColor(data.isSaved ? .yellow : .white, for: .normal)
         starButton.setTitle(data.isSaved ? "★": "☆", for: .normal)
@@ -66,11 +66,10 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     @objc private func tappedStarButton() {
-        guard let indexPath = indexPath else {
+        guard let row = row else {
             return
         }
-        //TODO: indexpath -> row
-        delegate?.tappedSaveButton(indexPath)
+        delegate?.tappedSaveButton(row)
     }
     
     private func layout() {

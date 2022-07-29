@@ -18,15 +18,14 @@ final class MainTabBarController: UITabBarController {
         self.tabBar.tintColor = .white
     }
     
-    //TODO: vc1,vc2 이름바꾸기
     private func setVC() {
-        let vc1 = ImageListViewController()
-        vc1.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
+        let imageListViewController = ImageListViewController()
+        imageListViewController.tabBarItem.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
 
-        let vc2 = SavedImageListViewController()
-        vc2.tabBarItem.image = UIImage(systemName: "star.bubble")
+        let savedImageListViewController = SavedImageListViewController()
+        savedImageListViewController.tabBarItem.image = UIImage(systemName: "star.bubble")
 
-        self.viewControllers = [vc1, vc2]
+        self.viewControllers = [imageListViewController, savedImageListViewController]
     }
 
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ImageListCellDelegate: AnyObject {
-    func tappedSaveButton(_ indexPath: IndexPath)
+    func tappedSaveButton(_ row: Int)
 }

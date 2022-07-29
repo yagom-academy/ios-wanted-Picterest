@@ -71,7 +71,7 @@ extension SavedImageListViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedImageListCell.reuseIdentifier, for: indexPath) as? SavedImageListCell else { return UICollectionViewCell() }
-        cell.configure(data: viewModel.cellData(indexPath))
+        cell.configure(data: viewModel.cellData(indexPath.row))
         cell.delegate = self
         return cell
     }
@@ -80,7 +80,7 @@ extension SavedImageListViewController: UICollectionViewDataSource {
 //MARK: - CollectionView FlowLayout Delegate 메서드
 extension SavedImageListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return viewModel.cellSize(indexPath)
+        return viewModel.cellSize(indexPath.row)
     }
 }
 

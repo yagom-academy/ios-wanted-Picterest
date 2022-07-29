@@ -29,8 +29,8 @@ final class ImageListViewModel {
         self.networkManager = networkManager
     }
     
-    func cellData(_ indexPath: IndexPath) -> CellData? {
-        return cellDatas[safe: indexPath.row]
+    func cellData(_ row: Int) -> CellData? {
+        return cellDatas[safe: row]
     }
     
     func updateCellState(completion: @escaping ()->()) {
@@ -44,8 +44,8 @@ final class ImageListViewModel {
         }
     }
     
-    func cellHeightMultiplier(_ indexPath: IndexPath) -> CGFloat {
-        guard let data = networkDatas[safe: indexPath.row] else { return 0.0 }
+    func cellHeightMultiplier(_ row: Int) -> CGFloat {
+        guard let data = networkDatas[safe: row] else { return 0.0 }
         let multiplier = CGFloat(data.height) / CGFloat(data.width)
         return multiplier
     }
