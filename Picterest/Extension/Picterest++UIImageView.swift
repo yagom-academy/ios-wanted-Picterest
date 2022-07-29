@@ -18,6 +18,7 @@ extension UIImageView {
         }
             
         NetworkManager.shared.fetchImage(url: url) { image in
+            ImageCacheManager.shared.setObject(image, forKey: url as NSString)
             DispatchQueue.main.async {
                 self.image = image
             }
