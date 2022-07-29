@@ -10,6 +10,7 @@ import CoreData
 
 class SavedViewController: UIViewController {
     let coreDataService = CoreDataService.shared
+    let downloadManager = DownLoadManager()
     private var imageDatas: [savedModel] = []
     private let imageDownLoader = DownLoadManager()
     
@@ -148,7 +149,23 @@ extension SavedViewController: UICollectionViewDelegate {
             alertType: .confirmAndCancel
         ) { _ in
             //TODO: - 삭제 메서드 만들고 core Data 삭제 후, FileManager 삭제하기
-            print("삭제 완료",index)
+            let data = self.imageDatas[index]
+            let result = self.coreDataService.fetch()
+            self.coreDataService.delete(object: result[index])
+//            let item = self.imageDatas[index]
+//            coreDataService.context.delete()
+            if self.coreDataService.delete(object: result[index]) {
+                if self.downloadManager.removeData(data.file ?? "") {
+                    self.imageDatas.removeAll()
+                    if let layout = self.collectionView.collectionViewLayout as? SavedCollectionViewLayout {
+                        layout.resetLayout()
+                    }
+                    self.fetchData()
+                    self.collectionView.reloadData()
+                    print("삭제 완료",index)
+                }
+            }
+
         }
         
         alert.modalPresentationStyle = .overFullScreen

@@ -178,64 +178,55 @@ private extension FeedViewController {
 private extension FeedViewController {
     
     func presentErrorAlert() {
-        let alertController = UIAlertController(
-            title: "저장오류",
-            message: "이미 저장된 사진입니다.",
-            preferredStyle: .alert
-        )
-        
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        alertController.addAction(confirmAction)
-        present(alertController, animated: true)
+        let alertController = AlertViewController(
+            titleText: "저장오류",
+            messageText: "이미 저장된 사진입니다."
+        ) { _ in }
+        present(alertController, animated: false)
     }
     
     func presentWriteAlert(sender: UIButton) {
-        let alertController = UIAlertController(
-            title: "사진저장",
-            message: "사진과 함께 남길 메모를 작성해주세요.",
-            preferredStyle: .alert
-        )
         
-        let confirmAction = UIAlertAction(title: "저장", style: .default) { action in
-            if let writtenText = alertController.textFields?.first?.text {
-                sender.isSelected = true
-                sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
-                
-                let data = self.viewModel.imageDatas[sender.tag]
-                let width = self.collectionView.frame.size.width
-                let imageLoader = ImageLoader(baseURL: data.urls.regular, query: ["w":width.description])
-                
-                imageLoader.requestNetwork { result in
-                    switch result {
-                    case .success(let image):
-                        if let image = image as? UIImage, let imageData = image.pngData() {
-                            let imageKey = data.id.description + ".png"
-                            if DownLoadManager().uploadData(imageKey, data: imageData) {
-                                let _ = self.coreDataService.save(pictureId: data.id, memo: writtenText, rawURL: data.urls.raw, fileLocation: imageKey)
-                            }
-                        }
-                    case .failure(_):
-                        print("Error in download image")
+        let alertController = AlertViewController(
+            titleText: "저장 안내",
+            messageText: "사진과 함께 남길 메모를 작성해주세요.",
+            alertType: .confirmTextField
+        ) { [weak self] inputValue in
+            self?.confirmAction(sender: sender, inputValue: inputValue ?? "")
+        }
+        self.present(alertController, animated: false)
+    }
+    
+    func confirmAction(sender: UIButton, inputValue: String) {
+        sender.isSelected = true
+        sender.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        
+        let data = self.viewModel.imageDatas[sender.tag]
+        let width = self.collectionView.frame.size.width
+        let imageLoader = ImageLoader(baseURL: data.urls.regular, query: ["w":width.description])
+        
+        imageLoader.requestNetwork { result in
+            switch result {
+            case .success(let image):
+                if let image = image as? UIImage, let imageData = image.pngData() {
+                    let imageKey = data.id.description + ".png"
+                    if DownLoadManager().uploadData(imageKey, data: imageData) {
+                        let _ = self.coreDataService.save(
+                            pictureId: data.id,
+                            memo: inputValue,
+                            rawURL: data.urls.raw,
+                            fileLocation: imageKey
+                        )
                     }
                 }
-                
-                imageLoader.task?.resume()
-                
-                
+            case .failure(_):
+                print("Error in download image")
             }
         }
-        let cancelAction = UIAlertAction(title: "취소", style: .destructive) { action in
-            sender.isSelected = false
-            sender.setImage(UIImage(systemName: "star"), for: .normal)
-        }
-        [cancelAction,confirmAction].forEach {
-            alertController.addAction($0)
-        }
         
-        alertController.addTextField()
-        
-        self.present(alertController, animated: true)
+        imageLoader.task?.resume()
     }
+    
     func setUpNavBar() {
         navigationItem.title = "피드"
         navigationController?.navigationBar.prefersLargeTitles = true
