@@ -136,9 +136,9 @@
 		1867C3E4288E52E5002C42F9 /* SavedView */ = {
 			isa = PBXGroup;
 			children = (
-				18F956D72893BD2400F504A0 /* SubViews */,
 				1867C3E5288E52F7002C42F9 /* SavedViewController.swift */,
 				1888F42D2892BA7C0032D945 /* SavedCollectionViewLayout.swift */,
+				18F956D72893BD2400F504A0 /* SubViews */,
 			);
 			path = SavedView;
 			sourceTree = "<group>";

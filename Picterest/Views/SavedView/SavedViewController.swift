@@ -160,7 +160,8 @@ extension SavedViewController {
     func bindSavedImage() {
         savedViewModel.$savedImages
             .sink { [weak self] _ in
-                if let layout = self?.collectionView.collectionViewLayout as? SavedCollectionViewLayout {
+                let collectionLayout = self?.collectionView.collectionViewLayout
+                if let layout = collectionLayout as? SavedCollectionViewLayout {
                     layout.resetLayout()
                 }
                 self?.collectionView.reloadData()

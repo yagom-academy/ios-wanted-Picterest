@@ -48,7 +48,7 @@ class FeedViewController: UIViewController {
 extension FeedViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > collectionView.contentSize.height - 100 - scrollView.frame.size.height {
+        if position > collectionView.contentSize.height - 20 - scrollView.frame.size.height {
             guard !viewModel.isLoading else {
                 return
             }
@@ -101,13 +101,15 @@ extension FeedViewController: UICollectionViewDataSource {
         cell.setUpTask()
         cell.topButtonView.delegate = self
         cell.topButtonView.starButton.tag = indexPath.row
-        cell.blurColor = UIColor(hexString: imageData.color)
         
         let fetchIDs = viewModel.coreSavedImage.compactMap { $0.id }
         
         if fetchIDs.contains(imageData.id) {
             cell.topButtonView.starButton.isSelected = true
-            cell.topButtonView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            cell.topButtonView.starButton.setImage(UIImage.starFillImage, for: .normal)
+        } else {
+            cell.topButtonView.starButton.isSelected = false
+            cell.topButtonView.starButton.setImage(UIImage.starImage, for: .normal)
         }
         
         cell.topButtonView.indexLabel.text = indexPath.row.description + "번째 사진입니다."

@@ -21,7 +21,7 @@ protocol FeedViewModelObservable: AnyObject {
 class FeedViewModel: FeedViewModelObservable {
     private var coreDataService = CoreDataService.shared
     var coreSavedImage = [savedModel]()
-    var downLoadManager = DownLoadManager()
+    var downLoadManager = DownLoadManager.shared
     var isLoading: Bool = false
     var pageNumber: Int = 1
     @Published var imageDatas: Photo = []
@@ -62,11 +62,12 @@ class FeedViewModel: FeedViewModelObservable {
                    let imageData = image.pngData() {
                     let key = data.id.description + ".png"
                     
-                    if self.saveDownLoad(key: key, data: imageData) {
-                        self.coreDataService.save(
-                            pictureId: data.id,
-                            memo: inputValue, rawURL: data.urls.raw, fileLocation: key)
-                    }
+                    self.downLoadManager.uploadData(key: key, data: imageData)
+                    self.coreDataService.save(
+                        pictureId: data.id,
+                        memo: inputValue, rawURL: data.urls.raw, fileLocation: key)
+                    
+                    
                 }
             case .failure(_):
                 print("Error in download image")
@@ -74,10 +75,6 @@ class FeedViewModel: FeedViewModelObservable {
         }
         
         imageLoader.task?.resume()
-    }
-    
-    private func saveDownLoad(key: String, data: Data) -> Bool {
-        return downLoadManager.uploadData(key, data: data)
     }
 }
 

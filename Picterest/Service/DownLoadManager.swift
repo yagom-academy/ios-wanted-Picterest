@@ -7,7 +7,8 @@
 
 import Foundation
 
-class DownLoadManager {
+class DownLoadManager: cacheAble {
+    static let shared = DownLoadManager()
     var folderURL: URL? {
         return FileManager.default.urls(
             for: .documentDirectory,
@@ -20,20 +21,18 @@ class DownLoadManager {
         createFolder()
     }
     
-    func fetchData(key: String) -> Data? {
+    func fetchData(_ key: String) -> Data? {
         guard let writeURL = folderURL?.appendingPathComponent(key) else {
             return nil
         }
         return FileManager.default.contents(atPath: writeURL.path)
     }
     
-    func uploadData(_ key: String, data: Data) -> Bool {
+    func uploadData(key: String, data: Data) {
         guard let writeURL = folderURL?.appendingPathComponent(key) else {
-            return false
+            return
         }
         try? data.write(to: writeURL)
-        
-        return true
     }
     
     func removeData(_ key: String) -> Bool {

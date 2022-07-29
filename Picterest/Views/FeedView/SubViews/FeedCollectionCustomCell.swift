@@ -7,21 +7,16 @@
 
 import UIKit
 
-protocol ImageDrawAble: AnyObject {
+// MARK: - Image Drawable
+protocol ImageDrawable: AnyObject {
     var imageLoader: ImageLoader? { get }
-    var blurColor: UIColor? { get }
     func setUpTask()
 }
 
-class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawAble {
-    var blurColor: UIColor?
+class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawable {
     var imageLoader: ImageLoader?
     private let cache = CacheService.shared
     static let identifier = "FeedCollectionCustomCell"
-    private var dataTask: URLSessionDataTask?
-    let blurEffect = UIBlurEffect(style: .regular)
-    
-    lazy var visualEffectView = UIVisualEffectView(effect: blurEffect)
     
     var topButtonView: CellTopButtonView = {
         let CellTopButtonView = CellTopButtonView()
@@ -37,7 +32,6 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawAble {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        visualEffectView.alpha = 1.0
     }
     
     required init?(coder: NSCoder) {
@@ -51,42 +45,9 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawAble {
         cancelLoad()
         super.prepareForReuse()
     }
-    
-    func configureUI() {
-        self.autoresizesSubviews = false
-        
-        [
-            imageView,
-            topButtonView
-        ].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.layer.cornerRadius = 15
-            $0.clipsToBounds = true
-            
-            self.addSubview($0)
-        }
-        
-        NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            
-            topButtonView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            topButtonView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            topButtonView.topAnchor.constraint(equalTo: self.topAnchor),
-            topButtonView.heightAnchor.constraint(equalToConstant: 35),
-        ])
-        
-        imageView.frame = self.bounds
-        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        topButtonView.backgroundColor = .black.withAlphaComponent(0.2)
-        topButtonView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
-        imageView.backgroundColor = blurColor
-    }
-    
 }
 
+// MARK: - Task Methods
 extension FeedCollectionCustomCell {
     func setUpTask() {
         guard let imagePath = imageLoader?.baseURL else {
@@ -124,5 +85,41 @@ extension FeedCollectionCustomCell {
         imageLoader?.task?.cancel()
         imageLoader?.task = nil
         imageView.image = nil
+    }
+}
+
+
+// MARK: - UI Methods
+private extension FeedCollectionCustomCell {
+    func configureUI() {
+        self.autoresizesSubviews = false
+        
+        [
+            imageView,
+            topButtonView
+        ].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.layer.cornerRadius = 15
+            $0.clipsToBounds = true
+            
+            self.addSubview($0)
+        }
+        
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: self.topAnchor),
+            
+            topButtonView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            topButtonView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            topButtonView.topAnchor.constraint(equalTo: self.topAnchor),
+            topButtonView.heightAnchor.constraint(equalToConstant: 35),
+        ])
+        
+        imageView.frame = self.bounds
+        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        topButtonView.backgroundColor = .black.withAlphaComponent(0.2)
+        topButtonView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
     }
 }

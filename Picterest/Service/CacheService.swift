@@ -7,10 +7,15 @@
 
 import Foundation
 
-class CacheService {
+protocol cacheAble {
+    func fetchData(_ key: String) -> Data?
+    func uploadData(key: String, data: Data)
+}
+
+class CacheService: cacheAble {
     static let shared = CacheService()
     
-    let cache = NSCache<NSString,NSData>()
+    private let cache = NSCache<NSString,NSData>()
     
     func fetchData(_ key: String) -> Data? {
         guard let data = cache.object(forKey: key as NSString) else {

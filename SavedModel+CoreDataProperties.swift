@@ -12,13 +12,14 @@ import UIKit
 
 
 struct savedModel {
+    static let downloadManager = DownLoadManager.shared
     var id: String?
     var memo: String?
     var file: String?
     var raw: String?
     
     var image: UIImage? {
-        guard let imageData = DownLoadManager().fetchData(key: file ?? "") else {
+        guard let imageData = DownLoadManager().fetchData(file ?? "") else {
             return nil
         }
         return UIImage(data: imageData)

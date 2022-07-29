@@ -7,7 +7,11 @@
 
 import Foundation
 
-class KeyChainService {
+protocol KeyChainManagable {
+    var key: String { get set }
+}
+
+class KeyChainService: KeyChainManagable {
     static var shared = KeyChainService()
     
     private let account = "ApiKey"

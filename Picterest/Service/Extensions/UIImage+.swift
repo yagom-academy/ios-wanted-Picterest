@@ -20,3 +20,8 @@ extension UIImage {
         return renderImage
     }
 }
+
+extension UIImage {
+    static let starImage = UIImage(systemName: "star")
+    static let starFillImage = UIImage(systemName: "star.fill")
+}
