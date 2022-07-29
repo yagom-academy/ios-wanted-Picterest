@@ -29,14 +29,14 @@ class PhotoListView: UIView {
     
     // MARK: Setup
     
-    func setupView() {
+    private func setupView() {
         self.addSubview(photoCollectionView)
         photoCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // MARK: AutoLayout
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             photoCollectionView.topAnchor.constraint(equalTo: self.topAnchor),
             photoCollectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
