@@ -56,11 +56,12 @@ extension ImagesViewController: UICollectionViewDataSource {
         }
     
         cell.delegate = self
-        cell.view.textLabel.text = "\(index)번째 사진"
+        cell.view.textLabel.text = "\(index + 1)번째 사진"
         cell.view.imageView.loadImage(urlString: imageData.urls.small, imageID: imageData.id)
         if ImageFileManager.shared.fileExists(imageData.id as NSString) {
             cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             cell.view.saveButton.tintColor = .yellow
+            cell.view.isSaved = true
         }
         return cell
     }

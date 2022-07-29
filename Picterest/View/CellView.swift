@@ -9,6 +9,8 @@ import UIKit
 
 final class CellView: UIView {
     
+    var isSaved: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()

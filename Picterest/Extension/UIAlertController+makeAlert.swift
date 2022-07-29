@@ -48,6 +48,7 @@ extension UIAlertController {
             coreDataManager.save(id: id, originalURL: originalURL, memo: memo, savedLocation: savedLocation, imageHeight: imageHeight, imageWidth: imageWidth)
             cell.view.saveButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
             cell.view.saveButton.tintColor = .yellow
+            cell.view.isSaved = true
         }
         
         return actionHandler

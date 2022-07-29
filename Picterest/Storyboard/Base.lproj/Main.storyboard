@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="VbM-GI-Fij">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -15,20 +15,31 @@
             <objects>
                 <viewController id="Vv4-bH-G1C" customClass="SavedViewController" customModule="Picterest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GMr-9i-GHb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-wv-Xwb">
-                                <rect key="frame" x="49" y="54" width="365" height="27"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="28k-DN-0GD">
-                                <rect key="frame" x="10" y="40.5" width="29" height="54"/>
-                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ejl-Jo-6O8">
+                                <rect key="frame" x="15.666666666666657" y="44.000000000000007" width="358.66666666666674" height="71.666666666666686"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="square.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="28k-DN-0GD">
+                                        <rect key="frame" x="0.0" y="0.0" width="32.333333333333336" height="71.333333333333343"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Saved Images" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-wv-Xwb">
+                                        <rect key="frame" x="42.333333333333343" y="0.0" width="316.33333333333326" height="71.666666666666671"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ssg-wv-Xwb" firstAttribute="centerY" secondItem="Ejl-Jo-6O8" secondAttribute="centerY" id="Ptt-sh-YVo"/>
+                                    <constraint firstItem="28k-DN-0GD" firstAttribute="centerY" secondItem="Ejl-Jo-6O8" secondAttribute="centerY" id="Y1C-VX-e9A"/>
+                                    <constraint firstItem="28k-DN-0GD" firstAttribute="leading" secondItem="Ejl-Jo-6O8" secondAttribute="leading" id="kwJ-XY-Zau"/>
+                                    <constraint firstItem="28k-DN-0GD" firstAttribute="width" secondItem="Ejl-Jo-6O8" secondAttribute="height" multiplier="0.45" id="rYh-qo-ug8"/>
+                                </constraints>
+                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Eqt-hq-od6">
-                                <rect key="frame" x="5" y="89" width="404" height="724"/>
+                                <rect key="frame" x="11.666666666666657" y="115.66666666666669" width="366.66666666666674" height="645.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QZA-pg-8Aj">
                                     <size key="itemSize" width="128" height="128"/>
@@ -51,21 +62,17 @@
                         <viewLayoutGuide key="safeArea" id="cMa-64-mjT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Eqt-hq-od6" firstAttribute="leading" secondItem="cMa-64-mjT" secondAttribute="leading" constant="5" id="86w-s0-GbH"/>
-                            <constraint firstItem="ssg-wv-Xwb" firstAttribute="leading" secondItem="28k-DN-0GD" secondAttribute="trailing" constant="10" id="At6-CM-fcy"/>
-                            <constraint firstItem="28k-DN-0GD" firstAttribute="centerY" secondItem="ssg-wv-Xwb" secondAttribute="centerY" id="FWz-mG-t6a"/>
-                            <constraint firstItem="ssg-wv-Xwb" firstAttribute="top" secondItem="cMa-64-mjT" secondAttribute="top" constant="10" id="Jfg-t7-nZb"/>
-                            <constraint firstItem="ssg-wv-Xwb" firstAttribute="height" secondItem="GMr-9i-GHb" secondAttribute="height" multiplier="0.03" id="Jsl-bZ-u6E"/>
-                            <constraint firstItem="28k-DN-0GD" firstAttribute="width" secondItem="GMr-9i-GHb" secondAttribute="width" multiplier="0.07" id="L7c-f3-C8o"/>
-                            <constraint firstItem="28k-DN-0GD" firstAttribute="height" secondItem="ssg-wv-Xwb" secondAttribute="height" multiplier="2" id="R9x-k6-DeB"/>
-                            <constraint firstItem="Eqt-hq-od6" firstAttribute="top" secondItem="28k-DN-0GD" secondAttribute="bottom" constant="-5.5" id="Rcy-T0-iwa"/>
-                            <constraint firstItem="cMa-64-mjT" firstAttribute="trailing" secondItem="ssg-wv-Xwb" secondAttribute="trailing" id="YLO-bA-Bja"/>
-                            <constraint firstItem="cMa-64-mjT" firstAttribute="trailing" secondItem="Eqt-hq-od6" secondAttribute="trailing" constant="5" id="kk4-p4-kRt"/>
-                            <constraint firstItem="28k-DN-0GD" firstAttribute="leading" secondItem="cMa-64-mjT" secondAttribute="leading" constant="10" id="phm-i3-KnE"/>
+                            <constraint firstItem="Eqt-hq-od6" firstAttribute="width" secondItem="GMr-9i-GHb" secondAttribute="width" multiplier="0.94" id="3Ol-up-yjG"/>
+                            <constraint firstItem="Eqt-hq-od6" firstAttribute="top" secondItem="Ejl-Jo-6O8" secondAttribute="bottom" id="7zX-d9-DVb"/>
+                            <constraint firstItem="Ejl-Jo-6O8" firstAttribute="height" secondItem="cMa-64-mjT" secondAttribute="height" multiplier="0.1" id="GI6-oS-KUd"/>
+                            <constraint firstItem="Ejl-Jo-6O8" firstAttribute="centerX" secondItem="cMa-64-mjT" secondAttribute="centerX" id="Hyq-AW-nKh"/>
+                            <constraint firstItem="Eqt-hq-od6" firstAttribute="centerX" secondItem="cMa-64-mjT" secondAttribute="centerX" id="Ogy-mB-LSc"/>
+                            <constraint firstItem="Ejl-Jo-6O8" firstAttribute="width" secondItem="GMr-9i-GHb" secondAttribute="width" multiplier="0.92" id="Qdj-l2-04a"/>
+                            <constraint firstItem="cMa-64-mjT" firstAttribute="top" secondItem="Ejl-Jo-6O8" secondAttribute="top" id="miP-MX-MQI"/>
                             <constraint firstItem="cMa-64-mjT" firstAttribute="bottom" secondItem="Eqt-hq-od6" secondAttribute="bottom" id="ucY-de-NQ4"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Saved" image="star.bubble" id="0le-zF-tub"/>
+                    <tabBarItem key="tabBarItem" title="Saved" image="square.and.arrow.down" catalog="system" id="0le-zF-tub"/>
                     <connections>
                         <outlet property="collectionView" destination="Eqt-hq-od6" id="ocb-Nr-aJ9"/>
                     </connections>
@@ -79,16 +86,36 @@
             <objects>
                 <viewController id="cIW-wd-HK4" customClass="ImagesViewController" customModule="Picterest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oA1-qD-gEy">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cJg-Im-PSF">
+                                <rect key="frame" x="15.666666666666657" y="44.000000000000007" width="358.66666666666674" height="71.666666666666686"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="photo.fill.on.rectangle.fill" translatesAutoresizingMaskIntoConstraints="NO" id="ooS-ah-kfu">
+                                        <rect key="frame" x="0.0" y="0.0" width="32.333333333333336" height="71.666666666666671"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeM-lU-F53">
+                                        <rect key="frame" x="42.333333333333343" y="0.0" width="316.33333333333326" height="71.666666666666671"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ooS-ah-kfu" firstAttribute="leading" secondItem="cJg-Im-PSF" secondAttribute="leading" id="Vcz-lq-KrG"/>
+                                    <constraint firstItem="QeM-lU-F53" firstAttribute="centerY" secondItem="cJg-Im-PSF" secondAttribute="centerY" id="a9U-Ev-ARO"/>
+                                    <constraint firstItem="ooS-ah-kfu" firstAttribute="width" secondItem="cJg-Im-PSF" secondAttribute="height" multiplier="0.45" id="fMh-gL-aZ7"/>
+                                    <constraint firstItem="ooS-ah-kfu" firstAttribute="centerY" secondItem="cJg-Im-PSF" secondAttribute="centerY" id="m4Z-Lx-Jfi"/>
+                                </constraints>
+                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9sN-An-OeU">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                                <rect key="frame" x="7.6666666666666572" y="115.66666666666669" width="374.66666666666674" height="645.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewLayout key="collectionViewLayout" id="Q9u-DH-xms" customClass="CustomLayout" customModule="Picterest" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PicterestCell" id="apk-7b-uUe" customClass="ImagesCollectionViewCell" customModule="Picterest" customModuleProvider="target">
-                                        <rect key="frame" x="87.5" y="0.0" width="239" height="371"/>
+                                        <rect key="frame" x="68" y="0.0" width="239" height="371"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XOi-hl-Umv">
                                             <rect key="frame" x="0.0" y="0.0" width="239" height="371"/>
@@ -102,10 +129,14 @@
                         <viewLayoutGuide key="safeArea" id="sxj-Fu-d5z"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="cJg-Im-PSF" firstAttribute="width" secondItem="oA1-qD-gEy" secondAttribute="width" multiplier="0.92" id="PjQ-ZP-XoO"/>
                             <constraint firstItem="sxj-Fu-d5z" firstAttribute="bottom" secondItem="9sN-An-OeU" secondAttribute="bottom" id="Uh7-QF-wS8"/>
-                            <constraint firstItem="9sN-An-OeU" firstAttribute="leading" secondItem="sxj-Fu-d5z" secondAttribute="leading" id="YM5-LT-i9A"/>
-                            <constraint firstItem="sxj-Fu-d5z" firstAttribute="trailing" secondItem="9sN-An-OeU" secondAttribute="trailing" id="t77-e6-7Hk"/>
-                            <constraint firstItem="9sN-An-OeU" firstAttribute="top" secondItem="sxj-Fu-d5z" secondAttribute="top" id="ysk-b1-Fdz"/>
+                            <constraint firstItem="9sN-An-OeU" firstAttribute="centerX" secondItem="sxj-Fu-d5z" secondAttribute="centerX" id="WLq-uG-4qu"/>
+                            <constraint firstItem="9sN-An-OeU" firstAttribute="width" secondItem="oA1-qD-gEy" secondAttribute="width" multiplier="0.96" id="eAh-kv-e7A"/>
+                            <constraint firstItem="cJg-Im-PSF" firstAttribute="height" secondItem="sxj-Fu-d5z" secondAttribute="height" multiplier="0.1" id="gCW-Of-8Fe"/>
+                            <constraint firstItem="cJg-Im-PSF" firstAttribute="top" secondItem="sxj-Fu-d5z" secondAttribute="top" id="l04-ap-4Q4"/>
+                            <constraint firstItem="cJg-Im-PSF" firstAttribute="centerX" secondItem="sxj-Fu-d5z" secondAttribute="centerX" id="pOG-eG-sPY"/>
+                            <constraint firstItem="9sN-An-OeU" firstAttribute="top" secondItem="cJg-Im-PSF" secondAttribute="bottom" id="qJQ-WP-WoU"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Images" image="photo.fill.on.rectangle.fill" id="zHy-oM-IoG"/>
@@ -139,7 +170,6 @@
     <resources>
         <image name="photo.fill.on.rectangle.fill" width="13" height="11"/>
         <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
-        <image name="star.bubble" width="11" height="11"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

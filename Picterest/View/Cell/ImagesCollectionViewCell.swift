@@ -41,6 +41,7 @@ final class ImagesCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func tappedSaveImageButton() {
+        if self.view.isSaved { return }
         delegate?.alert(from: self)
     }
     

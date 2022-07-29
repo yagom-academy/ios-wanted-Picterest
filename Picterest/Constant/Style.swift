@@ -26,6 +26,6 @@ struct Style {
     }
     
     struct SavedCell {
-        static let width: CGFloat = UIScreen.main.bounds.size.width * 0.95
+        static let width: CGFloat = UIScreen.main.bounds.size.width * 0.94
     }
 }
