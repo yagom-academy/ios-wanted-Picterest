@@ -13,9 +13,9 @@ class PhotoListViewModel : ObservableObject {
     
     @Published var photoList : [Photo]?
         
-    var pageNumber = 1
-    var perPage = 15
-    let photoManager = PhotoManager()
+    private var pageNumber = 1
+    private var perPage = 15
+    private let photoManager = PhotoManager()
     
     // MARK: Network (Server)
 

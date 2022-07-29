@@ -12,10 +12,10 @@ import CoreData
 class PhotoListViewController: BaseViewController {
 
     private let photoListView = PhotoListView()
-    let photoListViewModel = PhotoListViewModel()
+    private let photoListViewModel = PhotoListViewModel()
         
-    var photoList : [Photo]?
-    var disposalbleBag = Set<AnyCancellable>()
+    private var photoList : [Photo]?
+    private var disposalbleBag = Set<AnyCancellable>()
     
     // MARK: View Life Cycle
     
@@ -35,7 +35,7 @@ class PhotoListViewController: BaseViewController {
         photoListView.photoCollectionView.reloadData()
     }
     
-    func configure() {
+    private func configure() {
         let layout = photoListView.photoCollectionView.collectionViewLayout as? PhotoListCustomLayout
         layout?.delegate = self
     }
@@ -44,7 +44,7 @@ class PhotoListViewController: BaseViewController {
 // MARK: Binding
 
 extension PhotoListViewController {
-    func setBinding() {
+    private func setBinding() {
         self.photoListViewModel.$photoList.sink {[weak self] updatedPhotoList in
             self?.photoList = updatedPhotoList
             DispatchQueue.main.async {
@@ -72,7 +72,7 @@ extension PhotoListViewController : UICollectionViewDataSource {
         return cell
     }
     
-    func updateStar(_ cell : PhotoListCollectionViewCell, _ name : String) {
+    private func updateStar(_ cell : PhotoListCollectionViewCell, _ name : String) {
         DispatchQueue.main.async {
             if (self.photoListViewModel.isSavedImage(name)) == false {
                 cell.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
@@ -105,7 +105,7 @@ extension PhotoListViewController : UICollectionViewDelegate {
             beginBatchFetch()
     }
     
-    func beginBatchFetch() {
+    private func beginBatchFetch() {
         DispatchQueue.main.async {
             self.photoListViewModel.getDataFromServer()
             self.photoListView.photoCollectionView.reloadData()

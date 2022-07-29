@@ -14,24 +14,25 @@ protocol ImageDelegate : AnyObject {
 class SavedPhotoListCollectionViewCell: UICollectionViewCell {
     
     static let identifier: String = "savedPhotoListCollectionViewCell"
+    
     weak var cellDelegate : ImageDelegate?
     
     var index : Int?
 
-    var saveButton : UIButton = {
+    let saveButton : UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "star.fill"), for: .normal)
         button.tintColor = .yellow
         return button
     }()
     
-    var rightLabel : UILabel = {
+    let rightLabel : UILabel = {
         let label = UILabel()
         label.textColor = .white
         return label
     }()
     
-    var topStackView: UIStackView = {
+    let topStackView: UIStackView = {
         let topView = UIStackView()
         topView.axis = .horizontal
         topView.backgroundColor = UIColor(white: 0.6, alpha: 0.6)
@@ -41,7 +42,7 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
         return topView
     }()
     
-    var imageView: UIImageView = {
+    let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 15
         imageView.layer.masksToBounds = true
@@ -67,7 +68,7 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
     
     // MARK: Setup
     
-    func setupView() {
+    private func setupView() {
         
         [saveButton, rightLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +84,7 @@ class SavedPhotoListCollectionViewCell: UICollectionViewCell {
     
     // MARK: AutoLayout
     
-    func setupConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             topStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             topStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
