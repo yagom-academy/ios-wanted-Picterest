@@ -20,7 +20,7 @@
 
 | 첫번째 화면 이미지 - pagination| 첫번째 화면 - 이미지 저장 | 두번째 화면 - 저장 이미지 화면 업데이트 | 두번째 화면 - 이미지 삭제 |
 |:---:|:---:|:---:|:---:|
-|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress](https://user-images.githubusercontent.com/58679737/181778000-473ca274-7ba8-45ef-ac1e-97d5d1b465d5.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (1)](https://user-images.githubusercontent.com/58679737/181778116-029a538a-2237-48e9-bc10-eedfae856626.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (2)](https://user-images.githubusercontent.com/58679737/181778146-24ab683d-bb0d-442b-93dc-e66edbb72a65.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (3)](https://user-images.githubusercontent.com/58679737/181778512-e2787186-fc9b-4f8e-bd4c-f5d6beba3ab8.gif) | 
+|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress](https://user-images.githubusercontent.com/58679737/181778000-473ca274-7ba8-45ef-ac1e-97d5d1b465d5.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (1)](https://user-images.githubusercontent.com/58679737/181778116-029a538a-2237-48e9-bc10-eedfae856626.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (4)](https://user-images.githubusercontent.com/58679737/181898055-5eae314f-354c-4fc0-bec6-bb4fbe5b87b8.gif)|![화면_기록_2022-07-29_오후_10_01_48_AdobeExpress (3)](https://user-images.githubusercontent.com/58679737/181778512-e2787186-fc9b-4f8e-bd4c-f5d6beba3ab8.gif) | 
 
 
 
