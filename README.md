@@ -12,7 +12,7 @@
 ## 기능
 |화면1|화면2|화면3|
 |--|--|--|
-|![기능1](/firstPreviews.gif)|![기능2](https://github.com/hhhan0315/ios-wanted-VoiceRecorder/blob/main/스크린샷/기능2.gif)|![기능3](https://github.com/hhhan0315/ios-wanted-VoiceRecorder/blob/main/스크린샷/기능3.gif)|
+|![기능1](https://github.com/leegyoungmin/ios-wanted-Picterest/blob/main/previews/firstPreviews.gif)|![기능2](https://github.com/leegyoungmin/ios-wanted-Picterest/blob/main/previews/secondPreview.gif))|![기능3](https://github.com/leegyoungmin/ios-wanted-Picterest/blob/main/previews/thirdPreview.gif)|
 
 
 ## 진행 과정
