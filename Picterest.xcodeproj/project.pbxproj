@@ -93,12 +93,19 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		365BFADA2894A54300F1FE72 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		36C79A19288E432D0016F9E5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				DE15E66128604278003DD2F5 /* MainStoryboard.storyboard */,
-				36C79A1D288E43DF0016F9E5 /* PhotoList */,
 				36C79A1E288E43E60016F9E5 /* PhotoSave */,
+				36C79A1D288E43DF0016F9E5 /* PhotoList */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -182,6 +189,7 @@
 				36C79A2C288E4D460016F9E5 /* Configuration */,
 				362C8963288F65D30055C3DF /* Network */,
 				36C79A36288EBC680016F9E5 /* Model */,
+				365BFADA2894A54300F1FE72 /* Extension */,
 				36C79A19288E432D0016F9E5 /* Source */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,

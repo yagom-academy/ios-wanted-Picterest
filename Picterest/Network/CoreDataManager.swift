@@ -20,7 +20,6 @@ class CoreDataManager {
             coreData = try context.fetch(fetchRequest)
             completion(coreData)
         } catch {
-            print(error)
             return
         }
     }

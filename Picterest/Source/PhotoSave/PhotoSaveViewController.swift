@@ -25,7 +25,6 @@ class PhotoSaveViewController: UIViewController {
             self?.coreData = coreData
             self?.coreData = coreData.reversed()
             self?.saveListCollectionView.reloadData()
-            print("PhtoSaveView___coreData", coreData.count)
         })
     }
 }
@@ -124,7 +123,6 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
                     CoreDataManager.shared.deleteCoreData(ID: id)
                     self?.coreData.remove(at: indexPath.item)
                     self?.saveListCollectionView.deleteItems(at: [indexPath])
-                    print("삭제 완료")
                 })
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             alertActionCell.addAction(deleteAction)

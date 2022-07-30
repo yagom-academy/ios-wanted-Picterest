@@ -19,7 +19,6 @@ class PhotoListViewController: UIViewController {
         super.viewDidLoad()
         setCollectionView()
         getPhotoData()
-        print(currentPage, "didload")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +27,6 @@ class PhotoListViewController: UIViewController {
             self?.coreData = data
         }
         photoListCollectionView.reloadData()
-        print("will", coreData.count)
     }
 }
 
@@ -144,7 +142,6 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        print(photoList.count, "photoCount")
         return photoList.count
     }
     

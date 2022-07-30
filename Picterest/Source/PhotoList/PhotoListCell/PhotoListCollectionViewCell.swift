@@ -44,7 +44,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
         if isSelectedFlag {
             savedButton.isSelected = true
         }
-        ImageLoder().leadImage(url: data.urls.small) { [weak self] result in
+        ImageLoder().loadImage(url: data.urls.small) { [weak self] result in
             switch result {
             case .success(let photos):
                 self?.radomImageView.image = photos

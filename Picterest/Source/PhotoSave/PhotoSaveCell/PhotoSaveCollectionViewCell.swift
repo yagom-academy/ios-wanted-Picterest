@@ -27,7 +27,7 @@ class PhotoSaveCollectionViewCell: UICollectionViewCell, CellNamable {
     }
     
     func fetchDataFromCollectionView(data: String) {
-        ImageLoder().leadImage(url: data) { [weak self] result in
+        ImageLoder().loadImage(url: data) { [weak self] result in
             switch result {
             case .success(let photos):
                 self?.savedImageView.image = photos
