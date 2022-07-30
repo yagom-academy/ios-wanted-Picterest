@@ -6,7 +6,7 @@
 
 cobugi|
 :-:|
-<img width="250px" src="./Results/cobugi.png" alt="cobugi" />
+<img width="250px" src="./Results/cobugi.png" alt="cobugi" />|
 
 ### 결과
 사진 목록 불러오기|사진 저장|사진 삭제
