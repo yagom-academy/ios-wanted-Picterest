@@ -65,7 +65,12 @@ extension SavedCollectionViewCell {
     func configure(with imageData: NSManagedObject) {
         guard let originalURL = imageData.value(forKey: CoreDataKey.originalURL) as? String,
               let imageID = imageData.value(forKey: CoreDataKey.id) as? String,
-              let memo = imageData.value(forKey: CoreDataKey.memo) as? String else { return }
+              var memo = imageData.value(forKey: CoreDataKey.memo) as? String else { return }
+        
+        if memo.count > 20 {
+            memo = memo.padding(toLength: 20, withPad: " ", startingAt: 0)
+            memo += "..."
+        }
 
         self.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
         self.view.textLabel.text = memo
