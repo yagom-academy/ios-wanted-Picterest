@@ -24,8 +24,8 @@ class PhotoSaveViewController: UIViewController {
         CoreDataManager.shared.fetchCoreData(completion: { [weak self] coreData in
             self?.coreData = coreData
             self?.coreData = coreData.reversed()
-            self?.saveListCollectionView.reloadData()
         })
+        self.saveListCollectionView.reloadData()
     }
 }
 
@@ -84,7 +84,7 @@ extension PhotoSaveViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let width = UIScreen.main.bounds.width - 32
-        let height =  width * (coreData[indexPath.row].heigt / coreData[indexPath.row].width)
+        let height =  width * (coreData[indexPath.row].height / coreData[indexPath.row].width)
         return CGSize(width: width, height: height)
     }
 }

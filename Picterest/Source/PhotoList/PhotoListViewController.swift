@@ -97,8 +97,8 @@ extension PhotoListViewController {
 
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
 
-extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
+extension PhotoListViewController: DidTapPhotoSaveButtonDelegate { 
+    func didTapPhotoSaveButton(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
         if isSelected {
             showSaveAlertMessage { memo in
                 guard let memo = memo, let photoInfo = photoInfo, let image = image  else { return }
@@ -124,7 +124,7 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
     }
 }
 
-//MARK: - Extension: CollectionView
+//MARK: - Extension: CollectionViewDataSource, Delegate
 
 extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
     func collectionView(

@@ -46,7 +46,7 @@ class CoreDataManager {
         object.location = location
         object.memo = memo
         object.width = width
-        object.heigt = height
+        object.height = height
         appDelegate.saveContext()
     }
     

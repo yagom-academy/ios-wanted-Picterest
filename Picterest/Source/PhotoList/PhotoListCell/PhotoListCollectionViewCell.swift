@@ -7,7 +7,7 @@
 import UIKit
 
 protocol DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?)
+    func didTapPhotoSaveButton(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?)
 }
 
 class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
@@ -33,7 +33,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
     
     @IBAction func didTapPhotoSave(_ sender: UIButton) {
         savedButton.isSelected.toggle()
-        delegate?.showSavePhotoAlert(
+        delegate?.didTapPhotoSaveButton(
             isSelected: savedButton.isSelected,
             photoInfo: photoInfo,
             image: radomImageView.image
@@ -53,5 +53,4 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
             }
         }
     }
-    
 }
