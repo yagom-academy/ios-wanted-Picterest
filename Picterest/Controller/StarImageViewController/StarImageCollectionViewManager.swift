@@ -12,7 +12,7 @@ class StarImageCollectionViewManager: NSObject {
     
     // MARK: - Properties
     private let starImageViewModel: StarImageViewModelInterface
-    let showAlert = PassthroughSubject<UIAlertController, Never>()
+    let showAlert = PassthroughSubject<Int, Never>()
     
     // MARK: - LifeCycle
     init(viewModel: StarImageViewModelInterface) {
@@ -24,12 +24,9 @@ class StarImageCollectionViewManager: NSObject {
         cell: ImageCollectionViewCell,
         index: Int
     ) {
-        cell.starButtonTapped = { [weak self] button, image in
+        cell.starButtonTapped = { [weak self] _, _ in
             guard let self = self else { return }
-            if button.isSelected {
-                let alert = self.starImageViewModel.showImageDeleteAlert(index)
-                self.showAlert.send(alert)
-            }
+            self.showAlert.send(index)
         }
     }
 }

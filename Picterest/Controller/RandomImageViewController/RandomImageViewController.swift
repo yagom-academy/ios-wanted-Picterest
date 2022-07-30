@@ -89,7 +89,24 @@ extension RandomImageViewController {
     
     private func bindingCollectionViewManager() {
         collectionViewManager?.showAlert
-            .sink { [weak self] alert in
+            .sink { [weak self] button, index, image in
+                let alert: UIAlertController
+                if button.isSelected {
+                    alert = AlertManager(
+                        alertMessage: "\(index)번째 사진을 삭제하겠습니까?"
+                    ).createAlert(isSave: false) { alert in
+                        self?.randomImageViewModel?.deleteImageToStorage(index: index)
+                        button.isSelected = false
+                    }
+                } else {
+                    alert = AlertManager(
+                        alertMessage: "\(index)번째 사진을 저장하시겠습니까?"
+                    ).createAlert(isSave: true) { alert in
+                        guard let memo = alert.textFields?[0].text else { return }
+                        button.isSelected = true
+                        self?.randomImageViewModel?.saveImageToStorage(image: image, index: index, memo: memo)
+                    }
+                }
                 self?.present(alert, animated: true)
             }.store(in: &subscriptions)
     }

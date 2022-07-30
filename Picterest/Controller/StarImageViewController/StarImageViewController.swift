@@ -91,7 +91,12 @@ extension StarImageViewController {
     
     private func bindingCollectionViewManager() {
         collectionViewManager?.showAlert
-            .sink { [weak self] alert in
+            .sink { [weak self] index in
+                let alert = AlertManager(
+                    alertMessage: "사진을 삭제하겠습니까?"
+                ).createAlert(isSave: false) { alert in
+                    self?.starImageViewModel?.deleteImageToStorage(index: index)
+                }
                 self?.present(alert, animated: true)
             }.store(in: &subscriptions)
     }
@@ -129,7 +134,11 @@ extension StarImageViewController {
                 self.longPressCell?.transform = .identity
             }
             if longPressStartIndexPath == indexPath {
-                guard let alert = starImageViewModel?.showImageDeleteAlert(indexPath.row) else { return }
+                let alert = AlertManager(
+                    alertMessage: "사진을 삭제하겠습니까?"
+                ).createAlert(isSave: false) { [weak self] alert in
+                    self?.starImageViewModel?.deleteImageToStorage(index: self?.longPressStartIndexPath?.row ?? 0)
+                }
                 self.present(alert, animated: true)
             }
         }

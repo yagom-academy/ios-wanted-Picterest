@@ -12,7 +12,7 @@ class RandomImageCollectionViewManager: NSObject {
     
     // MARK: - Properties
     private let randomImageViewModel: RandomImageViewModelInterface
-    let showAlert = PassthroughSubject<UIAlertController, Never>()
+    let showAlert = PassthroughSubject<(UIButton, Int, UIImage), Never>()
     
     // MARK: - LifeCycle
     init(viewModel: RandomImageViewModelInterface) {
@@ -25,14 +25,7 @@ class RandomImageCollectionViewManager: NSObject {
         index: Int
     ) {
         cell.starButtonTapped = { [weak self] button, image in
-            guard let self = self else { return }
-            if button.isSelected {
-                let alert = self.randomImageViewModel.showImageDeleteAlert(index, button: button)
-                self.showAlert.send(alert)
-            } else {
-                let alert = self.randomImageViewModel.showImageSaveAlert(index, button: button, image: image)
-                self.showAlert.send(alert)
-            }
+            self?.showAlert.send((button, index, image))
         }
     }
 }
