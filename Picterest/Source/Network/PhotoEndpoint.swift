@@ -23,6 +23,14 @@ enum PhotoEndpoint: EndPointType {
         }
     }
     
+    var apiKey: String {
+        switch self {
+        case .getPhoto:
+            return "yVGmATwgQ50f6Q_zGJc5t_uhhweNqORAN4if0wo2NQg"
+        }
+        
+    }
+    
     var path: String {
         switch self {
         case .getPhoto:
