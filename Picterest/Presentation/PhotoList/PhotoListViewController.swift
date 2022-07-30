@@ -70,6 +70,23 @@ class PhotoListViewController: UIViewController {
         }
     }
     
+    private func checkFileExist(id: String) -> Bool {
+        guard let localURL = ImageManager.shared.getDirectoryURL() else { return false }
+        let localImagePath = localURL.appendingPathComponent(id).path
+        
+        if FileManager.default.fileExists(atPath: localImagePath) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+}
+
+// MARK: - Layout extension
+
+extension PhotoListViewController {
+    
     private func setupCollectionView() {
         if let layout = collectionView.collectionViewLayout as?  CustomCollectionViewLayout {
             layout.delegate = self
@@ -102,17 +119,6 @@ class PhotoListViewController: UIViewController {
                 equalTo: view.safeAreaLayoutGuide.bottomAnchor
             )
         ])
-    }
-    
-    private func checkFileExist(id: String) -> Bool {
-        guard let localURL = ImageManager.shared.getDirectoryURL() else { return false }
-        let localImagePath = localURL.appendingPathComponent(id).path
-        
-        if FileManager.default.fileExists(atPath: localImagePath) {
-            return true
-        } else {
-            return false
-        }
     }
     
 }
@@ -190,6 +196,8 @@ extension PhotoListViewController: UICollectionViewDataSource {
     
 }
 
+// MARK: - CollectionView Delegate extension
+
 extension PhotoListViewController: UICollectionViewDelegate {
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -231,8 +239,10 @@ extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
 
 }
 
+// MARK: - Save alert extension
+
 extension PhotoListViewController: CellActionDelegate {
-    // TODO: [] alert class 따로 만들기
+    
     func starButtonTapped(cell: PhotoListCollectionViewCell) {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         
@@ -243,13 +253,13 @@ extension PhotoListViewController: CellActionDelegate {
         let imageHeight = photo.height
         let localImagePath = ImageManager.shared.getImagePath(id: imageID)
         let alert = UIAlertController(
-            title: "사진 메모",
+            title: Text.alertTitle,
             message: "",
             preferredStyle: .alert
         )
         
         let saveButton = UIAlertAction(
-            title: "저장",
+            title: Text.save,
             style: .default) {_ in
             if let textField = alert.textFields?.first,
                let text = textField.text {
@@ -284,18 +294,34 @@ extension PhotoListViewController: CellActionDelegate {
         }
         
         let cancelButton = UIAlertAction(
-            title: "취소",
+            title: Text.cancel,
             style: .destructive,
             handler: nil
         )
         
         alert.addTextField { textField in
-            textField.placeholder = "메모를 입력해주세요."
+            textField.placeholder = Text.memoPlaceholder
         }
         alert.addAction(cancelButton)
         alert.addAction(saveButton)
         
         self.present(alert, animated: true)
+        
+    }
+    
+}
+
+// MARK: - NameSpaces
+
+extension PhotoListViewController {
+    
+    private enum Text {
+        
+        static let alertTitle: String = "사진 메모"
+        static let save: String = "저장"
+        static let cancel: String = "취소"
+        static let memoPlaceholder: String = "메모를 입력해주세요."
+        
         
     }
     

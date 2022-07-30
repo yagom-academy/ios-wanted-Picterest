@@ -83,7 +83,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
 }
 
-// MARK: - Extensions
+// MARK: - Layout extension
 
 extension PhotoListCollectionViewCell {
     
@@ -94,7 +94,7 @@ extension PhotoListCollectionViewCell {
     }
     
     func setupCell(photo: PhotoListResult, index: Int) {
-        memoLabel.text = "\(index + 1)번째 사진"
+        memoLabel.text = String(index + 1) + Text.numberOfImage
     }
     
     private func setupView() {
@@ -187,4 +187,9 @@ extension PhotoListCollectionViewCell {
         static let starImage = UIImage(systemName: "star")
         static let selectedStarImage = UIImage(systemName: "star.fill")
     }
+    
+    private enum Text {
+        static let numberOfImage: String = "번째 사진"
+    }
+    
 }

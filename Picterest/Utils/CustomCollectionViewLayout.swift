@@ -31,12 +31,8 @@ class CustomCollectionViewLayout: UICollectionViewLayout {
     override func prepare() {
         
         guard let collectionView = collectionView else { return }
-        
         let collectionViewItems = collectionView.numberOfItems(inSection: 0)
-        
         if collectionViewItems == cache.count { return }
-        
-        //        cache.removeAll()
         
         let columnWidth = contentWidth / CGFloat(numberOfColums)
         var xOffset: [CGFloat] = []

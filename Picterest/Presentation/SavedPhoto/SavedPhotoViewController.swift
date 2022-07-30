@@ -59,7 +59,7 @@ extension SavedPhotoViewController {
     
 }
 
-// MARK: - SavedPhotoViewController Layout extension
+// MARK: - Layout extension
 
 extension SavedPhotoViewController {
     
@@ -71,7 +71,7 @@ extension SavedPhotoViewController {
     
     private func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "Saved Images"
+        self.navigationItem.title = Text.navigationTitle
     }
     
     private func setupCollectionView() {
@@ -129,14 +129,14 @@ extension SavedPhotoViewController: UIGestureRecognizerDelegate {
             if let indexPath = collectionView.indexPathForItem(at: location) {
                 let photo = photos[indexPath.item]
                 let alert = UIAlertController(
-                    title: "즐겨찾기 사진 삭제",
+                    title: Text.favoriteTitle,
                     message: "",
                     preferredStyle: .alert
                 )
                 let deleteButton = UIAlertAction(
-                    title: "삭제",
+                    title: Text.delete,
                     style: .destructive) { _ in
-                        if let imageID = photo.value(forKey: "id") as? String {
+                        if let imageID = photo.value(forKey: Key.id) as? String {
                             self.photos.remove(at: indexPath.item)
                             CoreDataManager.shared.delete(item: photo)
                             ImageManager.shared.deleteImage(id: imageID)
@@ -144,7 +144,7 @@ extension SavedPhotoViewController: UIGestureRecognizerDelegate {
                         }
                     }
                 let cancelButton = UIAlertAction(
-                    title: "취소",
+                    title: Text.cancel,
                     style: .cancel,
                     handler: nil
                 )
@@ -194,8 +194,8 @@ extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let photo = photos[indexPath.item]
-        guard let imageWidth = photo.value(forKey: "width") as? CGFloat,
-              let imageHeight = photo.value(forKey: "height") as? CGFloat else {
+        guard let imageWidth = photo.value(forKey: Key.width) as? CGFloat,
+              let imageHeight = photo.value(forKey: Key.height) as? CGFloat else {
             return CGSize(width: 0, height: 0)
         }
         let cellWidth = collectionView.frame.width * 0.9
@@ -219,4 +219,23 @@ extension SavedPhotoViewController {
         )
         
     }
+    
+    private enum Text {
+        
+        static let navigationTitle: String = "Saved Images"
+        
+        static let favoriteTitle: String = "즐겨찾기 사진 삭제"
+        static let delete: String = "삭제"
+        static let cancel: String = "취소"
+        
+    }
+    
+    private enum Key {
+        
+        static let id: String = "id"
+        static let width: String = "width"
+        static let height: String = "height"
+        
+    }
+    
 }
