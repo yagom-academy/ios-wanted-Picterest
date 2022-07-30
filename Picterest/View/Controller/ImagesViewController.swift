@@ -134,15 +134,3 @@ extension ImagesViewController {
         present(alert, animated: true)
     }
 }
-
-extension ImagesViewController: ImageDeleteDelegate {
-    func imageDeleteSuccess(data: ImageData) {
-        let savedViewController = SavedViewController()
-        
-        DispatchQueue.main.async {
-            savedViewController.delegate = self
-            self.viewModel.deleteImage(data.image)
-            self.collectionView.reloadData()
-        }
-    }
-}

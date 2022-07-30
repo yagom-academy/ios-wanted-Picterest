@@ -33,7 +33,7 @@ final class ImageCollectionViewModel {
                 self?.pageNumber += 1
                 self?.isFetching = false
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
+                debugPrint("Error: \(error.localizedDescription)")
             }
         }
     }

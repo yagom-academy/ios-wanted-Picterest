@@ -16,14 +16,12 @@ enum NetworkError: Error {
 }
 
 final class NetworkManager {
-    
-    let apiKey = "EYcGnmZWJmPQPhb1Hw9nXqv7mo7p_Vr4XpVnkkMqN5I"
-    
+
     static let shared = NetworkManager()
     private init() {}
     
     func fetchImageList(pageNumber: Int, completion: @escaping (Result<[Image], NetworkError>) -> Void) {
-        let urlStr = "https://api.unsplash.com/photos/?client_id=\(apiKey)&page=\(pageNumber)&per_page=15"
+        let urlStr = "https://api.unsplash.com/photos/?client_id=\(APIKey.value)&page=\(pageNumber)&per_page=15"
         guard let url = URL(string: urlStr) else {
             completion(.failure(.invalidURL))
             return
@@ -44,7 +42,7 @@ final class NetworkManager {
                 }
                 completion(.success(data))
             default:
-                print("Error - StatusCode: \(response.statusCode), Response: \(response)")
+                debugPrint("Error - StatusCode: \(response.statusCode), Response: \(response)")
             }
         }.resume()
     }

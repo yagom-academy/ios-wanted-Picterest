@@ -14,6 +14,7 @@
 		1240F13C289555A10070F23D /* ImageInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240F13A289555A10070F23D /* ImageInfo+CoreDataClass.swift */; };
 		1240F13D289555A10070F23D /* ImageInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240F13B289555A10070F23D /* ImageInfo+CoreDataProperties.swift */; };
 		1240F13F289579360070F23D /* PicterestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240F13E289579360070F23D /* PicterestCollectionViewCell.swift */; };
+		1240F141289579D90070F23D /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1240F140289579D90070F23D /* APIKey.swift */; };
 		127EBA252890129D0069B28D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127EBA242890129D0069B28D /* TabBarController.swift */; };
 		127EBA2B289013620069B28D /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127EBA2A289013620069B28D /* ImagesViewController.swift */; };
 		127EBA2D2890136A0069B28D /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127EBA2C2890136A0069B28D /* SavedViewController.swift */; };
@@ -39,6 +40,7 @@
 		1240F13A289555A10070F23D /* ImageInfo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1240F13B289555A10070F23D /* ImageInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1240F13E289579360070F23D /* PicterestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicterestCollectionViewCell.swift; sourceTree = "<group>"; };
+		1240F140289579D90070F23D /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		127EBA242890129D0069B28D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		127EBA2A289013620069B28D /* ImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		127EBA2C2890136A0069B28D /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				DE15E66928604279003DD2F5 /* Info.plist */,
+				1240F140289579D90070F23D /* APIKey.swift */,
 				127EBA3D28903A510069B28D /* Model */,
 				127EBA26289012DE0069B28D /* View */,
 				127EBA3E28903A6B0069B28D /* ViewModel */,
@@ -258,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				127EBA4728903B900069B28D /* NetworkManager.swift in Sources */,
+				1240F141289579D90070F23D /* APIKey.swift in Sources */,
 				12275A3728916ACC00F1335E /* LocalFileManager.swift in Sources */,
 				12275A68289214C500F1335E /* CoreDataManager.swift in Sources */,
 				127EBA252890129D0069B28D /* TabBarController.swift in Sources */,

@@ -49,10 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if context.hasChanges {
             do {
                 try context.save()
-                print("변경사항 저장완료")
             } catch {
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                debugPrint("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
     }
