@@ -11,6 +11,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier = "imageCollectionViewCell"
     
+    var isSaved: Bool = false
     var starButtonStatusChanged: () -> Void = {}
     
     private lazy var imageView: UIImageView = {
@@ -30,7 +31,7 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         return descriptionView
     }()
     
-    private lazy var starButton: UIButton = {
+    lazy var starButton: UIButton = {
         let starButton = UIButton()
         starButton.setImage(UIImage(systemName: "star"), for: .normal)
         starButton.tintColor = .white
@@ -49,31 +50,30 @@ final class ImageCollectionViewCell: UICollectionViewCell {
     @objc func starButtonTapped() {
         starButtonStatusChanged()
     }
-    
-    func configureImageCollectionCell(with imageViewModel: ImageViewModel, index: Int) {
+
+    func configureImageCollectionCell(with image: ImageData, at index: Int) {
         setSubView()
         setConstraints()
-        self.imageView.loadImage(url: imageViewModel.url)
+        self.imageView.loadImage(url: image.image.urls.small)
         self.indexLabel.text = "\(index)번째 사진"
-        let checkResult = LocalFileManager.shared.checkFileExistInLocal(id: imageViewModel.id)
-        setStarButton(didSaved: checkResult)
+        setStarButton(isSaved: LocalFileManager.shared.checkFileExistInLocal(id: image.image.id))
     }
     
-    func configureSavedCollectionCell(with savedViewModel: SavedImageViewModel, memo: String) {
+    func configureSavedCollectionCell(with image: ImageData) {
         setSubView()
         setConstraints()
-        self.imageView.loadFromLocal(id: savedViewModel.id)
-        self.indexLabel.text = memo
-        setStarButton(didSaved: true)
+        self.imageView.loadFromLocal(id: image.image.id)
+        self.indexLabel.text = image.memo
+        setStarButton(isSaved: true)
     }
     
-    private func setStarButton(didSaved: Bool = false) {
-        if didSaved {
-            starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-            starButton.tintColor = .yellow
+    func setStarButton(isSaved: Bool) {
+        if isSaved {
+            self.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            self.starButton.tintColor = .systemYellow
         } else {
-            starButton.setImage(UIImage(systemName: "star"), for: .normal)
-            starButton.tintColor = .white
+            self.starButton.setImage(UIImage(systemName: "star"), for: .normal)
+            self.starButton.tintColor = .white
         }
     }
     
@@ -127,3 +127,4 @@ final class ImageCollectionViewCell: UICollectionViewCell {
         ])
     }
 }
+
