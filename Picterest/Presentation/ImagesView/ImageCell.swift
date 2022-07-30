@@ -66,6 +66,12 @@ class ImageCell: UICollectionViewCell, ReuseIdentifying {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+        imageView.image = nil
+    }
 }
 
 // MARK: - @objc Methods

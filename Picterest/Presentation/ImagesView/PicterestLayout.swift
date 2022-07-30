@@ -5,7 +5,6 @@
 //  Created by oyat on 2022/07/26.
 //
 
-import Foundation
 import UIKit
 
 protocol PicterstLayoutDelegate: AnyObject {

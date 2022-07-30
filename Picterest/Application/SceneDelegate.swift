@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tab = UITabBarController()
         let ImagesView = ImagesViewController()
-        let SavedView = SavedViewController()
+        let SavedView = UINavigationController(rootViewController: SavedViewController()) 
             
         ImagesView.tabBarItem = UITabBarItem(title: "Images", image: UIImage(systemName: "photo.fill.on.rectangle.fill"), selectedImage: nil)
         SavedView.tabBarItem = UITabBarItem(title: "Saved", image: UIImage(systemName: "star.bubble.fill"), selectedImage: nil)
