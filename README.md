@@ -1,4 +1,4 @@
-# 원티드 iOS 프리온보딩(with 야곰아카데미) - ⌨ CustomKeyboard App <br />[2022.07.25 &#126; 2022.07.30]<br />
+# 원티드 iOS 프리온보딩(with 야곰아카데미) - Picterest App <br />[2022.07.25 &#126; 2022.07.30]<br />
 개발과정이담긴 👉🏻 <a href="https://github.com/kirkim/ios-wanted-Picterest/issues?q=is%3Aissue+is%3Aclosed">깃허브이슈 페이지</a>
 
 # 🧑‍🍳 Maker
