@@ -12,7 +12,7 @@ class SavedPhotoViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var photos: [NSManagedObject] = []
+    private var savedPhotos: [NSManagedObject] = []
     
     // MARK: - UIProperties
     
@@ -54,7 +54,7 @@ class SavedPhotoViewController: UIViewController {
 extension SavedPhotoViewController {
     
     private func fetchFromCoreData() {
-        photos = CoreDataManager.shared.load() ?? []
+        savedPhotos = CoreDataManager.shared.load() ?? []
     }
     
 }
@@ -127,7 +127,7 @@ extension SavedPhotoViewController: UIGestureRecognizerDelegate {
 
         if gestureRecognizer.state == .began {
             if let indexPath = collectionView.indexPathForItem(at: location) {
-                let photo = photos[indexPath.item]
+                let photo = savedPhotos[indexPath.item]
                 let alert = UIAlertController(
                     title: Text.favoriteTitle,
                     message: "",
@@ -136,8 +136,8 @@ extension SavedPhotoViewController: UIGestureRecognizerDelegate {
                 let deleteButton = UIAlertAction(
                     title: Text.delete,
                     style: .destructive) { _ in
-                        if let imageID = photo.value(forKey: Key.id) as? String {
-                            self.photos.remove(at: indexPath.item)
+                        if let imageID = photo.value(forKey: CoreDataKey.id) as? String {
+                            self.savedPhotos.remove(at: indexPath.item)
                             CoreDataManager.shared.delete(item: photo)
                             ImageManager.shared.deleteImage(id: imageID)
                             self.collectionView.deleteItems(at: [indexPath])
@@ -164,7 +164,7 @@ extension SavedPhotoViewController: UIGestureRecognizerDelegate {
 extension SavedPhotoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return savedPhotos.count
     }
     
     func collectionView(
@@ -177,7 +177,7 @@ extension SavedPhotoViewController: UICollectionViewDataSource {
         ) as? SavedPhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let photo = photos[indexPath.item]
+        let photo = savedPhotos[indexPath.item]
         cell.setupCell(photo: photo)
         return cell
     }
@@ -193,9 +193,9 @@ extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let photo = photos[indexPath.item]
-        guard let imageWidth = photo.value(forKey: Key.width) as? CGFloat,
-              let imageHeight = photo.value(forKey: Key.height) as? CGFloat else {
+        let photo = savedPhotos[indexPath.item]
+        guard let imageWidth = photo.value(forKey: CoreDataKey.width) as? CGFloat,
+              let imageHeight = photo.value(forKey: CoreDataKey.height) as? CGFloat else {
             return CGSize(width: 0, height: 0)
         }
         let cellWidth = collectionView.frame.width * 0.9
@@ -223,14 +223,13 @@ extension SavedPhotoViewController {
     private enum Text {
         
         static let navigationTitle: String = "Saved Images"
-        
         static let favoriteTitle: String = "즐겨찾기 사진 삭제"
         static let delete: String = "삭제"
         static let cancel: String = "취소"
         
     }
     
-    private enum Key {
+    private enum CoreDataKey {
         
         static let id: String = "id"
         static let width: String = "width"

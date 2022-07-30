@@ -3,6 +3,7 @@
 //  Picterest
 //
 
+import CoreData
 import UIKit
 
 protocol CustomCollectionViewLayoutDelegate: AnyObject {
@@ -41,6 +42,7 @@ class PhotoListViewController: UIViewController {
     private var photoListAPIProvider: PhotoListAPIProviderType?
     private var URLImageProvider: URLImageProviderType?
     private var photos: [PhotoListResult] = []
+    private var savedPhotos: [NSManagedObject] = []
     private var page = 1
     
     // MARK: - LifeCycle
@@ -61,10 +63,12 @@ class PhotoListViewController: UIViewController {
         setupCollectionView()
         setupConstraints()
         fetchPhotos()
+        fetchFromCoreData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchFromCoreData()
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -79,6 +83,16 @@ class PhotoListViewController: UIViewController {
         } else {
             return false
         }
+    }
+    
+}
+
+// MARK: - FetchFromCoreData Method extension
+
+extension PhotoListViewController {
+    
+    private func fetchFromCoreData() {
+        savedPhotos = CoreDataManager.shared.load() ?? []
     }
     
 }
@@ -247,51 +261,11 @@ extension PhotoListViewController: CellActionDelegate {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         
         let photo = photos[indexPath.item]
-        let imageID = photo.id
-        let imageURL = photo.urls.small
-        let imageWidth = photo.width
-        let imageHeight = photo.height
-        let localImagePath = ImageManager.shared.getImagePath(id: imageID)
-        let alert = UIAlertController(
-            title: Text.alertTitle,
-            message: "",
-            preferredStyle: .alert
-        )
-        
-        let saveButton = UIAlertAction(
-            title: Text.save,
-            style: .default) {_ in
-            if let textField = alert.textFields?.first,
-               let text = textField.text {
-                self.URLImageProvider?.fetchImage(from: imageURL, completion: { result in
-                    switch result {
-                        
-                    case .success(let image):
-                        let imageSaved = ImageManager.shared.saveImage(
-                            id: imageID,
-                            image: image
-                        )
-                        
-                        if imageSaved {
-                            cell.starButton.isSelected = true
-                            CoreDataManager.shared.save(
-                                id: imageID,
-                                imagePath: localImagePath,
-                                imageURL: imageURL,
-                                memo: text,
-                                width: imageWidth,
-                                height: imageHeight
-                            )
-                        } else {
-                            cell.starButton.isSelected = false
-                        }
-                        
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
-            )}
-        }
+        let photoID = photo.id
+        let photoURL = photo.urls.small
+        let photoWidth = photo.width
+        let photoHeight = photo.height
+        let localImagePath = ImageManager.shared.getImagePath(id: photoID)
         
         let cancelButton = UIAlertAction(
             title: Text.cancel,
@@ -299,13 +273,82 @@ extension PhotoListViewController: CellActionDelegate {
             handler: nil
         )
         
-        alert.addTextField { textField in
-            textField.placeholder = Text.memoPlaceholder
+        if !cell.starButton.isSelected {
+            
+            let alert = UIAlertController(
+                title: Text.saveAlertTitle,
+                message: "",
+                preferredStyle: .alert
+            )
+            
+            let saveButton = UIAlertAction(
+                title: Text.save,
+                style: .default) {_ in
+                    if let textField = alert.textFields?.first,
+                       let text = textField.text {
+                        self.URLImageProvider?.fetchImage(from: photoURL, completion: { result in
+                            switch result {
+                                
+                            case .success(let image):
+                                let imageSaved = ImageManager.shared.saveImage(
+                                    id: photoID,
+                                    image: image
+                                )
+                                
+                                if imageSaved {
+                                    cell.starButton.isSelected = true
+                                    CoreDataManager.shared.save(
+                                        id: photoID,
+                                        imagePath: localImagePath,
+                                        imageURL: photoURL,
+                                        memo: text,
+                                        width: photoWidth,
+                                        height: photoHeight
+                                    )
+                                    self.fetchFromCoreData()
+                                } else {
+                                    cell.starButton.isSelected = false
+                                }
+                                
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                            }
+                        }
+                        )}
+                }
+            
+            alert.addTextField { textField in
+                textField.placeholder = Text.memoPlaceholder
+            }
+            alert.addAction(cancelButton)
+            alert.addAction(saveButton)
+            
+            self.present(alert, animated: true)
+            
+        } else {
+            
+            let alert = UIAlertController(
+                title: Text.cancelAlertTitle,
+                message: Text.cancelAlertMessage,
+                preferredStyle: .alert
+            )
+            let confirmButton = UIAlertAction(
+                title: Text.confirm,
+                style: .default) { _ in
+                    // TODO: [] 추후 리팩토링 꼭하기
+                    if let index = self.savedPhotos.firstIndex(where: { ($0.value(forKey: CoreDataKey.id) as? String)!.hasPrefix(photoID) }) {
+                        let savedPhoto = self.savedPhotos[index]
+                        
+                        ImageManager.shared.deleteImage(id: photoID)
+                        CoreDataManager.shared.delete(item: savedPhoto)
+                        cell.starButton.isSelected = false
+                    }
+                }
+            alert.addAction(cancelButton)
+            alert.addAction(confirmButton)
+            
+            self.present(alert, animated: true)
         }
-        alert.addAction(cancelButton)
-        alert.addAction(saveButton)
-        
-        self.present(alert, animated: true)
         
     }
     
@@ -317,11 +360,19 @@ extension PhotoListViewController {
     
     private enum Text {
         
-        static let alertTitle: String = "사진 메모"
+        static let saveAlertTitle: String = "사진 메모"
+        static let cancelAlertTitle: String = "저장 취소"
+        static let cancelAlertMessage: String = "사진 저장을 취소 하시겠습니까?"
+        static let confirm: String = "저장취소"
         static let save: String = "저장"
         static let cancel: String = "취소"
         static let memoPlaceholder: String = "메모를 입력해주세요."
         
+    }
+    
+    private enum CoreDataKey {
+        
+        static let id: String = "id"
         
     }
     
