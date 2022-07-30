@@ -142,7 +142,7 @@ extension PhotoListCollectionViewCell {
             topView.trailingAnchor.constraint(
                 equalTo: unsplashImageView.safeAreaLayoutGuide.trailingAnchor
             ),
-            topView.heightAnchor.constraint(equalToConstant: Style.stackViewHeight)
+            topView.heightAnchor.constraint(equalToConstant: Style.alphaViewHeight)
         ])
     }
     
@@ -182,11 +182,9 @@ extension PhotoListCollectionViewCell {
         static let trailingPadding: CGFloat = -8
         static let cornerRadius: CGFloat = 10
         static let alpha: CGFloat = 0.7
-        static let stackViewHeight: CGFloat = 40
+        static let alphaViewHeight: CGFloat = 40
         
         static let starImage = UIImage(systemName: "star")
         static let selectedStarImage = UIImage(systemName: "star.fill")
-        static let stackViewInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
-        
     }
 }

@@ -201,6 +201,8 @@ extension PhotoListViewController: UICollectionViewDelegate {
     
 }
 
+// MARK: - CustomCollectionViewLayoutDelegate extension
+
 extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
 
     func collectionView(
@@ -227,6 +229,8 @@ extension PhotoListViewController: CellActionDelegate {
         let photo = photos[indexPath.item]
         let imageID = photo.id
         let imageURL = photo.urls.small
+        let imageWidth = photo.width
+        let imageHeight = photo.height
         let localImagePath = ImageManager.shared.getImagePath(id: imageID)
         let alert = UIAlertController(
             title: "사진 메모",
@@ -254,7 +258,9 @@ extension PhotoListViewController: CellActionDelegate {
                                 id: imageID,
                                 imagePath: localImagePath,
                                 imageURL: imageURL,
-                                memo: text
+                                memo: text,
+                                width: imageWidth,
+                                height: imageHeight
                             )
                         } else {
                             cell.starButton.isSelected = false

@@ -5,6 +5,7 @@
 //  Created by BH on 2022/07/27.
 //
 
+import CoreData
 import UIKit
 
 class SavedPhotoViewController: UIViewController {
@@ -12,7 +13,7 @@ class SavedPhotoViewController: UIViewController {
     
     // MARK: - Properties
     
-    private var photos: [String] = []
+    private var photos: [NSManagedObject] = []
     
     // MARK: - UIProperties
     
@@ -37,6 +38,17 @@ class SavedPhotoViewController: UIViewController {
         setupView()
         setupConstraints()
         
+        photos = CoreDataManager.shared.load() ?? []
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        photos = CoreDataManager.shared.load() ?? []
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     // MARK: - Methods
@@ -84,7 +96,7 @@ class SavedPhotoViewController: UIViewController {
 extension SavedPhotoViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return photos.count
     }
     
     func collectionView(
@@ -97,13 +109,15 @@ extension SavedPhotoViewController: UICollectionViewDataSource {
         ) as? SavedPhotoCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
-        cell.setupCell()
+        let photo = photos[indexPath.item]
+        cell.setupCell(photo: photo)
         
         return cell
     }
     
 }
+
+// MARK: - UICollectionView DelegateFlowLayout Extensions
 
 extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
     
@@ -112,18 +126,16 @@ extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
+        let imageWidth = photos[indexPath.item].value(forKey: "width") as? CGFloat
+        let imageHeight = photos[indexPath.item].value(forKey: "height") as? CGFloat
         let width = collectionView.frame.width
-        let height = collectionView.frame.height
         let itemsPerRow: CGFloat = 1
         let widthPadding = Style.sectionInsets.left * (itemsPerRow + 1)
-        let itemsPerColumn: CGFloat = 2
-        let heightPadding = Style.sectionInsets.top * (itemsPerColumn + 1)
         let cellWidth = (width - widthPadding) / itemsPerRow
-        let cellHeight = (height - heightPadding) / itemsPerColumn
+        let cellHeight = imageHeight! * width / imageWidth!
         
         return CGSize(width: cellWidth, height: cellHeight)
     }
-    
 }
 
 // MARK: - NameSpaces

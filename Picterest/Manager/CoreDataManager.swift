@@ -46,7 +46,9 @@ extension CoreDataManager {
         id: String,
         imagePath: String,
         imageURL: String,
-        memo: String
+        memo: String,
+        width: Int,
+        height: Int
     ) {
         let context = persistentContainer.viewContext
         guard let entityDescription = NSEntityDescription.entity(
@@ -59,6 +61,8 @@ extension CoreDataManager {
         image.setValue(imagePath, forKey: "imagePath")
         image.setValue(imageURL, forKey: "imageURL")
         image.setValue(memo, forKey: "memo")
+        image.setValue(width, forKey: "width")
+        image.setValue(height, forKey: "height")
         
         do {
             try context.save()
