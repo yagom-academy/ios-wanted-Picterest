@@ -117,7 +117,7 @@ extension PhotoListViewController : UICollectionViewDelegate {
 
 extension PhotoListViewController : SaveButtonDelegate {
     func pressSaveButton(_ cell : PhotoListCollectionViewCell) {
-        if cell.saveButton.imageView?.image == UIImage(systemName: "star") {
+        if cell.saveButton.tintColor == .white {
             let alert = UIAlertController(title: "", message: "저장 하시겠습니까?", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.destructive, handler: {[weak self] _ in
                 self?.dismiss(animated: true)
@@ -138,7 +138,7 @@ extension PhotoListViewController : SaveButtonDelegate {
             cell.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
             cell.saveButton.tintColor = .white
             // filemanager에 있는 이미지 삭제
-            self.photoListViewModel.deleteImageFromFilemanager("\(String(describing: self.photoList?[cell.index ?? -1].id)).jpg" )
+            self.photoListViewModel.deleteImageFromFilemanager("\( self.photoList?[cell.index ?? -1].id ?? "").jpg" )
             // coredata에 있는 정보 삭제
             CoreDataManager.shared.getData()
             for object in CoreDataManager.shared.images {

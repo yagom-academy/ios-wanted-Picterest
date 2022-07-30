@@ -103,7 +103,7 @@ extension PhotoListViewModel : FileManagerProtocol {
         
         guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
         let directoryURL = directory.appendingPathComponent("images")
-        let imagePathURL = directoryURL.appendingPathComponent(name)
+        let imagePathURL = directoryURL.appendingPathComponent("\(name)")
         do {
             try fileManager.removeItem(at: imagePathURL)
         } catch {
