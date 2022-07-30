@@ -47,7 +47,6 @@ final class ImageManager {
     imageEntity.saveStoredDirectory(url: directory.appendingPathComponent(imageEntity.imageURL.lastPathComponent))
     do {
       try imageData.write(to: directory.appendingPathComponent(imageEntity.imageURL.lastPathComponent))
-      print("\(String(describing: imageEntity.storedDirectory)) 에 저장됨")
       coreDataManager.insert(imageEntity)
       completion(nil)
     } catch {

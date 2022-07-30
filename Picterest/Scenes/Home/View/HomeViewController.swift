@@ -77,7 +77,6 @@ private extension HomeViewController {
     self.viewModel.imageList.bind({ list in
       let group = DispatchGroup()
       DispatchQueue.global().async {
-        print(list.count)
         if list.count > 0 {
           group.enter()
           DispatchQueue.main.async {

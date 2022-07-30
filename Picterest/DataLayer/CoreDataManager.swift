@@ -32,7 +32,6 @@ final class CoreDataManager {
   func fetchImages() -> [ImageData]? {
     do {
       let data = try context.fetch(ImageData.fetchRequest()) as! [ImageData]
-      print("총 \(data.count) 개의 이미지가 코어데이터에 저장되어 있습니다")
       return data
     }catch{
       print(error.localizedDescription)
@@ -41,7 +40,6 @@ final class CoreDataManager {
   }
   
   func insert(_ model: ImageEntity) {
-    print("Inserting \(model.id)...")
     if let entity = imageData {
       let managedObject = NSManagedObject(entity: entity, insertInto: context)
       managedObject.setValue(model.id, forKey: "id")
@@ -54,7 +52,6 @@ final class CoreDataManager {
   
   
   func delete(_ model: ImageEntity) {
-    print("Deleting \(model.id)...")
     guard let fetchResults = fetchImages(),
           let targetModel = fetchResults.filter({$0.id == model.id}).first
     else {return}
@@ -64,7 +61,6 @@ final class CoreDataManager {
   
   func deleteAll(){
     guard let fetchResults = fetchImages()else {return}
-    print("Deleting All data in coreData ...")
     for item in fetchResults {
       context.delete(item)
     }

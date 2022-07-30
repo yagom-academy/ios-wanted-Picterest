@@ -61,18 +61,18 @@ final class EmptyIndicatorView: UIView {
 
 private extension EmptyIndicatorView {
   func setConstraints() {
+    
     self.addSubview(emptyImage)
     self.addSubview(stackView)
+    
     NSLayoutConstraint.activate([
       emptyImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
-      emptyImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      emptyImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 100),
-      emptyImage.trailingAnchor.constraint(equalTo: self.leadingAnchor, constant: -100),
-      emptyImage.heightAnchor.constraint(equalToConstant: 150),
+      emptyImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+      emptyImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+      emptyImage.heightAnchor.constraint(equalToConstant: 260),
       
       stackView.topAnchor.constraint(equalTo: emptyImage.bottomAnchor, constant: 20),
       stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-      stackView.centerXAnchor.constraint(equalTo: emptyImage.centerXAnchor),
       stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
     ])
   }
