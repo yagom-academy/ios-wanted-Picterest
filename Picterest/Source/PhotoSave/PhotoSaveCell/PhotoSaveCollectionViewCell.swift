@@ -8,7 +8,6 @@
 import UIKit
 
 class PhotoSaveCollectionViewCell: UICollectionViewCell, CellNamable {
-    
     var coreData = [Picterest]()
     
     @IBOutlet weak var savedButton: UIButton!
