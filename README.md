@@ -12,13 +12,13 @@
   
 ---
 
-
 # 👨‍💻 Developer
 |Peppo|
 |:--:|
 |[<img src = "https://user-images.githubusercontent.com/78457093/180595896-1ae6c1a5-4ebe-48da-9d7d-8246046ec12e.jpg" width = "250" height = "300">](https://github.com/Bhoon-coding)|
 
---- 
+---
+
 <br>
 
 # 프로젝트 소개
@@ -38,15 +38,19 @@
 
 ## 기능 소개
 
+
 ### PhotoListPage
-|무한스크롤, <br>오픈API (GET)|
+|무한스크롤, <br> 오픈API (GET)|
 |:--:|
-|<img src = "https://i.imgur.com/FTYNKLJ.gif" width = "300">|
+|<img src = "https://user-images.githubusercontent.com/64088377/181904342-9c235cb7-061c-4dfe-b8d8-c7147b03d498.gif" width = "300">|
+
+<br>
 
 ### SavedPhotoPage
 |사진 저장 (Local)|저장된 사진 삭제|
 |:--:|:--:|
-|<img src = "https://i.imgur.com/LMyxFQS.gif" width = "200">| <img src = "https://i.imgur.com/0QJ7GqC.gif" width = "200">|
+|<img src = "https://user-images.githubusercontent.com/64088377/181904386-c391d8cd-ef59-4030-bd3a-2a68537bfb83.gif" width = "200"> | <img src = "https://i.imgur.com/0QJ7GqC.gif" width = "200">|
+
 
 ---
 <br>
