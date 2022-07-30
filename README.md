@@ -24,7 +24,40 @@
 - 사용 기술:  `UIKit`, `URLSession`, `TabBarController`, `NSCache`,  `MVC`, `CoreData`, `FileManager`,  `UICollectionViewCustomLayout`
 <br>
 
-# 🦊 이슈
-- ### 첫번째 화면에서 버튼으로 사진 저장 후 두번째 화면에서 로드 안되는 문제
+# 🦊 이슈 & 리팩토링
+- ### 첫번째 화면에서 버튼으로 사진 저장 후 두번째 화면에서 업데이트 안되는 문제
 ```Text
+- Saved Image View에서 coreData를 사용해 Cell 업데이트
+- coreData를 업데이트 해주지 않아 저장은 되지만 리스트 업데이트는 안됨
+- Saved Image View viewWillAppear에서 coreData fetch 및 collectioView reloaData 하는 것으로 해결 
+- 마찬가지로 List Image View에서는 coreData와 PhotoModel을 비교해 저장버튼 상태를 업데이트하고 있어
+  List Image View에서도 viewWillAppear에서 coreData fetch 및 collectioView reloaData 적용
 ```
+<br>
+
+- ### 첫번째 화면과 두번째 화면 너비 안맞는 문제
+```Text
+- List Image View에서는 CustomLayout에서 지정해준 cellPadding이 있어 더 좁게 보임
+- Saved Image View CollectionViewFlowLayout cellPadding만큼 더해 Size 수정
+```
+<br>
+
+- ### 어떻게 String 데이터를 효과적으로 관리할 수 있을까?
+```Swift
+// 변경 전 - 처음에는 구조체로 String값을 저장 후 사용하는 것으로 사용
+struct CellName {
+    static let photoListCell = "PhotoListCollectionViewCell"
+    static let saveListCell = "PhotoSaveCollectionViewCell"
+}
+
+// 변경 후 - Protocol을 사용해 String 데이터를 사용하지 않도록 변경
+protocol CellNamable {
+    static var identifier: String { get }
+}
+
+extension CellNamable {
+    static var identifier: String { String(describing: self) }
+}
+```
+<br>
+
