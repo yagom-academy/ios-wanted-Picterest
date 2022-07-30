@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class StarImageCollectionViewManager: NSObject {
+final class StarImageCollectionViewManager: NSObject {
     
     // MARK: - Properties
     private let starImageViewModel: StarImageViewModelInterface

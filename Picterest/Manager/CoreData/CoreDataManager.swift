@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import Combine
 
-class CoreDataManager {
+final class CoreDataManager {
     
     // MARK: - Properties
     private let entityName = "StarImage"

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APIKey {
+final class APIKey {
     static let accessKey = "osD_eRI9poCKLZE37g0WFRt7osA6dbXTLjj7LIgQWuM"
 //    static let accessKey = "Hv8wpp9ZIbUOAM84jdQXC6GTBXcRIUovZq2ehkfu0CQ"
 //    static let accessKey = "_MYpDmYtFKRTSeg7uIoeU49JBaDJcvyb6B9bMRUXnzA"

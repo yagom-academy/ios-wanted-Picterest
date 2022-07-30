@@ -10,10 +10,10 @@ import Foundation
 struct Resource<T: Codable> {
     
     // MARK: - Properties
-    var base: String
-    var path: String
-    var params: [String: String]
-    var header: [String: String]
+    private var base: String
+    private var path: String
+    private var params: [String: String]
+    private var header: [String: String]
     
     var urlRequest: URLRequest? {
         guard var urlComponents = URLComponents(string: base + path) else { return nil }

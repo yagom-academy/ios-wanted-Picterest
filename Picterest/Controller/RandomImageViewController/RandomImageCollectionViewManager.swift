@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class RandomImageCollectionViewManager: NSObject {
+final class RandomImageCollectionViewManager: NSObject {
     
     // MARK: - Properties
     private let randomImageViewModel: RandomImageViewModelInterface
