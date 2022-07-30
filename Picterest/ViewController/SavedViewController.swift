@@ -44,11 +44,8 @@ extension SavedViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? SavedCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        guard let imageData = viewModel.getImage(at: indexPath.row) else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? SavedCollectionViewCell,
+              let imageData = viewModel.getImage(at: indexPath.row) else {
             return UICollectionViewCell()
         }
 
@@ -63,19 +60,18 @@ extension SavedViewController: UICollectionViewDataSource {
 
 extension SavedViewController: CollectionViewCellDelegate {
     func alert(from cell: UICollectionViewCell) {
+        guard let cell = cell as? SavedCollectionViewCell,
+              let index = self.collectionView.indexPath(for: cell)?.row,
+              let imageData = self.viewModel.getImage(at: index) else {
+            return
+        }
+        
         let title = "Picterest"
         let message = "사진을 삭제하시겠습니까?"
         let firstActionTitle = "취소"
         let secondActionTitle = "확인"
         
         let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert)
-        
-        guard let index = self.collectionView.indexPath(for: cell)?.row,
-              let imageData = self.viewModel.getImage(at: index) else {
-            return
-        }
-    
-        guard let cell = cell as? SavedCollectionViewCell else { return }
         let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
             self.viewModel.fetch {
                 self.collectionView.reloadData()

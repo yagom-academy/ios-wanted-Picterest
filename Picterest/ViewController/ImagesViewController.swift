@@ -55,14 +55,11 @@ extension ImagesViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ImagesCollectionViewCell,
+              let imageInformation = viewModel.getImage(at: indexPath.row) else {
             return UICollectionViewCell()
         }
         
-        guard let imageInformation = viewModel.getImage(at: indexPath.row) else {
-            return UICollectionViewCell()
-        }
-    
         cell.delegate = self
         cell.configure(with: imageInformation, index: indexPath.row)
         
