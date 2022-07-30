@@ -19,7 +19,6 @@ class PhotoListViewController: UIViewController {
         super.viewDidLoad()
         setCollectionView()
         getPhotoData()
-        print(currentPage, "didload")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,7 +27,6 @@ class PhotoListViewController: UIViewController {
             self?.coreData = data
         }
         photoListCollectionView.reloadData()
-        print("will", coreData.count)
     }
 }
 
@@ -79,7 +77,6 @@ extension PhotoListViewController {
         )
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
             completion(alertController.textFields?[0].text)
-            
         }
         alertController.addTextField()
         alertController.addAction(saveAction)
@@ -100,13 +97,11 @@ extension PhotoListViewController {
 
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
 
-extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
+extension PhotoListViewController: DidTapPhotoSaveButtonDelegate { 
+    func didTapPhotoSaveButton(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
         if isSelected {
             showSaveAlertMessage { memo in
-                guard let memo = memo else { return }
-                guard let photoInfo = photoInfo else { return }
-                guard let image = image else { return }
+                guard let memo = memo, let photoInfo = photoInfo, let image = image  else { return }
                 guard let urlPath = ImageFileManager.shared.saveImageToLocal(
                     image: image,
                     name: (photoInfo.id) + ".png"
@@ -114,7 +109,7 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                 CoreDataManager.shared.saveCoreData(
                     id: photoInfo.id,
                     memo: memo,
-                    url:photoInfo.urls.small,
+                    url:photoInfo.urls.regular,
                     location: urlPath,
                     width: photoInfo.width,
                     height: photoInfo.height
@@ -129,7 +124,7 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
     }
 }
 
-//MARK: - Extension: CollectionView
+//MARK: - Extension: CollectionViewDataSource, Delegate
 
 extension PhotoListViewController: PhotoListCollectionViewLayoutDelegate {
     func collectionView(
@@ -147,7 +142,6 @@ extension PhotoListViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        print(photoList.count, "photoCount")
         return photoList.count
     }
     

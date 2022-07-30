@@ -7,7 +7,7 @@
 import UIKit
 
 protocol DidTapPhotoSaveButtonDelegate {
-    func showSavePhotoAlert(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?)
+    func didTapPhotoSaveButton(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?)
 }
 
 class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
@@ -22,8 +22,8 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
         super.awakeFromNib()
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
-        savedButton.setImage(UIImage(systemName: "star"), for: .normal)
-        savedButton.setImage(UIImage(systemName: "star.fill"), for: .selected)
+        savedButton.setImage(Icon.star.image, for: .normal)
+        savedButton.setImage(Icon.starFill.image, for: .selected)
     }
     
     override func prepareForReuse() {
@@ -33,7 +33,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
     
     @IBAction func didTapPhotoSave(_ sender: UIButton) {
         savedButton.isSelected.toggle()
-        delegate?.showSavePhotoAlert(
+        delegate?.didTapPhotoSaveButton(
             isSelected: savedButton.isSelected,
             photoInfo: photoInfo,
             image: radomImageView.image
@@ -44,7 +44,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
         if isSelectedFlag {
             savedButton.isSelected = true
         }
-        ImageLoder().leadImage(url: data.urls.small) { [weak self] result in
+        ImageLoder().loadImage(url: data.urls.small) { [weak self] result in
             switch result {
             case .success(let photos):
                 self?.radomImageView.image = photos
@@ -53,5 +53,4 @@ class PhotoListCollectionViewCell: UICollectionViewCell, CellNamable {
             }
         }
     }
-    
 }

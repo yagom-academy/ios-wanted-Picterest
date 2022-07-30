@@ -24,9 +24,8 @@ class PhotoSaveViewController: UIViewController {
         CoreDataManager.shared.fetchCoreData(completion: { [weak self] coreData in
             self?.coreData = coreData
             self?.coreData = coreData.reversed()
-            self?.saveListCollectionView.reloadData()
-            print("PhtoSaveView___coreData", coreData.count)
         })
+        self.saveListCollectionView.reloadData()
     }
 }
 
@@ -85,7 +84,7 @@ extension PhotoSaveViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let width = UIScreen.main.bounds.width - 32
-        let height =  width * (coreData[indexPath.row].heigt / coreData[indexPath.row].width)
+        let height =  width * (coreData[indexPath.row].height / coreData[indexPath.row].width)
         return CGSize(width: width, height: height)
     }
 }
@@ -111,7 +110,7 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
                 at: point
             ) else { return }
             let alertActionCell = UIAlertController(
-                title: "",
+                title: "사진 삭제",
                 message: "사진을 삭제 하시겠습니까?",
                 preferredStyle: .alert
             )
@@ -124,8 +123,6 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
                     CoreDataManager.shared.deleteCoreData(ID: id)
                     self?.coreData.remove(at: indexPath.item)
                     self?.saveListCollectionView.deleteItems(at: [indexPath])
-                    self?.saveListCollectionView.reloadData()
-                    print("삭제 완료")
                 })
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             alertActionCell.addAction(deleteAction)

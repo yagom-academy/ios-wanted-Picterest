@@ -15,7 +15,7 @@ enum ImageLoaderError: Error {
 class ImageLoder {
     static let imageCache = NSCache<NSString, UIImage>()
     
-    func leadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+    func loadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
         if let image = ImageLoder.imageCache.object(forKey: url as NSString) {
             DispatchQueue.main.async {
                 completion(.success(image))
