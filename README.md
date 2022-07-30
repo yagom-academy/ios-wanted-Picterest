@@ -12,9 +12,9 @@
 <br>
 
 ## 👀 미리보기
-|Basic function|Extension|
-|---|---|
-|<img width = "250" alt="page1-VoiceRecorder" src = "https://user-images.githubusercontent.com/73249915/180597545-5c5d502f-7b42-4078-807f-c5fae3cd23f5.gif">|<img width = "250" alt= "page2-VoiceRecorder" src = "https://user-images.githubusercontent.com/73249915/180597790-60bc5e75-c19d-4045-bed0-69c9b8c2eb9a.gif">|
+|Basic function|
+|---|
+|<img width = "250" alt="page1-VoiceRecorder" src = "https://user-images.githubusercontent.com/73249915/181870210-c81a4277-78ab-4ff2-885f-54f47bb0274a.gif">|
 
 <br>
 
