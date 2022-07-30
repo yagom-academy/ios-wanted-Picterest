@@ -54,8 +54,8 @@ extension ImagesViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        let imageData = imageCollectionViewModel.imageAtIndex(indexPath.row)
-        cell.configureImageCollectionCell(with: imageData, index: indexPath.row)
+        let imageData = imageCollectionViewModel.image(at: indexPath.row)
+        cell.configureImageCollectionCell(with: imageData.image, at: indexPath.row)
         cell.starButtonStatusChanged = { [weak self] in
             self?.starButtonTapped(at: indexPath.row)
         }
@@ -78,25 +78,25 @@ extension ImagesViewController: UICollectionViewDelegate {
 
 extension ImagesViewController: PicterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let imageViewModel = imageCollectionViewModel.imageAtIndex(indexPath.row)
+        let imageData = imageCollectionViewModel.image(at: indexPath.row)
         let cellWidth: CGFloat = view.bounds.width / 2
-        let imageRatio = CGFloat(imageViewModel.height) / CGFloat(imageViewModel.width)
+        let imageRatio = CGFloat(imageData.image.height) / CGFloat(imageData.image.width)
         return cellWidth * imageRatio
     }
 }
 
 extension ImagesViewController {
     private func starButtonTapped(at index: Int) {
-        let data = imageCollectionViewModel.imageAtIndex(index)
+        let data = imageCollectionViewModel.image(at: index)
         
-        if imageCollectionViewModel.checkFileExistInLocal(data: data) {
-            showAlertOfDelete(data: data)
+        if imageCollectionViewModel.checkFileExistInLocal(data: data.image) {
+            showAlertOfDelete(data: data.image)
         } else {
-            showAlertOfSave(data: data)
+            showAlertOfSave(data: data.image)
         }
     }
     
-    private func showAlertOfSave(data: ImageViewModel) {
+    private func showAlertOfSave(data: Image) {
         let alert = UIAlertController(title: "사진을 저장합니다 ", message: "메모를 남겨보세요", preferredStyle: .alert)
         let save = UIAlertAction(title: "저장", style: .default) { _ in
             guard let textField = alert.textFields,
@@ -110,7 +110,7 @@ extension ImagesViewController {
         present(alert, animated: true)
     }
     
-    private func showAlertOfDelete(data: ImageViewModel) {
+    private func showAlertOfDelete(data: Image) {
         let alert = UIAlertController(title: "즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
         let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
             self.imageCollectionViewModel.deleteImage(id: data.id)

@@ -11,14 +11,14 @@ class DataManager {
     static let shared = DataManager()
     private init() {}
     
-    func save(data: ImageViewModel, memo: String) {
-        LocalFileManager.shared.saveToLocal(data)
+    func save(data: Image, memo: String) {
+        LocalFileManager.shared.save(data: data)
         let localPath = LocalFileManager.shared.localPath
         CoreDataManager.shared.saveData(data: data, memo: memo, localPath: localPath)
     }
     
     func delete(id: String) {
-        LocalFileManager.shared.deleteFromLocal(id: id)
+        LocalFileManager.shared.delete(data: id)
         CoreDataManager.shared.deleteData(id: id)
     }
 }

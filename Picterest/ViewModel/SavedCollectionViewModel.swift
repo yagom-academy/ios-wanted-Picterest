@@ -8,7 +8,7 @@
 import UIKit
 
 final class SavedCollectionViewModel {
-    private var savedImages: [SavedImageViewModel] = []
+    private var savedImages: [ImageData] = []
     
     var savedImagesCount: Int {
         return savedImages.count
@@ -24,8 +24,16 @@ final class SavedCollectionViewModel {
                   let url = $0.url else { return }
             let width = Int($0.width)
             let height = Int($0.height)
-            let savedData = SavedImageViewModel(image: Image(id: id, width: width, height: height, urls: URLs(small: url)),
-                                                memo: memo)
+            let savedData = ImageData(
+                image: Image(
+                    id: id,
+                    width: width,
+                    height: height,
+                    urls: URLs(small: url)
+                ),
+                memo: memo,
+                isSaved: true
+            )
             savedImages.append(savedData)
         }
         DispatchQueue.main.async {
@@ -34,7 +42,7 @@ final class SavedCollectionViewModel {
     }
     
     func deleteData(at index: Int) {
-        DataManager.shared.delete(id: savedImages[index].id)
+        DataManager.shared.delete(id: savedImages[index].image.id)
         savedImages.remove(at: index)
         self.savedImagesUpdated()
     }
@@ -45,31 +53,7 @@ final class SavedCollectionViewModel {
         self.savedImagesUpdated()
     }
     
-    func imageAtIndex(_ index: Int) -> SavedImageViewModel {
+    func image(at index: Int) -> ImageData {
         return savedImages[index]
     }
 }
-
-struct SavedImageViewModel {
-    
-    var image: Image
-    var memo: String
-
-    init(image: Image, memo: String) {
-        self.image = image
-        self.memo = memo
-    }
-    
-    var id: String {
-        return image.id
-    }
-    
-    var width: Int {
-        return image.width
-    }
-    
-    var height: Int {
-        return image.height
-    }
-}
-

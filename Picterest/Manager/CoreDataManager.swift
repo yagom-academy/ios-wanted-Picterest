@@ -32,7 +32,7 @@ final class CoreDataManager {
         return imageInfoList
     }
     
-    func saveData(data: ImageViewModel, memo: String, localPath: String) {
+    func saveData(data: Image, memo: String, localPath: String) {
         guard let context = context else { return }
         guard let entity = NSEntityDescription.entity(forEntityName: self.modelName, in: context),
               let imageInfo = NSManagedObject(entity: entity, insertInto: context) as? ImageInfo else { return }
@@ -40,7 +40,7 @@ final class CoreDataManager {
         imageInfo.id = data.id
         imageInfo.width = Int16(data.width)
         imageInfo.height = Int16(data.height)
-        imageInfo.url = data.url
+        imageInfo.url = data.urls.small
         imageInfo.memo = memo
         imageInfo.localPath = localPath
         appDelegate?.saveContext()

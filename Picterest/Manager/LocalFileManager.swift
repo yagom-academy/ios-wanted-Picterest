@@ -26,9 +26,9 @@ final class LocalFileManager {
         return false
     }
     
-    func saveToLocal(_ imageViewModel: ImageViewModel) {
-        guard let imageURL = documentURL?.appendingPathComponent(imageViewModel.id) else { return }
-        NetworkManager.shared.fetchImage(url: imageViewModel.url) { image in
+    func save(data: Image) {
+        guard let imageURL = documentURL?.appendingPathComponent(data.id) else { return }
+        NetworkManager.shared.fetchImage(url: data.urls.small) { image in
             do {
                 let pngImage = image.pngData()
                 try pngImage?.write(to: imageURL)
@@ -39,7 +39,7 @@ final class LocalFileManager {
         }
     }
     
-    func deleteFromLocal(id: String) {
+    func delete(data id: String) {
         guard let imageURL = documentURL?.appendingPathComponent(id) else { return }
         if FileManager.default.fileExists(atPath: imageURL.path) {
             do {

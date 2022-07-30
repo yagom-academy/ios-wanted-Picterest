@@ -7,6 +7,18 @@
 
 import UIKit
 
+struct ImageData {
+    let image: Image
+    let memo: String
+    let isSaved: Bool
+    
+    init(image: Image, memo: String, isSaved: Bool) {
+        self.image = image
+        self.memo = memo
+        self.isSaved = isSaved
+    }
+}
+
 struct Image: Decodable {
     let id: String
     let width: Int

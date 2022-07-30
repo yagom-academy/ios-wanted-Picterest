@@ -56,8 +56,8 @@ extension SavedViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell()}
-        let savedData = viewModel.imageAtIndex(indexPath.row)
-        cell.configureSavedCollectionCell(with: savedData, memo: savedData.memo)
+        let savedData = viewModel.image(at: indexPath.row)
+        cell.configureSavedCollectionCell(with: savedData.image, memo: savedData.memo)
         return cell
     }
     
@@ -74,9 +74,9 @@ extension SavedViewController: UICollectionViewDataSource {
 
 extension SavedViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let savedImageViewModel = viewModel.imageAtIndex(indexPath.row)
+        let savedImage = viewModel.image(at: indexPath.row)
         let width: CGFloat = view.frame.width - 20
-        let imageRatio = CGFloat(savedImageViewModel.height) / CGFloat(savedImageViewModel.width)
+        let imageRatio = CGFloat(savedImage.image.height) / CGFloat(savedImage.image.width)
         let height = (width * imageRatio)
         return CGSize(width: width, height: height)
     }

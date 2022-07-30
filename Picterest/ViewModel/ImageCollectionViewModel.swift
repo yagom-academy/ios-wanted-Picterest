@@ -9,7 +9,7 @@ import UIKit
 
 final class ImageCollectionViewModel {
     private var pageNumber = 1
-    private var images: [Image] = [] {
+    private var images: [ImageData] = [] {
         didSet {
             collectionViewUpdate()
         }
@@ -25,10 +25,11 @@ final class ImageCollectionViewModel {
         NetworkManager.shared.fetchImageList(pageNumber: pageNumber) { [weak self] result in
             switch result {
             case .success(let images):
+                let imageData = images.map { ImageData(image: $0, memo: "", isSaved: false)}
                 if self?.pageNumber == 1 {
-                    self?.images = images
+                    self?.images = imageData
                 } else {
-                    self?.images.append(contentsOf: images)
+                    self?.images.append(contentsOf: imageData)
                 }
                 self?.pageNumber += 1
                 self?.isFetching = false
@@ -38,16 +39,20 @@ final class ImageCollectionViewModel {
         }
     }
     
-    func imageAtIndex(_ index: Int) -> ImageViewModel {
-        return ImageViewModel(image: images[index])
+    func image(at index: Int) -> ImageData {
+        let id = images[index].image.id
+        let width = images[index].image.width
+        let height = images[index].image.height
+        let urls = images[index].image.urls
+        return ImageData(image: Image(id: id, width: width, height: height, urls: urls), memo: "", isSaved: false)
     }
     
-    func checkFileExistInLocal(data: ImageViewModel) -> Bool {
+    func checkFileExistInLocal(data: Image) -> Bool {
         let result = LocalFileManager.shared.checkFileExistInLocal(id: data.id)
         return result
     }
     
-    func save(data: ImageViewModel, with memo: String) {
+    func save(data: Image, with memo: String) {
         DataManager.shared.save(data: data, memo: memo)
     }
     
@@ -55,28 +60,3 @@ final class ImageCollectionViewModel {
         DataManager.shared.delete(id: id)
     }
 }
-
-struct ImageViewModel {
-    private let image: Image
-    
-    init(image: Image) {
-        self.image = image
-    }
-    
-    var id: String {
-        return image.id
-    }
-    
-    var width: Int {
-        return image.width
-    }
-    
-    var height: Int {
-        return image.height
-    }
-    
-    var url: String {
-        return image.urls.small
-    }
-}
-
