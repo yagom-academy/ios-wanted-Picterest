@@ -35,11 +35,22 @@ final class SavedViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, PhotoEntityData>?
     
-    private let viewModel = SavedViewModel()
+    private let savedViewModel: SavedViewModel
     
     private var cancellable = Set<AnyCancellable>()
     
     weak var delegate: SavedViewControllerDelegate?
+    
+    // MARK: - init Method
+    
+    init(savedViewModel: SavedViewModel) {
+        self.savedViewModel = savedViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Override Method
     
@@ -48,7 +59,7 @@ final class SavedViewController: UIViewController {
         
         configure()
         
-        viewModel.fetch()
+        savedViewModel.fetch()
     }
     
     // MARK: - Configure Method
@@ -117,7 +128,7 @@ extension SavedViewController {
 
 extension SavedViewController {
     private func bind() {
-        viewModel.$photoEntityData
+        savedViewModel.$photoEntityData
             .receive(on: DispatchQueue.main)
             .sink { photoEntityData in
                 var snapShot = NSDiffableDataSourceSnapshot<Section, PhotoEntityData>()
@@ -152,7 +163,7 @@ extension SavedViewController {
             let alertController = UIAlertController(title: "사진 삭제", message: nil, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
             alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                self.viewModel.deletePhotoEntityData(index: indexPath.item) {
+                self.savedViewModel.deletePhotoEntityData(index: indexPath.item) {
                     self.delegate?.photoDeleteSuccess()
                 }
             }))
@@ -165,9 +176,6 @@ extension SavedViewController {
 
 extension SavedViewController: PhotosViewControllerDelegate {
     func photoSaveSuccess() {
-        viewModel.fetch()
-        DispatchQueue.main.async {
-            self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
-        }
+        savedViewModel.fetch()
     }
 }

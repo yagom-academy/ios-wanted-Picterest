@@ -37,11 +37,22 @@ final class PhotosViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Photo>?
     
-    private let viewModel = PhotosViewModel()
+    private let photosViewModel: PhotosViewModel
     
     private var cancellable = Set<AnyCancellable>()
     
     weak var delegate: PhotosViewControllerDelegate?
+    
+    // MARK: - init Method
+    
+    init(photosViewModel: PhotosViewModel) {
+        self.photosViewModel = photosViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Override Method
     
@@ -50,7 +61,7 @@ final class PhotosViewController: UIViewController {
         
         configure()
         
-        viewModel.fetch()
+        photosViewModel.fetch()
     }
     
     // MARK: - Configure Method
@@ -108,7 +119,7 @@ extension PhotosViewController {
 
 extension PhotosViewController {
     private func bind() {
-        viewModel.$photos
+        photosViewModel.$photos
             .receive(on: DispatchQueue.main)
             .sink { photos in
                 var snapShot = NSDiffableDataSourceSnapshot<Section, Photo>()
@@ -119,7 +130,7 @@ extension PhotosViewController {
             }
             .store(in: &cancellable)
         
-        viewModel.$photoSaveSuccessTuple
+        photosViewModel.$photoSaveSuccessTuple
             .receive(on: DispatchQueue.main)
             .sink { photoSaveSuccessTuple in
                 guard let success = photoSaveSuccessTuple.success, let indexPath = photoSaveSuccessTuple.indexPath else {
@@ -150,8 +161,8 @@ extension PhotosViewController {
 
 extension PhotosViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == viewModel.photosCount() - 1 {
-            viewModel.fetch()
+        if indexPath.item == photosViewModel.photosCount() - 1 {
+            photosViewModel.fetch()
         }
     }
 }
@@ -161,8 +172,8 @@ extension PhotosViewController: UICollectionViewDelegate {
 extension PhotosViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let cellWidth: CGFloat = (view.bounds.width - 4) / 2
-        let imageHeight: CGFloat = CGFloat(viewModel.photo(at: indexPath.item).height)
-        let imageWidth: CGFloat = CGFloat(viewModel.photo(at: indexPath.item).width)
+        let imageHeight: CGFloat = CGFloat(photosViewModel.photo(at: indexPath.item).height)
+        let imageWidth: CGFloat = CGFloat(photosViewModel.photo(at: indexPath.item).width)
         let imageRatio = imageHeight / imageWidth
         
         return imageRatio * cellWidth
@@ -177,7 +188,7 @@ extension PhotosViewController: PhotoCollectionViewCellDelegate {
         alertController.addTextField()
         alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
         alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-            self.viewModel.savePhotoResponse(indexPath: indexPath, memo: alertController.textFields?.first?.text ?? "")
+            self.photosViewModel.savePhotoResponse(indexPath: indexPath, memo: alertController.textFields?.first?.text ?? "")
         }))
         self.present(alertController, animated: true)
     }

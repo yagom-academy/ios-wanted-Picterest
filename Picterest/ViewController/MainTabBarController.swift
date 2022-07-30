@@ -56,10 +56,10 @@ extension MainTabBarController {
         let photosTabBarItem = UITabBarItem(title: MainTabBarItem.photo.title, image: MainTabBarItem.photo.image, selectedImage: nil)
         let savedTabBarItem = UITabBarItem(title: MainTabBarItem.saved.title, image: MainTabBarItem.saved.image, selectedImage: nil)
         
-        let photosViewController = PhotosViewController()
+        let photosViewController = PhotosViewController(photosViewModel: PhotosViewModel())
         photosViewController.tabBarItem = photosTabBarItem
         
-        let savedViewController = SavedViewController()
+        let savedViewController = SavedViewController(savedViewModel: SavedViewModel())
         savedViewController.tabBarItem = savedTabBarItem
         
         photosViewController.delegate = savedViewController
