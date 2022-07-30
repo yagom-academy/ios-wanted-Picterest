@@ -67,23 +67,23 @@ ___
     <summary> <h2>MVVM Pattern</h2></summary>
     <h3> 1. MVVM 패턴을 사용한 이유</h3>
     <ul>
-      <li> 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 `CoreData`를 이용하여 저장하고, 이미지파일을 `FileManager`를 이용하여 저장합니다.
-이 모든 작업을 `View`에서 하기에는 무리가 있습니다. 그렇기 때문에 `ViewModel`을 만들어 데이터를 주고받는 역할을 하도록하고 추가로 이벤트를 처리하는 작업도 하도록 만들었습니다.</li>
+	    <li> 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 <code>CoreData</code>를 이용하여 저장하고, 이미지파일을 <code>FileManager</code>를 이용하여 저장합니다.
+이 모든 작업을 <code>View</code>에서 하기에는 무리가 있습니다. 그렇기 때문에 <code>ViewModel</code>을 만들어 데이터를 주고받는 역할을 하도록하고 추가로 이벤트를 처리하는 작업도 하도록 만들었습니다.</li>
     </ul>
     <h3> 2. 이번 프로젝트에서 사용한 곳</h3>
     <ul>
-      <li>이번 프로젝트는 크게 화면이 `2개`입니다. 이 2개의 화면에만 ViewModel을 만들어주었습니다.</li>
+      <li>이번 프로젝트는 크게 화면이 <code>2개</code>입니다. 이 2개의 화면에만 ViewModel을 만들어주었습니다.</li>
       <ol>
         <li>ImageListViewController (첫번째 화면)</li>
         <li>SavedImageListViewController (두번째 화면)</li>
       </ol>
-      <li>Alert와 같은 다소 작은 뷰들은 `delegate`를 이용하여 이벤트를 처리하도록 하였습니다.</li>
+      <li>Alert와 같은 다소 작은 뷰들은 <code>delegate</code>를 이용하여 이벤트를 처리하도록 하였습니다.</li>
 </details>
 <details>
 		<summary> <h2>Delegate Pattern</h2></summary>
     <h3> 1.딜리게이트 패턴을 사용한 이유</h3>
     <ul>
-      <li>이번 프로젝트에서는 `RxSwift`를 사용하지 않고 만든 프로젝트입니다. 그래서 이벤트전달을 하기위해 떠오른 방법이 `노티피케이션`과 `델리게이트패턴`입니다. 노티피케이션은 이벤트의 전달과정을 파악하기가 쉽지않고 실수를 할 가능성이 큽니다. 반면에 델리게이트패턴을 뷰와 1대1 대응이 되도록 구현한다면 가독성과 유지보수가 좋아지게 됩니다.</li>
+      <li>이번 프로젝트에서는 <code>RxSwift</code>를 사용하지 않고 만든 프로젝트입니다. 그래서 이벤트전달을 하기위해 떠오른 방법이 <code>노티피케이션</code>과 <code>델리게이트패턴</code>입니다. 노티피케이션은 이벤트의 전달과정을 파악하기가 쉽지않고 실수를 할 가능성이 큽니다. 반면에 델리게이트패턴을 뷰와 1대1 대응이 되도록 구현한다면 가독성과 유지보수가 좋아지게 됩니다.</li>
   </ul>
     <h3>2. 이번 프로젝트에서 사용한 곳</h3>
     <ol>
@@ -99,7 +99,7 @@ ___
 		<summary> <h2>NSCache</h2></summary>
     <h3> NSCache를 사용한 이유</h3>
     <ul>
-      <li>앱의 동작중 가장 비용이 드는 동작은 아마도 네트워크통신일 것입니다. 그중에서도 이미지파일의 경우 JSON데이터에 비해 용량이 매우 큰편입니다. 그렇기 때문에 이미 한번 네트워크요청을 해서 받아온 이미지파일이라면 `NSCache`를 이용하여 임시로 저장하는 것이 효율적일 것 입니다.</li>
+      <li>앱의 동작중 가장 비용이 드는 동작은 아마도 네트워크통신일 것입니다. 그중에서도 이미지파일의 경우 JSON데이터에 비해 용량이 매우 큰편입니다. 그렇기 때문에 이미 한번 네트워크요청을 해서 받아온 이미지파일이라면 <code>NSCache</code>를 이용하여 임시로 저장하는 것이 효율적일 것 입니다.</li>
   </ul>
 </details>
 <details>
@@ -139,7 +139,16 @@ ___
 ___
 
 # 🌈 기타 프로젝트 특징
-
+	
+<details>
+		<summary> <h2>다양한 행의갯수로 유연하게 출력가능</h2></summary>
+    <ul>
+      <li>커스텀레이아웃의 delegate를 이용하여 행의 갯수를 조정해줄 수 있습니다.</li>
+				<img src= "Picterest/Resource/Images/coulmn_code.png"/>
+			<li>행의 갯수가 변하더라도 행이짧은쪽을 우선순위로 셀이 쌓이는 방식은 유지됩니다.</li>
+				<img src= "Picterest/Resource/Images/coulmn_234.png"/>
+  	</ul>
+</details>
 <details>
 		<summary> <h2>코드의 Style수치값들을 하드코딩하지않고 Style파일에서 관리</h2></summary>
     <ul>
@@ -166,14 +175,5 @@ ___
 				<img src= "Picterest/Resource/Images/collection_subscript_code.png"/>
 			<li>다음과 같이 guard문을 활용하여 안전하게 배열의 요소에 접근이 가능해 집니다.</li>
 				<img src= "Picterest/Resource/Images/collection_subscript_code2.png"/>
-  	</ul>
-</details>
-<details>
-		<summary> <h2>다양한 행의갯수로 유연하게 출력가능</h2></summary>
-    <ul>
-      <li>커스텀레이아웃의 delegate를 이용하여 행의 갯수를 조정해줄 수 있습니다.</li>
-				<img src= "Picterest/Resource/Images/coulmn_code.png"/>
-			<li>행의 갯수가 변하더라도 행이짧은쪽을 우선순위로 셀이 쌓이는 방식은 유지됩니다.</li>
-				<img src= "Picterest/Resource/Images/coulmn_234.png"/>
   	</ul>
 </details>
