@@ -8,11 +8,13 @@
 import UIKit
 
 extension UIImageView {
-    func setImageUrl(_ url: String) {
+    func setImageUrl(_ url: String) -> Bool {
+        var isChached = false
         DispatchQueue.global(qos: .background).async {
             let cachedKey = NSString(string: url)
             if let cachedImage = ImageCacheManager.shared.object(forKey: cachedKey) {
                 DispatchQueue.main.sync {
+                    isChached = true
                     self.image = cachedImage
                 }
                 return
@@ -35,5 +37,6 @@ extension UIImageView {
                 }
             }.resume()
         }
+        return isChached
     }
 }

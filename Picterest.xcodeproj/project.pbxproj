@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		7C1DFE4B28950D1F002342B6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C1DFE4928950D1F002342B6 /* Model.xcdatamodeld */; };
 		7C4A32C1289522FC00A5E485 /* FileSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A32C0289522FC00A5E485 /* FileSaveManager.swift */; };
+		7C4A32C528952F9600A5E485 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A32C428952F9600A5E485 /* Entity+CoreDataProperties.swift */; };
 		7C69A2CD28950E2600F7FFDE /* Entity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69A2CB28950E2600F7FFDE /* Entity+CoreDataClass.swift */; };
-		7C69A2CE28950E2600F7FFDE /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69A2CC28950E2600F7FFDE /* Entity+CoreDataProperties.swift */; };
 		7C69A2D12895116A00F7FFDE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69A2D02895116A00F7FFDE /* CoreDataManager.swift */; };
 		7C69A2F2289515DB00F7FFDE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69A2F1289515DB00F7FFDE /* HomeViewController.swift */; };
 		7C69A2F4289515F200F7FFDE /* SavedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C69A2F3289515F200F7FFDE /* SavedViewController.swift */; };
@@ -30,8 +30,8 @@
 /* Begin PBXFileReference section */
 		7C1DFE4A28950D1F002342B6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C4A32C0289522FC00A5E485 /* FileSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaveManager.swift; sourceTree = "<group>"; };
+		7C4A32C428952F9600A5E485 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7C69A2CB28950E2600F7FFDE /* Entity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		7C69A2CC28950E2600F7FFDE /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		7C69A2D02895116A00F7FFDE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7C69A2F1289515DB00F7FFDE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7C69A2F3289515F200F7FFDE /* SavedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedViewController.swift; sourceTree = "<group>"; };
@@ -64,10 +64,10 @@
 		7C69A2CF28950F9F00F7FFDE /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				7C4A32C428952F9600A5E485 /* Entity+CoreDataProperties.swift */,
 				7C69A2D02895116A00F7FFDE /* CoreDataManager.swift */,
 				7C1DFE4928950D1F002342B6 /* Model.xcdatamodeld */,
 				7C69A2CB28950E2600F7FFDE /* Entity+CoreDataClass.swift */,
-				7C69A2CC28950E2600F7FFDE /* Entity+CoreDataProperties.swift */,
 			);
 			path = "Core Data";
 			sourceTree = "<group>";
@@ -206,10 +206,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C4A32C528952F9600A5E485 /* Entity+CoreDataProperties.swift in Sources */,
 				7C69A2F72895164300F7FFDE /* CollectionViewCell.swift in Sources */,
 				7C69A2FF28951EA400F7FFDE /* ImageCacheManager.swift in Sources */,
 				7C69A2FC289516AD00F7FFDE /* NetworkService.swift in Sources */,
-				7C69A2CE28950E2600F7FFDE /* Entity+CoreDataProperties.swift in Sources */,
 				7C69A2D12895116A00F7FFDE /* CoreDataManager.swift in Sources */,
 				7C69A2F4289515F200F7FFDE /* SavedViewController.swift in Sources */,
 				7C69A2F2289515DB00F7FFDE /* HomeViewController.swift in Sources */,

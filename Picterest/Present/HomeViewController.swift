@@ -7,25 +7,25 @@
 
 import UIKit
 
+import CoreData
+
 class HomeViewController: UIViewController {
 
     var imageList: [ImageEntity] = []
     var imageModelList : [ImageModel] = []
-    var selectedItem = 0
 
     @IBOutlet weak var HomeCollectionView: UICollectionView!
     
     @IBAction func tapStarBttn(_ sender: UIButton) {
-        self.selectedItem = sender.tag
         imageModelList[sender.tag].isSaved = true
         if sender.isSelected {
-            sender.isSelected = false
             return
         }else{
             sender.isSelected = true
         }
-        self.setAlert(_ sender: sender)
+        self.setAlert(sender)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let customLayout = CustomLayout()
@@ -48,6 +48,7 @@ class HomeViewController: UIViewController {
             }
         }
     }
+
     func setAlert(_ sender: UIButton) {
         let alert = UIAlertController(
             title: "⚠️",
@@ -58,12 +59,10 @@ class HomeViewController: UIViewController {
             title: "OK",
             style: .default) { (ok) in
                 let name = alert.textFields?[0].text ?? UUID().uuidString
-                if FileSaveManager.shared.saveImage(image: (sender.imageView?.image)!, name: name) {
-                    print("Saved")
-//                    self.saveItem(name: name, path: "", url: self.imageModelList[sender.tag].imageURL, memo: name)
-                }
-                let a = FileSaveManager.shared.getSavedImage(named: "tmp")
-                print(">>>>", a ?? "??")
+                guard let path = FileSaveManager.shared.saveImage(image: (sender.imageView?.image)!, name: name) else { return }
+                let item = self.imageModelList[sender.tag]
+                self.saveItem(name: name, path: path, url: item.imageURL, memo: name, height: item.height, width: item.width)
+//                let a = FileSaveManager.shared.getSavedImage(named: name)
         }
         let cancel = UIAlertAction(
             title: "cancel",
@@ -82,8 +81,9 @@ class HomeViewController: UIViewController {
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
     }
-    func saveItem(name: String, path: String, url: String, memo: String) {
-        CoreDataManager.shared.createItem(name: name, path: path, url: url, memo: memo) {
+    
+    func saveItem(name: String, path: String, url: String, memo: String, height: Int, width: Int) {
+        CoreDataManager.shared.createItem(name: name, path: path, url: url, memo: memo, height: Int64(height), width: Int64(width)) {
             print("Saved in CoreData")
         }
     }
@@ -104,15 +104,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout, UICollectionVi
         cell.indexLabel.text = "\(indexPath.row + 1)번째"
         let info = imageList[indexPath.row]
         let urlString = info.imageURL.thumbnail
-        cell.imageView.setImageUrl(urlString)
-        
+        if cell.imageView.setImageUrl(urlString){
+            cell.downloadBttn.isSelected = true
+        }
         return cell
   }
-
-    @objc func deleteImage(sender: UIButton){
-        self.HomeCollectionView.deleteItems(at: [IndexPath.init(row: sender.tag, section: 0)])
-        self.imageModelList.remove(at: sender.tag)
-    }
 }
 
 extension HomeViewController: CustomLayoutDelegate {
@@ -120,7 +116,12 @@ extension HomeViewController: CustomLayoutDelegate {
         let cellWidth: CGFloat = (view.bounds.width - 4) / 2
         let imageHeight = imageList[indexPath.item].height
         let imageWidth = imageList[indexPath.item].width
-        let imageRatio = imageHeight/imageWidth
+        var imageRatio = 0
+        if imageHeight < imageWidth{
+            imageRatio = imageWidth / imageHeight
+        }else {
+            imageRatio = imageHeight / imageWidth
+        }
         return CGFloat(imageRatio) * cellWidth
     }
 }

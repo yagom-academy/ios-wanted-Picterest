@@ -20,9 +20,11 @@ extension Entity {
     @NSManaged public var memo: String?
     @NSManaged public var path: String?
     @NSManaged public var url: String?
+    @NSManaged public var height: Int64
+    @NSManaged public var width: Int64
 
 }
 
 extension Entity : Identifiable {
-    
+
 }

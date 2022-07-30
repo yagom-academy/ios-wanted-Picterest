@@ -13,17 +13,22 @@ class CoreDataManager {
     
    static let shared = CoreDataManager()
    private init() { }
-   var container: NSPersistentContainer?
+    var container: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores(completionHandler: { (_, error) in
+            if let error = error as NSError? {
+                fatalError("ERROR: \(error)")
+            }
+        })
+        return container
+    }()
    var mainContext: NSManagedObjectContext {
-    guard let context = container?.viewContext else{
-      fatalError("Not Implemented")
-    }
-    return context
+    return container.viewContext
    }
 
     func setup(modelName: String){
         container = NSPersistentContainer(name: modelName)
-        container?.loadPersistentStores(completionHandler: {(desc, error) in
+        container.loadPersistentStores(completionHandler: {(desc, error) in
             if let error = error{
                 fatalError(error.localizedDescription)
             }
@@ -43,31 +48,33 @@ class CoreDataManager {
 }
 
 extension CoreDataManager {
-    func createItem(name: String, path: String, url: String, memo: String , completion: (() -> ())? = nil){
+    func createItem(name: String, path: String, url: String, memo: String, height: Int64, width: Int64 , completion: @escaping () -> ()){
         mainContext.perform{
             let newItem = Entity(context: self.mainContext)
             newItem.id = name
             newItem.path = path
             newItem.url = url
             newItem.memo = memo
+            newItem.height = height
+            newItem.width = width
             self.saveMainContext()
-            completion?()
+            completion()
         }
     }
     
-    func fatchItem(predicate: NSPredicate? = nil) -> [Entity]{
+    func fatchItem(completion: @escaping ([Entity]) -> ()){
         var list = [Entity]()
         
         mainContext.performAndWait {
             let request: NSFetchRequest<Entity> = Entity.fetchRequest()
-            request.predicate = predicate
+            request.returnsObjectsAsFaults = false 
             do{
                 list = try mainContext.fetch(request)
             }catch{
-                print(error)
+                print("ERROR: ",error)
             }
         }
-        return list
+        completion(list)
     }
     
     func delete(entity: Entity){

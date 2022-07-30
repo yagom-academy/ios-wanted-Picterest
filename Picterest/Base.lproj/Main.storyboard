@@ -34,22 +34,29 @@
                                             <rect key="frame" x="0.0" y="0.0" width="216" height="371"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zxs-bj-vvA">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zxs-bj-vvA">
                                                     <rect key="frame" x="0.0" y="0.0" width="216" height="371"/>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.masksToBounds">
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="10"/>
                                                         </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zjJ-k7-55z">
                                                     <rect key="frame" x="0.0" y="0.0" width="216" height="46"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQ1-hO-TQM">
-                                                            <rect key="frame" x="169" y="8" width="47" height="31"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="star" catalog="system"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tQ1-hO-TQM">
+                                                            <rect key="frame" x="183" y="8" width="33" height="31"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal" image="star" catalog="system">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="20" scale="large"/>
+                                                            </state>
+                                                            <state key="selected" image="star.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="TapStarBttn:" destination="shG-7G-RxR" eventType="touchUpInside" id="0Rl-gQ-MSI"/>
+                                                            </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oeh-d3-cJv">
                                                             <rect key="frame" x="8" y="13" width="42" height="21"/>
@@ -58,7 +65,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="tQ1-hO-TQM" secondAttribute="bottom" constant="7" id="9Sc-Xz-u5Q"/>
                                                         <constraint firstItem="tQ1-hO-TQM" firstAttribute="top" secondItem="zjJ-k7-55z" secondAttribute="top" constant="8" id="KDQ-Y8-wDY"/>
@@ -81,6 +88,12 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="216" height="371"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="downloadBttn" destination="tQ1-hO-TQM" id="Emj-EA-ulP"/>
                                             <outlet property="imageView" destination="Zxs-bj-vvA" id="n3x-xx-5t1"/>
@@ -152,8 +165,11 @@
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JYB-ju-adk">
                                                             <rect key="frame" x="186" y="8" width="30" height="31"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                            <state key="normal" image="star" catalog="system"/>
+                                                            <state key="normal" image="star" catalog="system">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
+                                                            </state>
                                                             <state key="selected" image="star.fill" catalog="system"/>
                                                             <connections>
                                                                 <action selector="tapStarBttn:" destination="1YW-6g-1dG" eventType="touchUpInside" id="bDZ-SA-tiy"/>
@@ -166,7 +182,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="trailing" secondItem="JYB-ju-adk" secondAttribute="trailing" id="5gK-AR-mo4"/>
                                                         <constraint firstAttribute="bottom" secondItem="JYB-ju-adk" secondAttribute="bottom" constant="7" id="7cA-9b-a10"/>

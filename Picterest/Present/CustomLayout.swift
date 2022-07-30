@@ -68,7 +68,7 @@ class CustomLayout: UICollectionViewFlowLayout {
             var visibleLayoutAttributes: [UICollectionViewLayoutAttributes] = []
 
             for attributes in cache {
-                if attributes.frame.intersects(rect) { // 셀 frame 과 요청 Rect 가 교차한다면, 리턴 값에 추가합니다.
+                if attributes.frame.intersects(rect) {
                     visibleLayoutAttributes.append(attributes)
                 }
             }
