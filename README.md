@@ -1,3 +1,7 @@
+| JMin | 
+| -- | 
+| [<img src="https://github.com/jmindeveloper.png" width="200">](https://github.com/jmindeveloper)|
+
 # 프로젝트 소개
 ### Picterest
 - 서버에서 이미지를 받아와 가변레이아웃으로 나타냅니다.
@@ -51,7 +55,7 @@
 | `RandomImageEntity` | - 네트워크 통신을 통해 받아온 이미지정보의 모델이다 <br> - Image 프로토콜을 채택하고 있다 |
 | `RandomImage` | - RandomImageEntity에 필요한 정보를 추가한 모델이다 |
 | `StarImageEntity` | - StarImage 인스턴스를 손쉽게 생성하기 위한 모델이다 |
-| `StarImage` | - CoreData의 Entity이다 |
+| `StarImage` | - CoreData의 Entity이다 <br> - Image 프로토콜을 채택하고 있다 |
 
 <br>
 
