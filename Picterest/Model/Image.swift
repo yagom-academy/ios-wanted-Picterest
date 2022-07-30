@@ -9,8 +9,8 @@ import UIKit
 
 struct ImageData {
     let image: Image
-    let memo: String
-    let isSaved: Bool
+    var memo: String
+    var isSaved: Bool
     
     init(image: Image, memo: String, isSaved: Bool) {
         self.image = image

@@ -8,6 +8,7 @@
 import UIKit
 
 final class SavedViewController: UIViewController {
+    
     private let viewModel = SavedCollectionViewModel()
     
     private lazy var collectionView: UICollectionView = {
@@ -57,16 +58,19 @@ extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell()}
         let savedData = viewModel.image(at: indexPath.row)
-        cell.configureSavedCollectionCell(with: savedData.image, memo: savedData.memo)
+        cell.configureSavedCollectionCell(with: savedData)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionHeader,
-              let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                           withReuseIdentifier: SavedCollectionHeaderView.identifier,
-                                                                           for: indexPath) as? SavedCollectionHeaderView else {
-            return UICollectionReusableView() }
+              let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SavedCollectionHeaderView.identifier,
+                for: indexPath
+              ) as? SavedCollectionHeaderView else {
+            return UICollectionReusableView()
+        }
         header.configureView()
         return header
     }

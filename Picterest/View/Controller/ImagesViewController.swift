@@ -9,7 +9,7 @@ import UIKit
 
 final class ImagesViewController: UIViewController {
     
-    private let imageCollectionViewModel = ImageCollectionViewModel()
+    private let viewModel = ImageCollectionViewModel()
     private let picterestLayout = PicterestLayout()
     
     private lazy var collectionView: UICollectionView = {
@@ -25,14 +25,24 @@ final class ImagesViewController: UIViewController {
         super.viewDidLoad()
         picterestLayout.delegate = self
         configureSubviews()
-        imageCollectionViewModel.fetchImages()
-        imageCollectionViewModel.collectionViewUpdate = { [weak self] in
+        viewModel.fetchImages()
+        viewModel.collectionViewUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.picterestLayout.reloadData()
                 self?.collectionView.reloadData()
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.collectionViewUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+
     
     private func configureSubviews() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,13 +59,13 @@ final class ImagesViewController: UIViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageCollectionViewModel.imagesCount
+        return viewModel.imagesCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.reuseIdentifier, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
-        let imageData = imageCollectionViewModel.image(at: indexPath.row)
-        cell.configureImageCollectionCell(with: imageData.image, at: indexPath.row)
+        let imageData = viewModel.image(at: indexPath.row)
+        cell.configureImageCollectionCell(with: imageData, at: indexPath.row) 
         cell.starButtonStatusChanged = { [weak self] in
             self?.starButtonTapped(at: indexPath.row)
         }
@@ -69,8 +79,8 @@ extension ImagesViewController: UICollectionViewDelegate {
         let frameHeight = scrollView.frame.size.height
         let yOffset = scrollView.contentOffset.y
         if yOffset > (contentHeight - frameHeight) {
-            if imageCollectionViewModel.isFetching == false {
-                imageCollectionViewModel.fetchImages(needToFetch: true)
+            if viewModel.isFetching == false {
+                viewModel.fetchImages(needToFetch: true)
             }
         }
     }
@@ -78,7 +88,7 @@ extension ImagesViewController: UICollectionViewDelegate {
 
 extension ImagesViewController: PicterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let imageData = imageCollectionViewModel.image(at: indexPath.row)
+        let imageData = viewModel.image(at: indexPath.row)
         let cellWidth: CGFloat = view.bounds.width / 2
         let imageRatio = CGFloat(imageData.image.height) / CGFloat(imageData.image.width)
         return cellWidth * imageRatio
@@ -87,37 +97,52 @@ extension ImagesViewController: PicterestLayoutDelegate {
 
 extension ImagesViewController {
     private func starButtonTapped(at index: Int) {
-        let data = imageCollectionViewModel.image(at: index)
         
-        if imageCollectionViewModel.checkFileExistInLocal(data: data.image) {
-            showAlertOfDelete(data: data.image)
+        let data = viewModel.image(at: index)
+        
+        if data.isSaved {
+            showAlertOfDelete(data)
         } else {
-            showAlertOfSave(data: data.image)
+            showAlertOfSave(data)
         }
     }
     
-    private func showAlertOfSave(data: Image) {
+    private func showAlertOfSave(_ data: ImageData) {
         let alert = UIAlertController(title: "사진을 저장합니다 ", message: "메모를 남겨보세요", preferredStyle: .alert)
         let save = UIAlertAction(title: "저장", style: .default) { _ in
-            guard let textField = alert.textFields,
-                  let text = textField[0].text else { return }
-            self.imageCollectionViewModel.save(data: data, with: text)
+            guard let textField = alert.textFields?.first,
+                  let memo = textField.text else { return }
+            DispatchQueue.main.async {
+                self.viewModel.saveImage(data.image, with: memo)
+                self.collectionView.reloadData()
+            }
         }
-        let cancel = UIAlertAction(title: "취소", style: .default)
-        alert.addAction(cancel)
         alert.addAction(save)
         alert.addTextField()
         present(alert, animated: true)
     }
     
-    private func showAlertOfDelete(data: Image) {
+    private func showAlertOfDelete(_ data: ImageData) {
         let alert = UIAlertController(title: "즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
         let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            self.imageCollectionViewModel.deleteImage(id: data.id)
+            DispatchQueue.main.async {
+                self.viewModel.deleteImage(data.image)
+                self.collectionView.reloadData()
+            }
         }
-        let cancel = UIAlertAction(title: "취소", style: .default)
-        alert.addAction(cancel)
         alert.addAction(delete)
         present(alert, animated: true)
+    }
+}
+
+extension ImagesViewController: ImageDeleteDelegate {
+    func imageDeleteSuccess(data: ImageData) {
+        let savedViewController = SavedViewController()
+        
+        DispatchQueue.main.async {
+            savedViewController.delegate = self
+            self.viewModel.deleteImage(data.image)
+            self.collectionView.reloadData()
+        }
     }
 }

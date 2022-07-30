@@ -2,7 +2,7 @@
 //  ImageInfo+CoreDataClass.swift
 //  Picterest
 //
-//  Created by CHUBBY on 2022/07/28.
+//  Created by CHUBBY on 2022/07/30.
 //
 //
 

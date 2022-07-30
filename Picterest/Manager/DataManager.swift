@@ -11,7 +11,7 @@ class DataManager {
     static let shared = DataManager()
     private init() {}
     
-    func save(data: Image, memo: String) {
+    func save(data: Image, with memo: String, isSaved: Bool) {
         LocalFileManager.shared.save(data: data)
         let localPath = LocalFileManager.shared.localPath
         CoreDataManager.shared.saveData(data: data, memo: memo, localPath: localPath)

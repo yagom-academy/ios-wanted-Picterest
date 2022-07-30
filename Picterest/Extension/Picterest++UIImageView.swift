@@ -13,7 +13,6 @@ extension UIImageView {
         let key = NSString(string: url)
         if let cachedImage = ImageCacheManager.shared.object(forKey: key) {
             self.image = cachedImage
-            print("from cache")
             return
         }
             

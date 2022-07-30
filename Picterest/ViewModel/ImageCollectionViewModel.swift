@@ -9,7 +9,7 @@ import UIKit
 
 final class ImageCollectionViewModel {
     private var pageNumber = 1
-    private var images: [ImageData] = [] {
+    private var images: [Image] = [] {
         didSet {
             collectionViewUpdate()
         }
@@ -25,11 +25,10 @@ final class ImageCollectionViewModel {
         NetworkManager.shared.fetchImageList(pageNumber: pageNumber) { [weak self] result in
             switch result {
             case .success(let images):
-                let imageData = images.map { ImageData(image: $0, memo: "", isSaved: false)}
                 if self?.pageNumber == 1 {
-                    self?.images = imageData
+                    self?.images = images
                 } else {
-                    self?.images.append(contentsOf: imageData)
+                    self?.images.append(contentsOf: images)
                 }
                 self?.pageNumber += 1
                 self?.isFetching = false
@@ -40,23 +39,23 @@ final class ImageCollectionViewModel {
     }
     
     func image(at index: Int) -> ImageData {
-        let id = images[index].image.id
-        let width = images[index].image.width
-        let height = images[index].image.height
-        let urls = images[index].image.urls
-        return ImageData(image: Image(id: id, width: width, height: height, urls: urls), memo: "", isSaved: false)
+        let targetData = images[index]
+        let imageData = ImageData(image: targetData, memo: "", isSaved: checkFileExistInLocal(id: targetData.id))
+        return imageData
     }
-    
-    func checkFileExistInLocal(data: Image) -> Bool {
-        let result = LocalFileManager.shared.checkFileExistInLocal(id: data.id)
+
+    func checkFileExistInLocal(id: String) -> Bool {
+        let result = LocalFileManager.shared.checkFileExistInLocal(id: id)
         return result
     }
     
-    func save(data: Image, with memo: String) {
-        DataManager.shared.save(data: data, memo: memo)
+    func saveImage(_ data: Image, with memo: String) {
+        DataManager.shared.save(data: data, with: memo, isSaved: true)
+        collectionViewUpdate()
     }
     
-    func deleteImage(id: String) {
-        DataManager.shared.delete(id: id)
+    func deleteImage(_ data: Image) {
+        DataManager.shared.delete(id: data.id)
+        collectionViewUpdate()
     }
 }
