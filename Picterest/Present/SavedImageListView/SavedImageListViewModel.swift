@@ -28,7 +28,7 @@ final class SavedImageListViewModel {
     
     func cellSize(_ row: Int) -> CGSize {
         let aspectRatio = cellDatas[row].aspectRatio
-        let width = CellStyle.Math.largeWidth
+        let width = CellStyle.Math.cellWidth
         let height = width*aspectRatio
         return CGSize(width: width, height: height)
     }

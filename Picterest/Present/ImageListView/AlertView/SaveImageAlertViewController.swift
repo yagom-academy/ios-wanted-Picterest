@@ -30,6 +30,7 @@ final class SaveImageAlertViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.textColor = AlertStyle.Color.text
         label.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         return label
     }()
@@ -55,16 +56,16 @@ final class SaveImageAlertViewController: UIViewController {
     private let savedButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Define.savedButtonTitle, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
-        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.large, weight: .medium)
+        button.setTitleColor(AlertStyle.Color.button, for: .normal)
         return button
     }()
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Define.cancelButtonTitle, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
-        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.large, weight: .medium)
+        button.setTitleColor(AlertStyle.Color.button, for: .normal)
         return button
     }()
     

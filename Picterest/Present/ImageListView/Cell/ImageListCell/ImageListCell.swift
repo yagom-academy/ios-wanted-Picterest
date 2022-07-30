@@ -26,7 +26,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let starButton: UIButton = {
         let button = UIButton(type: .system)
-        button.titleLabel?.font = .systemFont(ofSize: Style.Font.starButton, weight: .medium)
+        button.titleLabel?.font = .systemFont(ofSize: CellStyle.Font.starButton, weight: .medium)
         return button
     }()
     
@@ -109,8 +109,8 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
             topBarStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        leftPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.topBarLeftPadding).isActive = true
-        rightPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.topBarRightPadding).isActive = true
+        leftPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.smallCellTopBarSidePadding).isActive = true
+        rightPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.smallCellTopBarSidePadding).isActive = true
         
         starButton.widthAnchor.constraint(equalToConstant: CellStyle.Math.starButtonSize).isActive = true
         starButton.heightAnchor.constraint(equalToConstant: CellStyle.Math.starButtonSize).isActive = true

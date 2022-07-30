@@ -18,7 +18,9 @@ enum AlertStyle {
     }
     enum Color {
         static let fakeBackground:UIColor = .white.withAlphaComponent(0.2)
-        static let background:UIColor = .green
+        static let background:UIColor = Style.Color.brown
+        static let text:UIColor = Style.Color.text
+        static let button:UIColor = Style.Color.darkBrown
         static let textFieldBackground:UIColor = .white
     }
 }

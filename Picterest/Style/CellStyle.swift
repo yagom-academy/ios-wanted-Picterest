@@ -9,13 +9,16 @@ import UIKit
 
 enum CellStyle {
     enum Math {
-        static let cornerRadius:CGFloat = Style.Math.cornerRadius
+        static let cornerRadius:CGFloat = Style.Math.windowWidth < 340 ? 10.0 : 15.0
         static let topBarHeight:CGFloat = Style.Math.windowWidth < 340 ? 40.0 : 60.0
-        static let topBarLeftPadding:CGFloat = Style.Math.windowWidth < 340 ? 10.0 : 20.0
-        static let topBarRightPadding:CGFloat = Style.Math.windowWidth < 340 ? 10.0 : 20.0
+        static let smallCellTopBarSidePadding:CGFloat = Style.Math.windowWidth < 340 ? 8.0 : 10.0
+        static let largeCellTopBarSidePadding:CGFloat = Style.Math.windowWidth < 340 ? 15.0 : 20.0
         static let starButtonSize:CGFloat = topBarHeight/2
-        static let largePadding:CGFloat = 10.0
-        static let largeWidth:CGFloat = Style.Math.windowWidth - 2*largePadding
+        static let cellPadding:CGFloat = 10.0
+        static let cellWidth:CGFloat = Style.Math.windowWidth - 2*cellPadding
+    }
+    enum Font {
+        static let starButton:CGFloat = Style.Math.windowWidth < 340 ? 20.0 : 25.0
     }
     enum Color {
         static let text:UIColor = Style.Color.text

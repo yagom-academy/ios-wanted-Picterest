@@ -18,7 +18,7 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         setVC()
         let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.backgroundColor = Style.Color.tabBarBackground
+        tabBarAppearance.backgroundColor = Style.Color.brown
         self.tabBar.standardAppearance = tabBarAppearance
         self.tabBar.scrollEdgeAppearance = tabBarAppearance
         self.tabBar.tintColor = Style.Color.tint
@@ -33,5 +33,4 @@ final class MainTabBarController: UITabBarController {
 
         self.viewControllers = [imageListViewController, savedImageListViewController]
     }
-
 }

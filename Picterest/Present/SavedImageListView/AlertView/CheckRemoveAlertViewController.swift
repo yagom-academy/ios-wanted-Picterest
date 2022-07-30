@@ -20,7 +20,7 @@ final class CheckRemoveAlertViewController: UIViewController {
     private let alertStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.layer.cornerRadius = AlertStyle.Math.cornerRadius
-        stackView.backgroundColor = .green
+        stackView.backgroundColor = AlertStyle.Color.background
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
@@ -31,6 +31,7 @@ final class CheckRemoveAlertViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = Value.Text.titleLabelText
+        label.textColor = AlertStyle.Color.text
         label.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         label.textAlignment = .center
         return label
@@ -46,16 +47,16 @@ final class CheckRemoveAlertViewController: UIViewController {
     private let removeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Value.Text.removeButtonTitle, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
+        button.setTitleColor(AlertStyle.Color.button, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.large, weight: .medium)
         return button
     }()
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Value.Text.cancelButtonTitle, for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
+        button.setTitleColor(AlertStyle.Color.button, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.large, weight: .medium)
         return button
     }()
     

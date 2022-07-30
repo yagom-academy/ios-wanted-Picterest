@@ -14,9 +14,8 @@ enum Style {
     }
     
     enum Font {
-        static let medium:CGFloat = Math.windowWidth < 340 ? 14.0 : 18.0
+        static let medium:CGFloat = Math.windowWidth < 340 ? 12.0 : 16.0
         static let large:CGFloat = Math.windowWidth < 340 ? 20.0 : 25.0
-        static let starButton:CGFloat = Math.windowWidth < 340 ? 20.0 : 30.0
     }
     
     enum Color {
@@ -26,6 +25,7 @@ enum Style {
         static let deSelectedStar:UIColor = .white
         static let background:UIColor = .white
         static let collectionViewBackground:UIColor = .clear
-        static let tabBarBackground:UIColor = .init(red: 110/256, green: 77/256, blue: 65/256, alpha: 1)
+        static let brown:UIColor = .init(red: 110/256, green: 77/256, blue: 65/256, alpha: 1)
+        static let darkBrown:UIColor = .init(red: 64/256, green: 36/256, blue: 26/256, alpha: 1)
     }
 }
