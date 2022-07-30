@@ -11,6 +11,7 @@ class HomeViewController: UIViewController {
   let layoutProvider = SceneLayout(scene: .home, cellPadding: 6)
   private var isLoading = false
   private var loadingView: Footer?
+  private var alertController: UIAlertController?
   
   init(viewModel: ImageConfigurable) {
     self.viewModel = viewModel
@@ -24,10 +25,14 @@ class HomeViewController: UIViewController {
   private lazy var collectionView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layoutProvider)
     collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.id)
-    collectionView.register(Footer.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: Footer.id)
+    collectionView.register(Footer.self,
+                            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                            withReuseIdentifier: Footer.id)
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     return collectionView
   }()
+  
+  
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
@@ -67,6 +72,7 @@ private extension HomeViewController {
       viewModel.fetchImages()
     }
   }
+  
   func setDataBinding() {
     self.viewModel.imageList.bind({ list in
       let group = DispatchGroup()
@@ -131,11 +137,19 @@ private extension HomeViewController {
         textField.placeholder = "어떤 영감을 받았나요?"
         textField.addTarget(self, action: #selector(self.textChanged(_:)), for: .editingChanged)
       })
+      alert.actions[0].isEnabled = false
+      self.alertController = alert
     }
   }
   
   @objc func textChanged(_ sender:UITextField) {
-    MemoAlert.memo = sender.text
+    guard let alertController = self.alertController else {return}
+    if !(sender.text!.trimmingCharacters(in: .whitespaces).isEmpty) {
+      alertController.actions[0].isEnabled = true
+      MemoAlert.memo = sender.text
+    }else {
+      alertController.actions[0].isEnabled = false
+    }
   }
 }
 

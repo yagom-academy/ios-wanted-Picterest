@@ -18,6 +18,7 @@ struct MemoAlert {
     controller.present(alertController, animated: true)
     return alertController
   }
+  
 }
 
 extension MemoAlert {
