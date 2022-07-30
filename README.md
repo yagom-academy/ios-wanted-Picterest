@@ -24,9 +24,9 @@
 ## FileManager
 - 프로젝트 조건에 CoreData에 id, 메모, 사진 원본 url, 사진 저장 위치를 저장하도록 제시
 - 사진 저장 위치에 documentDirectory를 포함한 이미지 파일 주소 전체를 저장했지만 시뮬레이터에서 앱을 재실행할 경우 documentDirectory가 계속 바뀌는 문제가 발생해 이미지 로딩 실패
-- 저장 시 id, data를 통해 해당 id를 제목으로 가지는 이미지 파일 저장
-- 불러올 경우 전체 주소가 아닌 id를 통해서만 해당 directory에서 탐색
-- 조건과 다르게 CoreData에는 id, 메모, 사진 원본 url, 생성 날짜 저장 
+- 저장 시 id를 제목으로 가지는 이미지 파일 저장
+- 불러올 경우 전체 주소가 아닌 id를 통해서만 해당 directory에서 이미지 파일 불러오기
+- 조건과 다르게 CoreData에는 id, 메모, 사진 원본 url, 생성 날짜 저장
 
 ## UICollectionViewDiffableDataSource
 - CollectionView reloadData or reloadSections 시 깜빡임 현상 발생
@@ -38,8 +38,8 @@
 ## 이미지 중복 발생
 - 첫 번째 화면에서 page가 하나씩 증가하면서 Pagination 구현
 - 중복이 발생한 경우
-  - 15개의 사진을 불러올 경우 발생 -> 10개, 13개 등 15개가 아닌 것으로 수정했을 때는 발생하지 않음
-  - 잠시 기다리면 새로운 사진이 추가되면 그 뒤로는 중복 발생하지 않음
+  - 새로운 사진이 추가된 경우에 15개씩 사진을 불러오는 경우에 중복 발생
+  - 10개, 13개 등 15개가 아닌 다른 조건으로 수정한 경우에는 발생하지 않음
   - 네트워크의 문제라고 생각
 - UICollectionViewDiffableDataSource 사용 시 사용하는 모델이 서로 구분할 수 있는 Hash value를 가져야 함
   - 처음에는 네트워크 요청 후 받는 id String 값으로 설정
@@ -56,3 +56,7 @@
 ## iOS 13.1로 개발한 이유
 - iOS 13.0 시뮬레이터 실행 시 UIAlertController의 title, message가 한글이면 오류 발생하며 나타나지 않는 발생
 - 내 컴퓨터만의 문제인지 모르겠지만 iOS 13.1부터는 정상 동작 확인
+
+## Collection View Context menus
+- 참고 : https://medium.com/doyeona/context-menus-in-ios13-collectionview-1d292d4fe8e0
+- 사진 앨범과 비슷하게 만들어보고 싶어서 검색
