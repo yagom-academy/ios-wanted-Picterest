@@ -47,7 +47,7 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout, UICollectionV
   }
         
 }
-extension SavedViewController: PinterestLayoutDelegate {
+extension SavedViewController: CustomLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         let cellWidth: CGFloat = (view.bounds.width - 4) / 2
         let imageHeight = savedImageList[indexPath.item].height
