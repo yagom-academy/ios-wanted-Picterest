@@ -8,7 +8,7 @@
 import UIKit
 
 class SaveCollectionTitleView: UIView {
-    
+    // MARK: - View Properties
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "저장된 사진"
@@ -16,7 +16,7 @@ class SaveCollectionTitleView: UIView {
         label.textColor = .black
         return label
     }()
-    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -25,7 +25,10 @@ class SaveCollectionTitleView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+}
+
+// MARK: - UI Configure Methods
+private extension SaveCollectionTitleView {
     func setupUI() {
         addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

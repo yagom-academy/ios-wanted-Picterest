@@ -7,17 +7,13 @@
 
 import UIKit
 
-// MARK: - Image Drawable
-protocol ImageDrawable: AnyObject {
-    var imageLoader: ImageLoader? { get }
-    func setUpTask()
-}
-
-class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawable {
+class FeedCollectionCustomCell: UICollectionViewCell {
+    // MARK: - Properties
     var imageLoader: ImageLoader?
     private let cache = CacheService.shared
-    static let identifier = "FeedCollectionCustomCell"
+    static let identifier = String.FeedCellIdentifier
     
+    // MARK: - View Properties
     var topButtonView: CellTopButtonView = {
         let CellTopButtonView = CellTopButtonView()
         return CellTopButtonView
@@ -29,6 +25,7 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawable {
         return imageView
     }()
     
+    // MARK: - Init Methods
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -37,7 +34,6 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func prepareForReuse() {
         topButtonView.starButton.isSelected = false
@@ -50,28 +46,23 @@ class FeedCollectionCustomCell: UICollectionViewCell, ImageDrawable {
 // MARK: - Task Methods
 extension FeedCollectionCustomCell {
     func setUpTask() {
-        guard let imagePath = imageLoader?.baseURL else {
+        guard let imagePath = imageLoader?.configureURL()?.absoluteString else {
             return
         }
-        
         if let imageData = cache.fetchData(imagePath) {
             let image = UIImage(data: imageData)
             self.imageView.image = image
-            print("Image get cache storage")
             return
         }
-        
         
         imageLoader?.requestNetwork(completion: { result in
             switch result {
             case .success(let data):
-                if let image = data as? UIImage,
-                   let imageData = image.pngData() {
-                    DispatchQueue.main.async {
-                        self.imageView.image = image
-                    }
-                    self.cache.uploadData(key: imagePath, data: imageData)
-                    
+                
+                let image = UIImage(data: data)
+                self.cache.uploadData(key: imagePath, data: data)
+                DispatchQueue.main.async {
+                    self.imageView.image = image
                 }
             case .failure(let error):
                 print("Error in download mage \(error)")
@@ -82,8 +73,7 @@ extension FeedCollectionCustomCell {
     }
     
     func cancelLoad() {
-        imageLoader?.task?.cancel()
-        imageLoader?.task = nil
+        imageLoader?.cancelTask()
         imageView.image = nil
     }
 }
@@ -120,6 +110,5 @@ private extension FeedCollectionCustomCell {
         
         topButtonView.backgroundColor = .black.withAlphaComponent(0.2)
         topButtonView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        
     }
 }

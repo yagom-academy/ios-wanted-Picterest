@@ -7,24 +7,43 @@
 
 import UIKit
 
+// MARK: - Alert Type
 enum AlertType {
     case confirmAndCancel
     case confirm
     case confirmTextField
-}
-
-protocol AlertAble: AnyObject {
-    var titleText: String? { get }
-    var messageText: String? { get }
-    var alertType: AlertType { get }
-}
-
-class AlertViewController: UIViewController, AlertAble {
-    var titleText: String?
-    var messageText: String?
-    var alertType: AlertType
-    var completion: (String?) -> ()
     
+    var alertTitle: String {
+        switch self {
+        case .confirmAndCancel:
+            return "삭제안내"
+        case .confirm:
+            return "저장오류"
+        case .confirmTextField:
+            return "저장안내"
+        }
+    }
+    
+    var alertMessage: String {
+        switch self {
+        case .confirmAndCancel:
+            return "정말 삭제하시겠습니다?\n삭제 후에는 복원할 수 없습니다."
+        case .confirm:
+            return "이미 저장된 사진입니다."
+        case .confirmTextField:
+            return "사진과 함께 남길 메모를 작성해주세요."
+        }
+    }
+}
+
+class AlertViewController: UIViewController {
+    // MARK: - Properties
+    private let titleText: String?
+    private let messageText: String?
+    private let alertType: AlertType
+    private let completion: (String?) -> ()
+    
+    // MARK: - Init Methods
     init(
         titleText: String?,
         messageText: String?,
@@ -44,6 +63,7 @@ class AlertViewController: UIViewController, AlertAble {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - View Properties
     private lazy var containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -108,28 +128,8 @@ class AlertViewController: UIViewController, AlertAble {
         button.setTitleColor(UIColor.label, for: .normal)
         return button
     }()
-    
-    @objc func didTapConfirmButton() {
-        completion(inputTextField.text)
-        self.dismiss(animated: true)
-    }
-    @objc func didTapCancelButton() {
-        self.dismiss(animated: true)
-    }
-    
-    @objc func keyboardWillshow(notification: NSNotification) {
-        let userInfo = notification.userInfo
-        guard let keyboardSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-            return
-        }
-        
-        self.view.frame.origin.y = 0 - (keyboardSize.height * 0.5)
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        self.view.frame.origin.y = 0
-    }
-    
+
+    // View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButtonStackView()
@@ -167,7 +167,34 @@ class AlertViewController: UIViewController, AlertAble {
             self?.containerView.isHidden = true
         }
     }
+}
+
+// MARK: - Objc Methods
+private extension AlertViewController {
+    @objc func didTapConfirmButton() {
+        completion(inputTextField.text)
+        self.dismiss(animated: true)
+    }
+    @objc func didTapCancelButton() {
+        self.dismiss(animated: true)
+    }
     
+    @objc func keyboardWillshow(notification: NSNotification) {
+        let userInfo = notification.userInfo
+        guard let keyboardSize = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        self.view.frame.origin.y = 0 - (keyboardSize.height * 0.5)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+    }
+}
+
+// MARK: - UI cofigure Methods
+private extension AlertViewController {
     func configureContentView() {
         switch alertType {
         case .confirmAndCancel, .confirm:
@@ -231,5 +258,4 @@ class AlertViewController: UIViewController, AlertAble {
             ])
         }
     }
-    
 }

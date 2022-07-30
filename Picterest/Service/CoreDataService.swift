@@ -44,7 +44,10 @@ class CoreDataService {
             var values: [savedModel] = []
             let result = try context.fetch(request) as? [SavedModel]
             result?.forEach {
-                let value = savedModel(id: $0.id, memo: $0.memo, file: $0.fileURL, raw: $0.rawURL)
+                let value = savedModel(id: $0.id,
+                                       memo: $0.memo,
+                                       file: $0.fileURL,
+                                       raw: $0.rawURL)
                 values.append(value)
             }
             return values
@@ -54,7 +57,9 @@ class CoreDataService {
         }
     }
     
-    func fetchManagement<T: NSManagedObject>(request: NSFetchRequest<T> = NSFetchRequest(entityName: "SavedModel")) -> [T] {
+    func fetchManagement<T: NSManagedObject>(
+        request: NSFetchRequest<T> = NSFetchRequest(entityName: "SavedModel")
+    ) -> [T] {
         do {
             let result = try context.fetch(request)
             return result

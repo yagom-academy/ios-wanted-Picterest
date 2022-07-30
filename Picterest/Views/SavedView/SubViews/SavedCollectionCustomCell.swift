@@ -8,14 +8,15 @@
 import UIKit
 
 class SavedCollectionCustomCell: UICollectionViewCell {
+    // MARK: - Properties
     static let identifier = "SavedCollectionCustomCell"
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
         return imageView
     }()
-    let topView = CellTopButtonView()
+    private let topView = CellTopButtonView()
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -26,6 +27,21 @@ class SavedCollectionCustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        imageView.image = nil
+        super.prepareForReuse()
+    }
+    
+    func changeState(memo: String) {
+        topView.starButton.isSelected = true
+        topView.starButton.setImage(UIImage.starFillImage, for: .normal)
+        topView.starButton.isEnabled = false
+        topView.indexLabel.text = memo
+    }
+}
+
+// MARK: - UI Configure Methods
+private extension SavedCollectionCustomCell {
     func configureUI() {
         self.autoresizesSubviews = true
         self.backgroundColor = .clear
@@ -57,10 +73,5 @@ class SavedCollectionCustomCell: UICollectionViewCell {
         imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         topView.backgroundColor = .black.withAlphaComponent(0.5)
         topView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-    }
-    
-    override func prepareForReuse() {
-        imageView.image = nil
-        super.prepareForReuse()
     }
 }

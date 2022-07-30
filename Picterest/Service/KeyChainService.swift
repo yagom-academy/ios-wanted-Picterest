@@ -8,7 +8,7 @@
 import Foundation
 
 protocol KeyChainManagable {
-    var key: String { get set }
+    var key: String { get }
 }
 
 class KeyChainService: KeyChainManagable {

@@ -9,29 +9,39 @@ import Combine
 import UIKit
 import CoreData
 
-protocol FeedViewModelObservable: AnyObject {
-    var isLoading: Bool { get set }
-    var pageNumber: Int { get set }
-    var imageDataLoader: NetWorkAble { get }
-    var downLoadManager: DownLoadManager { get }
-    var coreSavedImage: [savedModel] { get }
-    var cancellable: Set<AnyCancellable> { get set }
+protocol FeedViewModelAble: AnyObject {
+    var isLoading: Bool { get }
+    var imageDatas: Photo { get }
+    var imageDataPublisher: Published<Photo>.Publisher { get }
+    func fetchCoreData()
+    func loadImageData()
+    func coreImage() -> [savedModel]
+    func saveImageInFile(index: Int, width: String, inputValue: String)
 }
 
-class FeedViewModel: FeedViewModelObservable {
-    private var coreDataService = CoreDataService.shared
-    var coreSavedImage = [savedModel]()
-    var downLoadManager = DownLoadManager.shared
-    var isLoading: Bool = false
-    var pageNumber: Int = 1
-    @Published var imageDatas: Photo = []
-    var imageDataLoader: NetWorkAble
-    var cancellable = Set<AnyCancellable>()
+class FeedViewModel: FeedViewModelAble {
+    private let downLoadManager = DownLoadManager()
+    private var coreSavedImage = [savedModel]()
+    private var imageDataLoader: NetWorkAble
+    private var cancellable = Set<AnyCancellable>()
     
-    init(imageDataLoader: NetWorkAble) {
-        self.imageDataLoader = imageDataLoader
+    @Published var imageDatas: Photo = []
+    var imageDataPublisher: Published<Photo>.Publisher { $imageDatas }
+
+    var isLoading: Bool = false
+    
+    init() {
+        let endPoint = EndPoint(
+            baseURL: "https://api.unsplash.com/photos",
+            apiKey: KeyChainService.shared.key
+        )
         
-        self.coreSavedImage = coreDataService.fetch()
+        self.imageDataLoader = ImageDataLoader(endPoint: endPoint)
+        fetchCoreData()
+    }
+    
+    func fetchCoreData() {
+        self.coreSavedImage = CoreDataService.shared.fetch()
     }
     
     func loadImageData() {
@@ -40,10 +50,13 @@ class FeedViewModel: FeedViewModelObservable {
         imageDataLoader.requestNetwork() { result in
             switch result {
             case .success(let datas):
-                if let photos = datas as? Photo {
+                do {
+                    let photos = try JSONDecoder().decode(Photo.self, from: datas)
                     self.imageDatas.append(contentsOf: photos)
+                    self.isLoading = false
+                } catch {
+                    print("Error in decode image data")
                 }
-                self.isLoading = false
             case .failure(let error):
                 print("Error in decode photo \(error)")
             }
@@ -53,28 +66,32 @@ class FeedViewModel: FeedViewModelObservable {
     func saveImageInFile(index: Int, width: String, inputValue: String) {
         let data = imageDatas[index]
         let query = ["w":width]
-        let imageLoader = ImageLoader(baseURL: data.urls.regular, query: query)
+        let endPoint = EndPoint(baseURL: data.urls.regular, query: query)
+        let imageLoader = ImageLoader(endPoint: endPoint)
         
-        imageLoader.requestNetwork { result in
+        imageLoader.requestNetwork { [weak self] result in
             switch result {
-            case .success(let image):
-                if let image = image as? UIImage,
-                   let imageData = image.pngData() {
-                    let key = data.id.description + ".png"
-                    
-                    self.downLoadManager.uploadData(key: key, data: imageData)
-                    self.coreDataService.save(
+            case .success(let imageData):
+                
+                let key = data.id.description + ".png"
+                
+                if self?.downLoadManager.uploadData(key: key, data: imageData) == true {
+                    CoreDataService.shared.save(
                         pictureId: data.id,
-                        memo: inputValue, rawURL: data.urls.raw, fileLocation: key)
-                    
-                    
+                        memo: inputValue,
+                        rawURL: data.urls.raw,
+                        fileLocation: key
+                    )
                 }
+
             case .failure(_):
                 print("Error in download image")
             }
         }
-        
-        imageLoader.task?.resume()
+    }
+    
+    func coreImage() -> [savedModel] {
+        return coreSavedImage
     }
 }
 

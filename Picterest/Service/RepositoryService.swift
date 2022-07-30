@@ -1,21 +1,44 @@
 //
-//  FileManager.swift
+//  RepositoryService.swift
 //  Picterest
 //
-//  Created by 이경민 on 2022/07/28.
+//  Created by 이경민 on 2022/07/27.
 //
 
 import Foundation
 
-class DownLoadManager: cacheAble {
-    static let shared = DownLoadManager()
-    var folderURL: URL? {
+protocol RepositoryAble {
+    func fetchData(_ key: String) -> Data?
+    func uploadData(key: String, data: Data) -> Bool
+}
+
+class CacheService: RepositoryAble {
+    static let shared = CacheService()
+    
+    private let cache = NSCache<NSString,NSData>()
+    
+    func fetchData(_ key: String) -> Data? {
+        guard let data = cache.object(forKey: key as NSString) else {
+            return nil
+        }
+        return Data(referencing: data)
+    }
+    
+    @discardableResult
+    func uploadData(key: String, data: Data) -> Bool {
+        cache.setObject(NSData(data: data), forKey: key as NSString)
+        return false
+    }
+}
+
+class DownLoadManager: RepositoryAble {
+    private var folderURL: URL? {
         return FileManager.default.urls(
             for: .documentDirectory,
             in: .userDomainMask
         ).first?.appendingPathComponent(name)
     }
-    var name: String = "Picterest"
+    private var name: String = "Picterest"
     
     init() {
         createFolder()
@@ -28,18 +51,18 @@ class DownLoadManager: cacheAble {
         return FileManager.default.contents(atPath: writeURL.path)
     }
     
-    func uploadData(key: String, data: Data) {
+    func uploadData(key: String, data: Data) -> Bool {
         guard let writeURL = folderURL?.appendingPathComponent(key) else {
-            return
+            return false
         }
         try? data.write(to: writeURL)
+        return true
     }
     
     func removeData(_ key: String) -> Bool {
         guard let writeURL = folderURL?.appendingPathComponent(key) else {
             return false
         }
-        print(writeURL)
         try? FileManager.default.removeItem(at: writeURL)
         return true
     }

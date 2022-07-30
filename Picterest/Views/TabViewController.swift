@@ -6,27 +6,29 @@
 import UIKit
 
 class TabViewController: UITabBarController {
-    let keychainService: KeyChainManagable = KeyChainService.shared
-
+    
+    private let feedTabBarItem = UITabBarItem(title: String.feed,
+                                      image: UIImage.firstTabIcon,
+                                      selectedImage: UIImage.firstTabTappedIcon)
+    private let savedTabBarItem = UITabBarItem(title: String.saved,
+                                       image: UIImage.secondTabIcon,
+                                       selectedImage: UIImage.secondTabTappedIcon)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let feedTabBarItem = UITabBarItem(title: "피드",
-                                          image: UIImage(systemName: "photo.on.rectangle"),
-                                          selectedImage: UIImage(systemName: "photo.fill.on.rectangle.fill"))
-        let savedTabBarItem = UITabBarItem(title: "즐겨찾기",
-                                           image: UIImage(systemName: "star"),
-                                           selectedImage: UIImage(systemName: "star.fill"))
-        
-        let imageLoader = ImageDataLoader(apiKey: keychainService.key)
-        let feedController = FeedViewController(observable: FeedViewModel(imageDataLoader: imageLoader))
+        setViewControllers(configureControllers(), animated: true)
+    }
+    
+    func configureControllers() -> [UIViewController] {
+        let feedController = FeedViewController(feedViewModel: FeedViewModel())
         let feedNavController = UINavigationController(rootViewController: feedController)
+        
         feedController.tabBarItem = feedTabBarItem
         
         let savedController = SavedViewController(savedViewModel: SavedViewModel())
         savedController.tabBarItem = savedTabBarItem
         
-        setViewControllers([feedNavController,savedController], animated: true)
-        tabBar.backgroundColor = .lightGray
+        return [feedNavController,savedController]
     }
 }

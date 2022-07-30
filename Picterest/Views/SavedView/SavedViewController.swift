@@ -6,14 +6,15 @@
 //
 
 import UIKit
-import CoreData
 import Combine
 
 class SavedViewController: UIViewController {
-    let savedViewModel: SavedViewModel
+    // MARK: - Properties
+    private let savedViewModel: SavedImageAble
     private var subscription = Set<AnyCancellable>()
     private lazy var titleView = SaveCollectionTitleView()
     
+    // MARK: - View Properties
     private lazy var collectionView: UICollectionView = {
         let layout = SavedCollectionViewLayout()
         layout.delegate = self
@@ -30,7 +31,8 @@ class SavedViewController: UIViewController {
         return collectionView
     }()
     
-    init(savedViewModel: SavedViewModel) {
+    // MARK: - Init Methods
+    init(savedViewModel: SavedImageAble) {
         self.savedViewModel = savedViewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,6 +41,7 @@ class SavedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
@@ -80,7 +83,7 @@ extension SavedViewController: UICollectionViewDataSource {
         if let image = data.image {
             cell.imageView.image = image.resizeImageTo(newWidth: cell.bounds.width)
         }
-        configureTopButton(cell: cell, memo: data.memoDescription)
+        cell.changeState(memo: data.memoDescription)
         return cell
     }
 }
@@ -110,7 +113,7 @@ extension SavedViewController: UICollectionViewDelegate {
         return configuration
     }
     
-    func makePreviewController(_ index: Int) -> UIViewController {
+    private func makePreviewController(_ index: Int) -> UIViewController {
         let previewController = UIViewController()
         let image = savedViewModel.savedImages[index].image
         let preview = UIImageView(image: image)
@@ -123,10 +126,11 @@ extension SavedViewController: UICollectionViewDelegate {
     }
     
     private func presentAlertView(_ index: Int) {
+        let alertType: AlertType = .confirmAndCancel
         let alert = AlertViewController(
-            titleText: "삭제 안내",
-            messageText: "정말 삭제하시겠습니다?\n삭제 후에는 복원할 수 없습니다.",
-            alertType: .confirmAndCancel
+            titleText: alertType.alertTitle,
+            messageText: alertType.alertMessage,
+            alertType: alertType
         ) { [weak self] _ in
             self?.savedViewModel.deleteData(index)
         }
@@ -155,10 +159,10 @@ extension SavedViewController: SaveCollectionViewDelegate {
     
 }
 
-// MARK: - Data Method
+// MARK: - Data Binding Method
 extension SavedViewController {
     func bindSavedImage() {
-        savedViewModel.$savedImages
+        savedViewModel.savedImagesPublisher
             .sink { [weak self] _ in
                 let collectionLayout = self?.collectionView.collectionViewLayout
                 if let layout = collectionLayout as? SavedCollectionViewLayout {
@@ -170,7 +174,7 @@ extension SavedViewController {
     }
     
     func bindReloadImage() {
-        savedViewModel.$isReLoadView
+        savedViewModel.isReLoadViewPublisher
             .sink { [weak self] isReLoad in
                 if isReLoad {
                     self?.resetCollectionView()
@@ -180,8 +184,7 @@ extension SavedViewController {
     }
 }
 
-// MARK: - UI Configure
-
+// MARK: - UI Configure Methods
 private extension SavedViewController {
     func configureUI() {
         view.backgroundColor = .systemBackground
@@ -209,16 +212,9 @@ private extension SavedViewController {
         ])
     }
     
-    func configureTopButton(cell: SavedCollectionCustomCell, memo: String) {
-        cell.topView.starButton.isSelected = true
-        cell.topView.starButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        cell.topView.starButton.isEnabled = false
-        cell.topView.indexLabel.text = memo
-    }
-    
     func resetCollectionView() {
         savedViewModel.resetData()
         savedViewModel.fetchData()
-        savedViewModel.isReLoadView = false
+        savedViewModel.changeReLoadState()
     }
 }

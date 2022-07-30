@@ -24,4 +24,8 @@ extension UIImage {
 extension UIImage {
     static let starImage = UIImage(systemName: "star")
     static let starFillImage = UIImage(systemName: "star.fill")
+    static let firstTabIcon = UIImage(systemName: "photo.on.rectangle")
+    static let secondTabIcon = UIImage(systemName: "star")
+    static let firstTabTappedIcon = UIImage(systemName: "photo.fill.on.rectangle.fill")
+    static let secondTabTappedIcon = UIImage(systemName: "star.fill")
 }

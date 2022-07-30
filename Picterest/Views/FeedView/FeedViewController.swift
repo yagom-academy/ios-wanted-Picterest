@@ -7,16 +7,21 @@
 
 import UIKit
 import Combine
-import CoreData
 
 class FeedViewController: UIViewController {
-    private let viewModel: FeedViewModel
+    // MARK: - Properties
+    private let viewModel: FeedViewModelAble
+    private var subscription = Set<AnyCancellable>()
     
+    // MARK: - View Properties
     lazy var collectionView: UICollectionView = {
         let layout = FeedCollectionLayout()
         layout.delegate = self
         let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        collectionView.register(FeedCollectionCustomCell.self, forCellWithReuseIdentifier: FeedCollectionCustomCell.identifier)
+        collectionView.register(
+            FeedCollectionCustomCell.self,
+            forCellWithReuseIdentifier: String.FeedCellIdentifier
+        )
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .white
@@ -24,24 +29,24 @@ class FeedViewController: UIViewController {
         return collectionView
     }()
     
-    init(observable: FeedViewModel) {
-        self.viewModel = observable
+    // MARK: - Init Methods
+    init(feedViewModel: FeedViewModelAble) {
+        self.viewModel = feedViewModel
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        let imageDataLoader = ImageDataLoader(apiKey: KeyChainService.shared.key)
-        self.viewModel = FeedViewModel(imageDataLoader: imageDataLoader)
+        self.viewModel = FeedViewModel()
         super.init(coder: coder)
     }
     
+    // MARK: - View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavBar()
         configView()
         bindImageData()
     }
-    
 }
 
 // MARK: - ScrollView Delegate
@@ -85,7 +90,7 @@ extension FeedViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FeedCollectionCustomCell.identifier,
+            withReuseIdentifier: String.FeedCellIdentifier,
             for: indexPath
         ) as? FeedCollectionCustomCell else {
             return UICollectionViewCell()
@@ -96,13 +101,14 @@ extension FeedViewController: UICollectionViewDataSource {
             "w": cell.frame.size.width.description,
             "h": cell.frame.size.height.description
         ]
-        
-        cell.imageLoader = ImageLoader(baseURL: imageData.urls.raw, query: imageSizeQuery)
+        let endPoint = EndPoint(baseURL: imageData.urls.regular, query: imageSizeQuery)
+        let imageLoader = ImageLoader(endPoint: endPoint)
+        cell.imageLoader = imageLoader
         cell.setUpTask()
         cell.topButtonView.delegate = self
         cell.topButtonView.starButton.tag = indexPath.row
         
-        let fetchIDs = viewModel.coreSavedImage.compactMap { $0.id }
+        let fetchIDs = viewModel.coreImage().compactMap { $0.id }
         
         if fetchIDs.contains(imageData.id) {
             cell.topButtonView.starButton.isSelected = true
@@ -131,17 +137,13 @@ extension FeedViewController: FeedCollectionLayoutDelegate {
 // MARK: - Binding Methods
 private extension FeedViewController {
     func bindImageData() {
-        viewModel.$imageDatas
-            .dropFirst()
+        viewModel.imageDataPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] images in
-                UIViewPropertyAnimator(duration: 2, curve: .easeInOut) {
-                    self?.collectionView.reloadData()
-                    self?.collectionView.collectionViewLayout.invalidateLayout()
-                }
-                .startAnimation()
+                self?.collectionView.reloadData()
+                self?.collectionView.collectionViewLayout.invalidateLayout()
             }
-            .store(in: &viewModel.cancellable)
+            .store(in: &subscription)
     }
 }
 
@@ -149,19 +151,21 @@ private extension FeedViewController {
 private extension FeedViewController {
     
     func presentErrorAlert() {
+        let alertType: AlertType = .confirm
         let alertController = AlertViewController(
-            titleText: "저장오류",
-            messageText: "이미 저장된 사진입니다."
+            titleText: alertType.alertTitle,
+            messageText: alertType.alertMessage
         ) { _ in }
         present(alertController, animated: false)
     }
     
     func presentWriteAlert(sender: UIButton) {
         
+        let alertType: AlertType = .confirmTextField
         let alertController = AlertViewController(
-            titleText: "저장 안내",
-            messageText: "사진과 함께 남길 메모를 작성해주세요.",
-            alertType: .confirmTextField
+            titleText: alertType.alertTitle,
+            messageText: alertType.alertMessage,
+            alertType: alertType
         ) { [weak self] inputValue in
             self?.confirmAction(sender: sender, inputValue: inputValue ?? "")
         }

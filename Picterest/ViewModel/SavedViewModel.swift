@@ -7,24 +7,27 @@
 
 import Foundation
 
+protocol SavedImageAble {
+    var savedImages: [savedModel] { get }
+    var savedImagesPublisher: Published<[savedModel]>.Publisher { get }
+    var isReLoadViewPublisher: Published<Bool>.Publisher { get }
+    func fetchData()
+    func deleteData(_ index: Int)
+    func resetData()
+    func changeReLoadState()
+}
 
-class SavedViewModel: ObservableObject {
+class SavedViewModel: SavedImageAble {
     private let coreDataService = CoreDataService.shared
     private let downloadManager = DownLoadManager()
     @Published var savedImages: [savedModel] = []
+    var savedImagesPublisher: Published<[savedModel]>.Publisher { $savedImages }
     @Published var isReLoadView: Bool = false
+    var isReLoadViewPublisher: Published<Bool>.Publisher { $isReLoadView }
     
     func fetchData() {
         savedImages.removeAll()
-        if let datas = coreDataService.fetch() as? [SavedModel] {
-            datas.forEach {
-                let savedModel = savedModel(id: $0.id,
-                                            memo: $0.memo,
-                                            file: $0.fileURL,
-                                            raw: $0.rawURL)
-                self.savedImages.append(savedModel)
-            }
-        }
+        savedImages = coreDataService.fetch()
     }
     
     func deleteData(_ index: Int) {
@@ -41,5 +44,9 @@ class SavedViewModel: ObservableObject {
     
     func resetData() {
         savedImages.removeAll()
+    }
+    
+    func changeReLoadState() {
+        isReLoadView = false
     }
 }

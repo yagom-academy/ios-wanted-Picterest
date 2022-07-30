@@ -12,7 +12,7 @@ import UIKit
 
 
 struct savedModel {
-    static let downloadManager = DownLoadManager.shared
+    static let downloadManager = DownLoadManager()
     var id: String?
     var memo: String?
     var file: String?

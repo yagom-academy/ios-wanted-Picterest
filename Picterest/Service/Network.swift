@@ -5,7 +5,6 @@
 //  Created by 이경민 on 2022/07/28.
 //
 
-import Foundation
 import UIKit
 
 enum NetWorkError: Error {
@@ -13,62 +12,31 @@ enum NetWorkError: Error {
 }
 
 protocol NetWorkAble {
-    var baseURL: String { get }
-    var pageNumber: Int { get set }
-    var apiKey: String { get }
-    var query: [String: String]? { get }
-    
+    var task: URLSessionDataTask? { get }
     func configureURL() -> URL?
-    func toQueryItem() -> [URLQueryItem]
-    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void)
-}
-
-extension NetWorkAble {
-    func toQueryItem() -> [URLQueryItem] {
-        if let query = query {
-            return query.configureQuerys()
-        } else {
-            let queryItem = [
-                "client_id": apiKey,
-                "page": "\(pageNumber)",
-                "per_page": "15"
-            ]
-            return queryItem.configureQuerys()
-        }
-    }
-
-    func configureURL() -> URL? {
-        guard var components = URLComponents(string: baseURL) else {
-            return nil
-        }
-        
-        components.queryItems = toQueryItem()
-
-        guard let url = components.url else {
-            return nil
-        }
-        
-        return url
-    }
+    func requestNetwork(completion: @escaping (Result<Data, NetWorkError>) -> Void)
 }
 
 class ImageLoader: NetWorkAble {
-    var baseURL: String
-    var query: [String : String]?
-    var pageNumber: Int
-    
-    var apiKey: String
     var task: URLSessionDataTask?
+    private var endPoint: EndPoint
     
-    init(baseURL: String, pageNumber: Int = 0, apiKey: String = "", query: [String:String]?) {
-        self.baseURL = baseURL
-        self.pageNumber = pageNumber
-        self.apiKey = apiKey
-        self.query = query
+    init(endPoint: EndPoint) {
+        self.endPoint = endPoint
     }
     
-    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void) {
+    func configureURL() -> URL? {
+        guard var components = URLComponents(string: endPoint.baseURL) else {
+            return nil
+        }
         
+        components.queryItems = endPoint.query?.configureQuerys()
+        guard let url = components.url else {
+            return nil
+        }
+        return url
+    }
+    func requestNetwork(completion: @escaping (Result<Data, NetWorkError>) -> Void) {
         if let imageLoadURL = configureURL() {
             task = URLSession.shared.dataTask(with: imageLoadURL) { data, response, error in
                 guard error == nil else {
@@ -79,43 +47,58 @@ class ImageLoader: NetWorkAble {
                 guard let response = response as? HTTPURLResponse,
                       response.statusCode == 200 else {
                     completion(.failure(.unknown))
-                    
                     return
                 }
                 
-                guard let data = data,
-                      let image = UIImage(data: data) else {
+                guard let data = data else {
                     completion(.failure(.unknown))
                     return
                 }
-                
-                completion(.success(image))
+                completion(.success(data))
             }
+            
+            task?.resume()
         }
+    }
+    
+    func cancelTask() {
+        task?.cancel()
+        task = nil
     }
 }
 
 class ImageDataLoader: NetWorkAble {
-    var baseURL: String
-    var pageNumber: Int
-    var apiKey: String
-    var query: [String : String]?
+    var task: URLSessionDataTask?
+    private var pageNumber: Int = 1
+    private var endPoint: EndPoint
     
-    init(
-        baseURL: String = "https://api.unsplash.com/photos/",
-        pageNumber: Int = 1,
-        apiKey: String,
-        query: [String: String]? = nil
-    ) {
-        self.baseURL = baseURL
-        self.pageNumber = pageNumber
-        self.apiKey = apiKey
+    init(endPoint: EndPoint) {
+        self.endPoint = endPoint
     }
     
-    func requestNetwork(completion: @escaping (Result<Any, NetWorkError>) -> Void) {
+    func configureURL() -> URL? {
+        guard var components = URLComponents(string: endPoint.baseURL) else {
+            return nil
+        }
+        if let apiKey = endPoint.apiKey {
+            let query: [String: String] = [
+                "client_id": apiKey,
+                "page": pageNumber.description,
+                "per_page": "15"
+            ]
+            components.queryItems = query.configureQuerys()
+        }
+        
+        guard let url = components.url else {
+            return nil
+        }
+        return url
+    }
+    
+    func requestNetwork(completion: @escaping (Result<Data, NetWorkError>) -> Void) {
         
         if let imageDataLoadURL = configureURL() {
-            URLSession.shared.dataTask(with: imageDataLoadURL) { data, response, error in
+            task = URLSession.shared.dataTask(with: imageDataLoadURL) { data, response, error in
                 guard error == nil else {
                     print("Error in data add")
                     completion(.failure(.unknown))
@@ -124,7 +107,6 @@ class ImageDataLoader: NetWorkAble {
                 
                 guard let response = response as? HTTPURLResponse,
                       response.statusCode == 200 else {
-                    print(response)
                     completion(.failure(.unknown))
                     print("Error in status code")
                     return
@@ -134,16 +116,10 @@ class ImageDataLoader: NetWorkAble {
                     completion(.failure(.unknown))
                     return
                 }
-                
-                do {
-                    let datas = try JSONDecoder().decode(Photo.self, from: data)
-                    completion(.success(datas))
-                    self.pageNumber += 1
-                } catch {
-                    print("Error in decode data")
-                }
+                self.pageNumber += 1
+                completion(.success(data))
             }
-            .resume()
+            task?.resume()
         }
     }
     
