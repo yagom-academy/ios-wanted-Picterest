@@ -11,5 +11,5 @@ protocol CellNamable {
 }
 
 extension CellNamable {
-    static var identifier: String { String(describing: Self.self) }
+    static var identifier: String { String(describing: self) }
 }
