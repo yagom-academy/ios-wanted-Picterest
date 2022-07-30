@@ -72,7 +72,7 @@ PhotoListVC에서 채택하여 `starButtonTapped` 메서드의 파라미터로`P
 // PhotoListCollectionViewCell
 protocol CellActionDelegate: AnyObject {
     
-    func starButtonTapped(cell: PhotoListCollectionViewCell) { }
+    func starButtonTapped(cell: PhotoListCollectionViewCell)
     
     
 }
