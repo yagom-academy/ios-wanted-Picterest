@@ -13,16 +13,43 @@
 
 ## 목표
 
-> 서버 API를 이용하여 이미지를 받아와, 가변 세로 길이의 레이아웃으로 나타냅니다.
-> 원하는 사진을 선택해 저장하는 기능을 갖습니다.
-> 아이폰, 세로 모드만 지원하는 앱입니다.
+> 서버 API를 이용하여 이미지를 받아와, 가변 세로 길이의 레이아웃으로 나타냅니다.<br>
+> 원하는 사진을 선택해 저장하는 기능을 갖습니다.<br>
+> 아이폰, 세로 모드만 지원하는 앱입니다.<br>
+
+<br><br>
+
+# 앱동작 설명
+
+## 오토레이아웃 (ipodtouch7 ~ iphoneProMax13)
+
+- 최대한 모든 기종에서 자연스럽게 보일 수 있도록 UI를 구현하였습니다.
+  <img src= "Picterest/Resource/Images/autolayout_1.png" width="400"/>
+
+<br><br>
+
+## 더보기 버튼과 끌어당겨 새로고침하는 기능
+
+- 더보기 버튼을 이용하여 새로운 이미지를 15개씩 무한히 가져올 수 있습니다.
+- 콜렉션뷰를 끌어당겨서 새로고침을 하면 모든셀데이터를 리셋한 뒤 최초의 15개 이미지를 다시 받아옵니다.
+
+|                            더보기버튼 기능                             |                       끌어당겨 새로고침하는 기능                       |
+| :--------------------------------------------------------------------: | :--------------------------------------------------------------------: |
+| <img src= "Picterest/Resource/Images/picterest_gif1.gif" width="200"/> | <img src= "Picterest/Resource/Images/picterest_gif2.gif" width="200"/> |
+
+## 메모와 함께 사진이 저장되는 기능
+
+- 별버튼을 클릭하여 이미지를 저장할 수 있고 저장완료시 별버튼이 실시간으로 변합니다.
+- 이미지의 정보를 CoreData에 저장, 이미지파일을 FileManager를 통해 별도의 앱폴더에 저장합니다.
+- 두번째탭의 화면에서 실시간으로 저장된 이미지를 확인할 수 있습니다.
+  <img src= "Picterest/Resource/Images/picterest_gif3.gif" width="200"/>
 
 # 사용한 기술
 
 `MVVM Pattern` `Delegate Pattern` `Code-based UI` `NSCache` `CoreData` `FileManager` `UICollectionViewLayout`
 
 <details>
-    <summary> <h1>🚥 MVVM Pattern</h1></summary>
+    <summary> <h2>🚥 MVVM Pattern</h2></summary>
     <h3> 1. MVVM 패턴을 사용한 이유</h3>
     <ul>
       <li> 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 `CoreData`를 이용하여 저장하고, 이미지파일을 `FileManager`를 이용하여 저장합니다.
@@ -38,7 +65,7 @@
       <li>Alert와 같은 다소 작은 뷰들은 `delegate`를 이용하여 이벤트를 처리하도록 하였습니다.</li>
 </details>
 <details>
-		<summary> <h1>🕹 Delegate Pattern</h1></summary>
+		<summary> <h2>🕹 Delegate Pattern</h2></summary>
     <h3> 1.딜리게이트 패턴을 사용한 이유</h3>
     <ul>
       <li>이번 프로젝트에서는 `RxSwift`를 사용하지 않고 만든 프로젝트입니다. 그래서 이벤트전달을 하기위해 떠오른 방법이 `노티피케이션`과 `델리게이트패턴`입니다. 노티피케이션은 이벤트의 전달과정을 파악하기가 쉽지않고 실수를 할 가능성이 큽니다. 반면에 델리게이트패턴을 뷰와 1대1 대응이 되도록 구현한다면 가독성과 유지보수가 좋아지게 됩니다.</li>
@@ -54,14 +81,14 @@
   </ol>
 </details>
 <details>
-		<summary> <h1>NSCache</h1></summary>
+		<summary> <h2>NSCache</h2></summary>
     <h3> NSCache를 사용한 이유</h3>
     <ul>
       <li>앱의 동작중 가장 비용이 드는 동작은 아마도 네트워크통신일 것입니다. 그중에서도 이미지파일의 경우 JSON데이터에 비해 용량이 매우 큰편입니다. 그렇기 때문에 이미 한번 네트워크요청을 해서 받아온 이미지파일이라면 `NSCache`를 이용하여 임시로 저장하는 것이 효율적일 것 입니다.</li>
   </ul>
 </details>
 <details>
-		<summary> <h1>CoreData</h1></summary>
+		<summary> <h2>CoreData</h2></summary>
     <h3> CoreData을 사용한 이유</h3>
     <ul>
       <li>이번에 다음과 같은 데이터를 사용하기 위해 사용했습니다.
@@ -77,14 +104,14 @@
   	</ul>
 </details>
 <details>
-		<summary> <h1>FileManager</h1></summary>
+		<summary> <h2>FileManager</h2></summary>
     <h3> FileManager을 사용한 이유</h3>
     <ul>
       <li>이번 프로젝트는 이미지파일도 따로 저장합니다. 이미지파일은 용량이 크기 때문에 coreData에 같이 보관하기에는 무리가 있습니다. 그렇기 때문에 FileManager를 이용하여 앱에서 제공해주는 저장공간에 따로 저장하도록 구현했습니다.</li>
   	</ul>
 </details>
 <details>
-		<summary> <h1>UICollectionViewLayout</h1></summary>
+		<summary> <h2>UICollectionViewLayout</h2></summary>
     <h3> UICollectionViewLayout을 사용한 이유</h3>
     <ul>
       <li>단순하게 콜렉션뷰라면 UICollectionViewFlowLayout을 이용하여 간단하게 구현할 수 있습니다.</li>
@@ -93,34 +120,23 @@
   	</ul>
 </details>
 
-# 이번프로젝트의 특별한 컨셉
+# 기타 프로젝트 특징
 
 <details>
-		<summary> <h1>코드의 Style수치값들을 하드코딩하지않고 Style파일에서 관리</h1></summary>
+		<summary> <h2>코드의 Style수치값들을 하드코딩하지않고 Style파일에서 관리</h2></summary>
     <ul>
       <li>뷰의 frame, font, 각종사이즈, UIColor등등을 하드코딩하여 관리하게 되면 가독성이 떨어질 뿐만 아니라 코드수정이 힘들어 집니다.</li>
-			<li>그래서 다음과 같이
-    			```swift
-    			enum CellStyle {
-    					enum Math {
-    							static let cornerRadius:CGFloat = Style.Math.windowWidth < 340 ? 10.0 : 15.0
-    							static let topBarHeight:CGFloat = Style.Math.windowWidth < 340 ? 40.0 : 60.0
-    							static let smallCellTopBarSidePadding:CGFloat = Style.Math.windowWidth < 340 ? 8.0 : 10.0
-    							static let largeCellTopBarSidePadding:CGFloat = Style.Math.windowWidth < 340 ? 15.0 : 20.0
-    							static let starButtonSize:CGFloat = topBarHeight/2
-    							static let cellPadding:CGFloat = 10.0
-    							static let cellWidth:CGFloat = Style.Math.windowWidth - 2*cellPadding
-    					}
-    					enum Font {
-    							static let starButton:CGFloat = Style.Math.windowWidth < 340 ? 20.0 : 25.0
-    					}
-    					enum Color {
-    							static let text:UIColor = Style.Color.text
-    							static let topBarBackground:UIColor = .black.withAlphaComponent(0.6)
-    					}
-    				}
-    				```
-    		</li>
-
+			<li>그래서 다음과 같이 enum타입의 네임스페이스를 만들어서 Style에 필요한 값들을 관리해주도록 했습니다.<br>
+				<img src= "Picterest/Resource/Images/cellstyle_code.png" width="400"/>
+    	</li>
+  	</ul>
+</details>
+<details>
+		<summary> <h2>ReuseIdentifying프로토콜로 Cell 고유키값을 관리</h2></summary>
+    <ul>
+      <li>콜렉션뷰에서 셀을 재사용하거나 생성할 때 Cell의 고유키값이 필요합니다. 이 키값을 하드코딩하여 관리하는 것은 실수할 가능성이 크고, 매번 작성하는 것도 번거롭습니다.</li>
+			<li>다음과 같이 extension기능을 활용하여 ReuseIdentifying프로토콜을 만들어 사용하면 위의 단점을 보완할 수 있습니다.<br>
+				<img src= "Picterest/Resource/Images/reuseidentifying_code.png" width="400"/>
+    	</li>
   	</ul>
 </details>
