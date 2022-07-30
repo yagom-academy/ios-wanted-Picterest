@@ -83,7 +83,7 @@ extension PhotoSaveViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let width = UIScreen.main.bounds.width - 32
+        let width = UIScreen.main.bounds.width - 42
         let height =  width * (coreData[indexPath.row].height / coreData[indexPath.row].width)
         return CGSize(width: width, height: height)
     }
