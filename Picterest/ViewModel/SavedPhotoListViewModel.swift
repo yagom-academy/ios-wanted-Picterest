@@ -13,7 +13,25 @@ class SavedPhotoListViewModel {
     
     @Published var savedPhotos : [String] = []
     
+    // MARK: Util
+    
+    func makeImage(_ url : String) -> UIImage? {
+        let cacheKey = NSString(string : url)
+        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
+            return cachedImage
+        } else {
+            guard let imageUrl = URL(string: url) else {return nil}
+            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
+            guard let image = UIImage(data: imageData) else {return nil}
+            CacheManager.shared.setObject(image, forKey: cacheKey)
+            return image
+        }
+    }
+}
     // MARK: FileManager
+    
+extension SavedPhotoListViewModel : FileManagerProtocol {
+    func saveImageToFilemanager(_ image: UIImage, _ name: String) -> String {return ""}
     
     func getSavedPhotoListFromFilemanager() {
         let fileManager = FileManager.default
@@ -58,29 +76,17 @@ class SavedPhotoListViewModel {
             print(error.localizedDescription)
         }
     }
-    
-    // MARK: Util
-    
-    func makeImage(_ url : String) -> UIImage? {
-        let cacheKey = NSString(string : url)
-        if let cachedImage = CacheManager.shared.object(forKey: cacheKey) {
-            return cachedImage
-        } else {
-            guard let imageUrl = URL(string: url) else {return nil}
-            guard let imageData = try? Data(contentsOf: imageUrl) else {return nil}
-            guard let image = UIImage(data: imageData) else {return nil}
-            CacheManager.shared.setObject(image, forKey: cacheKey)
-            return image
-        }
-    }
-    
+}
     // MARK: Core Data
+    
+extension SavedPhotoListViewModel : CoreDataProtocol {
+    func saveDataToCoreData(_ id: String, _ memo: String, _ url: String, _ path: String, _ width: Int32, _ height: Int32) {}
     
     func getDataFromCoreData() {
         CoreDataManager.shared.getData()
     }
     
-    func deleteDataInCoreData(_ object : NSManagedObject) {
+    func deleteDataInCoreData(_ object: NSManagedObject) {
         CoreDataManager.shared.deleteData(object)
     }
 }

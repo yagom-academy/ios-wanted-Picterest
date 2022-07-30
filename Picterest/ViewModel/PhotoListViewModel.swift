@@ -12,13 +12,13 @@ import CoreData
 class PhotoListViewModel : ObservableObject {
     
     @Published var photoList : [Photo]?
-        
+    
     private var pageNumber = 1
     private var perPage = 15
     private let photoManager = PhotoManager()
     
     // MARK: Network (Server)
-
+    
     func getDataFromServer() {
         photoManager.getData(perPage, pageNumber) { [weak self] photoList in
             self?.imageCaching(photoList)
@@ -29,44 +29,6 @@ class PhotoListViewModel : ObservableObject {
             }
         }
         pageNumber += 1
-    }
-    
-    // MARK: FileManager
-    
-    func saveImageToFilemanager(_ image : UIImage, _ name : String) -> String {
-        let fileManager = FileManager.default
-        
-        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return ""}
-        let directoryURL = directory.appendingPathComponent("images")
-        if !fileManager.fileExists(atPath: directoryURL.path) {
-            do {
-                try fileManager.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
-        let data = image.jpegData(compressionQuality: 1.0)
-        do {
-            try data?.write(to: imagePathURL)
-            return directoryURL.path
-        } catch {
-            print(error.localizedDescription)
-            return ""
-        }
-    }
-    
-    func deleteImageFromFilemanager(_ name : String) {
-        let fileManager = FileManager.default
-        
-        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
-        let directoryURL = directory.appendingPathComponent("images")
-        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
-        do {
-            try fileManager.removeItem(at: imagePathURL)
-        } catch {
-            print(error.localizedDescription)
-        }
     }
     
     // MARK: Caching
@@ -108,9 +70,55 @@ class PhotoListViewModel : ObservableObject {
             return false
         }
     }
+}
+
+// MARK: FileManager
+
+extension PhotoListViewModel : FileManagerProtocol {
+    func saveImageToFilemanager(_ image: UIImage, _ name: String) -> String {
+        let fileManager = FileManager.default
+        
+        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return ""}
+        let directoryURL = directory.appendingPathComponent("images")
+        if !fileManager.fileExists(atPath: directoryURL.path) {
+            do {
+                try fileManager.createDirectory(atPath: directoryURL.path, withIntermediateDirectories: true)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        let imagePathURL = directoryURL.appendingPathComponent("\(name).jpg")
+        let data = image.jpegData(compressionQuality: 1.0)
+        do {
+            try data?.write(to: imagePathURL)
+            return directoryURL.path
+        } catch {
+            print(error.localizedDescription)
+            return ""
+        }
+    }
     
-    // MARK: - Core Data
+    func deleteImageFromFilemanager(_ name: String) {
+        let fileManager = FileManager.default
+        
+        guard let directory : URL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
+        let directoryURL = directory.appendingPathComponent("images")
+        let imagePathURL = directoryURL.appendingPathComponent(name)
+        do {
+            try fileManager.removeItem(at: imagePathURL)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
     
+    func getSavedPhotoListFromFilemanager() {}
+    
+    func getSavedPhotoFromFilemanager(_ name: String) -> UIImage? {return nil}
+    
+}
+// MARK: - Core Data
+
+extension PhotoListViewModel : CoreDataProtocol {
     func saveDataToCoreData(_ id : String, _ memo : String, _ url : String, _ path : String, _ width : Int32, _ height : Int32) {
         CoreDataManager.shared.saveData(id, memo, url, path, width, height)
     }

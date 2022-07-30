@@ -138,7 +138,7 @@ extension PhotoListViewController : SaveButtonDelegate {
             cell.saveButton.setImage(UIImage(systemName: "star"), for: .normal)
             cell.saveButton.tintColor = .white
             // filemanager에 있는 이미지 삭제
-            self.photoListViewModel.deleteImageFromFilemanager(self.photoList?[cell.index ?? -1].id ?? "")
+            self.photoListViewModel.deleteImageFromFilemanager("\(String(describing: self.photoList?[cell.index ?? -1].id)).jpg" )
             // coredata에 있는 정보 삭제
             CoreDataManager.shared.getData()
             for object in CoreDataManager.shared.images {
