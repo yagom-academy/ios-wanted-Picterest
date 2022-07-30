@@ -14,43 +14,39 @@
 > 서버 API를 이용하여 이미지를 받아와, 가변 세로 길이의 레이아웃으로 나타냅니다. 
 > 원하는 사진을 선택해 저장하는 기능을 갖습니다.
 > 아이폰, 세로 모드만 지원하는 앱입니다.
-
-## 사용한 기술
-`MVVM Pattern` `Delegate Pattern` `Code-based UI` `NSCache` `CoreData` `FileManager` `UICollectionViewLayout`
   
 # 사용한 기술
-## MVVM Pattern
-### 1. MVVM 패턴을 사용한 이유
+`MVVM Pattern` `Delegate Pattern` `Code-based UI` `NSCache` `CoreData` `FileManager` `UICollectionViewLayout`
+<details>
+    <summary> <h1>🚥 MVVM Pattern</h1></summary>
+    <h3> 1. MVVM 패턴을 사용한 이유</h3>
+    <ul>
+      <li> 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 `CoreData`를 이용하여 저장하고, 이미지파일을 `FileManager`를 이용하여 저장합니다.
+이 모든 작업을 `View`에서 하기에는 무리가 있습니다. 그렇기 때문에 `ViewModel`을 만들어 데이터를 주고받는 역할을 하도록하고 추가로 이벤트를 처리하는 작업도 하도록 만들었습니다.</li>
+    </ul>
+    <h3> 2. 이번 프로젝트에서 사용한 곳</h3>
+    <ul>
+      <li>이번 프로젝트는 크게 화면이 `2개`입니다. 이 2개의 화면에만 ViewModel을 만들어주었습니다.</li>
+      <ol>
+        <li>ImageListViewController (첫번째 화면)</li>
+        <li>SavedImageListViewController (두번째 화면)</li>
+      </ol>
+      <li>Alert와 같은 다소 작은 뷰들은 `delegate`를 이용하여 이벤트를 처리하도록 하였습니다.</li>
+</details>
 
-- 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 `CoreData`를 이용하여 저장하고, 이미지파일을 `FileManager`를 이용하여 저장합니다.
-이 모든 작업을 `View`에서 하기에는 무리가 있습니다. 그렇기 때문에 `ViewModel`을 만들어 데이터를 주고받는 역할을 하도록하고 추가로 이벤트를 처리하는 작업도 하도록 만들었습니다.
-
-### 2. 이번 프로젝트에서 사용한 곳
-
-## Delegate Pattern
-  
-### 1. 딜리게이트 패턴을 사용한 이유
-
-### 2. 이번 프로젝트에서 사용한 곳
-
-## 객체 역할 소개
-
-### View 관련
-
-| class / struct               | 역할                                                         |
-| ---------------------------- | ------------------------------------------------------------ |
-| `SceneDelegate`         | - 윈도우초기화 및 앱의 초기 권한 요청, 첫페이지 연결  |
-| `ReviewListView`           | - 요청받아온 리뷰목록을 표시한다. <br />- 입력한 리뷰를 POST요청할 수 있다. |
-| `ReviewWriteView`            | - 키보드로 입력된 값을 실시간으로 출력하여 보여준다. <br />- 키보드 return입력시 실시간내용을 ReviewListView로 보내준다. |
-| `CustomKeyBoardStackView`            | - 한글쿼티키보드입력, shift, back, space, return 버튼기능을 한다. |
-
-### Manger 관련
-
-| class / struct               | 역할                                                         |
-| ---------------------------- | ------------------------------------------------------------ |
-| `NetworkManager`         | - 네트워크 통신을 하는 싱글턴 객체입니다. <br />- 제공된API로부터 리뷰목록을 GET요청하여 데이터를 받아온다. <br />- 제공된API로 리뷰를 POST요청하여 응답코드를 받을 수 있다. |
-| `KeyboardEngine`      | - 문장의 끝글자와 입력글자의 조합역할을 하는 구조체입니다. <br />- 글자,space 입력시 아이폰의 입력과 동일한 규칙의 조합으로 출력해줍니다. <br />- back버튼 클릭시 글자,space의 입력과 동일한 규칙을 이용해 역방향으로 지워줍니다.<br />&nbsp;&nbsp;(단, ㅓ+ㅣ => ㅔ와 같은 아이폰에만 존재하는 규칙은 한번에 지워줌) |
-
-# 고민한 부분
-
-# 회고
+<details>
+    <summary> <h1>🕹 Delegate Pattern</h1></summary>
+    <h3> 1.딜리게이트 패턴을 사용한 이유</h3>
+    <ul>
+      <li>이번 프로젝트에서는 `RxSwift`를 사용하지 않고 만든 프로젝트입니다. 그래서 이벤트전달을 하기위해 떠오른 방법이 `노티피케이션`과 `델리게이트패턴`입니다. 노티피케이션은 이벤트의 전달과정을 파악하기가 쉽지않고 실수를 할 가능성이 큽니다. 반면에 델리게이트패턴을 뷰와 1대1 대응이 되도록 구현한다면 가독성과 유지보수가 좋아지게 됩니다.</li>
+  </ul>
+    <h3>2. 이번 프로젝트에서 사용한 곳</h3>
+    <ol>
+      <li>이미지저장버튼클릭이벤트</li>
+  <li>셀추가버튼클릭이벤트</li>
+  <li>커스텀레이아웃의 데이터소스(이미지 aspactRatiom, footer높이, 행갯수)</li> 
+  <li>콜렉션뷰의 데이터소스(셀, 셀갯수, 섹션갯수, footer)</li>
+  <li>CollectionDelegateFlowLayout(셀사이즈)</li>
+  <li>셀삭제이벤트(UILongPressGestureRecognizer전달)</li>
+  </ol>
+</details>
