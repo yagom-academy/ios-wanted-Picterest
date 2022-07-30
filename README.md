@@ -41,9 +41,9 @@
 
 
 ### PhotoListPage
-|무한스크롤, <br> 오픈API (GET)|
-|:--:|
-|<img src = "https://user-images.githubusercontent.com/64088377/181904342-9c235cb7-061c-4dfe-b8d8-c7147b03d498.gif" width = "300">|
+|무한스크롤, <br> 오픈API (GET)|저장된 사진 삭제|
+|:--:|:--:|
+|<img src = "https://user-images.githubusercontent.com/64088377/181904342-9c235cb7-061c-4dfe-b8d8-c7147b03d498.gif" width = "200">|<img src = "https://user-images.githubusercontent.com/64088377/181916033-e4925cc9-e0c1-46df-bd0c-10363bdbafbc.gif" width = "200">|
 
 <br>
 
