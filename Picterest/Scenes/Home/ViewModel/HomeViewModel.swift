@@ -90,8 +90,4 @@ private extension HomeViewModel {
   func pageCount() -> Int {
     return self.imageList.value.count / imagesPerPage
   }
-  
-
-
-  
 }

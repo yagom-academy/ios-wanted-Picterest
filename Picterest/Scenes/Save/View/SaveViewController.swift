@@ -27,6 +27,12 @@ class SaveViewController: UIViewController {
     return collectionView
   }()
   
+  private let defaultView: EmptyIndicatorView = {
+    let defaultView = EmptyIndicatorView()
+    defaultView.translatesAutoresizingMaskIntoConstraints = false
+    return defaultView
+  }()
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     resetData()
@@ -55,14 +61,21 @@ private extension SaveViewController {
   
   func setDataBinding() {
     viewModel.imageList.bind({ list in
+      if list.isEmpty{
+        self.defaultView.isHidden = false
+      }else {
+        self.defaultView.isHidden = true
+      }
         DispatchQueue.main.async {
-          self.collectionView.reloadData()
+          self.collectionView.reloadSections(IndexSet(integer: 0))
         }
     })
   }
   
   func setConstraints() {
     view.addSubview(collectionView)
+    view.addSubview(defaultView)
+    
     if let layout = collectionView.collectionViewLayout as? SceneLayout {
       layout.delegate = self
     }
@@ -70,7 +83,12 @@ private extension SaveViewController {
       collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
       collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+      collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      
+      defaultView.topAnchor.constraint(equalTo: collectionView.topAnchor),
+      defaultView.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+      defaultView.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+      defaultView.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor)
     ])
   }
     

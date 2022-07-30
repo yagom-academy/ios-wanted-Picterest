@@ -10,20 +10,7 @@ import UIKit
 final class ImageCell: UICollectionViewCell {
 
   static let id = "ImageCell"
-  
   private var model: ImageEntity?
-//  {
-//    didSet{
-//      guard let model = model else {return}
-//      self.imageView.setImage(urlSource: model){ image in
-//        model.saveImage(image: image)
-//      }
-//      if model.isLiked == true {
-//        memoLabel.text = model.memo
-//      }
-//    }
-//  }
-  
   var saveDidTap: ((ImageEntity) -> Void)?
   
   private let likeImage: UIImage? = {
