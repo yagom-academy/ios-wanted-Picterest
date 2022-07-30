@@ -60,35 +60,14 @@ class ImageManager {
         }
     }
     
-//    func loadImageFromAlbum(folderName: String) -> [String] {
-//
-////        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
-////        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
-////         "/Users/bh/Library/Developer/CoreSimulator/Devices/B3D368A7-7088-46DA-BE24-221DBCD20A48/data/Containers/Data/Application/332743D0-6BB3-4767-8905-9DDF462742C2/Documents"
-//
-//// file:///Users/bh/Library/Developer/CoreSimulator/Devices/B3D368A7-7088-46DA-BE24-221DBCD20A48/data/Containers/Data/Application/B17065C3-99D6-4EE2-99A7-986C2B20153B/Documents/Photo/
-////        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
-//
-////        let paths = try? fileManager.contentsOfDirectory(atPath: "Photo")
-//
-//        let paths = getDirectoryURL()
-//        let test = try! fileManager.contentsOfDirectory(atPath: paths)
-//        print("paths:\(test)")
-//
-////        var theitems: [String] = []
-////        if let dirPath = paths.first {
-////
-////
-////            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(folderName)
-////            do {
-////                theitems = try FileManager.default.contentsOfDirectory(atPath: imageURL.path)
-////                return theitems
-////            } catch let error {
-////                print(error.localizedDescription)
-////                return theitems
-////            }
-////        }
-//        return [""]
-//    }
+    func loadImage(id: String) -> UIImage? {
+        guard let directoryURL = getDirectoryURL() else { return nil }
+        let imageURL = directoryURL.appendingPathComponent(id)
+        
+        do {
+            guard let imageData = try? Data(contentsOf: imageURL) else { return nil }
+            return UIImage(data: imageData)
+        }
+    }
     
 }
