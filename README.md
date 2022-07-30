@@ -93,3 +93,11 @@ Image Protocol을 만들어 RandomImageEntity 및 StarImage에 채택해주었�
 따라서 이미지 모델의 배열에 각각 다른 타입의 이미지 모델을 저장할수 있었다  
 <br>
 나중에 또다른 이미지 모델을 저장할 일이 생기더라도 Image Protocol만 채택해주면 저장이 가능하기에 코드가 유연해졌다고도 생각한다
+
+## 타입 메서드 사용이유
+
+NetworkManager 및 StorageManager에서 이미지를 받아오는 함수는 타입메서드로 구현이 되어있다  
+<br>
+이미지는 collectionView의 cell이 재사용할때 불러오고 있는데 cell을 재사용할때마다 NetworkManager 및 StorageManager의 인스턴스를 생성해주는게 성능면에서 좋지 않을거라 생각했다  
+또한 이미지를 받아오는 작업은 앱 전반적으로 계속해서 사용하기 때문에 해당 메서드가 메모리에 계속 올라와있어도 괜찮을거라 판단하여 타입메서드로 작성했다
+
