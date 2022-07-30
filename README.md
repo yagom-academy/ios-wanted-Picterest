@@ -156,9 +156,6 @@ struct ImageURL: Decodable {
 
 → API 호출로 부터 받는 Response 의 raw 한 데이터를 받을수 있는 그릇 역할을 하는 객체
 
-→ 어플리케이션의 요구사항에 의해서 Response 로부터 어떤 데이터를 받을건지 정의 해야 합니다.
-
-
 - ImageEntity
 
 ```swift 
@@ -173,6 +170,7 @@ let id: String
   private(set) var storedDirectory: URL?
 }
 ```
+
 → 서버 응답으로 부터 받아온 DTO 객체 프로퍼티 들은 Raw 한 타입을 가지고 있어서 View 에 쉽게 사용하기 위해 캐스팅 작업을 거쳐야합니다.
 
 → 따라서 필요에 맞게 DTO 프로퍼티들을 가공한 객체를 Entity 라고 불르고, 위와 같이 설계 하였습니다. 
