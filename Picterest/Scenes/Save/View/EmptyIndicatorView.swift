@@ -31,7 +31,7 @@ final class EmptyIndicatorView: UIView {
     let label = UILabel()
     label.textColor = .black
     label.numberOfLines = 0
-    label.text = "이미지를 탐색하고 영감을\n 주는 아이디어가 있는 이미지를 저장해보세요."
+    label.text = "이미지를 탐색하고 영감을\n 주는 이미지를 저장해보세요."
     label.textAlignment = .center
     label.backgroundColor = .clear
     label.font = .systemFont(ofSize: 17, weight: .medium)
