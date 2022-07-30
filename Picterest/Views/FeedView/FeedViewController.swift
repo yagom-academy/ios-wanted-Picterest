@@ -24,6 +24,7 @@ class FeedViewController: UIViewController {
         )
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.prefetchDataSource = self
         collectionView.backgroundColor = .white
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         return collectionView
@@ -47,6 +48,11 @@ class FeedViewController: UIViewController {
         configView()
         bindImageData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.fetchCoreData()
+        collectionView.reloadData()
+        super.viewWillAppear(animated)
+    }
 }
 
 // MARK: - ScrollView Delegate
@@ -54,7 +60,7 @@ extension FeedViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
         if position > collectionView.contentSize.height - 20 - scrollView.frame.size.height {
-            guard !viewModel.isLoading else {
+            guard !viewModel.isLoading || viewModel.isLoadingFirst else {
                 return
             }
             viewModel.loadImageData()
@@ -73,6 +79,24 @@ extension FeedViewController: CellTopButtonDelegate {
     }
 }
 
+extension FeedViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths {
+            guard let cell = collectionView.cellForItem(at: indexPath) as? FeedCollectionCustomCell else {
+                return
+            }
+            let data = viewModel.imageDatas[indexPath.row]
+            let query = [
+                "w": cell.bounds.width.description,
+                "h": cell.bounds.height.description
+            ]
+            let endpoint = EndPoint(baseURL: data.urls.regular, query: query)
+            let imageLoader = ImageLoader(endPoint: endpoint)
+            cell.imageLoader = imageLoader
+            cell.setUpTask()
+        }
+    }
+}
 // MARK: - CollectionView Delegate
 extension FeedViewController: UICollectionViewDelegate {}
 

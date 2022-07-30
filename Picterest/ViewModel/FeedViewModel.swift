@@ -11,6 +11,7 @@ import CoreData
 
 protocol FeedViewModelAble: AnyObject {
     var isLoading: Bool { get }
+    var isLoadingFirst: Bool { get }
     var imageDatas: Photo { get }
     var imageDataPublisher: Published<Photo>.Publisher { get }
     func fetchCoreData()
@@ -29,6 +30,8 @@ class FeedViewModel: FeedViewModelAble {
     var imageDataPublisher: Published<Photo>.Publisher { $imageDatas }
 
     var isLoading: Bool = false
+    var isLoadingFirst: Bool = true
+
     
     init() {
         let endPoint = EndPoint(
@@ -38,6 +41,8 @@ class FeedViewModel: FeedViewModelAble {
         
         self.imageDataLoader = ImageDataLoader(endPoint: endPoint)
         fetchCoreData()
+        
+        isLoadingFirst = false
     }
     
     func fetchCoreData() {
