@@ -8,21 +8,20 @@
 import UIKit
 
 final class CustomCollectionViewLayout: UICollectionViewLayout {
-    enum CumulativeValue {
-        static var height: [Int:CGFloat] = [:]
-        static var maxHeight: CGFloat = 0.0
+    
+    private enum Define {
+        static let cellPadding:CGFloat = 6
     }
     
-    weak var delegate: CustomCollectionViewLayoutDelegate?
-
-    private var windowWidth = UIScreen.main.bounds.width
-    private var cellPadding: CGFloat = 6
-
-    private var cache: [UICollectionViewLayoutAttributes]?
-    private var sectionOneFooterCache: UICollectionViewLayoutAttributes?
-
-    private var contentHeight: CGFloat = 0
-
+    private enum Math {
+        static var contentHeight: CGFloat = 0
+        static var height: [Int:CGFloat] = [:]
+        static var maxHeight: CGFloat = 0.0
+        static var xOffset: [CGFloat] = []
+        static var yOffset: [CGFloat] = []
+        static var numberOfColumns: Int = 0
+    }
+    
     private var contentWidth: CGFloat {
       guard let collectionView = collectionView else {
         return 0
@@ -30,22 +29,30 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
       let insets = collectionView.contentInset
         return collectionView.bounds.width - (insets.left + insets.right)
     }
+
+    private var cache: [UICollectionViewLayoutAttributes]?
+    private var sectionOneFooterCache: UICollectionViewLayoutAttributes?
+
+    weak var delegate: CustomCollectionViewLayoutDelegate?
     
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: contentWidth, height: contentHeight)
+        return CGSize(width: contentWidth, height: Math.contentHeight)
     }
     
     override func prepare() {
         super.prepare()
         initCumlativeValue()
         prepareSectionOneCellLayout()
-        prepareSectionOneFooterLayout(maxHeight: CumulativeValue.maxHeight)
+        prepareSectionOneFooterLayout(maxHeight: Math.maxHeight)
     }
     
     private func initCumlativeValue() {
-        CumulativeValue.height.removeAll()
-        CumulativeValue.maxHeight = 0.0
-        contentHeight = 0.0
+        Math.height.removeAll()
+        Math.maxHeight = 0.0
+        Math.contentHeight = 0.0
+        Math.numberOfColumns = delegate?.collectionView(numberOfColumnsInSection: 0) ?? 1
+        Math.xOffset = [CGFloat]()
+        Math.yOffset = [CGFloat](repeating: 0, count: Math.numberOfColumns)
         cache = [UICollectionViewLayoutAttributes]()
         sectionOneFooterCache = nil
     }
@@ -54,33 +61,40 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
         guard let collectionView = collectionView else {
             return
         }
-        let numberOfColumns = delegate?.collectionView(collectionView, numberOfColumnsInSection: 0) ?? 1
-        let columnWidth = contentWidth / CGFloat(numberOfColumns)
-        var xOffset = [CGFloat]()
-        for column in 0 ..< numberOfColumns {
-            xOffset.append(CGFloat(column) * columnWidth)
+        let columnWidth = contentWidth / CGFloat(Math.numberOfColumns)
+        
+        for col in 0 ..< Math.numberOfColumns {
+            Math.xOffset.append(CGFloat(col) * columnWidth)
         }
-        var column = 0
-        var yOffset = [CGFloat](repeating: 0, count: numberOfColumns)
         
         for item in 0 ..< collectionView.numberOfItems(inSection: 0) {
-            let indexPath = IndexPath(item: item, section: 0)
+            let frame = calculateCellFrame(row: item, calculateColumnHeightFunc: calculateCellHeight(row:), columnWidth: columnWidth)
+            let insetFrame = frame.insetBy(dx: Define.cellPadding, dy: Define.cellPadding)
             
-            let cellWidth = windowWidth/CGFloat(numberOfColumns) - cellPadding*2
-            let photoHeight = cellWidth * (delegate?.collectionView(collectionView, heightMultiplierForPhotoAtIndexPath: indexPath) ?? 1)
-            let height = cellPadding * 2 + photoHeight
-            column = correctColumn(numberOfColumns: numberOfColumns, height: height)
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
-            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
-            
-            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            let attributes = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: item, section: 0))
             attributes.frame = insetFrame
             cache?.append(attributes)
-            
-            contentHeight = max(contentHeight, frame.maxY)
-            yOffset[column] = yOffset[column] + height
         }
-        CumulativeValue.maxHeight = yOffset.reduce(0) { beforeValue, value in
+        calculateMaxHeight()
+    }
+    
+    private func calculateCellFrame(row: Int, calculateColumnHeightFunc: (Int)->CGFloat, columnWidth: CGFloat) -> CGRect {
+        let height = calculateColumnHeightFunc(row)
+        let column = correctColumn(numberOfColumns: Math.numberOfColumns, height: height)
+        let frame = CGRect(x: Math.xOffset[column], y: Math.yOffset[column], width: columnWidth, height: height)
+        Math.contentHeight = max(Math.contentHeight, frame.maxY)
+        Math.yOffset[column] = Math.yOffset[column] + height
+        return frame
+    }
+    
+    private func calculateCellHeight(row: Int) -> CGFloat {
+        let cellWidth = Style.Math.windowWidth/CGFloat(Math.numberOfColumns) - Define.cellPadding*2
+        let photoHeight = cellWidth * (delegate?.collectionView(heightMultiplierForPhotoAtRow: row) ?? 1)
+        return Define.cellPadding * 2 + photoHeight
+    }
+    
+    private func calculateMaxHeight() {
+        Math.maxHeight = Math.yOffset.reduce(0) { beforeValue, value in
             return beforeValue > value ? beforeValue : value
         }
     }
@@ -92,11 +106,11 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
         if (collectionView.numberOfItems(inSection: 0) > 0) {
             let indexPath = IndexPath(row: 0, section: 0)
             let frame = CGRect(x: 0, y: maxHeight, width: contentWidth, height: (delegate?.collectionView(heightFooterAtIndexPath: indexPath) ?? 0))
-            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            let insetFrame = frame.insetBy(dx: Define.cellPadding, dy: Define.cellPadding)
             let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(row: 0, section: 0))
             attributes.frame = insetFrame
             sectionOneFooterCache = attributes
-            contentHeight = max(contentHeight, frame.maxY)
+            Math.contentHeight = max(Math.contentHeight, frame.maxY)
         }
     }
     
@@ -104,18 +118,18 @@ final class CustomCollectionViewLayout: UICollectionViewLayout {
         var result: Int = 0
         guard numberOfColumns >= 2 else { return result }
         for i in 1..<numberOfColumns {
-            guard let min = CumulativeValue.height[result] else {
-                CumulativeValue.height.updateValue(height, forKey: result)
+            guard let min = Math.height[result] else {
+                Math.height.updateValue(height, forKey: result)
                 return result
             }
-            guard let next = CumulativeValue.height[i] else {
-                CumulativeValue.height.updateValue(height, forKey: i)
+            guard let next = Math.height[i] else {
+                Math.height.updateValue(height, forKey: i)
                 return i
             }
             result = min > next ? i : result
         }
         
-        CumulativeValue.height.updateValue((CumulativeValue.height[result] ?? 0)+height, forKey: result)
+        Math.height.updateValue((Math.height[result] ?? 0)+height, forKey: result)
         return result
     }
     

@@ -46,15 +46,15 @@ final class ImageListViewController: UIViewController {
 
 //MARK: - CustomCollectionViewLayoutDelegate
 extension ImageListViewController: CustomCollectionViewLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightMultiplierForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return viewModel.cellHeightMultiplier(indexPath.row)
+    func collectionView(heightMultiplierForPhotoAtRow row: Int) -> CGFloat {
+        return viewModel.cellHeightMultiplier(row)
     }
     
     func collectionView(heightFooterAtIndexPath indexPath: IndexPath) -> CGFloat {
         return FooterStyle.Math.height
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
+    func collectionView(numberOfColumnsInSection section: Int) -> Int {
         return Define.numberOfColumns
     }
 }
