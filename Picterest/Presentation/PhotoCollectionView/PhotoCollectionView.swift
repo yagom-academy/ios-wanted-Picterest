@@ -9,7 +9,25 @@ import Foundation
 import SwiftUI
 
 struct PhotoCollectionView: View {
+    
+    let columns = [GridItem(),
+                   GridItem()]
+    
     var body: some View {
-        Text("PhotoCollectionView")
+        ScrollView {
+            Text("PhotoCollectionView")
+            LazyVGrid(columns: columns, alignment: .center, spacing: 5 ) {
+                PhotoCard()
+                PhotoCard()
+                PhotoCard()
+            }
+        }
+    }
+    
+}
+
+struct PhotoCollectionView_Preview: PreviewProvider {
+    static var previews: some View {
+        PhotoCollectionView()
     }
 }
