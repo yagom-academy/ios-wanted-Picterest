@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     private lazy var imagesViewController: UIViewController = {
         let imagesVC = ImagesViewController()
         let tabBarItem = UITabBarItem(title: "Images",
