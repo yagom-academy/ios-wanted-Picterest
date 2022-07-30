@@ -17,8 +17,7 @@ final class ImageManager {
   private init(){}
   
   func loadImage(urlSource: ImageEntity, completion: @escaping (Data?) -> Void) {
-    //Search Data in Memory
-    
+    //MARK: Search Data in Memory
     if let data = imageCache.object(forKey: urlSource.imageURL.lastPathComponent as NSString) {
       completion(data as Data)
       return
@@ -48,7 +47,7 @@ final class ImageManager {
     imageEntity.saveStoredDirectory(url: directory.appendingPathComponent(imageEntity.imageURL.lastPathComponent))
     do {
       try imageData.write(to: directory.appendingPathComponent(imageEntity.imageURL.lastPathComponent))
-      print("\(imageEntity.storedDirectory) 에 저장됨")
+      print("\(String(describing: imageEntity.storedDirectory)) 에 저장됨")
       coreDataManager.insert(imageEntity)
       completion(nil)
     } catch {
@@ -72,7 +71,7 @@ final class ImageManager {
     }
   }
   
-  func clearStorage(completion: @escaping ((Error?) -> Void)){
+  func clearStorage(completion: @escaping ((Error?) -> Void)) {
     let storedModels = coreDataManager.fetchImages()
     storedModels?.forEach({
       do {
@@ -91,7 +90,6 @@ final class ImageManager {
     let image: UIImage? = UIImage(contentsOfFile: path)
     return image
   }
-  
 }
 
 private extension ImageManager {
@@ -120,8 +118,7 @@ private extension ImageManager {
     }
     return directory
   }
-  
-  
+
   func makeImageData(image: UIImage?) -> Data? {
     guard let image = image,
           let data = image.jpegData(compressionQuality: 1) ?? image.pngData()
@@ -130,6 +127,4 @@ private extension ImageManager {
     }
     return data
   }
-  
-  
 }

@@ -8,10 +8,9 @@
 import Foundation
 import CoreData
 
-class CoreDataManager {
+final class CoreDataManager {
   static var shared: CoreDataManager = CoreDataManager()
   
-  //MARK: Persistent container: Core Data Stack을 나타내는 모든 객체를 포함한다.
   lazy var persistentContainer: NSPersistentContainer = {
     let container = NSPersistentContainer(name: "CoreData")
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -54,7 +53,7 @@ class CoreDataManager {
   }
   
   
-  func delete(_ model: ImageEntity){
+  func delete(_ model: ImageEntity) {
     print("Deleting \(model.id)...")
     guard let fetchResults = fetchImages(),
           let targetModel = fetchResults.filter({$0.id == model.id}).first

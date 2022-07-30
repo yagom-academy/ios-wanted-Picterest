@@ -8,7 +8,8 @@
 import UIKit
 
 protocol SceneLayoutDelegate: AnyObject {
-  func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
+  func collectionView(_ collectionView: UICollectionView,
+                      heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
 enum SceneType: Int {
@@ -113,12 +114,14 @@ extension SceneLayout {
       let otherCol = column == 0 ? 1:0
       column = yOffset[column] < yOffset[otherCol] ? column : otherCol
 
-      let footerAtrributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                                              with:
-                                                                IndexPath(
-                                                                item: item,
-                                                                section: 0)
-                                                              )
+      let footerAtrributes = UICollectionViewLayoutAttributes(
+        forSupplementaryViewOfKind:
+          UICollectionView.elementKindSectionFooter,
+        with:
+          IndexPath(
+            item: item,
+            section: 0)
+      )
       
       if (previousItemCounter != item) && ((item + 1) % 15 == 0) {
         previousItemCounter += item

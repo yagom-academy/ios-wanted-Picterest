@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ImageEntity: Identifiable{
+final class ImageEntity: Identifiable {
   let id: String
   let imageURL: URL
   private(set) var width: CGFloat?

@@ -7,15 +7,7 @@
 
 import UIKit
 
-protocol ImageConfigurable {
-  var imageList: Observable<[ImageEntity]> {get set}
-  func fetchImages()
-  func resetList()
-  func updateLikeStatus()
-  func resetLikeStatus()
-  func toogleLikeState(item entity: ImageEntity, completion: @escaping ((Error?) -> Void))
-  subscript(index: IndexPath) -> ImageEntity? { get }
-}
+
 
 
 final class HomeViewModel: ImageConfigurable {

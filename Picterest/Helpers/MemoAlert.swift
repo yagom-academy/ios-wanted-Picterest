@@ -10,7 +10,10 @@ import UIKit
 
 struct MemoAlert {
   static var memo: String?
-  static func makeAlertController(title: String?, message: String, actions: MemoAlert.Action..., from controller: UIViewController) -> UIAlertController{
+  static func makeAlertController(title: String?,
+                                  message: String,
+                                  actions: MemoAlert.Action...,
+                                  from controller: UIViewController) -> UIAlertController {
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
     actions.forEach({
       alertController.addAction($0.alertAction)
@@ -18,7 +21,6 @@ struct MemoAlert {
     controller.present(alertController, animated: true)
     return alertController
   }
-  
 }
 
 extension MemoAlert {

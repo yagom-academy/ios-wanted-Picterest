@@ -93,7 +93,8 @@ private extension SaveViewController {
   }
     
   func setGuesture() {
-    let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+    let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self,
+                                                                           action: #selector(handleLongPress))
     lpgr.minimumPressDuration = 0.5
     lpgr.delegate = self
     lpgr.delaysTouchesBegan = true

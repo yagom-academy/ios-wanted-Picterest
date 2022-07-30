@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension ImageData {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<ImageData> {
