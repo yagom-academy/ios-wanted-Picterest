@@ -33,6 +33,7 @@ class SaveViewController: UIViewController {
     setDataBinding()
   }
 
+
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = self
@@ -70,6 +71,7 @@ private extension SaveViewController {
   func didReceiveToogleLikeStatus(on cell: ImageCell) {
     cell.saveDidTap = {
       print($0.storedDirectory)
+      //TODO: 
     }
   }
   
@@ -88,7 +90,7 @@ extension SaveViewController: UICollectionViewDataSource, SceneLayoutDelegate {
     else {
       return UICollectionViewCell()
     }
-    cell.configure(model: model, indexPath: indexPath)
+    cell.configure(model: model, indexPath: indexPath, sceneType: .save)
     didReceiveToogleLikeStatus(on: cell)
     return cell
   }

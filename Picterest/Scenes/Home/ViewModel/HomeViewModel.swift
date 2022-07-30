@@ -28,6 +28,7 @@ final class HomeViewModel: ImageConfigurable {
 
   func fetchImages() {
     let page = pageCount() + 1
+    let storedModels = repository.fetchSavedImageData()
     let endPoint = EndPoint(path: .showList, query: .imagesPerPage(pageNumber: page, perPage: imagesPerPage))
     repository.fetchImages(endPoint: endPoint) { result in
       switch result {
@@ -35,6 +36,9 @@ final class HomeViewModel: ImageConfigurable {
         for item in data {
 //          let imageNumber = self.imageList.value.count + 1
           let imageEntity = item.toDomain()
+          if storedModels.contains(where: {$0.id == imageEntity.id}) {
+            imageEntity.toogleLikeStates()
+          }
           self.imageList.value.append(imageEntity)
         }
       case .failure(let error):
@@ -60,4 +64,7 @@ private extension HomeViewModel {
   func pageCount() -> Int {
     return self.imageList.value.count / imagesPerPage
   }
+  
+
+  
 }

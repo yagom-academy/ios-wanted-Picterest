@@ -18,13 +18,13 @@ final class ImageManager {
   
   func loadImage(urlSource: ImageEntity, completion: @escaping (Data?) -> Void) {
     //Search Data in Memory
-
+    
     if let data = imageCache.object(forKey: urlSource.imageURL.lastPathComponent as NSString) {
       completion(data as Data)
       return
     }
     
-    //TODO: Search Image data in Disk
+    //MARK: Search Image data in Disk
     if let image = getSavedImage(named: urlSource.imageURL.lastPathComponent) {
       completion(makeImageData(image: image))
     }
@@ -41,7 +41,7 @@ final class ImageManager {
     }
   }
   
-
+  
   func saveImage(_ imageEntity: ImageEntity, completion: @escaping ((Error?) -> Void)) {
     guard let directory = makePath(with: imageEntity.imageURL),
           let imageData = makeImageData(image: imageEntity.image) else {return}
@@ -62,9 +62,9 @@ final class ImageManager {
   }
   
   func deleteSavedImage(imageEntity: ImageEntity, completion: @escaping ((Error?) -> Void)) {
-    guard let storedDirectory = imageEntity.storedDirectory else {return}
+    guard let storedDirectory = getStoredDirectory(imageName: imageEntity.imageURL.lastPathComponent) else {return}
     do {
-      try fileManager.removeItem(at: storedDirectory)
+      try fileManager.removeItem(atPath: storedDirectory)
       coreDataManager.delete(imageEntity)
       completion(nil)
     }catch{
@@ -72,24 +72,43 @@ final class ImageManager {
     }
   }
   
-
-  func getSavedImage(named: String) -> UIImage? {
-    if let dir: URL
-        = try? FileManager.default.url(for: .downloadsDirectory,
-                                     in: .userDomainMask,
-                                     appropriateFor: nil,
-                                     create: false) {
-      let path: String
-        = URL(fileURLWithPath: dir.absoluteString)
-            .appendingPathComponent(named).path
-      let image: UIImage? = UIImage(contentsOfFile: path)
-      return image
-    }
-    return nil
+  func clearStorage(completion: @escaping ((Error?) -> Void)){
+    let storedModels = coreDataManager.fetchImages()
+    storedModels?.forEach({
+      do {
+        guard let storedDirectory = getStoredDirectory(imageName: $0.imageURL.lastPathComponent) else {return}
+        try fileManager.removeItem(atPath: storedDirectory)
+        coreDataManager.deleteAll()
+      }
+      catch{
+        completion(error)
+      }
+    })
   }
+  
+  func getSavedImage(named: String) -> UIImage? {
+    guard let path = getStoredDirectory(imageName: named) else {return nil}
+    let image: UIImage? = UIImage(contentsOfFile: path)
+    return image
+  }
+  
 }
 
 private extension ImageManager {
+  
+  func getStoredDirectory(imageName: String) -> String? {
+    if let dir: URL
+        = try? FileManager.default.url(for: .downloadsDirectory,
+                                       in: .userDomainMask,
+                                       appropriateFor: nil,
+                                       create: false){
+      let path: String
+      = URL(fileURLWithPath: dir.absoluteString)
+        .appendingPathComponent(imageName).path
+      return path
+    }
+    return nil
+  }
   
   func makePath(with url: URL) -> URL? {
     guard let directory = try? FileManager.default.url(for: .downloadsDirectory,
@@ -102,6 +121,7 @@ private extension ImageManager {
     return directory
   }
   
+  
   func makeImageData(image: UIImage?) -> Data? {
     guard let image = image,
           let data = image.jpegData(compressionQuality: 1) ?? image.pngData()
@@ -110,4 +130,6 @@ private extension ImageManager {
     }
     return data
   }
+  
+  
 }

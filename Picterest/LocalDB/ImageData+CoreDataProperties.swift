@@ -21,12 +21,10 @@ extension ImageData {
 extension ImageData : Identifiable {
   
   func toDomain() -> ImageEntity? {
-    guard let id = self.id,
-          let imageURL = self.imageURL,
-          let memo = self.memo,
+    guard let memo = self.memo,
           let storedDirectory = self.storedDirectory
     else {return nil}
-    return ImageEntity(id: id, imageURL: imageURL, isLiked: true, memo: memo, storedDirectory: storedDirectory)
+    return ImageEntity(id: self.id, imageURL: self.imageURL, isLiked: true, memo: memo, storedDirectory: storedDirectory)
   }
   
 }

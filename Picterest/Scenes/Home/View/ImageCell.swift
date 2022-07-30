@@ -11,19 +11,18 @@ final class ImageCell: UICollectionViewCell {
 
   static let id = "ImageCell"
   
-  private var model: ImageEntity? {
-    didSet{
-      guard let model = model else {return}
-      let buttonImage = model.isLiked == true ? likeImage: defaultLikeImage
-      self.imageView.setImage(urlSource: model){ image in
-        model.saveImage(image: image)
-      }
-      if let memo = model.memo {
-        memoLabel.text = memo
-      }
-      self.likeButton.setImage(buttonImage, for: .normal)
-    }
-  }
+  private var model: ImageEntity?
+//  {
+//    didSet{
+//      guard let model = model else {return}
+//      self.imageView.setImage(urlSource: model){ image in
+//        model.saveImage(image: image)
+//      }
+//      if model.isLiked == true {
+//        memoLabel.text = model.memo
+//      }
+//    }
+//  }
   
   var saveDidTap: ((ImageEntity) -> Void)?
   
@@ -40,7 +39,7 @@ final class ImageCell: UICollectionViewCell {
   private lazy var likeButton: UIButton = {
     let button = UIButton()
     button.backgroundColor = .clear
-    button.tintColor = .white
+    button.tintColor = UIColor(red: 0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
     button.setImage(defaultLikeImage, for: .normal)
     button.addTarget(self, action: #selector(saveButtonDidTap), for: .touchUpInside)
     return button
@@ -85,9 +84,18 @@ final class ImageCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func configure(model: ImageEntity, indexPath: IndexPath) {
-    self.memoLabel.text = "\(indexPath.item + 1)번째 사진"
+  func configure(model: ImageEntity, indexPath: IndexPath, sceneType: SceneType) {
     self.model = model
+    self.memoLabel.text = "\(indexPath.item + 1)번째 사진"
+    self.imageView.setImage(urlSource: model){ image in
+      model.saveImage(image: image)
+    }
+    switch sceneType {
+    case .save:
+      setCellToLikeState(model: model)
+    case .home:
+      setCellToDefaultState(model: model)
+    }
   }
   
   override func prepareForReuse() {
@@ -95,7 +103,15 @@ final class ImageCell: UICollectionViewCell {
     memoLabel.text = nil
     likeButton.setImage(defaultLikeImage, for: .normal)
   }
-
+  
+  func setLikeButtonToLike() {
+    likeButton.setImage(likeImage, for: .normal)
+  }
+  
+  func setLikeButtonToUndoLike() {
+    likeButton.setImage(defaultLikeImage, for: .normal)
+  }
+  
 }
 
 private extension ImageCell {
@@ -120,15 +136,20 @@ private extension ImageCell {
   
   @objc func saveButtonDidTap(){
     guard let model = self.model else {return}
-    saveDidTap?(model)
+    if model.isLiked == false {
+      saveDidTap?(model)
+    }
   }
   
-  func setLikeButtonToLike() {
-    likeButton.setImage(likeImage, for: .normal)
+  func setCellToDefaultState(model: ImageEntity) {
+    if model.isLiked == true {
+      setLikeButtonToLike()
+    }
   }
   
-  func setLikeButtonToUndoLike() {
-    likeButton.setImage(defaultLikeImage, for: .normal)
+  func setCellToLikeState(model: ImageEntity) {
+    setLikeButtonToLike()
+    self.memoLabel.text = model.memo
   }
-  
+
 }

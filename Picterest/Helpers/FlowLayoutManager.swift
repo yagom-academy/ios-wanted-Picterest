@@ -11,7 +11,7 @@ protocol SceneLayoutDelegate: AnyObject {
   func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat
 }
 
-enum LayoutType: Int {
+enum SceneType: Int {
   case save = 1
   case home
 }
@@ -36,7 +36,7 @@ final class SceneLayout: UICollectionViewLayout {
     case footer
   }
   
-  init(scene: LayoutType, cellPadding: CGFloat){
+  init(scene: SceneType, cellPadding: CGFloat){
     self.numberOfColumns = scene.rawValue
     self.cellPadding = cellPadding
     super.init()
@@ -102,7 +102,7 @@ extension SceneLayout {
       //11
       contentHeight = max(contentHeight, frame.maxY)
       yOffset[column] = yOffset[column] + height
-      if numberOfColumns == LayoutType.save.rawValue {
+      if numberOfColumns == SceneType.save.rawValue {
         continue
       }
       let otherCol = column == 0 ? 1:0

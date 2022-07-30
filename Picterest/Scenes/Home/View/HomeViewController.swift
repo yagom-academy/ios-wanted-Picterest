@@ -82,7 +82,11 @@ private extension HomeViewController {
         guard let memo = $0 else {return}
         selectedImageEntity.configureMemo(memo: memo)
         self.viewModel.toogleLikeState(item: selectedImageEntity) { error in
-          print(error?.localizedDescription)
+          if let error = error {
+            print(error.localizedDescription)
+          }else {
+            cell.setLikeButtonToLike()
+          }
         }
       }),
                                                 .cancel,
@@ -112,7 +116,7 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
     else {
       return UICollectionViewCell()
     }
-    cell.configure(model: model, indexPath: indexPath)
+    cell.configure(model: model, indexPath: indexPath, sceneType: .home)
     didReceiveToogleLikeStatus(on: cell)
     return cell
   }
