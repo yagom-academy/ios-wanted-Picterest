@@ -24,5 +24,5 @@ extension Entity {
 }
 
 extension Entity : Identifiable {
-
+    
 }
