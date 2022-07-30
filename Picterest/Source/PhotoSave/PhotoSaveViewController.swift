@@ -109,25 +109,18 @@ extension PhotoSaveViewController: UIGestureRecognizerDelegate {
             guard let indexPath = self.saveListCollectionView?.indexPathForItem(
                 at: point
             ) else { return }
-            let alertActionCell = UIAlertController(
+            let deletAlert = UIAlertController.presentSaveAndDeleteAlert(
                 title: "사진 삭제",
                 message: "사진을 삭제 하시겠습니까?",
-                preferredStyle: .alert
-            )
-            let deleteAction = UIAlertAction(
-                title: "삭제",
-                style: .destructive,
-                handler: { [weak self] _ in
+                isTextField: false,
+                isLongPress: true) {  [weak self] _ in
                     guard let id = self?.coreData[indexPath.row].id else { return }
                     ImageFileManager.shared.deleteImageFromLocal(named: id + ".png")
                     CoreDataManager.shared.deleteCoreData(ID: id)
                     self?.coreData.remove(at: indexPath.item)
                     self?.saveListCollectionView.deleteItems(at: [indexPath])
-                })
-            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-            alertActionCell.addAction(deleteAction)
-            alertActionCell.addAction(cancelAction)
-            self.present(alertActionCell, animated: true, completion: nil)
+                }
+            self.present(deletAlert, animated: true)
         }
     }
 }

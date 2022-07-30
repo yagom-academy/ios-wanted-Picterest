@@ -68,31 +68,6 @@ extension PhotoListViewController {
             }
         }
     }
-    
-    private func showSaveAlertMessage(completion: @escaping (String?) -> Void) {
-        let alertController = UIAlertController(
-            title: "사진 저장",
-            message: "저장할 사진에 메모를 남겨주세요",
-            preferredStyle: .alert
-        )
-        let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
-            completion(alertController.textFields?[0].text)
-        }
-        alertController.addTextField()
-        alertController.addAction(saveAction)
-        self.present(alertController, animated: true)
-    }
-    
-    private func showDeleteAlertMessage() {
-        let alertController = UIAlertController(
-            title: "사진 저장 취소",
-            message: "사진 저장이 취소 되었습니다.",
-            preferredStyle: .alert
-        )
-        let deleteAction = UIAlertAction(title: "확인", style: .default)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true)
-    }
 }
 
 //MARK: - Extension: DidTapPhotoSaveButtonDelegate
@@ -100,8 +75,14 @@ extension PhotoListViewController {
 extension PhotoListViewController: DidTapPhotoSaveButtonDelegate { 
     func didTapPhotoSaveButton(isSelected: Bool, photoInfo: PhotoModel?, image: UIImage?) {
         if isSelected {
-            showSaveAlertMessage { memo in
-                guard let memo = memo, let photoInfo = photoInfo, let image = image  else { return }
+            let saveAlert = UIAlertController.presentSaveAndDeleteAlert(
+                title: "사진 저장",
+                message: "저장할 사진에 메모를 남겨주세요",
+                isTextField: true
+            ) { alert in
+                guard let memo = alert.textFields?.first?.text,
+                      let photoInfo = photoInfo,
+                      let image = image  else { return }
                 guard let urlPath = ImageFileManager.shared.saveImageToLocal(
                     image: image,
                     name: (photoInfo.id) + ".png"
@@ -115,11 +96,17 @@ extension PhotoListViewController: DidTapPhotoSaveButtonDelegate {
                     height: photoInfo.height
                 )
             }
+            self.present(saveAlert, animated: true)
         } else {
+            let deleteAlert = UIAlertController.presentSaveAndDeleteAlert(
+                title: "사진 저장 취소",
+                message: "사진 저장이 취소 되었습니다.",
+                isTextField: false,
+                completion: nil)
             guard let photoInfo = photoInfo else { return }
             ImageFileManager.shared.deleteImageFromLocal(named: (photoInfo.id) + ".png")
             CoreDataManager.shared.deleteCoreData(ID: photoInfo.id)
-            showDeleteAlertMessage()
+            self.present(deleteAlert, animated: true)
         }
     }
 }
