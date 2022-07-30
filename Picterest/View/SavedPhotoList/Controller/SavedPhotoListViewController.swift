@@ -62,7 +62,7 @@ class SavedPhotoListViewController: BaseViewController {
 // MARK: Binding
 
 extension SavedPhotoListViewController {
-    func setBinding() {
+    private func setBinding() {
         self.savedPhotoListViewModel.$savedPhotos.sink {[weak self] updatedSavedPhotoList in
             self?.savedPhotos = updatedSavedPhotoList
             DispatchQueue.main.async {
