@@ -54,11 +54,3 @@ struct Profile: Codable {
         case url = "medium"
     }
 }
-
-
-struct ImageModel {
-    var imageURL: String
-    var width: Int
-    var height: Int
-    var isSaved: Bool
-}

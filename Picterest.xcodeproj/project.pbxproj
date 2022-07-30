@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C0B128C2895625600A1CF0E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B128B2895625600A1CF0E /* ImageModel.swift */; };
 		7C1DFE4B28950D1F002342B6 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7C1DFE4928950D1F002342B6 /* Model.xcdatamodeld */; };
 		7C4A32C1289522FC00A5E485 /* FileSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A32C0289522FC00A5E485 /* FileSaveManager.swift */; };
 		7C4A32C528952F9600A5E485 /* Entity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A32C428952F9600A5E485 /* Entity+CoreDataProperties.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7C0B128B2895625600A1CF0E /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		7C1DFE4A28950D1F002342B6 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7C4A32C0289522FC00A5E485 /* FileSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSaveManager.swift; sourceTree = "<group>"; };
 		7C4A32C428952F9600A5E485 /* Entity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -61,6 +63,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C0B128D2895626D00A1CF0E /* API Model */ = {
+			isa = PBXGroup;
+			children = (
+				7C0B128B2895625600A1CF0E /* ImageModel.swift */,
+				7C69A2F92895168500F7FFDE /* ImageEntity.swift */,
+			);
+			path = "API Model";
+			sourceTree = "<group>";
+		};
+		7C0B128E289562C500A1CF0E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7C69A2F62895164300F7FFDE /* CollectionViewCell.swift */,
+				7C69A30028951FBC00F7FFDE /* CustomLayout.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7C69A2CF28950F9F00F7FFDE /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,10 +95,9 @@
 		7C69A2F5289515F600F7FFDE /* Present */ = {
 			isa = PBXGroup;
 			children = (
+				7C0B128E289562C500A1CF0E /* View */,
 				7C69A2F1289515DB00F7FFDE /* HomeViewController.swift */,
 				7C69A2F3289515F200F7FFDE /* SavedViewController.swift */,
-				7C69A2F62895164300F7FFDE /* CollectionViewCell.swift */,
-				7C69A30028951FBC00F7FFDE /* CustomLayout.swift */,
 			);
 			path = Present;
 			sourceTree = "<group>";
@@ -86,7 +105,7 @@
 		7C69A2F82895167300F7FFDE /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				7C69A2F92895168500F7FFDE /* ImageEntity.swift */,
+				7C0B128D2895626D00A1CF0E /* API Model */,
 				7C69A2FB289516AD00F7FFDE /* NetworkService.swift */,
 			);
 			path = Network;
@@ -123,8 +142,8 @@
 			children = (
 				7C69A2FD289516C000F7FFDE /* Common */,
 				7C69A2F82895167300F7FFDE /* Network */,
-				7C69A2F5289515F600F7FFDE /* Present */,
 				7C69A2CF28950F9F00F7FFDE /* Core Data */,
+				7C69A2F5289515F600F7FFDE /* Present */,
 				DE15E65B28604278003DD2F5 /* AppDelegate.swift */,
 				DE15E65D28604278003DD2F5 /* SceneDelegate.swift */,
 				DE15E66128604278003DD2F5 /* Main.storyboard */,
@@ -221,6 +240,7 @@
 				7C69A3032895223C00F7FFDE /* UIImage+extension.swift in Sources */,
 				7C1DFE4B28950D1F002342B6 /* Model.xcdatamodeld in Sources */,
 				7C69A2FA2895168500F7FFDE /* ImageEntity.swift in Sources */,
+				7C0B128C2895625600A1CF0E /* ImageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
