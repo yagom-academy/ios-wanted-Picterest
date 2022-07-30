@@ -2,7 +2,7 @@
 //  ImageInfoEntity+CoreDataClass.swift
 //  Picterest
 //
-//  Created by oyat on 2022/07/29.
+//  Created by oyat on 2022/07/30.
 //
 //
 

@@ -41,8 +41,10 @@ class ImageFileManager {
             return
         }
         
+        //캐시에 이미지 저장
         let cachedImage = ImageCacheManager.shared.cachedImage(urlString: urlString)
         
+        //캐시에 이미지 없으면 파일 생성
         if cachedImage != nil  {
             guard let result = createFile(image: cachedImage, imageID: imageID) else {
                 return
@@ -78,9 +80,10 @@ class ImageFileManager {
         let imageName = "\(imageID).png"
         
         //저장경로 -> picDownURL
+        //코어데이터 저장 목록 4.사진저장위치(로컬)
         var folderPath = URL(fileURLWithPath: picDownURL.path)
         folderPath.appendPathComponent((imageName as NSString).lastPathComponent)
-        
+        print("folderPath:", folderPath)
         if !fileManager.fileExists(atPath: folderPath.path) {
             fileManager.createFile(atPath: folderPath.path, contents: image.pngData(), attributes: nil)
         }

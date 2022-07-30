@@ -9,6 +9,9 @@ import UIKit
 
 class SavedViewController: UIViewController {
     
+    // MARK: - Properties
+    private let viewModel = SavedViewModel()
+    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -21,9 +24,15 @@ class SavedViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadCell()
     }
     
     init() {
@@ -34,6 +43,13 @@ class SavedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func loadCell() {
+        viewModel.updateSaveData { [weak self] in
+                   DispatchQueue.main.async {
+                       self?.collectionView.reloadData()
+                   }
+               }
+           }
 }
 
 extension SavedViewController {
@@ -62,8 +78,7 @@ extension SavedViewController: UICollectionViewDelegateFlowLayout {
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //저장된 이미지 갯수
-        4
+        return viewModel.saveDataCount
     }
     
     
@@ -72,7 +87,8 @@ extension SavedViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SavedImageCell.reuseIdentifier, for: indexPath) as? SavedImageCell else { return SavedImageCell()
         }
         
-        cell.configure()
+        let saveData = viewModel.saveData(at: indexPath.row)
+        cell.configure(data: saveData)
         
         return cell
     }

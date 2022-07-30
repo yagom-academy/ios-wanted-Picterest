@@ -2,7 +2,7 @@
 //  ImageInfoEntity+CoreDataProperties.swift
 //  Picterest
 //
-//  Created by oyat on 2022/07/29.
+//  Created by oyat on 2022/07/30.
 //
 //
 
@@ -20,6 +20,8 @@ extension ImageInfoEntity {
     @NSManaged public var memo: String?
     @NSManaged public var originUrl: String?
     @NSManaged public var savePath: String?
+    @NSManaged public var width: String?
+    @NSManaged public var height: String?
 
 }
 

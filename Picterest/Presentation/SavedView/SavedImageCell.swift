@@ -12,7 +12,6 @@ class SavedImageCell: UICollectionViewCell, ReuseIdentifying {
     
     private let savedImageView: UIImageView = {
        let imageView = UIImageView()
-        imageView.backgroundColor = .blue
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 30
         imageView.clipsToBounds = true
@@ -57,13 +56,19 @@ class SavedImageCell: UICollectionViewCell, ReuseIdentifying {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        savedImageView.image = nil
+        savedMemoLabel.text = nil
+        
     }
 }
 
 // MARK: - Methods
 extension SavedImageCell {
-    func configure() {
-        
+    func configure(data: CoreDataInfo?) {
+        guard let data = data else { return }
+        let result = savedImageView.load(urlString: data.originUrl)
+        print(result)
+        savedMemoLabel.text = data.memo
     }
     
     private func configureUI() {
