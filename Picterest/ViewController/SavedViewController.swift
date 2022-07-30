@@ -22,14 +22,12 @@ final class SavedViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout(section: createLayoutSection())
-        
-        let longPressGesutre = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized(_:)))
-        
+                
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.dataSource = dataSource
+        collectionView.delegate = self
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
-        collectionView.addGestureRecognizer(longPressGesutre)
         return collectionView
     }()
     
@@ -140,42 +138,44 @@ extension SavedViewController {
     }
 }
 
-// MARK: - objc Method
-
-extension SavedViewController {
-    @objc private func longPressGestureRecognized(_ sender: UILongPressGestureRecognizer) {
-        let pressPoint = sender.location(in: collectionView)
-        guard let indexPath = collectionView.indexPathForItem(at: pressPoint) else {
-            return
-        }
-        guard let cell = collectionView.cellForItem(at: indexPath) else {
-            return
-        }
-        
-        if sender.state == .began {
-            UIView.animate(withDuration: 0.1) {
-                cell.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-            }
-        } else if sender.state == .ended {
-            UIView.animate(withDuration: 0.1) {
-                cell.transform = .identity
-            }
-            let alertController = UIAlertController(title: "사진 삭제", message: nil, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "취소", style: .cancel))
-            alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                self.savedViewModel.deletePhotoEntityData(index: indexPath.item) {
-                    self.delegate?.photoDeleteSuccess()
-                }
-            }))
-            present(alertController, animated: true)
-        }
-    }
-}
-
 // MARK: - PhotosViewControllerDelegate
 
 extension SavedViewController: PhotosViewControllerDelegate {
     func photoSaveSuccess() {
         savedViewModel.fetch()
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension SavedViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return configureContextMenu(indexPath: indexPath)
+    }
+}
+
+// MARK: - Method
+
+extension SavedViewController {
+    private func configureContextMenu(indexPath: IndexPath) -> UIContextMenuConfiguration{
+        let context = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { (action) -> UIMenu? in
+            
+            let delete = UIAction(title: "보관함에서 삭제", image: UIImage(systemName: "trash"), identifier: nil, discoverabilityTitle: nil, attributes: .destructive, state: .off) { (_) in
+                
+                let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel))
+                actionSheet.addAction(UIAlertAction(title: "사진 삭제", style: .destructive) { _ in
+                    self.savedViewModel.deletePhotoEntityData(index: indexPath.item) {
+                        self.delegate?.photoDeleteSuccess()
+                    }
+                })
+                
+                self.present(actionSheet, animated: true)
+            }
+            
+            return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [delete])
+            
+        }
+        return context
     }
 }
