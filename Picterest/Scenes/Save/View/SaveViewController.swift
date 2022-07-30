@@ -29,19 +29,25 @@ class SaveViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    resetData()
     fetchImage()
     setDataBinding()
   }
-
 
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = self
     setConstraints()
+    setGuesture()
   }
+  
 }
 
 private extension SaveViewController {
+  
+  func resetData(){
+    viewModel.resetList()
+  }
   
   func fetchImage() {
     viewModel.fetchImages()
@@ -67,17 +73,43 @@ private extension SaveViewController {
       collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
   }
+    
+  func setGuesture() {
+    let lpgr : UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+    lpgr.minimumPressDuration = 0.5
+    lpgr.delegate = self
+    lpgr.delaysTouchesBegan = true
+    self.collectionView.addGestureRecognizer(lpgr)
+  }
   
-  func didReceiveToogleLikeStatus(on cell: ImageCell) {
-    cell.saveDidTap = {
-      print($0.storedDirectory)
-      //TODO: 
+  @objc func handleLongPress(gestureRecognizer : UILongPressGestureRecognizer){
+    if gestureRecognizer.state == .began {
+      let p = gestureRecognizer.location(in: self.collectionView)
+      if let indexPath = self.collectionView.indexPathForItem(at: p) {
+        guard let model = viewModel[indexPath] else {return}
+        handleAlert(model)
+      } else {
+        print("couldn't find index path")
+      }
     }
+  }
+  
+  func handleAlert(_ model: ImageEntity) {
+    guard let memo = model.memo else {return}
+    _ = MemoAlert.makeAlertController(title: nil,
+                                      message: "선택하신 메모 '\(memo)' 를 지우시겠습니까?",
+                                      actions: .ok({ _ in
+      self.viewModel.toogleLikeState(item: model) { error in
+        if let error = error {
+          print(error.localizedDescription)
+        }
+      }
+    }), .cancel, from: self)
   }
   
 }
 
-extension SaveViewController: UICollectionViewDataSource, SceneLayoutDelegate {
+extension SaveViewController: UICollectionViewDataSource, SceneLayoutDelegate, UIGestureRecognizerDelegate {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     let count = viewModel.imageList.value.count
@@ -91,7 +123,6 @@ extension SaveViewController: UICollectionViewDataSource, SceneLayoutDelegate {
       return UICollectionViewCell()
     }
     cell.configure(model: model, indexPath: indexPath, sceneType: .save)
-    didReceiveToogleLikeStatus(on: cell)
     return cell
   }
   

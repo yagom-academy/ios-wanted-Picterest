@@ -48,5 +48,14 @@ struct HomeRepository {
     }
   }
   
+  func resetRepository(completion: @escaping ((Error?) -> Void)){
+    ImageManager.shared.clearStorage(){ error in
+      if let error = error {
+        completion(error)
+      }else {
+        completion(nil)
+      }
+    }
+  }
   
 }

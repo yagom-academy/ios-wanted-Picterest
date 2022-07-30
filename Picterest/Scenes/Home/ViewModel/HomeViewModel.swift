@@ -10,6 +10,9 @@ import UIKit
 protocol ImageConfigurable {
   var imageList: Observable<[ImageEntity]> {get set}
   func fetchImages()
+  func resetList()
+  func updateLikeStatus()
+  func resetLikeStatus()
   func toogleLikeState(item entity: ImageEntity, completion: @escaping ((Error?) -> Void))
   subscript(index: IndexPath) -> ImageEntity? { get }
 }
@@ -17,6 +20,7 @@ protocol ImageConfigurable {
 
 final class HomeViewModel: ImageConfigurable {
   
+  var didUpdateLikeStatusAt: ((Int) -> Void)?
   var imageList: Observable<[ImageEntity]> = Observable([])
   let repository = HomeRepository()
   private(set) var imagesPerPage = 15
@@ -25,7 +29,28 @@ final class HomeViewModel: ImageConfigurable {
     return imageList.value[index.row]
   }
   
-
+  func resetList() {
+    imageList.value = []
+  }
+  
+ 
+  func updateLikeStatus() {
+    let storedModels = repository.fetchSavedImageData()
+    imageList.value.forEach({ imageEntity in
+      if storedModels.contains(where: {$0.id == imageEntity.id}) {
+        imageEntity.toogleLikeStates()
+      }
+    })
+  }
+  
+  func resetLikeStatus() {
+    imageList.value.forEach({ imageEntity in
+      if imageEntity.isLiked == true {
+        imageEntity.toogleLikeStates()
+      }
+    })
+  }
+  
   func fetchImages() {
     let page = pageCount() + 1
     let storedModels = repository.fetchSavedImageData()
@@ -33,14 +58,15 @@ final class HomeViewModel: ImageConfigurable {
     repository.fetchImages(endPoint: endPoint) { result in
       switch result {
       case .success(let data):
+        var tempList: [ImageEntity] = []
         for item in data {
-//          let imageNumber = self.imageList.value.count + 1
           let imageEntity = item.toDomain()
           if storedModels.contains(where: {$0.id == imageEntity.id}) {
             imageEntity.toogleLikeStates()
           }
-          self.imageList.value.append(imageEntity)
+          tempList.append(imageEntity)
         }
+        self.imageList.value += tempList
       case .failure(let error):
         print(error)
       }
@@ -65,6 +91,7 @@ private extension HomeViewModel {
     return self.imageList.value.count / imagesPerPage
   }
   
+
 
   
 }

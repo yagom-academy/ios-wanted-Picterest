@@ -34,10 +34,6 @@ class CoreDataManager {
     do {
       let data = try context.fetch(ImageData.fetchRequest()) as! [ImageData]
       print("총 \(data.count) 개의 이미지가 코어데이터에 저장되어 있습니다")
-      print(data.forEach({ imageData in
-        print(imageData.memo)
-        print(imageData.storedDirectory)
-      }))
       return data
     }catch{
       print(error.localizedDescription)

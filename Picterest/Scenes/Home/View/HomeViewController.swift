@@ -7,11 +7,11 @@ import UIKit
 
 class HomeViewController: UIViewController {
   
-  let viewModel: ImageConfigurable
+  var viewModel: ImageConfigurable
   let layoutProvider = SceneLayout(scene: .home, cellPadding: 6)
   private var isLoading = false
   private var loadingView: Footer?
-
+  
   init(viewModel: ImageConfigurable) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
@@ -29,36 +29,72 @@ class HomeViewController: UIViewController {
     return collectionView
   }()
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    fetchImage()
+    updateData()
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView.dataSource = self
-//    CoreDataManager.shared.deleteAll()
-    setConstraints()
-    fetchImage()
     setDataBinding()
+    setConstraints()
   }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    resetData()
+  }
+  
 }
 
 private extension HomeViewController {
   
-  func fetchImage() {
-    viewModel.fetchImages()
+  func resetData(){
+    viewModel.resetLikeStatus()
   }
   
+  func updateData() {
+    viewModel.updateLikeStatus()
+    DispatchQueue.main.async {
+      self.collectionView.reloadSections(IndexSet(integer: 0))
+    }
+  }
+  
+  func fetchImage() {
+    if viewModel.imageList.value.isEmpty {
+      viewModel.fetchImages()
+    }
+  }
   func setDataBinding() {
-    let group = DispatchGroup()
-    viewModel.imageList.bind({ list in
-      if list.count > 0 {
-        group.enter()
-        DispatchQueue.main.async {
-          self.collectionView.insertItems(at: [IndexPath(item: list.count - 1, section: 0)])
-          group.leave()
+    self.viewModel.imageList.bind({ list in
+      let group = DispatchGroup()
+      DispatchQueue.global().async {
+        print(list.count)
+        if list.count > 0 {
+          group.enter()
+          DispatchQueue.main.async {
+            let indexPathArray = self.makeIndexPathArray(list: list.count)
+            self.collectionView.performBatchUpdates {
+              self.collectionView.insertItems(at: indexPathArray)
+            }
+            group.leave()
+          }
         }
+        group.wait()
       }
-      group.wait()
     })
   }
+  
+  func makeIndexPathArray(list: Int) -> [IndexPath] {
+    var indexPathArray:[IndexPath] = []
+    for i in self.collectionView.numberOfItems(inSection: 0)..<list {
+      indexPathArray.append(IndexPath(item: i, section: 0))
+    }
+    return indexPathArray
+  }
+  
   
   func setConstraints() {
     view.addSubview(collectionView)
@@ -97,7 +133,7 @@ private extension HomeViewController {
       })
     }
   }
-
+  
   @objc func textChanged(_ sender:UITextField) {
     MemoAlert.memo = sender.text
   }
@@ -136,7 +172,7 @@ extension HomeViewController: UICollectionViewDataSource, SceneLayoutDelegate, U
       guard !self.isLoading else { return }
       self.isLoading = true
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-        self.fetchImage()
+        self.viewModel.fetchImages()
         self.isLoading = false
       }
     }

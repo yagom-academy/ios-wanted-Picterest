@@ -62,6 +62,11 @@ extension SceneLayout {
       return
     }
     
+    //Reset
+    cache.updateValue([], forKey: .items)
+    cache.updateValue([], forKey: .footer)
+    contentHeight = 0
+    
     //CollectionView 넣어주면...
     let columnWidth = (contentWidth / CGFloat(numberOfColumns))
     
