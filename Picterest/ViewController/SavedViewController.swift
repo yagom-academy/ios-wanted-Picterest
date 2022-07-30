@@ -8,6 +8,7 @@
 import UIKit
 
 final class SavedViewController: UIViewController {
+    
     private let reuseIdentifier = "SavedCell"
     private let viewModel = SavedViewModel()
     
@@ -40,7 +41,7 @@ extension SavedViewController {
 
 extension SavedViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.getImagesCount()
+        return viewModel.getNumberOfImages()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -71,7 +72,7 @@ extension SavedViewController: CollectionViewCellDelegate {
         let firstActionTitle = "취소"
         let secondActionTitle = "확인"
         
-        let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert)
+        let alertController = UIAlertController().createAlert(title, message, style: .alert)
         let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
             self.collectionView.reloadData()
         }

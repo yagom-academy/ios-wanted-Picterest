@@ -8,6 +8,7 @@
 import UIKit
 
 final class ImagesViewController: UIViewController {
+    
     private let reuseIdentifier = "PicterestCell"
     private let viewModel = ImagesViewModel()
     private var layout: CustomLayout?
@@ -50,7 +51,7 @@ extension ImagesViewController {
 
 extension ImagesViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.getImagesCount()
+        return viewModel.getNumberOfImages()
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -95,7 +96,6 @@ extension ImagesViewController: UICollectionViewDelegate {
         
         if Int(distanceFromOriginToVisiblePoint) >= Int(totalHeightOfContentView - visibleHeightOfContentView) {
             DispatchQueue.main.async {
-                self.viewModel.increasePageIndex()
                 self.viewModel.fetch {
                     self.collectionView.reloadData()
                 }
@@ -120,7 +120,7 @@ extension ImagesViewController: CollectionViewCellDelegate {
         let firstActionTitle = "취소"
         let secondActionTitle = "확인"
         
-        let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert, hasTextField: true)
+        let alertController = UIAlertController().createAlert(title, message, style: .alert, hasTextField: true)
         let alertAction = alertController.alertActionInImagesViewController(cell: cell, imageInformation: imageInformation)
         
         alertController.addAlertAction(title: firstActionTitle, style: .default)

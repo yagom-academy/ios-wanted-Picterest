@@ -8,8 +8,7 @@
 import UIKit
 
 final class CellView: UIView {
-    var isSaved: Bool = false
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
@@ -19,6 +18,10 @@ final class CellView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    // MARK: - Property
+    
+    var isSaved: Bool = false
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -38,7 +41,7 @@ final class CellView: UIView {
     let saveButton: UIButton = {
         let saveButton = UIButton()
         saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.setImage(UIImage(systemName: "star"), for: .normal)
+        saveButton.setImage(UIImage(systemName: UIStyle.Icon.star), for: .normal)
         saveButton.tintColor = .white
         saveButton.isOpaque = true
         return saveButton
@@ -53,7 +56,11 @@ final class CellView: UIView {
         textLabel.font = UIFont.systemFont(ofSize: UIStyle.CellView.fontSize)
         return textLabel
     }()
-    
+}
+
+// MARK: - Private
+
+extension CellView {
     private func setView() {
         self.clipsToBounds = true
         self.layer.cornerRadius = UIStyle.CellView.cornerRadius

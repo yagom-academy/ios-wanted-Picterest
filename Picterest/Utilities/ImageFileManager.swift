@@ -14,7 +14,11 @@ final class ImageFileManager {
     private init() { }
     
     private let fileManager = FileManager.default
-    
+}
+
+// MARK: - Public 
+
+extension ImageFileManager {
     func save(_ fileName: NSString, _ image: UIImage?) -> String? {
         guard let image = image else {
             return nil
@@ -27,9 +31,8 @@ final class ImageFileManager {
             try imageData?.write(to: imageFileURL)
         } catch {
             print(error.localizedDescription)
-            print("31")
         }
-        print("path: \(imageFileURL.path)")
+        
         return imageFileURL.path
     }
     
@@ -61,6 +64,8 @@ final class ImageFileManager {
     }
    
 }
+
+// MARK: - Private
 
 extension ImageFileManager {
     private func makeFileURL(using fileName: NSString) -> URL {

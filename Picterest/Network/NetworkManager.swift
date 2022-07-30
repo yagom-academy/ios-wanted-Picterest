@@ -14,15 +14,12 @@ final class NetworkManager {
         request.httpMethod = "GET"
 
         URLSession.shared.dataTask(with: request) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let safeData = data, error == nil else {
-                    print("Download image fail : \(url)")
+            guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                  let safeData = data, error == nil else {
                     return
             }
 
             DispatchQueue.main.async() {
-                print("Download image success : \(url)")
                 do {
                     let decodedData = try JSONDecoder().decode([ImageInformation].self, from: safeData)
                     completion(decodedData)

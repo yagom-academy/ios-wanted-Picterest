@@ -13,7 +13,11 @@ final class ImageCacheManager {
     private init() { }
     
     private var memory = NSCache<NSString, NSData>()
-    
+}
+
+// MARK: - Public
+
+extension ImageCacheManager {
     func save(_ key: NSString, _ data: Data) {
         self.memory.setObject(NSData(data: data), forKey: key)
     }
@@ -22,6 +26,7 @@ final class ImageCacheManager {
         if let data = self.memory.object(forKey: key) {
             return Data(referencing: data)
         }
+        
         return nil
     }
 }

@@ -10,9 +10,9 @@ import CoreData
 
 final class SavedViewModel {
     
-    let coreDataManager = CoreDataManager.shared
+    private let coreDataManager = CoreDataManager.shared
     
-    func getImagesCount() -> Int {
+    func getNumberOfImages() -> Int {
         return coreDataManager.coreDataArray.count
     }
     

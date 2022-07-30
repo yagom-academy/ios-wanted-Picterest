@@ -9,13 +9,14 @@ import UIKit
 import CoreData
 
 final class SavedCollectionViewCell: UICollectionViewCell {
+    
+    weak var delegate: CollectionViewCellDelegate?
+    
     let view: CellView = {
         let view = CellView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    weak var delegate: CollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +32,25 @@ final class SavedCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         view.textLabel.text = ""
         view.imageView.image = nil
+    }
+}
+
+// MARK: - Public
+
+extension SavedCollectionViewCell {
+    func configure(with imageData: NSManagedObject) {
+        guard let originalURL = imageData.value(forKey: CoreDataKey.originalURL) as? String,
+              let imageID = imageData.value(forKey: CoreDataKey.id) as? String,
+              var memo = imageData.value(forKey: CoreDataKey.memo) as? String else { return }
+        
+        if memo.count > 20 {
+            let endIndex = memo.index(memo.startIndex, offsetBy: 20)
+            memo = String(memo[..<endIndex])
+            memo += "..."
+        }
+
+        self.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
+        self.view.textLabel.text = memo
     }
 }
 
@@ -58,21 +78,5 @@ extension SavedCollectionViewCell {
             view.topAnchor.constraint(equalTo: self.topAnchor),
             view.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
-    }
-}
-
-extension SavedCollectionViewCell {
-    func configure(with imageData: NSManagedObject) {
-        guard let originalURL = imageData.value(forKey: CoreDataKey.originalURL) as? String,
-              let imageID = imageData.value(forKey: CoreDataKey.id) as? String,
-              var memo = imageData.value(forKey: CoreDataKey.memo) as? String else { return }
-        
-        if memo.count > 20 {
-            memo = memo.padding(toLength: 20, withPad: " ", startingAt: 0)
-            memo += "..."
-        }
-
-        self.view.imageView.loadImage(urlString: originalURL, imageID: imageID)
-        self.view.textLabel.text = memo
     }
 }

@@ -11,9 +11,9 @@ struct ImageInformation: Decodable {
     let id: String
     let width: Int
     let height: Int
-    let urls: URLsModel
+    let urls: ImageURL
 }
 
-struct URLsModel: Decodable {
+struct ImageURL: Decodable {
     let small: String
 }

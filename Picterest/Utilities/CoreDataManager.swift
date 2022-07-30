@@ -29,12 +29,14 @@ final class CoreDataManager {
     }
 }
 
-// MARK: - Method
+// MARK: - Public
 
 extension CoreDataManager {
-    func save(id: String, originalURL: String, memo: String, savedLocation: String, imageHeight: Int, imageWidth: Int) {
+    func save(_ id: String, _ originalURL: String, _ memo: String, _ savedLocation: String, _ imageHeight: Int, _ imageWidth: Int) {
         guard let context = context,
-              let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
+              let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
+            return
+        }
 
         let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
         
@@ -54,7 +56,9 @@ extension CoreDataManager {
     }
     
     func load(completion: () -> Void) {
-        guard let context = context else { return }
+        guard let context = context else {
+            return
+        }
         
         let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
         
@@ -67,13 +71,13 @@ extension CoreDataManager {
         }
     }
     
-    func remove(_ item: NSManagedObject) {
+    func remove(_ data: NSManagedObject) {
         guard let context = context,
-              let index = coreDataArray.firstIndex(of: item) else {
+              let index = coreDataArray.firstIndex(of: data) else {
             return
         }
     
-        context.delete(item)
+        context.delete(data)
     
         do {
             try context.save()
