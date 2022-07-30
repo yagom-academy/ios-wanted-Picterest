@@ -10,7 +10,7 @@ import UIKit
 final class ImageListViewController: UIViewController {
     
     private enum Define {
-        static let numberOfColumns: Int = 2
+        static let numberOfColumns: Int = 4
         static let numberOfSections: Int = 1
     }
     

@@ -1,17 +1,13 @@
 # 원티드 iOS 프리온보딩(with 야곰아카데미) - ⌨ CustomKeyboard App <br />[2022.07.25 &#126; 2022.07.30]
 
-# Team
+# 🧑‍🍳 Maker
 
-## 팀원 소개
-
-| 커킴                                                                               |
-| ---------------------------------------------------------------------------------- |
+|                                        커킴                                        |
+| :--------------------------------------------------------------------------------: |
 | [<img src="https://github.com/kirkim.png" width="200">](https://github.com/kirkim) |
-| 개발                                                                               |
+|                                        개발                                        |
 
-# 프로젝트 소개
-
-## 목표
+# 프로젝트 목표
 
 > 서버 API를 이용하여 이미지를 받아와, 가변 세로 길이의 레이아웃으로 나타냅니다.<br>
 > 원하는 사진을 선택해 저장하는 기능을 갖습니다.<br>
@@ -19,37 +15,52 @@
 
 <br><br>
 
-# 앱동작 설명
+# 🏗 앱동작 설명
 
 ## 오토레이아웃 (ipodtouch7 ~ iphoneProMax13)
 
 - 최대한 모든 기종에서 자연스럽게 보일 수 있도록 UI를 구현하였습니다.
-  <img src= "Picterest/Resource/Images/autolayout_1.png" width="400"/>
+
+<img src= "Picterest/Resource/Images/autolayout_1.png" width="400"/>
 
 <br><br>
 
 ## 더보기 버튼과 끌어당겨 새로고침하는 기능
 
 - 더보기 버튼을 이용하여 새로운 이미지를 15개씩 무한히 가져올 수 있습니다.
+- 모든이미지들은 해당이미지의 비율에 맞게 셀높이가 조정되어 나타나게 됩니다.
 - 콜렉션뷰를 끌어당겨서 새로고침을 하면 모든셀데이터를 리셋한 뒤 최초의 15개 이미지를 다시 받아옵니다.
 
 |                            더보기버튼 기능                             |                       끌어당겨 새로고침하는 기능                       |
 | :--------------------------------------------------------------------: | :--------------------------------------------------------------------: |
 | <img src= "Picterest/Resource/Images/picterest_gif1.gif" width="200"/> | <img src= "Picterest/Resource/Images/picterest_gif2.gif" width="200"/> |
 
+<br><br>
+
 ## 메모와 함께 사진이 저장되는 기능
 
 - 별버튼을 클릭하여 이미지를 저장할 수 있고 저장완료시 별버튼이 실시간으로 변합니다.
 - 이미지의 정보를 CoreData에 저장, 이미지파일을 FileManager를 통해 별도의 앱폴더에 저장합니다.
 - 두번째탭의 화면에서 실시간으로 저장된 이미지를 확인할 수 있습니다.
-  <img src= "Picterest/Resource/Images/picterest_gif3.gif" width="200"/>
 
-# 사용한 기술
+<img src= "Picterest/Resource/Images/picterest_gif3.gif" width="200"/>
+
+<br><br>
+
+## 저장된사진을 길게 클릭하면 삭제되는 기능
+
+- 두번째화면에서 저장된사진을 길게 클릭하면 알림창을 통해 이미지를 삭제할 수 있습니다.
+- 이미지를 삭제하게 되면 CoreData에 있는 이미지정보가 삭제되며, FileManager를 통해 앱폴더에 저장된 이미지를 삭제하게 됩니다.
+- 삭제한 뒤에 첫번째화면에 돌아와보면, 해당이미지의 별모양의 상태가 다시 바뀌었음을 확인할 수 있습니다.
+
+<img src= "Picterest/Resource/Images/picterest_gif4.gif" width="200"/>
+
+# 🚀 사용한 기술
 
 `MVVM Pattern` `Delegate Pattern` `Code-based UI` `NSCache` `CoreData` `FileManager` `UICollectionViewLayout`
 
 <details>
-    <summary> <h2>🚥 MVVM Pattern</h2></summary>
+    <summary> <h2>MVVM Pattern</h2></summary>
     <h3> 1. MVVM 패턴을 사용한 이유</h3>
     <ul>
       <li> 이번 프로젝트는 이미지의 데이터를 최초로 네트워크통신을 이용해 가져옵니다. 그 후 추가 동작에 따라 `CoreData`를 이용하여 저장하고, 이미지파일을 `FileManager`를 이용하여 저장합니다.
@@ -65,7 +76,7 @@
       <li>Alert와 같은 다소 작은 뷰들은 `delegate`를 이용하여 이벤트를 처리하도록 하였습니다.</li>
 </details>
 <details>
-		<summary> <h2>🕹 Delegate Pattern</h2></summary>
+		<summary> <h2>Delegate Pattern</h2></summary>
     <h3> 1.딜리게이트 패턴을 사용한 이유</h3>
     <ul>
       <li>이번 프로젝트에서는 `RxSwift`를 사용하지 않고 만든 프로젝트입니다. 그래서 이벤트전달을 하기위해 떠오른 방법이 `노티피케이션`과 `델리게이트패턴`입니다. 노티피케이션은 이벤트의 전달과정을 파악하기가 쉽지않고 실수를 할 가능성이 큽니다. 반면에 델리게이트패턴을 뷰와 1대1 대응이 되도록 구현한다면 가독성과 유지보수가 좋아지게 됩니다.</li>
@@ -120,14 +131,16 @@
   	</ul>
 </details>
 
-# 기타 프로젝트 특징
+<br><br>
+
+# 🌈 기타 프로젝트 특징
 
 <details>
 		<summary> <h2>코드의 Style수치값들을 하드코딩하지않고 Style파일에서 관리</h2></summary>
     <ul>
       <li>뷰의 frame, font, 각종사이즈, UIColor등등을 하드코딩하여 관리하게 되면 가독성이 떨어질 뿐만 아니라 코드수정이 힘들어 집니다.</li>
 			<li>그래서 다음과 같이 enum타입의 네임스페이스를 만들어서 Style에 필요한 값들을 관리해주도록 했습니다.<br>
-				<img src= "Picterest/Resource/Images/cellstyle_code.png" width="400"/>
+				<img src= "Picterest/Resource/Images/cellstyle_code.png"/>
     	</li>
   	</ul>
 </details>
@@ -136,7 +149,28 @@
     <ul>
       <li>콜렉션뷰에서 셀을 재사용하거나 생성할 때 Cell의 고유키값이 필요합니다. 이 키값을 하드코딩하여 관리하는 것은 실수할 가능성이 크고, 매번 작성하는 것도 번거롭습니다.</li>
 			<li>다음과 같이 extension기능을 활용하여 ReuseIdentifying프로토콜을 만들어 사용하면 위의 단점을 보완할 수 있습니다.<br>
-				<img src= "Picterest/Resource/Images/reuseidentifying_code.png" width="400"/>
+				<img src= "Picterest/Resource/Images/reuseidentifying_code.png"/>
+    	</li>
+  	</ul>
+</details>
+<details>
+		<summary> <h2>배열의 index를 안전하게 관리</h2></summary>
+    <ul>
+      <li>index값을 이용하여 배열의 요소에 접근할때 배열의 범위밖의 index에 접근한다면 앱이 크러쉬날 것입니다.</li>
+			<li>다음과 같이 Collection의 extension을 이용하여 subscript를 오버로드 하는 방식을 통해 좀 더 안전하게 배열의 요소에 접근할 수 있도록 만들었습니다.<br>
+				<img src= "Picterest/Resource/Images/collection_subscript_code.png"/>
+			다음과 같이 guard문을 활용하여 안전하게 배열의 요소에 접근이 가능해 집니다.
+				<img src= "Picterest/Resource/Images/collection_subscript_code2.png"/>
+    	</li>
+  	</ul>
+</details>
+<details>
+		<summary> <h2>다양한 행의갯수로 유연하게 출력가능</h2></summary>
+    <ul>
+      <li>커스텀레이아웃의 delegate를 이용하여 행의 갯수를 조정해줄 수 있습니다.</li>
+				<img src= "Picterest/Resource/Images/coulmn_code.png"/>
+			<li>행의 갯수가 변하더라도 행이짧은쪽을 우선순위로 셀이 쌓이는 방식은 유지됩니다.<br>
+				<img src= "Picterest/Resource/Images/coulmn_234.png"/>
     	</li>
   	</ul>
 </details>
