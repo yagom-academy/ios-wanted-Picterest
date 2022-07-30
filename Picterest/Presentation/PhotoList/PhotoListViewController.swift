@@ -58,17 +58,22 @@ class PhotoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        if let layout = collectionView.collectionViewLayout as?  CustomCollectionViewLayout {
-            layout.delegate = self
-        }
         setupCollectionView()
         setupConstraints()
-        
         fetchPhotos()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     private func setupCollectionView() {
+        if let layout = collectionView.collectionViewLayout as?  CustomCollectionViewLayout {
+            layout.delegate = self
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -117,8 +122,11 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController {
     
     private func fetchPhotos() {
-        photoListAPIProvider?.fetchPhotoList(with: page, completion: { [weak self] result in
+        photoListAPIProvider?.fetchPhotoList(
+            with: page,
+            completion: { [weak self] result in
             switch result {
+                
             case .success(let photoLists):
                 self?.photos += photoLists
                 self?.page += 1
@@ -169,13 +177,14 @@ extension PhotoListViewController: UICollectionViewDataSource {
         
         URLImageProvider?.fetchImage(from: imageURL, completion: { result in
             switch result {
+                
             case .success(let image):
                 cell.setupImage(image)
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
-        
         return cell
     }
     
@@ -186,6 +195,7 @@ extension PhotoListViewController: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         photoListAPIProvider?.fetchPhotoList(with: page, completion: { result in
             switch result {
+                
             case .success(let photoLists):
                 self.photos += photoLists
                 self.page += 1

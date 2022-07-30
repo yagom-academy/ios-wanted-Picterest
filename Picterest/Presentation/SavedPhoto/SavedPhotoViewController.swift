@@ -10,7 +10,6 @@ import UIKit
 
 class SavedPhotoViewController: UIViewController {
     
-    
     // MARK: - Properties
     
     private var photos: [NSManagedObject] = []
@@ -27,7 +26,6 @@ class SavedPhotoViewController: UIViewController {
             SavedPhotoCollectionViewCell.self,
             forCellWithReuseIdentifier: SavedPhotoCollectionViewCell.identifier
         )
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
@@ -37,25 +35,43 @@ class SavedPhotoViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupConstraints()
-        
-        photos = CoreDataManager.shared.load() ?? []
-        
+        setupLongGestureRecognizerOnCollection()
+        fetchFromCoreData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        photos = CoreDataManager.shared.load() ?? []
+        fetchFromCoreData()
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
-    // MARK: - Methods
+}
+
+// MARK: - FetchFromCoreData Method extension
+
+extension SavedPhotoViewController {
+    
+    private func fetchFromCoreData() {
+        photos = CoreDataManager.shared.load() ?? []
+    }
+    
+}
+
+// MARK: - SavedPhotoViewController Layout extension
+
+extension SavedPhotoViewController {
     
     private func setupView() {
         view.backgroundColor = .white
+        setupNavigationBar()
         setupCollectionView()
+    }
+    
+    private func setupNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.title = "Saved Images"
     }
     
     private func setupCollectionView() {
@@ -91,7 +107,59 @@ class SavedPhotoViewController: UIViewController {
     
 }
 
-// MARK: - Extensions
+// MARK: - LongPress to delete file methods extension
+
+extension SavedPhotoViewController: UIGestureRecognizerDelegate {
+    
+    private func setupLongGestureRecognizerOnCollection() {
+        let longPressedGesture = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress(gestureRecognizer:))
+        )
+        longPressedGesture.minimumPressDuration = 0.5
+        longPressedGesture.delegate = self
+        longPressedGesture.delaysTouchesBegan = true
+        collectionView.addGestureRecognizer(longPressedGesture)
+    }
+
+    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+        let location = gestureRecognizer.location(in: collectionView)
+
+        if gestureRecognizer.state == .began {
+            if let indexPath = collectionView.indexPathForItem(at: location) {
+                let photo = photos[indexPath.item]
+                let alert = UIAlertController(
+                    title: "즐겨찾기 사진 삭제",
+                    message: "",
+                    preferredStyle: .alert
+                )
+                let deleteButton = UIAlertAction(
+                    title: "삭제",
+                    style: .destructive) { _ in
+                        if let imageID = photo.value(forKey: "id") as? String {
+                            self.photos.remove(at: indexPath.item)
+                            CoreDataManager.shared.delete(item: photo)
+                            ImageManager.shared.deleteImage(id: imageID)
+                            self.collectionView.deleteItems(at: [indexPath])
+                        }
+                    }
+                let cancelButton = UIAlertAction(
+                    title: "취소",
+                    style: .cancel,
+                    handler: nil
+                )
+                alert.addAction(cancelButton)
+                alert.addAction(deleteButton)
+                self.present(alert, animated: true)
+            }
+        } else {
+            return
+        }
+    }
+    
+}
+
+// MARK: - UICollectionView DataSource extension
 
 extension SavedPhotoViewController: UICollectionViewDataSource {
     
@@ -111,13 +179,12 @@ extension SavedPhotoViewController: UICollectionViewDataSource {
         }
         let photo = photos[indexPath.item]
         cell.setupCell(photo: photo)
-        
         return cell
     }
     
 }
 
-// MARK: - UICollectionView DelegateFlowLayout Extensions
+// MARK: - UICollectionView DelegateFlowLayout extension
 
 extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
     
@@ -126,16 +193,16 @@ extension SavedPhotoViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let imageWidth = photos[indexPath.item].value(forKey: "width") as? CGFloat
-        let imageHeight = photos[indexPath.item].value(forKey: "height") as? CGFloat
-        let width = collectionView.frame.width
-        let itemsPerRow: CGFloat = 1
-        let widthPadding = Style.sectionInsets.left * (itemsPerRow + 1)
-        let cellWidth = (width - widthPadding) / itemsPerRow
-        let cellHeight = imageHeight! * width / imageWidth!
-        
+        let photo = photos[indexPath.item]
+        guard let imageWidth = photo.value(forKey: "width") as? CGFloat,
+              let imageHeight = photo.value(forKey: "height") as? CGFloat else {
+            return CGSize(width: 0, height: 0)
+        }
+        let cellWidth = collectionView.frame.width * 0.9
+        let cellHeight = imageHeight * cellWidth / imageWidth
         return CGSize(width: cellWidth, height: cellHeight)
     }
+    
 }
 
 // MARK: - NameSpaces
@@ -150,5 +217,6 @@ extension SavedPhotoViewController {
             bottom: 10,
             right: 10
         )
+        
     }
 }

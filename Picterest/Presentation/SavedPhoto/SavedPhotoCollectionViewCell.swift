@@ -19,6 +19,7 @@ class SavedPhotoCollectionViewCell: UICollectionViewCell {
     private lazy var savedImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Style.cornerRadius
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -156,7 +157,6 @@ extension SavedPhotoCollectionViewCell {
 extension SavedPhotoCollectionViewCell {
     
     private enum Style {
-       static let padding: CGFloat = 16
        static let leadingPadding: CGFloat = 8
        static let trailingPadding: CGFloat = -8
        static let cornerRadius: CGFloat = 10

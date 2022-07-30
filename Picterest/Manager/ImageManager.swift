@@ -70,4 +70,13 @@ class ImageManager {
         }
     }
     
+    func deleteImage(id: String) {
+        guard let directoryURL = getDirectoryURL() else { return }
+        let imageURL = directoryURL.appendingPathComponent(id)
+        
+        do {
+            try? fileManager.removeItem(at: imageURL)
+        }
+    }
+    
 }
