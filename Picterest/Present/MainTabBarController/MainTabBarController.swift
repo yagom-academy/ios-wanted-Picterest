@@ -11,7 +11,9 @@ final class MainTabBarController: UITabBarController {
     
     private enum Define {
         static let firtSlotImageSystemName = "photo.fill.on.rectangle.fill"
+        static let firtSlotTitleText = "images"
         static let secondSlotImageSystemName = "star.bubble"
+        static let secondSlotTitleText = "Saved"
     }
     
     override func viewDidLoad() {
@@ -27,10 +29,11 @@ final class MainTabBarController: UITabBarController {
     private func setVC() {
         let imageListViewController = ImageListViewController()
         imageListViewController.tabBarItem.image = UIImage(systemName: Define.firtSlotImageSystemName)
+        imageListViewController.tabBarItem.title = Define.firtSlotTitleText
 
         let savedImageListViewController = SavedImageListViewController()
         savedImageListViewController.tabBarItem.image = UIImage(systemName: Define.secondSlotImageSystemName)
-
+        savedImageListViewController.tabBarItem.title = Define.secondSlotTitleText
         self.viewControllers = [imageListViewController, savedImageListViewController]
     }
 }
