@@ -59,7 +59,7 @@
 <br><br>
 ___
 
-# 🚀 사용한 기술
+# 🚀 사용한 기술 (자세한내용: 각 항목 클릭)
 
 `MVVM Pattern` `Delegate Pattern` `Code-based UI` `NSCache` `CoreData` `FileManager` `UICollectionViewLayout`
 
@@ -138,7 +138,7 @@ ___
 <br><br>
 ___
 
-# 🌈 기타 프로젝트 특징
+# 🌈 기타 프로젝트 특징 (자세한내용: 각 항목 클릭)
 	
 <details>
 		<summary> <h2>다양한 행의갯수로 유연하게 출력가능</h2></summary>
