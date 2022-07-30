@@ -11,6 +11,7 @@ import CoreData
 final class CoreDataManager {
     
     static let shared = CoreDataManager()
+    var coreDataArray = [NSManagedObject]()
     
     private let entityName = "ImageCoreData"
     private let appDelegate: AppDelegate?
@@ -22,11 +23,13 @@ final class CoreDataManager {
             self.appDelegate = appDelegate
             return
         }
+        
         self.appDelegate = nil
         self.context = nil
-        print("CoreDataManager: appDelegate Error")
     }
 }
+
+// MARK: - Method
 
 extension CoreDataManager {
     func save(id: String, originalURL: String, memo: String, savedLocation: String, imageHeight: Int, imageWidth: Int) {
@@ -34,6 +37,7 @@ extension CoreDataManager {
               let entityDescription = NSEntityDescription.entity(forEntityName: entityName, in: context) else { return }
 
         let newValue = NSManagedObject(entity: entityDescription, insertInto: context)
+        
         newValue.setValue(id, forKey: CoreDataKey.id)
         newValue.setValue(memo, forKey: CoreDataKey.memo)
         newValue.setValue(originalURL, forKey: CoreDataKey.originalURL)
@@ -43,33 +47,41 @@ extension CoreDataManager {
         
         do {
             try context.save()
-            print("Save Success")
+            coreDataArray.append(newValue)
         } catch {
-            print("Save Error")
+            print(error.localizedDescription)
         }
     }
     
-    func load() -> [NSManagedObject]? {
-        guard let context = context else { return nil }
+    func load(completion: () -> Void) {
+        guard let context = context else { return }
+        
         let fetchRequest = NSFetchRequest<ImageCoreData>(entityName: entityName)
+        
         do {
             let results = try context.fetch(fetchRequest)
-            return results
+            coreDataArray = results
+            completion()
         } catch {
-            print("Could not retrieve")
+            print(error.localizedDescription)
         }
-        
-        return nil
     }
     
     func remove(_ item: NSManagedObject) {
-        guard let context = context else { return }
+        guard let context = context,
+              let index = coreDataArray.firstIndex(of: item) else {
+            return
+        }
+    
         context.delete(item)
+    
         do {
             try context.save()
+            coreDataArray.remove(at: index)
         } catch {
-            print("remove error")
+            print(error.localizedDescription)
         }
         
     }
 }
+

@@ -10,27 +10,16 @@ import CoreData
 
 final class SavedViewModel {
     
-    private var images = [NSManagedObject]()
-    private let coreDataManager = CoreDataManager.shared
-    
+    let coreDataManager = CoreDataManager.shared
     
     func getImagesCount() -> Int {
-        return images.count
+        return coreDataManager.coreDataArray.count
     }
     
     func getImage(at index: Int) -> NSManagedObject? {
-        if index < 0 || index >= images.count {
+        if index < 0 || index >= coreDataManager.coreDataArray.count {
             return nil
         }
-        return images[index]
-    }
-    
-    func fetch(completion: @escaping () -> Void) {
-        guard let images = self.coreDataManager.load() else {
-            print("coreDataManager.load error")
-            return
-        }
-        self.images = images
-        completion()
+        return coreDataManager.coreDataArray[index]
     }
 }

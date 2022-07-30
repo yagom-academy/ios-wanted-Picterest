@@ -148,10 +148,10 @@
             </objects>
             <point key="canvasLocation" x="5.7971014492753632" y="669.64285714285711"/>
         </scene>
-        <!--Tab Bar View Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="pMp-KA-H17">
             <objects>
-                <tabBarController id="VbM-GI-Fij" customClass="TabBarViewController" customModule="Picterest" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="VbM-GI-Fij" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="j2j-Qt-iJ5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -16,13 +16,13 @@ final class SavedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        
+        CoreDataManager.shared.load {
+            self.collectionView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel.fetch {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadData()
     }
     
 }
@@ -73,9 +73,6 @@ extension SavedViewController: CollectionViewCellDelegate {
         
         let alertController = UIAlertController().makeAlert(title: title, message: message, style: .alert)
         let alertAction = alertController.alertActionInSavedViewController(cell: cell, imageData: imageData) {
-            self.viewModel.fetch {
-                self.collectionView.reloadData()
-            }
             self.collectionView.reloadData()
         }
         
