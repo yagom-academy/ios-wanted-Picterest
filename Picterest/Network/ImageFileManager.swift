@@ -11,7 +11,7 @@ enum ImageFileManagerError: Error {
     case failToDelete
 }
 
-class ImageFileManager {
+final class ImageFileManager {
     static let shared: ImageFileManager = ImageFileManager()
 
     func saveImageToLocal(image: UIImage, name: String) -> String? {

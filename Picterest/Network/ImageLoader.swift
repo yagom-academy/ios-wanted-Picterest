@@ -12,7 +12,7 @@ enum ImageLoaderError: Error {
     case inavalidImageData
 }
 
-class ImageLoder {
+final class ImageLoder {
     static let imageCache = NSCache<NSString, UIImage>()
     
     func loadImage(url: String, completion: @escaping (Result<UIImage, Error>) -> Void) {

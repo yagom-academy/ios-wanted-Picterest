@@ -12,7 +12,7 @@ enum NetworkError: Error {
     case decodingError
 }
 
-class NetworkManager {
+final class NetworkManager {
     func getPhotoList(
         currentPage: Int,
         completion: @escaping (Result<[PhotoModel], NetworkError>) -> Void
