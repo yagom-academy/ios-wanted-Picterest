@@ -80,7 +80,9 @@ extension FeedViewController: CellTopButtonDelegate {
 }
 
 extension FeedViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    func collectionView(
+        _ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]
+    ) {
         for indexPath in indexPaths {
             guard let cell = collectionView.cellForItem(at: indexPath) as? FeedCollectionCustomCell else {
                 return
