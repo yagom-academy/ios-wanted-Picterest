@@ -1,4 +1,5 @@
-# 원티드 iOS 프리온보딩(with 야곰아카데미) - ⌨ CustomKeyboard App <br />[2022.07.25 &#126; 2022.07.30]
+# 원티드 iOS 프리온보딩(with 야곰아카데미) - ⌨ CustomKeyboard App <br />[2022.07.25 &#126; 2022.07.30]<br />
+개발과정이담긴 👉🏻 <a href="https://github.com/kirkim/ios-wanted-Picterest/issues?q=is%3Aissue+is%3Aclosed">깃허브이슈 페이지</a>
 
 # 🧑‍🍳 Maker
 
@@ -13,7 +14,7 @@
 > 원하는 사진을 선택해 저장하는 기능을 갖습니다.<br>
 > 아이폰, 세로 모드만 지원하는 앱입니다.<br>
 
-<br><br>
+<br>
 
 # 🏗 앱동작 설명
 
@@ -23,7 +24,7 @@
 
 <img src= "Picterest/Resource/Images/autolayout_1.png" width="400"/>
 
-<br><br>
+<br>
 
 ## 더보기 버튼과 끌어당겨 새로고침하는 기능
 
@@ -35,7 +36,7 @@
 | :--------------------------------------------------------------------: | :--------------------------------------------------------------------: |
 | <img src= "Picterest/Resource/Images/picterest_gif1.gif" width="200"/> | <img src= "Picterest/Resource/Images/picterest_gif2.gif" width="200"/> |
 
-<br><br>
+<br>
 
 ## 메모와 함께 사진이 저장되는 기능
 
@@ -45,7 +46,7 @@
 
 <img src= "Picterest/Resource/Images/picterest_gif3.gif" width="200"/>
 
-<br><br>
+<br>
 
 ## 저장된사진을 길게 클릭하면 삭제되는 기능
 
@@ -54,6 +55,9 @@
 - 삭제한 뒤에 첫번째화면에 돌아와보면, 해당이미지의 별모양의 상태가 다시 바뀌었음을 확인할 수 있습니다.
 
 <img src= "Picterest/Resource/Images/picterest_gif4.gif" width="200"/>
+
+<br><br>
+___
 
 # 🚀 사용한 기술
 
@@ -132,6 +136,7 @@
 </details>
 
 <br><br>
+___
 
 # 🌈 기타 프로젝트 특징
 
@@ -157,11 +162,10 @@
 		<summary> <h2>배열의 index를 안전하게 관리</h2></summary>
     <ul>
       <li>index값을 이용하여 배열의 요소에 접근할때 배열의 범위밖의 index에 접근한다면 앱이 크러쉬날 것입니다.</li>
-			<li>다음과 같이 Collection의 extension을 이용하여 subscript를 오버로드 하는 방식을 통해 좀 더 안전하게 배열의 요소에 접근할 수 있도록 만들었습니다.<br>
+			<li>다음과 같이 Collection의 extension을 이용하여 subscript를 오버로드 하는 방식을 통해 좀 더 안전하게 배열의 요소에 접근할 수 있도록 만들었습니다.</li>
 				<img src= "Picterest/Resource/Images/collection_subscript_code.png"/>
-			다음과 같이 guard문을 활용하여 안전하게 배열의 요소에 접근이 가능해 집니다.
+			<li>다음과 같이 guard문을 활용하여 안전하게 배열의 요소에 접근이 가능해 집니다.</li>
 				<img src= "Picterest/Resource/Images/collection_subscript_code2.png"/>
-    	</li>
   	</ul>
 </details>
 <details>
@@ -169,8 +173,7 @@
     <ul>
       <li>커스텀레이아웃의 delegate를 이용하여 행의 갯수를 조정해줄 수 있습니다.</li>
 				<img src= "Picterest/Resource/Images/coulmn_code.png"/>
-			<li>행의 갯수가 변하더라도 행이짧은쪽을 우선순위로 셀이 쌓이는 방식은 유지됩니다.<br>
+			<li>행의 갯수가 변하더라도 행이짧은쪽을 우선순위로 셀이 쌓이는 방식은 유지됩니다.</li>
 				<img src= "Picterest/Resource/Images/coulmn_234.png"/>
-    	</li>
   	</ul>
 </details>
