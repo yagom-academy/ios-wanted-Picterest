@@ -59,7 +59,6 @@ class FirstCollectionViewController: UICollectionViewController {
         let position = scrollView.contentOffset.y
         if position > (collectionView.contentSize.height+200-scrollView.frame.size.height) {
             if imageListViewModel.isPaginating == false{
-                print("fetch data")
                 imageListViewModel.fetchImages(pagination: true)
             }
         }
@@ -111,7 +110,6 @@ extension FirstCollectionViewController: ImageManagerDelegate {
     }
     
 func deleteImage() {
-    print("delete")
     DispatchQueue.main.async {
         if let layout = self.collectionView.collectionViewLayout as? ImageCollectionViewLayout {
             layout.reloadData()

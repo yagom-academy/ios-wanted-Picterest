@@ -13,10 +13,11 @@ class CoredataManager {
     
     static let shared = CoredataManager()
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    let ad = UIApplication.shared.delegate as? AppDelegate
     var coredataImageInfoList: [ImageInfo] = []
     
     func setImageInfo(_ imageViewModel: ImageViewModel, memo: String, saveLocation: String) {
+        guard let context = ad?.persistentContainer.viewContext else {return}
         let newImageInfo = ImageInfo(context: context)
         newImageInfo.id = imageViewModel.id
         newImageInfo.memo = memo
@@ -29,6 +30,7 @@ class CoredataManager {
     
     func loadCoredataImageInfo(completion: @escaping ([SavedImageViewModel]) -> Void ) {
         let request: NSFetchRequest<ImageInfo> = ImageInfo.fetchRequest()
+        guard let context = ad?.persistentContainer.viewContext else {return}
         do {
             var fetchDecodingCoredataArray : [SavedImageViewModel] = []
             let coredataItemList = try context.fetch(request)
@@ -51,12 +53,14 @@ class CoredataManager {
     }
     
     func deleteCoredata(indexPath: Int, completion: @escaping ()->Void) {
+        guard let context = ad?.persistentContainer.viewContext else {return}
         context.delete(coredataImageInfoList[indexPath])
         saveImageInfo()
         completion()
     }
     
     func saveImageInfo() {
+        guard let context = ad?.persistentContainer.viewContext else {return}
         do {
             try context.save()
         } catch {

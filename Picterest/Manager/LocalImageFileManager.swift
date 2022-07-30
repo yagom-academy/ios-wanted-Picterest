@@ -19,7 +19,6 @@ class LocalImageFileManager {
             do {
                 try imageData?.write(to: imageFilePath)
                 completion(imageFilePath.path)
-                print(imageFilePath)
             } catch {
                 print(error.localizedDescription)
             }
