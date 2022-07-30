@@ -19,7 +19,7 @@ private enum Value {
         static let cancelButtonTitle = " 취소 "
     }
     
-    enum Style {
+    enum Color {
         static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
     }
 }
@@ -33,6 +33,7 @@ final class CheckRemoveAlertViewController: UIViewController {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -93,10 +94,9 @@ final class CheckRemoveAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = Value.Style.backgroundColor
+        view.backgroundColor = Value.Color.backgroundColor
         
         removeButton.addTarget(self, action: #selector(tappedRemoveButton), for: .touchUpInside)
-        
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
     

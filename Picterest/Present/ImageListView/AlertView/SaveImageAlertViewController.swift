@@ -22,7 +22,7 @@ private enum Value {
         static let placeholder = "메시지를 입력하세요"
         static let titleLabelText = "%@번째 사진을 저장하시겠습니까?"
     }
-    enum Style {
+    enum Color {
         static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
         static let alertStackViewBackgroundColor:UIColor = .green
         static let inputTextFieldBackgroundColor:UIColor = .white
@@ -34,7 +34,7 @@ final class SaveImageAlertViewController: UIViewController {
     private let alertStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.layer.cornerRadius = Value.Math.cornerRadius
-        stackView.backgroundColor = Value.Style.alertStackViewBackgroundColor
+        stackView.backgroundColor = Value.Color.alertStackViewBackgroundColor
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
@@ -50,7 +50,7 @@ final class SaveImageAlertViewController: UIViewController {
     
     private let inputTextField: UITextField = {
        let textField = UITextField()
-        textField.backgroundColor = Value.Style.inputTextFieldBackgroundColor
+        textField.backgroundColor = Value.Color.inputTextFieldBackgroundColor
         textField.placeholder = Value.Text.placeholder
         textField.layer.cornerRadius = Value.Math.cornerRadius
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Value.Math.textFieldLeftPadding, height: 1.0))
@@ -107,7 +107,7 @@ final class SaveImageAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = Value.Style.backgroundColor
+        view.backgroundColor = Value.Color.backgroundColor
         titleLabel.text = String(format: Value.Text.titleLabelText, arguments: [String(row + 1)])
         savedButton.addTarget(self, action: #selector(tappedSavedButton), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)

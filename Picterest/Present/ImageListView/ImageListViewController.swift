@@ -13,7 +13,7 @@ private enum Value {
         static let numberOfColumns: Int = 2
         static let numberOfSections: Int = 1
     }
-    enum Style {
+    enum Color {
         static let collectionViewBackgroundColor: UIColor = .clear
         static let backgroundColor: UIColor = .white
     }
@@ -23,7 +23,7 @@ final class ImageListViewController: UIViewController {
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
-        collectionView.backgroundColor = Value.Style.collectionViewBackgroundColor
+        collectionView.backgroundColor = Value.Color.collectionViewBackgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -160,7 +160,7 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
 extension ImageListViewController {
     private func attribute() {
         setRefresh()
-        view.backgroundColor = Value.Style.backgroundColor
+        view.backgroundColor = Value.Color.backgroundColor
         
         if let layout = collectionView.collectionViewLayout as? CustomCollectionViewLayout {
           layout.delegate = self

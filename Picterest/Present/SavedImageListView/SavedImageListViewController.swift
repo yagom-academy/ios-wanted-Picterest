@@ -95,7 +95,7 @@ extension SavedImageListViewController: SavedImageListCellDelegate {
         let alert = CheckRemoveAlertViewController(id: id)
         alert.modalPresentationStyle = .overFullScreen
         alert.delegate = self
-        self.present(alert, animated: false)
+        present(alert, animated: false)
     }
 }
 

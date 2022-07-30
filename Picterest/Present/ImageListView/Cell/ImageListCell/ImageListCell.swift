@@ -23,7 +23,7 @@ private enum Value {
         static let starButtonDeSelected = "☆"
     }
     
-    enum Style {
+    enum Color {
         static let topBarBackgroundColor:UIColor = .black.withAlphaComponent(0.6)
         static let starButtonSelected:UIColor = .yellow
         static let starButtonDeSelected:UIColor = .white
@@ -35,7 +35,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = Value.Style.topBarBackgroundColor
+        stackView.backgroundColor = Value.Color.topBarBackgroundColor
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
@@ -50,7 +50,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Value.Style.titleLabelTextColor
+        label.textColor = Value.Color.titleLabelTextColor
         return label
     }()
     
@@ -85,7 +85,7 @@ final class ImageListCell: UICollectionViewCell, ReuseIdentifying {
         self.row = row
         titleLabel.text = String(format: Value.NameSpace.titleLabelText, arguments: [String(row + 1)])
         imageView.load(urlString: data.thumbnailURL)
-        starButton.setTitleColor(data.isSaved ? Value.Style.starButtonSelected : Value.Style.starButtonDeSelected, for: .normal)
+        starButton.setTitleColor(data.isSaved ? Value.Color.starButtonSelected : Value.Color.starButtonDeSelected, for: .normal)
         starButton.setTitle(data.isSaved ? Value.NameSpace.starButtonSelected: Value.NameSpace.starButtonDeSelected, for: .normal)
     }
     

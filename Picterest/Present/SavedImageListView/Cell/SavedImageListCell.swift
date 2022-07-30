@@ -21,7 +21,7 @@ private enum Value {
         static let starButtonTitle = "★"
     }
     
-    enum Style {
+    enum Color {
         static let topBarBackgroundColor:UIColor = .black.withAlphaComponent(0.6)
         static let starButtonTitleColor:UIColor = .yellow
         static let titleLabelColor:UIColor = .white
@@ -32,7 +32,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let topBarStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = Value.Style.topBarBackgroundColor
+        stackView.backgroundColor = Value.Color.topBarBackgroundColor
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
@@ -43,7 +43,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     private let starButton: UIButton = {
         let button = UIButton()
         button.setTitle(Value.Text.starButtonTitle, for: .normal)
-        button.setTitleColor(Value.Style.starButtonTitleColor, for: .normal)
+        button.setTitleColor(Value.Color.starButtonTitleColor, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: Value.Math.starButtonFontSize, weight: .medium)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -51,7 +51,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Value.Style.titleLabelColor
+        label.textColor = Value.Color.titleLabelColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -82,6 +82,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         delegate = nil
         titleLabel.text = ""
         imageView.image = nil
+        id = nil
     }
     
     func configure(data: CoreDataInfo?) {
@@ -101,11 +102,13 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         imageView.isUserInteractionEnabled = true
     }
     
-    @objc private func handleLongTappedGesture() {
+    @objc private func handleLongTappedGesture(_ sender: UILongPressGestureRecognizer) {
         guard let id = id else {
             return
         }
-        delegate?.didLongTappedCell(id: id)
+        if sender.state == .ended {
+            delegate?.didLongTappedCell(id: id)
+        }
     }
     
     private func attribute() {
