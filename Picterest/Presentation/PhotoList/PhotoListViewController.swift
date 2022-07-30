@@ -58,17 +58,22 @@ class PhotoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        if let layout = collectionView.collectionViewLayout as?  CustomCollectionViewLayout {
-            layout.delegate = self
-        }
         setupCollectionView()
         setupConstraints()
-        
         fetchPhotos()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
+    }
+    
     private func setupCollectionView() {
+        if let layout = collectionView.collectionViewLayout as?  CustomCollectionViewLayout {
+            layout.delegate = self
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -99,6 +104,17 @@ class PhotoListViewController: UIViewController {
         ])
     }
     
+    private func checkFileExist(id: String) -> Bool {
+        guard let localURL = ImageManager.shared.getDirectoryURL() else { return false }
+        let localImagePath = localURL.appendingPathComponent(id).path
+        
+        if FileManager.default.fileExists(atPath: localImagePath) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 }
 
 // MARK: - Fetch another page extension
@@ -106,8 +122,11 @@ class PhotoListViewController: UIViewController {
 extension PhotoListViewController {
     
     private func fetchPhotos() {
-        photoListAPIProvider?.fetchPhotoList(with: page, completion: { [weak self] result in
+        photoListAPIProvider?.fetchPhotoList(
+            with: page,
+            completion: { [weak self] result in
             switch result {
+                
             case .success(let photoLists):
                 self?.photos += photoLists
                 self?.page += 1
@@ -150,15 +169,22 @@ extension PhotoListViewController: UICollectionViewDataSource {
         cell.cellDelegate = self
         cell.setupCell(photo: photo, index: indexPath.item)
         
+        if checkFileExist(id: photo.id) {
+            cell.starButton.isSelected = true
+        } else {
+            cell.starButton.isSelected = false
+        }
+        
         URLImageProvider?.fetchImage(from: imageURL, completion: { result in
             switch result {
+                
             case .success(let image):
                 cell.setupImage(image)
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         })
-        
         return cell
     }
     
@@ -169,6 +195,7 @@ extension PhotoListViewController: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         photoListAPIProvider?.fetchPhotoList(with: page, completion: { result in
             switch result {
+                
             case .success(let photoLists):
                 self.photos += photoLists
                 self.page += 1
@@ -183,6 +210,8 @@ extension PhotoListViewController: UICollectionViewDelegate {
     }
     
 }
+
+// MARK: - CustomCollectionViewLayoutDelegate extension
 
 extension PhotoListViewController: CustomCollectionViewLayoutDelegate {
 
@@ -210,6 +239,9 @@ extension PhotoListViewController: CellActionDelegate {
         let photo = photos[indexPath.item]
         let imageID = photo.id
         let imageURL = photo.urls.small
+        let imageWidth = photo.width
+        let imageHeight = photo.height
+        let localImagePath = ImageManager.shared.getImagePath(id: imageID)
         let alert = UIAlertController(
             title: "사진 메모",
             message: "",
@@ -223,11 +255,27 @@ extension PhotoListViewController: CellActionDelegate {
                let text = textField.text {
                 self.URLImageProvider?.fetchImage(from: imageURL, completion: { result in
                     switch result {
+                        
                     case .success(let image):
-                        _ = ImageManager.shared.saveImage(id: imageID, image: image)
-          // TODO: [] id, text, 사진url, 저장위치 CoreData에 저장
-                        cell.starButton.isSelected = true
-                        print("text:\(text)")
+                        let imageSaved = ImageManager.shared.saveImage(
+                            id: imageID,
+                            image: image
+                        )
+                        
+                        if imageSaved {
+                            cell.starButton.isSelected = true
+                            CoreDataManager.shared.save(
+                                id: imageID,
+                                imagePath: localImagePath,
+                                imageURL: imageURL,
+                                memo: text,
+                                width: imageWidth,
+                                height: imageHeight
+                            )
+                        } else {
+                            cell.starButton.isSelected = false
+                        }
+                        
                     case .failure(let error):
                         print(error.localizedDescription)
                     }

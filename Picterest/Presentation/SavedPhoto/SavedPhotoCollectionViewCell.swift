@@ -1,34 +1,25 @@
 //
-//  PhotoListCollectionViewCell.swift
+//  SavedPhotoCollectionViewCell.swift
 //  Picterest
 //
-//  Created by BH on 2022/07/27.
+//  Created by BH on 2022/07/29.
 //
 
+import CoreData
 import UIKit
 
-protocol CellActionDelegate: AnyObject {
-    
-    func starButtonTapped(cell: PhotoListCollectionViewCell)
-    
-}
-
-class PhotoListCollectionViewCell: UICollectionViewCell {
-    
-    // MARK: - Type Properties
-    
-    static let identifier: String = "PhotoListCollectionViewCell"
+class SavedPhotoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    weak var cellDelegate: CellActionDelegate?
+    static let identifier: String = "SavedPhotoCollectionViewCell"
     
     // MARK: - UIProperties
     
-    lazy var unsplashImageView: UIImageView = {
+    private lazy var savedImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Style.cornerRadius
-        imageView.layer.masksToBounds = true
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -42,8 +33,7 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
     
     lazy var starButton: UIButton = {
         let button = UIButton()
-        button.setImage(Style.starImage, for: .normal)
-        button.setImage(Style.selectedStarImage, for: .selected)
+        button.setImage(Style.selectedStarImage, for: .normal)
         button.tintColor = .yellow
         return button
     }()
@@ -61,12 +51,6 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupView()
         setupConstraints()
-        
-        self.starButton.addTarget(
-            self,
-            action: #selector(starTapped),
-            for: .touchUpInside
-        )
     }
     
     @available(*, unavailable, message: "This initializer is not available.")
@@ -74,31 +58,27 @@ class PhotoListCollectionViewCell: UICollectionViewCell {
         super.init(coder: coder)
         setupView()
         setupConstraints()
-        
-    }
-    
-    @objc func starTapped() {
-        cellDelegate?.starButtonTapped(cell: self)
     }
     
 }
 
-// MARK: - Extensions
+// MARK: - Layout Extension
 
-extension PhotoListCollectionViewCell {
+extension SavedPhotoCollectionViewCell {
     
-    func setupImage(_ image: UIImage) {
-        DispatchQueue.main.async { [weak self] in
-            self?.unsplashImageView.image = image
+    func setupCell(photo: NSManagedObject) {
+        guard let imageID = photo.value(forKey: "id") as? String,
+              let imageMemo = photo.value(forKey: "memo") as? String else { return }
+        let savedImage = ImageManager.shared.loadImage(id: imageID)
+        
+        DispatchQueue.main.async {
+            self.savedImageView.image = savedImage
+            self.memoLabel.text = imageMemo
         }
     }
     
-    func setupCell(photo: PhotoListResult, index: Int) {
-        memoLabel.text = "\(index + 1)번째 사진"
-    }
-    
     private func setupView() {
-        [unsplashImageView,
+        [savedImageView,
          topView,
          starButton,
          memoLabel].forEach {
@@ -108,24 +88,24 @@ extension PhotoListCollectionViewCell {
     }
     
     private func setupConstraints() {
-        setupConstraintsOfUnsplashImageView()
+        setupConstraintsOfImageView()
         setupConstraintsOfTopView()
         setupConstraintsOfStarButton()
         setupConstraintsOfMemoLabel()
     }
     
-    private func setupConstraintsOfUnsplashImageView() {
+    private func setupConstraintsOfImageView() {
         NSLayoutConstraint.activate([
-            unsplashImageView.leadingAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.leadingAnchor
+            savedImageView.leadingAnchor.constraint(
+                equalTo: self.leadingAnchor
             ),
-            unsplashImageView.topAnchor.constraint(
+            savedImageView.topAnchor.constraint(
                 equalTo: self.safeAreaLayoutGuide.topAnchor
             ),
-            unsplashImageView.trailingAnchor.constraint(
-                equalTo: self.safeAreaLayoutGuide.trailingAnchor
+            savedImageView.trailingAnchor.constraint(
+                equalTo: self.trailingAnchor
             ),
-            unsplashImageView.bottomAnchor.constraint(
+            savedImageView.bottomAnchor.constraint(
                 equalTo: self.safeAreaLayoutGuide.bottomAnchor
             )
         ])
@@ -134,13 +114,13 @@ extension PhotoListCollectionViewCell {
     private func setupConstraintsOfTopView() {
         NSLayoutConstraint.activate([
             topView.leadingAnchor.constraint(
-                equalTo: unsplashImageView.safeAreaLayoutGuide.leadingAnchor
+                equalTo: savedImageView.safeAreaLayoutGuide.leadingAnchor
             ),
             topView.topAnchor.constraint(
-                equalTo: unsplashImageView.safeAreaLayoutGuide.topAnchor
+                equalTo: savedImageView.safeAreaLayoutGuide.topAnchor
             ),
             topView.trailingAnchor.constraint(
-                equalTo: unsplashImageView.safeAreaLayoutGuide.trailingAnchor
+                equalTo: savedImageView.safeAreaLayoutGuide.trailingAnchor
             ),
             topView.heightAnchor.constraint(equalToConstant: Style.alphaViewHeight)
         ])
@@ -174,17 +154,15 @@ extension PhotoListCollectionViewCell {
 
 // MARK: - NameSpaces
 
-extension PhotoListCollectionViewCell {
+extension SavedPhotoCollectionViewCell {
     
     private enum Style {
-        static let padding: CGFloat = 16
-        static let leadingPadding: CGFloat = 8
-        static let trailingPadding: CGFloat = -8
-        static let cornerRadius: CGFloat = 10
-        static let alpha: CGFloat = 0.7
-        static let alphaViewHeight: CGFloat = 40
-        
-        static let starImage = UIImage(systemName: "star")
-        static let selectedStarImage = UIImage(systemName: "star.fill")
-    }
+       static let leadingPadding: CGFloat = 8
+       static let trailingPadding: CGFloat = -8
+       static let cornerRadius: CGFloat = 10
+       static let alpha: CGFloat = 0.7
+       static let alphaViewHeight: CGFloat = 40
+       
+       static let selectedStarImage = UIImage(systemName: "star.fill")
+   }
 }
