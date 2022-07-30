@@ -154,6 +154,7 @@ ___
     <ul>
       <li>뷰의 frame, font, 각종사이즈, UIColor등등을 하드코딩하여 관리하게 되면 가독성이 떨어질 뿐만 아니라 코드수정이 힘들어 집니다.</li>
 			<li>그래서 다음과 같이 enum타입의 네임스페이스를 만들어서 Style에 필요한 값들을 관리해주도록 했습니다.<br>
+			Style파일중 하나인 CellStyle의 코드 모습입니다.<br>
 				<img src= "Picterest/Resource/Images/cellstyle_code.png"/>
     	</li>
   	</ul>
