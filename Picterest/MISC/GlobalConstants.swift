@@ -4,8 +4,6 @@
 //
 //  Created by 신의연 on 2022/07/29.
 //
-
-import Foundation
 import UIKit
 
 enum GlobalConstants {
@@ -29,6 +27,9 @@ enum GlobalConstants {
             static var save = "저장"
             static var deleteTitle = "삭제 되었습니다"
             static var confirm = "확인"
+            static var askDeleteTitle = "삭제 하시겠습니까?"
+            static var no = "아니오"
+            static var delete = "삭제"
         }
     }
     

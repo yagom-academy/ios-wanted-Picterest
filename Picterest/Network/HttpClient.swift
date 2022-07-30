@@ -33,7 +33,7 @@ enum NetworkError: LocalizedError {
     }
 }
 
-class HttpClient {
+final class HttpClient {
     
     func getImageData(baseUrl: String, path: String, params: [String: Any], completion: @escaping (Result<Data, NetworkError>) -> Void) {
         
@@ -69,6 +69,5 @@ class HttpClient {
         }
         task.resume()
     }
-    
     
 }

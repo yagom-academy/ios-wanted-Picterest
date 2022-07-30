@@ -4,8 +4,6 @@
 //
 //  Created by 신의연 on 2022/07/26.
 //
-
-import Foundation
 import UIKit
 
 private enum ImageLoaderError: Error {
@@ -13,7 +11,7 @@ private enum ImageLoaderError: Error {
     case invalidImageURL
 }
 
-class ImageLoder {
+final class ImageLoder {
     
     static let imageCache = NSCache<NSString, UIImage>()
     

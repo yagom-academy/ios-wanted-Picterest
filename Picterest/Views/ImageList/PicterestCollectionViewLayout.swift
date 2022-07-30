@@ -11,7 +11,7 @@ protocol PinterestLayoutDelegate: AnyObject {
     func collectionView(_ collectionView:UICollectionView, heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat
 }
 
-class PicterestCollectionViewLayout: UICollectionViewLayout {
+final class PicterestCollectionViewLayout: UICollectionViewLayout {
     
     weak var delegate: PinterestLayoutDelegate!
     
@@ -69,9 +69,11 @@ class PicterestCollectionViewLayout: UICollectionViewLayout {
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[0]
     }
+    
     override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[indexPath.item]
     }
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var visibleLayoutAttributes = [UICollectionViewLayoutAttributes]()

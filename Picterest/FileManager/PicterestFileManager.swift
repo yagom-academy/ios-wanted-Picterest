@@ -17,7 +17,7 @@ protocol FileStatusReceivable: AnyObject {
     func fileManager(_ fileManager: FileManager, error: FileError, desc: Error?)
 }
 
-class PicterestFileManager {
+final class PicterestFileManager {
     
     static let shared = PicterestFileManager()
     

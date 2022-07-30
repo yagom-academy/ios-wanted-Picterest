@@ -11,7 +11,7 @@ protocol PicterestPhotoSavable: AnyObject {
     func picterestCollectoinViewCell(isSelected: Bool, imageInfo: SavablePictureData, imageData: UIImage, idx: IndexPath)
 }
 
-class PicterestCollectionViewCell: UICollectionViewCell {
+final class PicterestCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: PicterestPhotoSavable?
     

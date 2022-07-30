@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageListViewModel {
+final class ImageListViewModel {
     
     private var repository = Repository()
     private var imageList: [SavablePictureData] = [SavablePictureData]()

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageRepositoryViewModel {
+final class ImageRepositoryViewModel {
     
     private var imageList: [Picture] = [Picture]()
     
@@ -31,7 +31,6 @@ class ImageRepositoryViewModel {
         CoreDataManager.shared.delete(entity: item)
         PicterestFileManager.shared.deletePicture(fileName: item.id!)
         imageList.remove(at: indexPath.row)
-        self.imageListUpdateAfterDelete()
     }
     
     func list() {

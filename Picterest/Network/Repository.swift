@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Repository {
+final class Repository {
     
     private let httpClient = HttpClient()
     

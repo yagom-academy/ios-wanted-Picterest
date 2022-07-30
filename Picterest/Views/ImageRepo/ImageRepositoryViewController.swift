@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageRepositoryViewController: UIViewController {
+final class ImageRepositoryViewController: UIViewController {
     
     private let viewModel = ImageRepositoryViewModel()
     
@@ -53,12 +53,6 @@ class ImageRepositoryViewController: UIViewController {
     
     private func addViewModelObserver() {
         viewModel.imageListUpdate = { [weak self] in
-            DispatchQueue.main.async {
-                self?.picturesCollectionView.reloadData()
-            }
-        }
-        
-        viewModel.imageListUpdateAfterDelete = { [weak self] in
             self?.picturesCollectionView.reloadData()
         }
         
@@ -120,12 +114,13 @@ extension ImageRepositoryViewController: UICollectionViewDataSource, UICollectio
 extension ImageRepositoryViewController {
     
     func setImageDeleteAlert(indexPath: IndexPath) {
-        let alert = UIAlertController(title: "삭제 하시겠습니까?.", message: nil, preferredStyle: .alert)
-        let cancleAction = UIAlertAction(title: "아니오", style: .cancel)
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [self] _ in
+        let alert = UIAlertController(title: GlobalConstants.Text.Alert.askDeleteTitle, message: nil, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: GlobalConstants.Text.Alert.no, style: .cancel)
+        let deleteAction = UIAlertAction(title: GlobalConstants.Text.Alert.delete, style: .destructive) { [self] _ in
             viewModel.deleteImage(at: indexPath)
+            picturesCollectionView.deleteItems(at: [indexPath])
         }
-        alert.addAction(cancleAction)
+        alert.addAction(cancelAction)
         alert.addAction(deleteAction)
         self.present(alert, animated: true)
     }
