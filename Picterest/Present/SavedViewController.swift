@@ -30,6 +30,8 @@ class SavedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         CoreDataManager.shared.fatchItem(completion: { entityList in
             self.savedImageList = entityList
+            
+            print(self.savedImageList)
             self.savedCollectioinView.reloadData()
         })
     }
