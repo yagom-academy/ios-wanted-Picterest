@@ -96,7 +96,8 @@ cell의 삭제시 contextMenu를 사용했다. 이 과정에서 내가 지정해
 
 **collectionView(_:previewForHighlightingContextMenuWithConfiguration:)** 를 사용하였다.
 
-preview에 접근하여 UIPreviewParameters의 backgroundColor을 clear로 바꿔주거나 visiblePath를 통해 preview 자체를 cell이 아닌 cell의 contentView로 깍아버렸다. 
+preview에 접근하여 UIPreviewParameters의 backgroundColor을 clear로 바꿔주거나 visiblePath를 통해 preview 자체를 cell이 아닌 cell의 contentView로 깎아버렸다.   
+
 ```Swift
 func collectionView(_ collectionView: UICollectionView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
         
@@ -153,7 +154,7 @@ func collectionView(_ collectionView: UICollectionView, previewForHighlightingCo
     
     따라서 이미지가 저장되고 삭제 되는 모든 과정에서 모델이 업데이트 되야 한다.
     
-    따라서 VM은 저장과 삭제를 담당하고 가지고 있는 모델을 업데이트 시켜준다.
+    VM은 저장과 삭제를 담당하고 가지고 있는 모델을 업데이트 시켜준다.
     
     여기까진 문제가 없다.
     
