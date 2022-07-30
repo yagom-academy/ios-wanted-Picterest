@@ -29,7 +29,7 @@ struct PhotoListAPIProvider: PhotoListAPIProviderType {
                 let decoder = JSONDecoder()
                 guard let decodedData = try? decoder.decode([PhotoListResult].self, from: data) else {
                     return
-                }
+                } 
                 completion(.success(decodedData))
                 
             case .failure(let error):
