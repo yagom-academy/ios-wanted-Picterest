@@ -9,14 +9,11 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    // MARK: - Properties
-    
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-    
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -88,7 +88,6 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
-				E158857D2894275D00405CC9 /* PhotoModel.xcdatamodeld */,
 				E1E9ECAE2893A1750019F31E /* Manager */,
 				E167D0AC288E6BB00062496F /* Application */,
 				E167D0AD288E6BBB0062496F /* Presentation */,
@@ -103,6 +102,7 @@
 		E14276932890DD3400AC4039 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E158857D2894275D00405CC9 /* PhotoModel.xcdatamodeld */,
 				E14276942890DD3F00AC4039 /* PhotoListResult.swift */,
 				E14276962890E49500AC4039 /* PhotoURL.swift */,
 			);

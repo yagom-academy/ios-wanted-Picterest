@@ -10,10 +10,18 @@ import UIKit.UIImage
 
 class ImageManager {
     
+    // MARK: - Properties
+    
     static let shared = ImageManager()
     private init() { }
     
     var fileManager = FileManager.default
+    
+}
+
+// MARK: - Methods extension
+
+extension ImageManager {
     
     func getDirectoryURL() -> URL? {
         guard let documentURL = fileManager.urls(

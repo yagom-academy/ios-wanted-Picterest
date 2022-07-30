@@ -10,6 +10,8 @@ import UIKit
 
 class CoreDataManager {
     
+    // MARK: - Properties
+    
     static let shared = CoreDataManager()
     private init() { }
     
@@ -39,6 +41,8 @@ class CoreDataManager {
     }
     
 }
+
+// MARK: - Methods extension
 
 extension CoreDataManager {
     

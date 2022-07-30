@@ -18,7 +18,6 @@ protocol PhotoListAPIProviderType {
 struct PhotoListAPIProvider: PhotoListAPIProviderType {
     
     let networkRequester: NetworkRequesterType
-    
 
     func fetchPhotoList(with page: Int,
         completion: @escaping (Result<[PhotoListResult], Error>
