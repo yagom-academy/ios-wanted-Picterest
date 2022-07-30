@@ -9,10 +9,6 @@ import UIKit
 
 final class SavedImageListViewController: UIViewController {
     
-    private enum Value {
-        static let backgroundColor:UIColor = .white
-    }
-    
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         return collectionView
@@ -49,7 +45,7 @@ final class SavedImageListViewController: UIViewController {
 extension SavedImageListViewController {
     
     private func attribute() {
-        view.backgroundColor = Value.backgroundColor
+        view.backgroundColor = Style.Color.background
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SavedImageListCell.self, forCellWithReuseIdentifier: SavedImageListCell.reuseIdentifier)

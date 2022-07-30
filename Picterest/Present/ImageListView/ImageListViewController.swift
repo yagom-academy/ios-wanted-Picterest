@@ -7,23 +7,16 @@
 
 import UIKit
 
-private enum Value {
-    enum Math {
-        static let footerHeight: CGFloat = 80.0
+final class ImageListViewController: UIViewController {
+    
+    private enum Define {
         static let numberOfColumns: Int = 2
         static let numberOfSections: Int = 1
     }
-    enum Color {
-        static let collectionViewBackgroundColor: UIColor = .clear
-        static let backgroundColor: UIColor = .white
-    }
-}
-
-final class ImageListViewController: UIViewController {
     
     private let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: CustomCollectionViewLayout())
-        collectionView.backgroundColor = Value.Color.collectionViewBackgroundColor
+        collectionView.backgroundColor = Style.Color.collectionViewBackground
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -58,11 +51,11 @@ extension ImageListViewController: CustomCollectionViewLayoutDelegate {
     }
     
     func collectionView(heightFooterAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return Value.Math.footerHeight
+        return FooterStyle.Math.height
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfColumnsInSection section: Int) -> Int {
-        return Value.Math.numberOfColumns
+        return Define.numberOfColumns
     }
 }
 
@@ -86,7 +79,7 @@ extension ImageListViewController: UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return Value.Math.numberOfSections
+        return Define.numberOfSections
     }
 }
 
@@ -160,7 +153,7 @@ extension ImageListViewController: SaveImageAlertViewDelegate {
 extension ImageListViewController {
     private func attribute() {
         setRefresh()
-        view.backgroundColor = Value.Color.backgroundColor
+        view.backgroundColor = Style.Color.background
         
         if let layout = collectionView.collectionViewLayout as? CustomCollectionViewLayout {
           layout.delegate = self

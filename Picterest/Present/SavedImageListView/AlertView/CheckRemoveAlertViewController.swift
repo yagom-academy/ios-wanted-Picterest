@@ -8,19 +8,10 @@
 import UIKit
 
 private enum Value {
-    enum Math {
-        static let alertWidth = UIScreen.main.bounds.width*(2/3)
-        static let alertHeight = alertWidth*(2/3)
-    }
-    
     enum Text {
         static let titleLabelText = "정말로 이미지를 삭제하시겠습니까?"
         static let removeButtonTitle = " 삭제 "
         static let cancelButtonTitle = " 취소 "
-    }
-    
-    enum Color {
-        static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
     }
 }
 
@@ -28,7 +19,7 @@ final class CheckRemoveAlertViewController: UIViewController {
     
     private let alertStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.layer.cornerRadius = 20
+        stackView.layer.cornerRadius = AlertStyle.Math.cornerRadius
         stackView.backgroundColor = .green
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -40,6 +31,7 @@ final class CheckRemoveAlertViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = Value.Text.titleLabelText
+        label.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         label.textAlignment = .center
         return label
     }()
@@ -54,12 +46,16 @@ final class CheckRemoveAlertViewController: UIViewController {
     private let removeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Value.Text.removeButtonTitle, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         return button
     }()
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle(Value.Text.cancelButtonTitle, for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         return button
     }()
     
@@ -94,7 +90,7 @@ final class CheckRemoveAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = Value.Color.backgroundColor
+        view.backgroundColor = AlertStyle.Color.fakeBackground
         
         removeButton.addTarget(self, action: #selector(tappedRemoveButton), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
@@ -104,14 +100,14 @@ final class CheckRemoveAlertViewController: UIViewController {
         view.addSubview(alertStackView)
         alertStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         alertStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        alertStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
-        alertStackView.heightAnchor.constraint(equalToConstant: Value.Math.alertHeight).isActive = true
+        alertStackView.widthAnchor.constraint(equalToConstant: AlertStyle.Math.width).isActive = true
+        alertStackView.heightAnchor.constraint(equalToConstant: AlertStyle.Math.height).isActive = true
         [UIView(), titleLabel, buttonContainerStackView, UIView()].forEach {
             alertStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
+        buttonContainerStackView.widthAnchor.constraint(equalToConstant: AlertStyle.Math.width).isActive = true
         
         [removeButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)

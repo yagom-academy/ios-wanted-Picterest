@@ -8,28 +8,28 @@
 import UIKit
 
 final class MainTabBarController: UITabBarController {
-    private enum Value {
-        static let backgroundColor:UIColor = .init(red: 110/256, green: 77/256, blue: 65/256, alpha: 1)
-        static let tintColor:UIColor = .white
+    
+    private enum Define {
         static let firtSlotImageSystemName = "photo.fill.on.rectangle.fill"
         static let secondSlotImageSystemName = "star.bubble"
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setVC()
         let tabBarAppearance = UITabBarAppearance()
-        tabBarAppearance.backgroundColor = Value.backgroundColor
+        tabBarAppearance.backgroundColor = Style.Color.tabBarBackground
         self.tabBar.standardAppearance = tabBarAppearance
         self.tabBar.scrollEdgeAppearance = tabBarAppearance
-        self.tabBar.tintColor = Value.tintColor
+        self.tabBar.tintColor = Style.Color.tint
     }
     
     private func setVC() {
         let imageListViewController = ImageListViewController()
-        imageListViewController.tabBarItem.image = UIImage(systemName: Value.firtSlotImageSystemName)
+        imageListViewController.tabBarItem.image = UIImage(systemName: Define.firtSlotImageSystemName)
 
         let savedImageListViewController = SavedImageListViewController()
-        savedImageListViewController.tabBarItem.image = UIImage(systemName: Value.secondSlotImageSystemName)
+        savedImageListViewController.tabBarItem.image = UIImage(systemName: Define.secondSlotImageSystemName)
 
         self.viewControllers = [imageListViewController, savedImageListViewController]
     }

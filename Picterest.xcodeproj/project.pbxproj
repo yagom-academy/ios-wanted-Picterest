@@ -18,6 +18,10 @@
 		FE24EB7C288E6BB100A4527C /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB7B288E6BB100A4527C /* MainTabBarController.swift */; };
 		FE24EB7F288E6CE600A4527C /* ImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB7E288E6CE600A4527C /* ImageListViewController.swift */; };
 		FE24EB82288E6E4300A4527C /* SavedImageListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */; };
+		FE39D2572894C9E9009B0CD4 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39D2562894C9E9009B0CD4 /* Style.swift */; };
+		FE39D2592894EB81009B0CD4 /* AlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39D2582894EB81009B0CD4 /* AlertStyle.swift */; };
+		FE39D25B2894EB98009B0CD4 /* CellStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39D25A2894EB98009B0CD4 /* CellStyle.swift */; };
+		FE39D25D2894EBA7009B0CD4 /* FooterStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE39D25C2894EBA7009B0CD4 /* FooterStyle.swift */; };
 		FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A660288E95DE00EBD539 /* CustomCollectionViewLayout.swift */; };
 		FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */; };
 		FE56A666288EB21600EBD539 /* ImageListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE56A665288EB21600EBD539 /* ImageListCell.swift */; };
@@ -59,6 +63,10 @@
 		FE24EB7B288E6BB100A4527C /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		FE24EB7E288E6CE600A4527C /* ImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListViewController.swift; sourceTree = "<group>"; };
 		FE24EB81288E6E4300A4527C /* SavedImageListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedImageListViewController.swift; sourceTree = "<group>"; };
+		FE39D2562894C9E9009B0CD4 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		FE39D2582894EB81009B0CD4 /* AlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStyle.swift; sourceTree = "<group>"; };
+		FE39D25A2894EB98009B0CD4 /* CellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellStyle.swift; sourceTree = "<group>"; };
+		FE39D25C2894EBA7009B0CD4 /* FooterStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterStyle.swift; sourceTree = "<group>"; };
 		FE56A660288E95DE00EBD539 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		FE56A662288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayoutDelegate.swift; sourceTree = "<group>"; };
 		FE56A665288EB21600EBD539 /* ImageListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListCell.swift; sourceTree = "<group>"; };
@@ -116,6 +124,7 @@
 		DE15E65A28604278003DD2F5 /* Picterest */ = {
 			isa = PBXGroup;
 			children = (
+				FE39D2552894C9D3009B0CD4 /* Style */,
 				FE56A66F288ECC9C00EBD539 /* Extension */,
 				FE6FC6B4289192FF00C7F358 /* DBManager */,
 				FE24EB7A288E6B9F00A4527C /* Present */,
@@ -200,6 +209,17 @@
 				FE6FC6B92891956600C7F358 /* Model.xcdatamodeld */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		FE39D2552894C9D3009B0CD4 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				FE39D2562894C9E9009B0CD4 /* Style.swift */,
+				FE39D2582894EB81009B0CD4 /* AlertStyle.swift */,
+				FE39D25A2894EB98009B0CD4 /* CellStyle.swift */,
+				FE39D25C2894EBA7009B0CD4 /* FooterStyle.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		FE56A664288EB1B000EBD539 /* CustomCollectionViewLayout */ = {
@@ -407,13 +427,16 @@
 				FEFB54E72891052F005EA2DD /* AddCellButtonFooterViewDelegate.swift in Sources */,
 				FE6FC6B62891931900C7F358 /* CoreDataManager.swift in Sources */,
 				FE24EB74288E45ED00A4527C /* NetworkAPI.swift in Sources */,
+				FE39D25B2894EB98009B0CD4 /* CellStyle.swift in Sources */,
 				FE71B1F62892584E001D000D /* SavedImageListViewModel.swift in Sources */,
+				FE39D25D2894EBA7009B0CD4 /* FooterStyle.swift in Sources */,
 				FE6E3DAD2893610C001F8E92 /* CheckRemoveAlertViewDelegate.swift in Sources */,
 				FE71B1F128922698001D000D /* DBManagerError.swift in Sources */,
 				FE6E3DA528935636001F8E92 /* ImageCoreInfo+CoreDataClass.swift in Sources */,
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				FE6E3DAB28935F7B001F8E92 /* CheckRemoveAlertViewController.swift in Sources */,
 				FE6E3DA828935B40001F8E92 /* SavedImageListCellDelegate.swift in Sources */,
+				FE39D2572894C9E9009B0CD4 /* Style.swift in Sources */,
 				FEFA21FE289216CE00D485C1 /* ImageFileManager.swift in Sources */,
 				FE71B1F4289256F0001D000D /* SavedImageListCell.swift in Sources */,
 				FE24EB77288E48B500A4527C /* ImageInfo.swift in Sources */,
@@ -426,6 +449,7 @@
 				FEFB54EE28911CC5005EA2DD /* SaveImageAlertViewController.swift in Sources */,
 				FE56A661288E95DE00EBD539 /* CustomCollectionViewLayout.swift in Sources */,
 				FE56A666288EB21600EBD539 /* ImageListCell.swift in Sources */,
+				FE39D2592894EB81009B0CD4 /* AlertStyle.swift in Sources */,
 				FE56A663288E95F700EBD539 /* CustomCollectionViewLayoutDelegate.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
 				FEFB54F02891864F005EA2DD /* SaveImageAlertViewDelegate.swift in Sources */,

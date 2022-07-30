@@ -10,11 +10,6 @@ import UIKit
 //TODO: delegate 만들어서 구현해보기
 final class SavedImageListViewModel {
     
-    private enum Math {
-        static let cellPadding:CGFloat = 10.0
-        static let cellWidth:CGFloat = UIScreen.main.bounds.width - 2*cellPadding
-    }
-    
     private var cellDatas: [CoreDataInfo] = []
     var totalCellCount: Int {
         return cellDatas.count
@@ -33,7 +28,7 @@ final class SavedImageListViewModel {
     
     func cellSize(_ row: Int) -> CGSize {
         let aspectRatio = cellDatas[row].aspectRatio
-        let width = Math.cellWidth
+        let width = CellStyle.Math.largeWidth
         let height = width*aspectRatio
         return CGSize(width: width, height: height)
     }

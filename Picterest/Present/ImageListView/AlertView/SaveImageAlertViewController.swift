@@ -7,34 +7,19 @@
 
 import UIKit
 
-private enum Value {
-    enum Math {
-        static let alertWidth = UIScreen.main.bounds.width*(2/3)
-        static let alertHeight = alertWidth*(2/3)
-        static let inputTextFieldWidth = alertWidth*(7/8)
-        static let inputTextFieldHeight = alertHeight/4
-        static let textFieldLeftPadding = 10.0
-        static let cornerRadius = 15.0
-    }
-    enum Text {
+final class SaveImageAlertViewController: UIViewController {
+    
+    private enum Define {
         static let savedButtonTitle = " 저장"
         static let cancelButtonTitle = " 취소 "
         static let placeholder = "메시지를 입력하세요"
         static let titleLabelText = "%@번째 사진을 저장하시겠습니까?"
     }
-    enum Color {
-        static let backgroundColor:UIColor = .white.withAlphaComponent(0.2)
-        static let alertStackViewBackgroundColor:UIColor = .green
-        static let inputTextFieldBackgroundColor:UIColor = .white
-    }
-}
-
-final class SaveImageAlertViewController: UIViewController {
     
     private let alertStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.layer.cornerRadius = Value.Math.cornerRadius
-        stackView.backgroundColor = Value.Color.alertStackViewBackgroundColor
+        stackView.layer.cornerRadius = AlertStyle.Math.cornerRadius
+        stackView.backgroundColor = AlertStyle.Color.background
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
@@ -45,16 +30,18 @@ final class SaveImageAlertViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
+        label.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         return label
     }()
     
     private let inputTextField: UITextField = {
        let textField = UITextField()
-        textField.backgroundColor = Value.Color.inputTextFieldBackgroundColor
-        textField.placeholder = Value.Text.placeholder
-        textField.layer.cornerRadius = Value.Math.cornerRadius
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: Value.Math.textFieldLeftPadding, height: 1.0))
+        textField.backgroundColor = AlertStyle.Color.textFieldBackground
+        textField.placeholder = Define.placeholder
+        textField.layer.cornerRadius = AlertStyle.Math.cornerRadius
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: AlertStyle.Math.textFieldLeftPadding, height: 1.0))
         textField.leftViewMode = .always
+        textField.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
         return textField
     }()
     
@@ -67,13 +54,17 @@ final class SaveImageAlertViewController: UIViewController {
     
     private let savedButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(Value.Text.savedButtonTitle, for: .normal)
+        button.setTitle(Define.savedButtonTitle, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle(Value.Text.cancelButtonTitle, for: .normal)
+        button.setTitle(Define.cancelButtonTitle, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.medium, weight: .medium)
+        button.setTitleColor(.black, for: .normal)
         return button
     }()
     
@@ -107,8 +98,8 @@ final class SaveImageAlertViewController: UIViewController {
     }
     
     private func attribute() {
-        view.backgroundColor = Value.Color.backgroundColor
-        titleLabel.text = String(format: Value.Text.titleLabelText, arguments: [String(row + 1)])
+        view.backgroundColor = AlertStyle.Color.fakeBackground
+        titleLabel.text = String(format: Define.titleLabelText, arguments: [String(row + 1)])
         savedButton.addTarget(self, action: #selector(tappedSavedButton), for: .touchUpInside)
         cancelButton.addTarget(self, action: #selector(tappedCancelButton), for: .touchUpInside)
     }
@@ -117,17 +108,17 @@ final class SaveImageAlertViewController: UIViewController {
         view.addSubview(alertStackView)
         alertStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         alertStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        alertStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
-        alertStackView.heightAnchor.constraint(equalToConstant: Value.Math.alertHeight).isActive = true
+        alertStackView.widthAnchor.constraint(equalToConstant: AlertStyle.Math.width).isActive = true
+        alertStackView.heightAnchor.constraint(equalToConstant: AlertStyle.Math.height).isActive = true
         [UIView(), titleLabel, inputTextField, buttonContainerStackView, UIView()].forEach {
             alertStackView.addArrangedSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        inputTextField.widthAnchor.constraint(equalToConstant: Value.Math.inputTextFieldWidth).isActive = true
-        inputTextField.heightAnchor.constraint(equalToConstant: Value.Math.inputTextFieldHeight).isActive = true
+        inputTextField.widthAnchor.constraint(equalToConstant: AlertStyle.Math.textFieldWidth).isActive = true
+        inputTextField.heightAnchor.constraint(equalToConstant: AlertStyle.Math.textFieldHeight).isActive = true
         
-        buttonContainerStackView.widthAnchor.constraint(equalToConstant: Value.Math.alertWidth).isActive = true
+        buttonContainerStackView.widthAnchor.constraint(equalToConstant: AlertStyle.Math.width).isActive = true
         
         [savedButton, cancelButton].forEach {
             buttonContainerStackView.addArrangedSubview($0)

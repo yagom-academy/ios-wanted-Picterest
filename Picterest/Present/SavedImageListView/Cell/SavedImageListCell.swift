@@ -7,32 +7,16 @@
 
 import UIKit
 
-private enum Value {
-    enum Math {
-        static let starButtonFontSize:CGFloat = 30.0
-        static let longGestureMinimumPressDuration:CGFloat = 0.5
-        static let cornerRadius:CGFloat = 20.0
-        static let topBarStackViewHeight:CGFloat = 60.0
-        static let sidePadding:CGFloat = 20.0
-        static let starButtonSize:CGFloat = topBarStackViewHeight/2
-    }
-    
-    enum Text {
-        static let starButtonTitle = "★"
-    }
-    
-    enum Color {
-        static let topBarBackgroundColor:UIColor = .black.withAlphaComponent(0.6)
-        static let starButtonTitleColor:UIColor = .yellow
-        static let titleLabelColor:UIColor = .white
-    }
-}
-
 final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
+    
+    private enum Define {
+        static let starButtonTitle = "★"
+        static let longGestureMinimumPressDuration:CGFloat = 0.5
+    }
     
     private let topBarStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = Value.Color.topBarBackgroundColor
+        stackView.backgroundColor = CellStyle.Color.topBarBackground
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fill
@@ -42,16 +26,16 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     
     private let starButton: UIButton = {
         let button = UIButton()
-        button.setTitle(Value.Text.starButtonTitle, for: .normal)
-        button.setTitleColor(Value.Color.starButtonTitleColor, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: Value.Math.starButtonFontSize, weight: .medium)
+        button.setTitle(Define.starButtonTitle, for: .normal)
+        button.setTitleColor(Style.Color.selectedStar, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: Style.Font.starButton, weight: .medium)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = Value.Color.titleLabelColor
+        label.textColor = CellStyle.Color.text
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -96,7 +80,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
 
     private func addLongTappedGesture() {
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTappedGesture))
-        gesture.minimumPressDuration = Value.Math.longGestureMinimumPressDuration
+        gesture.minimumPressDuration = Define.longGestureMinimumPressDuration
         gesture.delaysTouchesBegan = true
         imageView.addGestureRecognizer(gesture)
         imageView.isUserInteractionEnabled = true
@@ -112,7 +96,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
     }
     
     private func attribute() {
-        contentView.layer.cornerRadius = Value.Math.cornerRadius
+        contentView.layer.cornerRadius = CellStyle.Math.cornerRadius
         contentView.clipsToBounds = true
     }
     
@@ -129,7 +113,7 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
         topBarStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         topBarStackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         topBarStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        topBarStackView.heightAnchor.constraint(equalToConstant: Value.Math.topBarStackViewHeight).isActive = true
+        topBarStackView.heightAnchor.constraint(equalToConstant: CellStyle.Math.topBarHeight).isActive = true
         
         let leftPadding = UIView()
         leftPadding.translatesAutoresizingMaskIntoConstraints = false
@@ -140,10 +124,10 @@ final class SavedImageListCell: UICollectionViewCell, ReuseIdentifying {
             topBarStackView.addArrangedSubview($0)
         }
         
-        leftPadding.widthAnchor.constraint(equalToConstant: Value.Math.sidePadding).isActive = true
-        rightPadding.widthAnchor.constraint(equalToConstant: Value.Math.sidePadding).isActive = true
+        leftPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.topBarLeftPadding).isActive = true
+        rightPadding.widthAnchor.constraint(equalToConstant: CellStyle.Math.topBarRightPadding).isActive = true
         
-        starButton.widthAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
-        starButton.heightAnchor.constraint(equalToConstant: Value.Math.starButtonSize).isActive = true
+        starButton.widthAnchor.constraint(equalToConstant: CellStyle.Math.starButtonSize).isActive = true
+        starButton.heightAnchor.constraint(equalToConstant: CellStyle.Math.starButtonSize).isActive = true
     }
 }
