@@ -12,7 +12,7 @@
 		6BCD1F8F288E4D7300F63E64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */; };
 		6BCD1F91288E500700F63E64 /* SavedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F90288E500700F63E64 /* SavedListViewController.swift */; };
 		6BCD1F93288E52ED00F63E64 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F92288E52ED00F63E64 /* Icon.swift */; };
-		6BCD1F95288E52FF00F63E64 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F94288E52FF00F63E64 /* TabBar.swift */; };
+		6BCD1F95288E52FF00F63E64 /* TabBarCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F94288E52FF00F63E64 /* TabBarCase.swift */; };
 		6BCD1F9C288E5E5100F63E64 /* PhotoListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F9B288E5E5100F63E64 /* PhotoListCollectionViewCell.swift */; };
 		6BCD1F9E288E5E7E00F63E64 /* CellIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F9D288E5E7E00F63E64 /* CellIdentifiable.swift */; };
 		6BCD1FA0288E611D00F63E64 /* PhotoListCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD1F9F288E611D00F63E64 /* PhotoListCollectionViewLayout.swift */; };
@@ -46,7 +46,7 @@
 		6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6BCD1F90288E500700F63E64 /* SavedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedListViewController.swift; sourceTree = "<group>"; };
 		6BCD1F92288E52ED00F63E64 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
-		6BCD1F94288E52FF00F63E64 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
+		6BCD1F94288E52FF00F63E64 /* TabBarCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarCase.swift; sourceTree = "<group>"; };
 		6BCD1F9B288E5E5100F63E64 /* PhotoListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewCell.swift; sourceTree = "<group>"; };
 		6BCD1F9D288E5E7E00F63E64 /* CellIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellIdentifiable.swift; sourceTree = "<group>"; };
 		6BCD1F9F288E611D00F63E64 /* PhotoListCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListCollectionViewLayout.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 			children = (
 				6BCD1F8E288E4D7300F63E64 /* TabBarController.swift */,
 				6B1D292B289228B8002302F3 /* TabBarViewModel.swift */,
-				6BCD1F94288E52FF00F63E64 /* TabBar.swift */,
+				6BCD1F94288E52FF00F63E64 /* TabBarCase.swift */,
 				6B2771382893A03500212FE7 /* Common */,
 				6BCD1F97288E540A00F63E64 /* PhotoList */,
 				6BCD1F98288E541400F63E64 /* SavedList */,
@@ -311,7 +311,7 @@
 				DE15E65C28604278003DD2F5 /* AppDelegate.swift in Sources */,
 				6BCD1FA0288E611D00F63E64 /* PhotoListCollectionViewLayout.swift in Sources */,
 				DE15E65E28604278003DD2F5 /* SceneDelegate.swift in Sources */,
-				6BCD1F95288E52FF00F63E64 /* TabBar.swift in Sources */,
+				6BCD1F95288E52FF00F63E64 /* TabBarCase.swift in Sources */,
 				6BCD1FAC288EDACF00F63E64 /* PhotoListViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

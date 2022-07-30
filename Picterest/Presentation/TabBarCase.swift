@@ -1,5 +1,5 @@
 //
-//  TabBar.swift
+//  TabBarCase.swift
 //  Picterest
 //
 //  Created by yc on 2022/07/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum TabBar: String, CaseIterable {
+enum TabBarCase: String, CaseIterable {
     case photoList = "Images"
     case savedList = "Saved"
     

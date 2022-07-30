@@ -22,7 +22,7 @@ final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewControllers = TabBar.allCases.map {
+        viewControllers = TabBarCase.allCases.map {
             switch $0 {
             case .photoList:
                 let viewController = PhotoListViewController(
